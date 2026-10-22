@@ -46,17 +46,20 @@ Planned as an independent category.
 
 ## Current status
 
-The Angular application foundation includes:
+The Angular application includes:
 
 - Application startup and branding.
-- Routing configuration.
+- A lazy-loaded homepage route.
 - Shared charcoal, coral and lilac colour palette.
 - Locally served Bricolage Grotesque typography.
 - Responsive header and footer.
+- Homepage hero, connection illustration and rules section.
+- Fragment navigation to the rules section.
 - Keyboard skip link and visible focus indicators.
 - Component smoke tests.
 
-Catalogues, authentication and multiplayer functionality are in development.
+Category selection, catalogues, authentication and multiplayer functionality
+are in development. The homepage Play button is currently disabled.
 
 ## Project structure
 

@@ -1,0 +1,119 @@
+<section class="home-hero" aria-labelledby="home-title">
+  <div class="hero-copy">
+    <p class="kicker">A FRIENDLY GAME. UNTIL IT ISN’T.</p>
+
+    <h1 id="home-title">
+      Your brain.<br />
+      Their <em>problem.</em>
+    </h1>
+
+    <p class="intro">
+      Connect the titles. Pass the pressure.<br />
+      {{ turnSeconds }} seconds to keep your one life.
+    </p>
+
+    <div class="hero-actions">
+      <button class="play-button" type="button" disabled>
+        Let’s play <span aria-hidden="true">↗</span>
+      </button>
+
+      <a routerLink="/" fragment="how-to-play" class="rules-link">
+        Wait, how does this work?
+      </a>
+    </div>
+
+    <div class="hero-facts">
+      <span>2 players</span>
+      <span aria-hidden="true">·</span>
+      <span>{{ turnSeconds }} seconds</span>
+      <span aria-hidden="true">·</span>
+      <span>No second chances</span>
+    </div>
+  </div>
+
+  <div
+    class="hero-art"
+    role="img"
+    aria-label="Jaws connects to Jurassic Park through Steven Spielberg and John Williams. Both shared credits count."
+  >
+    <span class="art-caption">
+      A LITTLE KNOWLEDGE. A LOT OF TROUBLE.
+    </span>
+
+    <div class="film-slip jaws">
+      <small>THE LAST ANSWER</small>
+      <strong>JAWS</strong>
+      <span>1975</span>
+      <div class="shark-fin"></div>
+      <b>01</b>
+    </div>
+
+    <div class="film-slip jurassic">
+      <small>YOUR NEXT MOVE?</small>
+      <strong>JURASSIC<br />PARK</strong>
+      <span>1993</span>
+      <div class="slip-dots">● ● ●</div>
+      <b>02</b>
+    </div>
+
+    <div class="credit-bridge">
+      <span>Steven Spielberg</span>
+      <span>John Williams</span>
+      <svg viewBox="0 0 130 70" aria-hidden="true">
+        <path d="M10 8C10 54 96 5 117 52m-19-8 21 11 1-23" />
+      </svg>
+    </div>
+
+    <div class="time-sticker">
+      <strong>{{ turnSeconds }}</strong>
+      <span>seconds.<br />no pressure.</span>
+    </div>
+
+    <span class="both-count">BOTH CREDITS COUNT. ↗</span>
+  </div>
+</section>
+
+<section
+  id="how-to-play"
+  class="quick-rules"
+  aria-labelledby="rules-title"
+>
+  <div class="rules-heading">
+    <p class="kicker">THE SHORT VERSION</p>
+    <h2 id="rules-title">Easy to learn.<br />Hard to get out of.</h2>
+    <p>One life. Make it count.</p>
+  </div>
+
+  <ol>
+    <li>
+      <span aria-hidden="true">01</span>
+      <div>
+        <h3>Find the connection.</h3>
+        <p>
+          Name a new title that shares an eligible credit with the current one.
+        </p>
+      </div>
+    </li>
+    <li>
+      <span aria-hidden="true">02</span>
+      <div>
+        <h3>Watch the shared limits.</h3>
+        <p>
+          Every shared connector counts. Three uses each, across both players.
+          Any exhausted connector blocks the entire move.
+        </p>
+      </div>
+    </li>
+    <li>
+      <span aria-hidden="true">03</span>
+      <div>
+        <h3>Leave them thinking.</h3>
+        <p>
+          A valid answer passes the {{ turnSeconds }}-second clock.
+          Invalid? Retry while time remains, without resetting the clock.
+          No repeats. Traps welcome.
+        </p>
+      </div>
+    </li>
+  </ol>
+</section>

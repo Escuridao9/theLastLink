@@ -15,12 +15,13 @@ describe('App', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('renders the application name', () => {
+  it('renders the application branding', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
 
     const element: HTMLElement = fixture.nativeElement;
 
-    expect(element.querySelector('h1')?.textContent).toBe('The Last Link');
+    expect(element.querySelector('.wordmark-name')?.textContent)
+      .toContain('The Last Link');
   });
 });
