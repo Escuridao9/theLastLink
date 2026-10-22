@@ -50,6 +50,10 @@ The Angular application foundation includes:
 
 - Application startup and branding.
 - Routing configuration.
+- Shared charcoal, coral and lilac colour palette.
+- Locally served Bricolage Grotesque typography.
+- Responsive header and footer.
+- Keyboard skip link and visible focus indicators.
 - Component smoke tests.
 
 Catalogues, authentication and multiplayer functionality are in development.

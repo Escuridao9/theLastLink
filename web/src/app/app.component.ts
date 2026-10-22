@@ -10,4 +10,13 @@ import { RouterOutlet } from '@angular/router';
 export class App {
   readonly title: string = 'The Last Link';
   readonly tagline: string = 'One life. Make it count.';
+
+  skipToContent(event: Event): void {
+    event.preventDefault();
+
+    const main = document.getElementById('main-content');
+
+    main?.focus();
+    main?.scrollIntoView();
+  }
 }
