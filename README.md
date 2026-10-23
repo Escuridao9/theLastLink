@@ -64,6 +64,7 @@ The Angular application includes:
 - Category-specific room setup routes.
 - Unavailable-category handling.
 - Automated routing tests.
+- Create-room player-name field with typed reactive forms and accessible validation feedback.
 
 Room setup is available for Games and Movies. Room creation and joining are
 not connected yet. Catalogues, authentication and multiplayer functionality

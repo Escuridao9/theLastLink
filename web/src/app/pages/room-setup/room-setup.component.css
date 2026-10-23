@@ -1,0 +1,45 @@
+.create-room-form {
+  margin-top: 24px;
+}
+
+.create-room-form label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.player-name-input {
+  display: block;
+  width: 100%;
+  min-height: 52px;
+  margin-top: 8px;
+  padding: 12px 14px;
+  border: 2px solid var(--ll-line);
+  border-radius: 8px;
+  background: #28202a;
+  color: var(--ll-cream);
+  font-size: 16px;
+}
+
+.player-name-input[aria-invalid='true'] {
+  border-color: var(--ll-coral);
+}
+
+.field-hint {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--ll-quiet);
+}
+
+.field-error {
+  min-height: 20px;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--ll-coral);
+}
+
+.create-room-form .room-button {
+  width: 100%;
+  margin-top: 16px;
+}

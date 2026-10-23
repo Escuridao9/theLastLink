@@ -1,7 +1,5 @@
 <section class="room-page" aria-labelledby="room-title">
-  <a routerLink="/play" class="back-link">
-    <span aria-hidden="true">←</span> Change category
-  </a>
+  <a routerLink="/play" class="back-link"> <span aria-hidden="true">←</span> Change category </a>
 
   @if (category(); as selected) {
     <header class="room-header">
@@ -10,9 +8,7 @@
         {{ selected.name }}.<br />
         <em>Bring a rival.</em>
       </h1>
-      <p class="room-intro">
-        Create a private room, or join a friend.
-      </p>
+      <p class="room-intro">Create a private room, or join a friend.</p>
     </header>
 
     <div class="room-options">
@@ -20,34 +16,55 @@
         <span class="option-number" aria-hidden="true">01</span>
         <h2>Make the first move.</h2>
         <p>Create a room and invite your opponent.</p>
-        <button
-          class="room-button"
-          type="button"
-          disabled
-          aria-describedby="room-availability"
-        >
-          Create a room <span aria-hidden="true">↗</span>
-        </button>
+
+        <form class="create-room-form" [formGroup]="createRoomForm">
+          <label for="create-player-name">Your player name</label>
+
+          <input
+            id="create-player-name"
+            class="player-name-input"
+            type="text"
+            name="displayName"
+            formControlName="displayName"
+            autocomplete="nickname"
+            spellcheck="false"
+            required
+            aria-describedby="create-name-hint create-name-error"
+            [attr.aria-invalid]="displayName.touched && displayName.invalid"
+            (blur)="normalizeDisplayName()"
+          />
+
+          <p id="create-name-hint" class="field-hint">2–24 characters. Visible to your opponent.</p>
+
+          <p id="create-name-error" class="field-error" aria-live="polite" aria-atomic="true">
+            @if (displayName.touched) {
+              @if (displayName.hasError('required')) {
+                Enter your player name.
+              } @else if (displayName.hasError('minlength')) {
+                Use at least 2 characters.
+              } @else if (displayName.hasError('maxlength')) {
+                Use no more than 24 characters.
+              }
+            }
+          </p>
+
+          <button class="room-button" type="submit" disabled aria-describedby="room-availability">
+            Create a room <span aria-hidden="true">↗</span>
+          </button>
+        </form>
       </article>
 
       <article class="room-option">
         <span class="option-number" aria-hidden="true">02</span>
         <h2>Already invited?</h2>
         <p>Use your friend's room code to join them.</p>
-        <button
-          class="room-button"
-          type="button"
-          disabled
-          aria-describedby="room-availability"
-        >
+        <button class="room-button" type="button" disabled aria-describedby="room-availability">
           Join a room <span aria-hidden="true">↗</span>
         </button>
       </article>
     </div>
 
-    <p id="room-availability" class="availability">
-      Room creation and joining are coming soon.
-    </p>
+    <p id="room-availability" class="availability">Room creation and joining are coming soon.</p>
   } @else {
     <header class="room-header">
       <p class="eyebrow">UNAVAILABLE CATEGORY</p>
