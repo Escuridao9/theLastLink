@@ -60,8 +60,14 @@ The Angular application includes:
 - Routed category selection with Games and Movies options.
 - Reactive category selection using Angular signals.
 - Music category marked as coming soon.
+- Shared category configuration.
+- Category-specific room setup routes.
+- Unavailable-category handling.
+- Automated routing tests.
 
-Room setup, catalogues, authentication and multiplayer functionality are in development. Category selection currently runs locally in the browser.
+Room setup is available for Games and Movies. Room creation and joining are
+not connected yet. Catalogues, authentication and multiplayer functionality
+are in development.
 
 ## Project structure
 

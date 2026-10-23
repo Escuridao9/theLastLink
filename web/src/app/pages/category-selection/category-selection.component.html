@@ -1,14 +1,10 @@
 <section class="category-page" aria-labelledby="category-title">
-  <a routerLink="/" class="back-link">
-    <span aria-hidden="true">←</span> Back home
-  </a>
+  <a routerLink="/" class="back-link"> <span aria-hidden="true">←</span> Back home </a>
 
   <header class="category-header">
     <p class="eyebrow">KNOW YOUR TERRITORY</p>
     <h1 id="category-title">Pick your <em>arena.</em></h1>
-    <p class="category-intro">
-      Pick what you know. Then find out what they know.
-    </p>
+    <p class="category-intro">Pick what you know. Then find out what they know.</p>
   </header>
 
   <fieldset class="category-grid">
@@ -37,17 +33,11 @@
           {{ category.mark }}
         </span>
 
-        <strong
-          class="category-name"
-          [id]="'category-' + category.id + '-name'"
-        >
+        <strong class="category-name" [id]="'category-' + category.id + '-name'">
           {{ category.name }}
         </strong>
 
-        <span
-          class="category-description"
-          [id]="'category-' + category.id + '-description'"
-        >
+        <span class="category-description" [id]="'category-' + category.id + '-description'">
           {{ category.description }}
         </span>
 
@@ -78,18 +68,17 @@
           Choose a category to get started.
         }
       </p>
-      <p id="room-availability" class="room-hint">
-        Room setup is coming soon.
-      </p>
+      <p id="category-help" class="room-hint">Choose a category, then set up your room.</p>
     </div>
 
-    <button
-      class="continue-button"
-      type="button"
-      disabled
-      aria-describedby="room-availability"
-    >
-      Continue <span aria-hidden="true">↗</span>
-    </button>
+    @if (selectedCategory(); as selected) {
+      <a class="continue-button" [routerLink]="['/play', selected.id]">
+        Continue <span aria-hidden="true">↗</span>
+      </a>
+    } @else {
+      <button class="continue-button" type="button" disabled aria-describedby="category-help">
+        Continue <span aria-hidden="true">↗</span>
+      </button>
+    }
   </div>
 </section>

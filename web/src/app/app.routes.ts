@@ -10,10 +10,19 @@ export const routes: Routes = [
   },
   {
     path: 'play',
+    pathMatch: 'full',
     title: 'Choose your category — The Last Link',
     loadComponent: () =>
       import('./pages/category-selection/category-selection.component').then(
         (module) => module.CategorySelection,
+      ),
+  },
+  {
+    path: 'play/:categoryId',
+    title: 'Set up your room — The Last Link',
+    loadComponent: () =>
+      import('./pages/room-setup/room-setup.component').then(
+        (module) => module.RoomSetup,
       ),
   },
   {

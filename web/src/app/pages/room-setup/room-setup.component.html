@@ -1,0 +1,65 @@
+<section class="room-page" aria-labelledby="room-title">
+  <a routerLink="/play" class="back-link">
+    <span aria-hidden="true">←</span> Change category
+  </a>
+
+  @if (category(); as selected) {
+    <header class="room-header">
+      <p class="eyebrow">ONE RIVAL. ONE LIFE.</p>
+      <h1 id="room-title">
+        {{ selected.name }}.<br />
+        <em>Bring a rival.</em>
+      </h1>
+      <p class="room-intro">
+        Create a private room, or join a friend.
+      </p>
+    </header>
+
+    <div class="room-options">
+      <article class="room-option">
+        <span class="option-number" aria-hidden="true">01</span>
+        <h2>Make the first move.</h2>
+        <p>Create a room and invite your opponent.</p>
+        <button
+          class="room-button"
+          type="button"
+          disabled
+          aria-describedby="room-availability"
+        >
+          Create a room <span aria-hidden="true">↗</span>
+        </button>
+      </article>
+
+      <article class="room-option">
+        <span class="option-number" aria-hidden="true">02</span>
+        <h2>Already invited?</h2>
+        <p>Use your friend's room code to join them.</p>
+        <button
+          class="room-button"
+          type="button"
+          disabled
+          aria-describedby="room-availability"
+        >
+          Join a room <span aria-hidden="true">↗</span>
+        </button>
+      </article>
+    </div>
+
+    <p id="room-availability" class="availability">
+      Room creation and joining are coming soon.
+    </p>
+  } @else {
+    <header class="room-header">
+      <p class="eyebrow">UNAVAILABLE CATEGORY</p>
+      <h1 id="room-title">
+        That arena<br />
+        <em>isn't open.</em>
+      </h1>
+      <p class="room-intro">Choose Games or Movies to continue.</p>
+    </header>
+
+    <a routerLink="/play" class="room-button">
+      Choose a category <span aria-hidden="true">↗</span>
+    </a>
+  }
+</section>
