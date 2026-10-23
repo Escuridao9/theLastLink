@@ -1,0 +1,95 @@
+<section class="category-page" aria-labelledby="category-title">
+  <a routerLink="/" class="back-link">
+    <span aria-hidden="true">←</span> Back home
+  </a>
+
+  <header class="category-header">
+    <p class="eyebrow">KNOW YOUR TERRITORY</p>
+    <h1 id="category-title">Pick your <em>arena.</em></h1>
+    <p class="category-intro">
+      Pick what you know. Then find out what they know.
+    </p>
+  </header>
+
+  <fieldset class="category-grid">
+    <legend class="category-legend">Choose a category</legend>
+
+    @for (category of categories; track category.id) {
+      <label
+        class="category-option"
+        [attr.data-category]="category.id"
+        [class.is-selected]="selectedCategory()?.id === category.id"
+        [class.is-unavailable]="!category.selectable"
+      >
+        <input
+          type="radio"
+          name="category"
+          [id]="'category-' + category.id"
+          [value]="category.id"
+          [checked]="selectedCategory()?.id === category.id"
+          [disabled]="!category.selectable"
+          [attr.aria-labelledby]="'category-' + category.id + '-name'"
+          [attr.aria-describedby]="'category-' + category.id + '-description'"
+          (change)="selectedCategory.set(category)"
+        />
+
+        <span class="category-mark" aria-hidden="true">
+          {{ category.mark }}
+        </span>
+
+        <strong
+          class="category-name"
+          [id]="'category-' + category.id + '-name'"
+        >
+          {{ category.name }}
+        </strong>
+
+        <span
+          class="category-description"
+          [id]="'category-' + category.id + '-description'"
+        >
+          {{ category.description }}
+        </span>
+
+        <span class="category-connectors">
+          <span>CONNECT THROUGH</span>
+          {{ category.connectors }}
+        </span>
+
+        <span class="category-status">
+          @if (!category.selectable) {
+            Coming soon
+          } @else if (selectedCategory()?.id === category.id) {
+            Selected
+          } @else {
+            Choose category
+          }
+        </span>
+      </label>
+    }
+  </fieldset>
+
+  <div class="selection-footer">
+    <div>
+      <p class="selection-summary" role="status" aria-atomic="true">
+        @if (selectedCategory(); as selected) {
+          <strong>{{ selected.name }}</strong> selected.
+        } @else {
+          Choose a category to get started.
+        }
+      </p>
+      <p id="room-availability" class="room-hint">
+        Room setup is coming soon.
+      </p>
+    </div>
+
+    <button
+      class="continue-button"
+      type="button"
+      disabled
+      aria-describedby="room-availability"
+    >
+      Continue <span aria-hidden="true">↗</span>
+    </button>
+  </div>
+</section>

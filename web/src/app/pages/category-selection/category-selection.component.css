@@ -1,0 +1,246 @@
+:host {
+  display: block;
+}
+
+.category-page {
+  padding-block: 30px 56px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 12px;
+  color: var(--ll-quiet);
+}
+
+.back-link:hover {
+  color: var(--ll-cream);
+}
+
+.category-header {
+  margin-block: 30px 36px;
+}
+
+.eyebrow {
+  margin-bottom: 16px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--ll-quiet);
+}
+
+h1 {
+  font-size: clamp(44px, 6vw, 72px);
+  letter-spacing: -3px;
+}
+
+h1 em {
+  font-style: normal;
+  color: var(--ll-coral);
+}
+
+.category-intro {
+  margin-top: 18px;
+  font-size: 16px;
+  color: var(--ll-quiet);
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.category-legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.category-option {
+  --category-color: var(--ll-coral);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 350px;
+  padding: 24px;
+  border: 2px solid var(--ll-line);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 160ms, transform 160ms;
+}
+
+.category-option[data-category='movies'] {
+  --category-color: var(--ll-lilac);
+}
+
+.category-option[data-category='music'] {
+  --category-color: var(--ll-cream);
+}
+
+.category-option.is-selected {
+  border-color: var(--category-color);
+  background: #28202a;
+}
+
+.category-option:not(.is-unavailable):hover {
+  border-color: var(--category-color);
+  transform: translateY(-3px);
+}
+
+.category-option:has(input:focus-visible) {
+  outline: 3px solid var(--ll-lilac);
+  outline-offset: 5px;
+}
+
+.category-option input {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--category-color);
+  cursor: inherit;
+}
+
+.category-option input:focus-visible {
+  outline: none;
+}
+
+.category-mark {
+  margin-top: 20px;
+  color: var(--category-color);
+  font-size: clamp(56px, 7vw, 80px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -5px;
+}
+
+.category-name {
+  margin-top: 18px;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -1px;
+}
+
+.category-description {
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--ll-quiet);
+}
+
+.category-connectors {
+  margin-top: auto;
+  padding-top: 24px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ll-quiet);
+}
+
+.category-connectors > span {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.category-status {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--ll-line);
+  color: var(--category-color);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.is-unavailable {
+  cursor: not-allowed;
+}
+
+.is-unavailable .category-mark {
+  opacity: 0.4;
+}
+
+.selection-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--ll-line);
+}
+
+.selection-summary {
+  font-size: 16px;
+}
+
+.room-hint {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--ll-quiet);
+}
+
+.continue-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  min-height: 52px;
+  padding: 14px 22px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--ll-coral);
+  color: var(--ll-dark);
+  font-weight: 800;
+}
+
+.continue-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+@media (max-width: 760px) {
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .category-option {
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .category-mark {
+    margin-top: 0;
+    font-size: 44px;
+    letter-spacing: -2px;
+  }
+
+  .category-name {
+    margin-top: 12px;
+    font-size: 28px;
+  }
+
+  .category-connectors {
+    padding-top: 18px;
+  }
+
+  .selection-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

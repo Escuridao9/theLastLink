@@ -13,13 +13,9 @@
     </p>
 
     <div class="hero-actions">
-      <button class="play-button" type="button" disabled>
-        Let’s play <span aria-hidden="true">↗</span>
-      </button>
+      <a routerLink="/play" class="play-button"> Let’s play <span aria-hidden="true">↗</span> </a>
 
-      <a routerLink="/" fragment="how-to-play" class="rules-link">
-        Wait, how does this work?
-      </a>
+      <a routerLink="/" fragment="how-to-play" class="rules-link"> Wait, how does this work? </a>
     </div>
 
     <div class="hero-facts">
@@ -36,9 +32,7 @@
     role="img"
     aria-label="Jaws connects to Jurassic Park through Steven Spielberg and John Williams. Both shared credits count."
   >
-    <span class="art-caption">
-      A LITTLE KNOWLEDGE. A LOT OF TROUBLE.
-    </span>
+    <span class="art-caption"> A LITTLE KNOWLEDGE. A LOT OF TROUBLE. </span>
 
     <div class="film-slip jaws">
       <small>THE LAST ANSWER</small>
@@ -73,11 +67,7 @@
   </div>
 </section>
 
-<section
-  id="how-to-play"
-  class="quick-rules"
-  aria-labelledby="rules-title"
->
+<section id="how-to-play" class="quick-rules" aria-labelledby="rules-title">
   <div class="rules-heading">
     <p class="kicker">THE SHORT VERSION</p>
     <h2 id="rules-title">Easy to learn.<br />Hard to get out of.</h2>
@@ -89,9 +79,7 @@
       <span aria-hidden="true">01</span>
       <div>
         <h3>Find the connection.</h3>
-        <p>
-          Name a new title that shares an eligible credit with the current one.
-        </p>
+        <p>Name a new title that shares an eligible credit with the current one.</p>
       </div>
     </li>
     <li>
@@ -99,8 +87,8 @@
       <div>
         <h3>Watch the shared limits.</h3>
         <p>
-          Every shared connector counts. Three uses each, across both players.
-          Any exhausted connector blocks the entire move.
+          Every shared connector counts. Three uses each, across both players. Any exhausted
+          connector blocks the entire move.
         </p>
       </div>
     </li>
@@ -109,9 +97,8 @@
       <div>
         <h3>Leave them thinking.</h3>
         <p>
-          A valid answer passes the {{ turnSeconds }}-second clock.
-          Invalid? Retry while time remains, without resetting the clock.
-          No repeats. Traps welcome.
+          A valid answer passes the {{ turnSeconds }}-second clock. Invalid? Retry while time
+          remains, without resetting the clock. No repeats. Traps welcome.
         </p>
       </div>
     </li>

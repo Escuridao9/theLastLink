@@ -57,9 +57,11 @@ The Angular application includes:
 - Fragment navigation to the rules section.
 - Keyboard skip link and visible focus indicators.
 - Component smoke tests.
+- Routed category selection with Games and Movies options.
+- Reactive category selection using Angular signals.
+- Music category marked as coming soon.
 
-Category selection, catalogues, authentication and multiplayer functionality
-are in development. The homepage Play button is currently disabled.
+Room setup, catalogues, authentication and multiplayer functionality are in development. Category selection currently runs locally in the browser.
 
 ## Project structure
 

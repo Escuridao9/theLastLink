@@ -9,6 +9,14 @@ export const routes: Routes = [
       import('./pages/home/home.component').then((module) => module.Home),
   },
   {
+    path: 'play',
+    title: 'Choose your category — The Last Link',
+    loadComponent: () =>
+      import('./pages/category-selection/category-selection.component').then(
+        (module) => module.CategorySelection,
+      ),
+  },
+  {
     path: '**',
     redirectTo: '',
   },
