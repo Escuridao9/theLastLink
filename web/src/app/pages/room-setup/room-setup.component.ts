@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CATEGORY_OPTIONS } from '../../core/config/categories';
+import { createPlayerNameControl } from '../../core/forms/player-name.control';
 
 @Component({
   selector: 'app-room-setup',
@@ -25,20 +26,32 @@ export class RoomSetup {
     );
   });
 
-  readonly displayName = new FormControl('', {
-    nonNullable: true,
-    validators: [
-      Validators.required,
-      Validators.minLength(2),
-      Validators.maxLength(24),
-    ],
-  });
+  readonly displayName = createPlayerNameControl();
 
   readonly createRoomForm = new FormGroup({
     displayName: this.displayName,
   });
 
-  normalizeDisplayName(): void {
-    this.displayName.setValue(this.displayName.value.trim());
+  readonly joinDisplayName = createPlayerNameControl();
+
+  readonly roomCode = new FormControl('', {
+    nonNullable: true,
+    validators: [
+      Validators.required,
+      Validators.pattern(/^[A-Z0-9]{6}$/i),
+    ],
+  });
+
+  readonly joinRoomForm = new FormGroup({
+    displayName: this.joinDisplayName,
+    roomCode: this.roomCode,
+  });
+
+  normalizePlayerName(control: FormControl<string>): void {
+    control.setValue(control.value.trim());
+  }
+
+  normalizeRoomCode(): void {
+    this.roomCode.setValue(this.roomCode.value.trim().toUpperCase());
   }
 }

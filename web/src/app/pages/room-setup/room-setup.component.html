@@ -17,12 +17,12 @@
         <h2>Make the first move.</h2>
         <p>Create a room and invite your opponent.</p>
 
-        <form class="create-room-form" [formGroup]="createRoomForm">
+        <form class="room-form" [formGroup]="createRoomForm">
           <label for="create-player-name">Your player name</label>
 
           <input
             id="create-player-name"
-            class="player-name-input"
+            class="room-input"
             type="text"
             name="displayName"
             formControlName="displayName"
@@ -31,7 +31,7 @@
             required
             aria-describedby="create-name-hint create-name-error"
             [attr.aria-invalid]="displayName.touched && displayName.invalid"
-            (blur)="normalizeDisplayName()"
+            (blur)="normalizePlayerName(displayName)"
           />
 
           <p id="create-name-hint" class="field-hint">2–24 characters. Visible to your opponent.</p>
@@ -58,9 +58,77 @@
         <span class="option-number" aria-hidden="true">02</span>
         <h2>Already invited?</h2>
         <p>Use your friend's room code to join them.</p>
-        <button class="room-button" type="button" disabled aria-describedby="room-availability">
-          Join a room <span aria-hidden="true">↗</span>
-        </button>
+
+        <form class="room-form" [formGroup]="joinRoomForm">
+          <div class="form-field">
+            <label for="join-player-name">Your player name</label>
+
+            <input
+              id="join-player-name"
+              class="room-input"
+              type="text"
+              name="displayName"
+              formControlName="displayName"
+              autocomplete="nickname"
+              spellcheck="false"
+              required
+              aria-describedby="join-name-hint join-name-error"
+              [attr.aria-invalid]="joinDisplayName.touched && joinDisplayName.invalid"
+              (blur)="normalizePlayerName(joinDisplayName)"
+            />
+
+            <p id="join-name-hint" class="field-hint">2–24 characters. Visible to your opponent.</p>
+
+            <p id="join-name-error" class="field-error" aria-live="polite" aria-atomic="true">
+              @if (joinDisplayName.touched) {
+                @if (joinDisplayName.hasError('required')) {
+                  Enter your player name.
+                } @else if (joinDisplayName.hasError('minlength')) {
+                  Use at least 2 characters.
+                } @else if (joinDisplayName.hasError('maxlength')) {
+                  Use no more than 24 characters.
+                }
+              }
+            </p>
+          </div>
+
+          <div class="form-field">
+            <label for="join-room-code">Room code</label>
+
+            <input
+              id="join-room-code"
+              class="room-input room-code-input"
+              type="text"
+              name="roomCode"
+              formControlName="roomCode"
+              autocomplete="off"
+              autocapitalize="characters"
+              spellcheck="false"
+              required
+              aria-describedby="join-code-hint join-code-error"
+              [attr.aria-invalid]="roomCode.touched && roomCode.invalid"
+              (blur)="normalizeRoomCode()"
+            />
+
+            <p id="join-code-hint" class="field-hint">
+              6 letters or numbers. Ask your friend for their code.
+            </p>
+
+            <p id="join-code-error" class="field-error" aria-live="polite" aria-atomic="true">
+              @if (roomCode.touched) {
+                @if (roomCode.hasError('required')) {
+                  Enter a room code.
+                } @else if (roomCode.hasError('pattern')) {
+                  Use 6 characters: A-Z or 0-9.
+                }
+              }
+            </p>
+          </div>
+
+          <button class="room-button" type="submit" disabled aria-describedby="room-availability">
+            Join a room <span aria-hidden="true">↗</span>
+          </button>
+        </form>
       </article>
     </div>
 

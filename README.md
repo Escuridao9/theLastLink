@@ -65,6 +65,8 @@ The Angular application includes:
 - Unavailable-category handling.
 - Automated routing tests.
 - Create-room player-name field with typed reactive forms and accessible validation feedback.
+- Join-room form with player-name and room-code validation.
+- Case-insensitive six-character room codes, normalized to uppercase.
 
 Room setup is available for Games and Movies. Room creation and joining are
 not connected yet. Catalogues, authentication and multiplayer functionality
