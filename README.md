@@ -120,3 +120,17 @@ trailing slash.
 The development base URL remains `/`. Public assets use relative URLs
 so they also work when the application is hosted beneath a repository
 directory.
+
+[Open the live application](https://escuridao9.github.io/theLastLink/)
+
+The workflow in `.github/workflows/deploy.yml` installs dependencies,
+checks TypeScript, runs automated tests and builds the production
+application.
+
+Successful checks on `main` are followed by deployment to GitHub Pages.
+Pull requests run the checks without publishing. The workflow can also
+be started manually from the repository's Actions tab.
+
+The production base path is obtained from the GitHub Pages configuration.
+GitHub Pages hosts the Angular frontend; Supabase will provide
+authentication, persistent storage and multiplayer backend services.
