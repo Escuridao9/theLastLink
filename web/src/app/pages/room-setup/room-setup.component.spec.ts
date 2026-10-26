@@ -1,17 +1,36 @@
+import { ErrorHandler, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router, withComponentInputBinding } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { routes } from '../../app.routes';
-import { RoomSetup } from './room-setup.component';
-import { signal } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
+import { RoomService } from '../../core/services/room.service';
+import { RoomSetup } from './room-setup.component';
 
 describe('Room setup', () => {
-    beforeEach(() => {
+  const createRoom = vi.fn<RoomService['createRoom']>();
+  beforeEach(() => {
+    createRoom.mockReset();
+
+    createRoom.mockImplementation(async (request) => ({
+      id: request.roomId,
+      code: 'AB7K2Q',
+      categoryId: request.categoryId,
+      displayName: request.displayName,
+    }));
+
     TestBed.configureTestingModule({
       providers: [
         provideRouter(routes, withComponentInputBinding()),
+        {
+          provide: RoomService,
+          useValue: { createRoom },
+        },
+        {
+          provide: ErrorHandler,
+          useValue: { handleError: vi.fn() },
+        },
         {
           provide: AuthService,
           useValue: {
@@ -183,5 +202,132 @@ describe('Room setup', () => {
     expect(
       harness.routeNativeElement?.querySelector<HTMLInputElement>('#join-player-name')?.value,
     ).toBe('Rival');
+  });
+
+  function submitCreate(harness: RouterTestingHarness): void {
+    const form = harness.routeNativeElement?.querySelector('form');
+
+    if (!form) {
+      throw new Error('Create-room form was not rendered.');
+    }
+
+    form.dispatchEvent(
+      new Event('submit', {
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
+
+    harness.detectChanges();
+  }
+
+  it('displays the room returned by the service', async () => {
+    const harness = await RouterTestingHarness.create('/play/games');
+
+    enterPlayerName(harness, '  Diogo  ');
+    submitCreate(harness);
+
+    await harness.fixture.whenStable();
+    harness.detectChanges();
+
+    expect(createRoom).toHaveBeenCalledWith({
+      roomId: expect.any(String),
+      categoryId: 'games',
+      displayName: 'Diogo',
+    });
+
+    expect(harness.routeNativeElement?.querySelector('.created-room-code')?.textContent).toContain(
+      'AB7K2Q',
+    );
+
+    expect(
+      harness.routeNativeElement?.querySelector<HTMLInputElement>('#create-player-name')?.readOnly,
+    ).toBe(true);
+  });
+
+  it('reuses the request ID after a failed attempt', async () => {
+    createRoom.mockRejectedValueOnce(new Error('Please try again.'));
+
+    const harness = await RouterTestingHarness.create('/play/games');
+
+    enterPlayerName(harness, 'Diogo');
+    submitCreate(harness);
+
+    await harness.fixture.whenStable();
+    harness.detectChanges();
+
+    expect(harness.routeNativeElement?.querySelector('[role="alert"]')?.textContent).toContain(
+      'Please try again.',
+    );
+
+    submitCreate(harness);
+    await harness.fixture.whenStable();
+
+    expect(createRoom.mock.calls[0][0].roomId).toBe(createRoom.mock.calls[1][0].roomId);
+  });
+
+  it('prevents duplicate submissions while creating', async () => {
+    let finish = () => {};
+
+    createRoom.mockImplementationOnce(
+      (request) =>
+        new Promise((resolve) => {
+          finish = () =>
+            resolve({
+              id: request.roomId,
+              code: 'AB7K2Q',
+              categoryId: request.categoryId,
+              displayName: request.displayName,
+            });
+        }),
+    );
+
+    const harness = await RouterTestingHarness.create('/play/games');
+
+    enterPlayerName(harness, 'Diogo');
+
+    submitCreate(harness);
+    submitCreate(harness);
+
+    expect(createRoom).toHaveBeenCalledTimes(1);
+
+    const button =
+      harness.routeNativeElement?.querySelector<HTMLButtonElement>('button[type="submit"]');
+
+    expect(button?.disabled).toBe(true);
+    expect(button?.textContent).toContain('Creating');
+
+    finish();
+    await harness.fixture.whenStable();
+  });
+
+  it('discards a late result after the category changes', async () => {
+    let finish = () => {};
+
+    createRoom.mockImplementationOnce(
+      (request) =>
+        new Promise((resolve) => {
+          finish = () =>
+            resolve({
+              id: request.roomId,
+              code: 'AB7K2Q',
+              categoryId: request.categoryId,
+              displayName: request.displayName,
+            });
+        }),
+    );
+
+    const harness = await RouterTestingHarness.create('/play/games');
+
+    enterPlayerName(harness, 'Diogo');
+    submitCreate(harness);
+
+    await harness.navigateByUrl('/play/movies', RoomSetup);
+
+    finish();
+    await harness.fixture.whenStable();
+    harness.detectChanges();
+
+    expect(harness.routeNativeElement?.querySelector('.created-room-code')).toBeNull();
   });
 });

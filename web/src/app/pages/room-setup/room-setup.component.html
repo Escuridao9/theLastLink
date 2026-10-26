@@ -17,7 +17,12 @@
         <h2>Make the first move.</h2>
         <p>Create a room and invite your opponent.</p>
 
-        <form class="room-form" [formGroup]="createRoomForm">
+        <form
+          class="room-form"
+          [formGroup]="createRoomForm"
+          [attr.aria-busy]="creatingRoom()"
+          (ngSubmit)="createRoom()"
+        >
           <label for="create-player-name">Your player name</label>
 
           <input
@@ -32,6 +37,7 @@
             aria-describedby="create-name-hint create-name-error"
             [attr.aria-invalid]="displayName.touched && displayName.invalid"
             (blur)="normalizePlayerName(displayName)"
+            [readOnly]="creatingRoom() || createdRoom() !== null"
           />
 
           <p id="create-name-hint" class="field-hint">2–24 characters. Visible to your opponent.</p>
@@ -48,9 +54,35 @@
             }
           </p>
 
-          <button class="room-button" type="submit" disabled aria-describedby="room-availability">
-            Create a room <span aria-hidden="true">↗</span>
+          <button
+            class="room-button"
+            type="submit"
+            [disabled]="createRoomForm.invalid || creatingRoom() || createdRoom() !== null"
+            aria-describedby="create-room-feedback"
+          >
+            {{ creatingRoom() ? 'Creating…' : createdRoom() ? 'Room created' : 'Create a room' }}
+            <span aria-hidden="true">↗</span>
           </button>
+
+          <div id="create-room-feedback">
+            @if (creationError(); as error) {
+              <p class="creation-error" role="alert">
+                {{ error }}
+              </p>
+            }
+
+            <div role="status" aria-atomic="true">
+              @if (createdRoom(); as room) {
+                <div class="created-room">
+                  <p>Your room is ready, {{ room.displayName }}.</p>
+                  <p class="field-hint">Your room code</p>
+                  <strong class="created-room-code">
+                    {{ room.code }}
+                  </strong>
+                </div>
+              }
+            </div>
+          </div>
         </form>
       </article>
 
@@ -132,7 +164,7 @@
       </article>
     </div>
 
-    <p id="room-availability" class="availability">Room creation and joining are coming soon.</p>
+    <p id="room-availability" class="availability">Joining rooms is coming soon.</p>
   } @else {
     <header class="room-header">
       <p class="eyebrow">UNAVAILABLE CATEGORY</p>

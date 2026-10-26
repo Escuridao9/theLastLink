@@ -82,8 +82,14 @@ The Angular application includes:
 - Transactional room and host-membership creation.
 - Safe retries using a stable creation request ID.
 - Backend TypeScript checks and handler tests in GitHub Actions.
+- Angular room creation connected to the authenticated Edge Function.
+- Typed room request and response models.
+- Creation loading, error and success states.
+- Stable request IDs for safe retries.
 
-The room creation backend is implemented. Angular form integration, room joining, catalogues and multiplayer gameplay are in development.
+Room creation is connected to an authenticated Supabase Edge Function.
+The setup page displays the saved room code and supports safe retries.
+Room joining, catalogues and multiplayer gameplay are in development.
 
 ## Project structure
 

@@ -179,6 +179,27 @@ h2 {
   text-transform: uppercase;
 }
 
+.creation-error {
+  margin-top: 16px;
+  color: var(--ll-coral);
+  font-size: 13px;
+}
+
+.created-room {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--ll-line);
+  overflow-wrap: anywhere;
+}
+
+.created-room-code {
+  display: block;
+  margin-top: 8px;
+  color: var(--ll-lilac);
+  font-size: 32px;
+  letter-spacing: 0.15em;
+}
+
 @media (max-width: 640px) {
   .room-options {
     grid-template-columns: 1fr;
