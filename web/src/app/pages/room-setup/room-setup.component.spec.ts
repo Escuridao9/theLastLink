@@ -4,11 +4,22 @@ import { RouterTestingHarness } from '@angular/router/testing';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { routes } from '../../app.routes';
 import { RoomSetup } from './room-setup.component';
+import { signal } from '@angular/core';
+import { AuthService } from '../../core/services/auth.service';
 
 describe('Room setup', () => {
-  beforeEach(() => {
+    beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideRouter(routes, withComponentInputBinding())],
+      providers: [
+        provideRouter(routes, withComponentInputBinding()),
+        {
+          provide: AuthService,
+          useValue: {
+            isAuthenticated: signal(true),
+            ensureSession: async () => undefined,
+          },
+        },
+      ],
     });
   });
 
@@ -34,6 +45,8 @@ describe('Room setup', () => {
 
   it('continues from a category choice to its room setup', async () => {
     const harness = await RouterTestingHarness.create('/play');
+
+    await harness.fixture.whenStable();
 
     harness.routeNativeElement?.querySelector<HTMLInputElement>('#category-games')?.click();
 

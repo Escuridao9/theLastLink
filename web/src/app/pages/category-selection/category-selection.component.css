@@ -218,6 +218,37 @@ h1 em {
   filter: brightness(1.06);
 }
 
+.player-status {
+  margin-top: 8px;
+  color: var(--ll-lilac);
+  font-size: 12px;
+}
+
+.connection-error {
+  margin-top: 8px;
+  color: var(--ll-coral);
+  font-size: 12px;
+}
+
+.connection-retry {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 10px;
+  padding: 8px 14px;
+  border: 1px solid var(--ll-line);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ll-lilac);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.connection-retry:hover {
+  border-color: var(--ll-lilac);
+}
+
 @media (max-width: 760px) {
   .category-grid {
     grid-template-columns: 1fr;

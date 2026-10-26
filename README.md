@@ -70,10 +70,10 @@ The Angular application includes:
 - Supabase client service with local and production environment configuration.
 - GitHub Actions verification and GitHub Pages deployment configuration.
 - Shared authentication state, session-event handling and sign-out support.
+- Automatic Supabase guest authentication with saved-session reuse.
+- Player connection loading, error and retry states.
 
-Room setup is available for Games and Movies. Room creation and joining are
-not connected yet. Catalogues, authentication and multiplayer functionality
-are in development.
+Room setup is available for Games and Movies. Players authenticate through Supabase guest sessions. Room creation and joining, catalogues and multiplayer gameplay are in development.
 
 ## Project structure
 
@@ -109,6 +109,12 @@ npm start
 ```
 
 Open the local URL printed by the development server.
+
+Enable anonymous sign-ins in the Supabase project's Authentication →
+Sign In / Providers settings.
+
+The category page restores an existing session or creates a guest
+session. Player names are entered in the room forms. Guest identities cannot be recovered after signing out or clearing browser storage.
 
 ## Verification
 

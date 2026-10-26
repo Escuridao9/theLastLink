@@ -68,16 +68,40 @@
           Choose a category to get started.
         }
       </p>
+
       <p id="category-help" class="room-hint">Choose a category, then set up your room.</p>
+
+      <p class="player-status" role="status" aria-atomic="true">
+        @if (connecting()) {
+          Connecting your player…
+        } @else if (connectionError()) {
+          Connection unavailable.
+        } @else if (playerConnected()) {
+          Your player is connected.
+        } @else {
+          Connect to enter a room.
+        }
+      </p>
+
+      @if (connectionError(); as error) {
+        <p class="connection-error" role="alert">{{ error }}</p>
+      }
+
+      @if (!connecting() && (connectionError() || !playerConnected())) {
+        <button class="connection-retry" type="button" (click)="connectPlayer()">
+          {{ connectionError() ? 'Try again' : 'Connect as guest' }}
+        </button>
+      }
     </div>
 
-    @if (selectedCategory(); as selected) {
-      <a class="continue-button" [routerLink]="['/play', selected.id]">
+    @if (continueLink(); as link) {
+      <a class="continue-button" [routerLink]="link">
         Continue <span aria-hidden="true">↗</span>
       </a>
     } @else {
       <button class="continue-button" type="button" disabled aria-describedby="category-help">
-        Continue <span aria-hidden="true">↗</span>
+        {{ connecting() ? 'Connecting…' : 'Continue' }}
+        <span aria-hidden="true">↗</span>
       </button>
     }
   </div>
