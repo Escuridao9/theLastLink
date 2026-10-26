@@ -73,7 +73,11 @@ The Angular application includes:
 - Automatic Supabase guest authentication with saved-session reuse.
 - Player connection loading, error and retry states.
 - Reusable player connection component with @Input properties and
-  @Output/EventEmitter retry communication.
+@Output/EventEmitter retry communication.
+- Persistent room and player-membership schema.
+- Database constraints enforcing two-player rooms.
+- Membership-based Row Level Security.
+- Room tables registered for Supabase Realtime.
 
 Room setup is available for Games and Movies. Players authenticate through Supabase guest sessions. Room creation and joining, catalogues and multiplayer gameplay are in development.
 
@@ -81,8 +85,12 @@ Room setup is available for Games and Movies. Players authenticate through Supab
 
 - `web/`: Angular frontend, dependencies and component tests.
 
-Backend migrations, datasets and processing scripts will be added
-as those features are implemented.
+Database migrations define rooms, player membership and access policies.
+Room creation, joining and multiplayer gameplay are being implemented.
+
+- `supabase/`: backend configuration, database migrations and SQL checks.
+- `supabase/migrations/`: versioned database schema changes.
+- `supabase/checks/`: database constraint and access-policy checks.
 
 ## Requirements
 
@@ -137,6 +145,28 @@ The generated configuration is included in the frontend bundle.
 Authentication, RLS and server authorization will enforce access to data as backend features are implemented.
 Private backend credentials must never be included in frontend
 configuration.
+
+## Database verification
+
+Database changes are managed through versioned migrations using
+Supabase CLI 2.121.0.
+
+Run CLI commands from the repository root:
+
+```bash
+npx --yes supabase@2.121.0 db push --dry-run
+npx --yes supabase@2.121.0 db push
+npx --yes supabase@2.121.0 migration list
+```
+
+Run the complete `supabase/checks/rooms-access.sql` file in the
+Supabase SQL Editor using the postgres role.
+
+The checks verify room membership visibility, rejected browser writes
+and two-player constraints. Test fixtures are rolled back.
+
+Database checks are currently run separately from the Angular
+GitHub Actions checks.
 
 ## Routing and deployment
 
