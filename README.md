@@ -67,6 +67,8 @@ The Angular application includes:
 - Create-room player-name field with typed reactive forms and accessible validation feedback.
 - Join-room form with player-name and room-code validation.
 - Case-insensitive six-character room codes, normalized to uppercase.
+- Supabase client service with local and production environment configuration.
+- GitHub Actions verification and GitHub Pages deployment configuration.
 
 Room setup is available for Games and Movies. Room creation and joining are
 not connected yet. Catalogues, authentication and multiplayer functionality
@@ -101,7 +103,9 @@ connection details.
 
 Then, from `web/`, start the application:
 
+```bash
 npm start
+```
 
 Open the local URL printed by the development server.
 
@@ -121,7 +125,7 @@ typechecking, tests and production builds. Local values come from
 variables.
 
 The generated configuration is included in the frontend bundle.
-Authentication, RLS and server authorization enforce access to data.
+Authentication, RLS and server authorization will enforce access to data as backend features are implemented.
 Private backend credentials must never be included in frontend
 configuration.
 
@@ -152,3 +156,9 @@ be started manually from the repository's Actions tab.
 The production base path is obtained from the GitHub Pages configuration.
 GitHub Pages hosts the Angular frontend; Supabase will provide
 authentication, persistent storage and multiplayer backend services.
+
+For deployment, create the repository variables `SUPABASE_URL` and
+`SUPABASE_PUBLISHABLE_KEY` under Settings → Secrets and variables →
+Actions → Variables.
+
+Under Settings → Pages, select GitHub Actions as the publishing source.
