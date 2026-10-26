@@ -92,8 +92,16 @@ From the project root:
 ```bash
 cd web
 npm ci
-npm start
+cp .env.example .env
 ```
+
+Open `web/.env` and fill in `SUPABASE_URL` and
+`SUPABASE_PUBLISHABLE_KEY` using your Supabase project's public
+connection details.
+
+Then, from `web/`, start the application:
+
+npm start
 
 Open the local URL printed by the development server.
 
@@ -103,9 +111,19 @@ Run from `web/`:
 
 ```bash
 npm run build
-npx tsc --project tsconfig.app.json --noEmit
+npm run typecheck
 npm test -- --watch=false
 ```
+
+Public Supabase configuration is generated before development,
+typechecking, tests and production builds. Local values come from
+`web/.env`; GitHub Actions supplies production values through repository
+variables.
+
+The generated configuration is included in the frontend bundle.
+Authentication, RLS and server authorization enforce access to data.
+Private backend credentials must never be included in frontend
+configuration.
 
 ## Routing and deployment
 

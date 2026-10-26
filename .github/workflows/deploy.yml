@@ -11,9 +11,13 @@ permissions:
   contents: read
 
 jobs:
-  build:
+    build:
     name: Build and verify
     runs-on: ubuntu-latest
+
+    env:
+      SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+      SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
 
     permissions:
       contents: read
@@ -38,7 +42,7 @@ jobs:
         run: npm ci
 
       - name: Check TypeScript
-        run: npx tsc --project tsconfig.app.json --noEmit
+        run: npm run typecheck
 
       - name: Run automated tests
         run: npm test -- --watch=false
