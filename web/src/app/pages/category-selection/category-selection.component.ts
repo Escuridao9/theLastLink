@@ -13,10 +13,11 @@ import {
   type CategoryOption,
 } from '../../core/config/categories';
 import { AuthService } from '../../core/services/auth.service';
+import { PlayerConnection } from '../../shared/components/player-connection/player-connection.component';
 
 @Component({
   selector: 'app-category-selection',
-  imports: [RouterLink],
+  imports: [RouterLink, PlayerConnection],
   templateUrl: './category-selection.component.html',
   styleUrl: './category-selection.component.css',
 })

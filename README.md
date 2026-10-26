@@ -72,6 +72,8 @@ The Angular application includes:
 - Shared authentication state, session-event handling and sign-out support.
 - Automatic Supabase guest authentication with saved-session reuse.
 - Player connection loading, error and retry states.
+- Reusable player connection component with @Input properties and
+  @Output/EventEmitter retry communication.
 
 Room setup is available for Games and Movies. Players authenticate through Supabase guest sessions. Room creation and joining, catalogues and multiplayer gameplay are in development.
 

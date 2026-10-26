@@ -71,27 +71,12 @@
 
       <p id="category-help" class="room-hint">Choose a category, then set up your room.</p>
 
-      <p class="player-status" role="status" aria-atomic="true">
-        @if (connecting()) {
-          Connecting your player…
-        } @else if (connectionError()) {
-          Connection unavailable.
-        } @else if (playerConnected()) {
-          Your player is connected.
-        } @else {
-          Connect to enter a room.
-        }
-      </p>
-
-      @if (connectionError(); as error) {
-        <p class="connection-error" role="alert">{{ error }}</p>
-      }
-
-      @if (!connecting() && (connectionError() || !playerConnected())) {
-        <button class="connection-retry" type="button" (click)="connectPlayer()">
-          {{ connectionError() ? 'Try again' : 'Connect as guest' }}
-        </button>
-      }
+      <app-player-connection
+        [connecting]="connecting()"
+        [connected]="playerConnected()"
+        [error]="connectionError()"
+        (retryRequested)="connectPlayer()"
+      />
     </div>
 
     @if (continueLink(); as link) {

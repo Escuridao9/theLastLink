@@ -1,0 +1,25 @@
+<p class="player-status" role="status" aria-atomic="true">
+  @if (connecting) {
+    Connecting your player…
+  } @else if (error) {
+    Connection unavailable.
+  } @else if (connected) {
+    Your player is connected.
+  } @else {
+    Connect to enter a room.
+  }
+</p>
+
+@if (error) {
+  <p class="connection-error" role="alert">{{ error }}</p>
+}
+
+@if (!connecting && (error || !connected)) {
+  <button
+    class="connection-retry"
+    type="button"
+    (click)="retryRequested.emit()"
+  >
+    {{ error ? 'Try again' : 'Connect as guest' }}
+  </button>
+}
