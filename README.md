@@ -78,8 +78,12 @@ The Angular application includes:
 - Database constraints enforcing two-player rooms.
 - Membership-based Row Level Security.
 - Room tables registered for Supabase Realtime.
+- Authenticated create-room Edge Function.
+- Transactional room and host-membership creation.
+- Safe retries using a stable creation request ID.
+- Backend TypeScript checks and handler tests in GitHub Actions.
 
-Room setup is available for Games and Movies. Players authenticate through Supabase guest sessions. Room creation and joining, catalogues and multiplayer gameplay are in development.
+The room creation backend is implemented. Angular form integration, room joining, catalogues and multiplayer gameplay are in development.
 
 ## Project structure
 

@@ -47,6 +47,14 @@ jobs:
       - name: Run automated tests
         run: npm test -- --watch=false
 
+            - name: Check Edge Function TypeScript
+        working-directory: .
+        run: npx --yes deno@2.9.6 check --config supabase/functions/create-room/deno.json supabase/functions/create-room/index.ts
+
+      - name: Test room creation handler
+        working-directory: .
+        run: npx --yes deno@2.9.6 test --config supabase/functions/create-room/deno.json supabase/functions/create-room/handler.test.ts
+
       - name: Read GitHub Pages configuration
         if: github.ref == 'refs/heads/main'
         id: pages
