@@ -106,3 +106,17 @@ npm run build
 npx tsc --project tsconfig.app.json --noEmit
 npm test -- --watch=false
 ```
+
+## Routing and deployment
+
+The application uses hash-based Angular routing, with routes such as
+`/#/play/games`. This supports direct navigation and page refreshes
+on static hosting.
+
+GitHub Pages is the production hosting target. Production builds must
+set `--base-href` to the site's deployment directory, including its
+trailing slash.
+
+The development base URL remains `/`. Public assets use relative URLs
+so they also work when the application is hosted beneath a repository
+directory.

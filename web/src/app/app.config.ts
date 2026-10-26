@@ -5,6 +5,7 @@ import {
 import {
   provideRouter,
   withComponentInputBinding,
+  withHashLocation,
   withInMemoryScrolling,
 } from '@angular/router';
 import { routes } from './app.routes';
@@ -14,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(
       routes,
+      withHashLocation(),
       withComponentInputBinding(),
       withInMemoryScrolling({
         scrollPositionRestoration: 'top',

@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { App } from './app.component';
 
@@ -6,6 +7,7 @@ describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
+      providers: [provideRouter([])],
     }).compileComponents();
   });
 
@@ -21,7 +23,8 @@ describe('App', () => {
 
     const element: HTMLElement = fixture.nativeElement;
 
-    expect(element.querySelector('.wordmark-name')?.textContent)
-      .toContain('The Last Link');
+    expect(
+      element.querySelector('.wordmark-name')?.textContent,
+    ).toContain('The Last Link');
   });
 });
