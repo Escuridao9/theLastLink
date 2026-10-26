@@ -2,9 +2,7 @@
   display: block;
 }
 
-.room-page {
-  max-width: 960px;
-  margin-inline: auto;
+.category-page {
   padding-block: 30px 56px;
 }
 
@@ -21,7 +19,7 @@
   color: var(--ll-cream);
 }
 
-.room-header {
+.category-header {
   margin-block: 30px 36px;
 }
 
@@ -43,56 +41,167 @@ h1 em {
   color: var(--ll-coral);
 }
 
-.room-intro {
-  margin-top: 20px;
+.category-intro {
+  margin-top: 18px;
   font-size: 16px;
   color: var(--ll-quiet);
 }
 
-.room-options {
+.category-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
-.room-option {
+.category-legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.category-option {
+  --category-color: var(--ll-coral);
+
+  position: relative;
   display: flex;
   flex-direction: column;
-  padding: 28px;
+  min-width: 0;
+  min-height: 350px;
+  padding: 24px;
   border: 2px solid var(--ll-line);
   border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 160ms, transform 160ms;
 }
 
-.option-number {
-  margin-bottom: 22px;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--ll-coral);
+.category-option[data-category='movies'] {
+  --category-color: var(--ll-lilac);
 }
 
-.room-option:nth-child(2) .option-number {
-  color: var(--ll-lilac);
+.category-option[data-category='music'] {
+  --category-color: var(--ll-cream);
 }
 
-h2 {
-  margin-bottom: 12px;
-  font-size: 26px;
-  letter-spacing: -0.8px;
+.category-option.is-selected {
+  border-color: var(--category-color);
+  background: #28202a;
 }
 
-.room-option > p {
-  flex: 1;
+.category-option:not(.is-unavailable):hover {
+  border-color: var(--category-color);
+  transform: translateY(-3px);
+}
+
+.category-option:has(input:focus-visible) {
+  outline: 3px solid var(--ll-lilac);
+  outline-offset: 5px;
+}
+
+.category-option input {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--category-color);
+  cursor: inherit;
+}
+
+.category-option input:focus-visible {
+  outline: none;
+}
+
+.category-mark {
+  margin-top: 20px;
+  color: var(--category-color);
+  font-size: clamp(56px, 7vw, 80px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -5px;
+}
+
+.category-name {
+  margin-top: 18px;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -1px;
+}
+
+.category-description {
+  margin-top: 12px;
   font-size: 14px;
   color: var(--ll-quiet);
 }
 
-.room-button {
-  display: inline-flex;
+.category-connectors {
+  margin-top: auto;
+  padding-top: 24px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ll-quiet);
+}
+
+.category-connectors > span {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.category-status {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--ll-line);
+  color: var(--category-color);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.is-unavailable {
+  cursor: not-allowed;
+}
+
+.is-unavailable .category-mark {
+  opacity: 0.4;
+}
+
+.selection-footer {
+  display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  min-height: 48px;
-  padding: 14px 20px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--ll-line);
+}
+
+.selection-summary {
+  font-size: 16px;
+}
+
+.room-hint {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--ll-quiet);
+}
+
+.continue-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  min-height: 52px;
+  padding: 14px 22px;
   border: 0;
   border-radius: 8px;
   background: var(--ll-coral);
@@ -100,39 +209,42 @@ h2 {
   font-weight: 800;
 }
 
-.room-option .room-button {
-  margin-top: 28px;
-}
-
-.room-option:nth-child(2) .room-button {
-  background: var(--ll-lilac);
-}
-
-.room-button:disabled {
+.continue-button:disabled {
   cursor: not-allowed;
   opacity: 0.55;
-}
-
-.room-button:not(:disabled):hover {
-  filter: brightness(1.06);
-}
-
-.availability {
-  margin-top: 20px;
-  font-size: 12px;
-  color: var(--ll-quiet);
 }
 
 .continue-button:not(:disabled):hover {
   filter: brightness(1.06);
 }
 
-@media (max-width: 640px) {
-  .room-options {
+@media (max-width: 760px) {
+  .category-grid {
     grid-template-columns: 1fr;
   }
 
-  .room-option {
-    padding: 24px;
+  .category-option {
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .category-mark {
+    margin-top: 0;
+    font-size: 44px;
+    letter-spacing: -2px;
+  }
+
+  .category-name {
+    margin-top: 12px;
+    font-size: 28px;
+  }
+
+  .category-connectors {
+    padding-top: 18px;
+  }
+
+  .selection-footer {
+    align-items: stretch;
+    flex-direction: column;
   }
 }
