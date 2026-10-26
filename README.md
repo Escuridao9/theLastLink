@@ -69,6 +69,7 @@ The Angular application includes:
 - Case-insensitive six-character room codes, normalized to uppercase.
 - Supabase client service with local and production environment configuration.
 - GitHub Actions verification and GitHub Pages deployment configuration.
+- Shared authentication state, session-event handling and sign-out support.
 
 Room setup is available for Games and Movies. Room creation and joining are
 not connected yet. Catalogues, authentication and multiplayer functionality
