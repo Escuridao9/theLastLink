@@ -430,3 +430,8 @@ enabled = true
 verify_jwt = true
 import_map = "./functions/join-room/deno.json"
 entrypoint = "./functions/join-room/index.ts"
+
+[functions.match-api]
+enabled = true
+verify_jwt = false
+entrypoint = "./functions/match-api/index.ts"

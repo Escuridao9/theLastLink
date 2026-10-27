@@ -48,6 +48,10 @@ jobs:
         working-directory: .
         run: npm run typecheck
 
+      - name: Check match API TypeScript
+        working-directory: .
+        run: npm run typecheck:edge
+
       - name: Build Games catalogue
         working-directory: .
         run: node scripts/build-playable.ts

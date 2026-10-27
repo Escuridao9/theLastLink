@@ -270,3 +270,18 @@ inside `web`.
 
 Hosted Supabase Authentication, Realtime, Cron scheduling and simultaneous
 database connections require separate live verification.
+
+## Match API
+
+The `match-api` Edge Function verifies the caller with Supabase Auth
+and forwards their access token to `public.game_command`. PostgreSQL
+enforces authorization, match state, connector usage, and the
+20-second turn deadline.
+
+From the repository root, run `npm run verify` to check shared
+TypeScript, the Edge entry point, and automated tests.
+
+Deploy the function with
+`npx --yes supabase@2.121.0 functions deploy match-api --use-api`.
+GitHub Actions verifies the function. Backend deployment is performed
+separately from the Angular deployment to GitHub Pages.
