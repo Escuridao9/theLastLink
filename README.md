@@ -88,10 +88,14 @@ The Angular application includes:
 - Stable request IDs for safe retries.
 - Backend room-joining function with transactional seat allocation.
 - Joining checks for category, capacity, room status and safe retries.
+- Authenticated join-room Edge Function with verified player identity.
+- Room-joining validation and safe HTTP error responses.
 
 Room creation is connected to an authenticated Supabase Edge Function.
 The setup page displays the saved room code and supports safe retries.
-The room-joining database operation is implemented. Its Edge Function and Angular integration are in development, alongside catalogues and multiplayer gameplay.
+Room joining is implemented in PostgreSQL and exposed through an
+authenticated Edge Function. Angular joining, catalogues and multiplayer
+gameplay are in development.
 
 ## Project structure
 
@@ -157,6 +161,31 @@ The generated configuration is included in the frontend bundle.
 Authentication, RLS and server authorization will enforce access to data as backend features are implemented.
 Private backend credentials must never be included in frontend
 configuration.
+
+## Edge Function verification
+
+Run from the repository root:
+
+```bash
+npx --yes deno@2.9.6 check --config supabase/functions/create-room/deno.json supabase/functions/create-room/index.ts
+npx --yes deno@2.9.6 test --config supabase/functions/create-room/deno.json supabase/functions/create-room/handler.test.ts
+npx --yes deno@2.9.6 check --config supabase/functions/join-room/deno.json supabase/functions/join-room/index.ts
+npx --yes deno@2.9.6 test --config supabase/functions/join-room/deno.json supabase/functions/join-room/handler.test.ts
+```
+
+Handler tests use injected database callbacks and require no live
+Supabase credentials. They run in GitHub Actions. Authenticated live
+requests are verified separately.
+
+Deploy Edge Functions manually from the repository root:
+
+```bash
+npx --yes supabase@2.121.0 functions deploy create-room --use-api
+npx --yes supabase@2.121.0 functions deploy join-room --use-api
+```
+
+GitHub Actions deploys the Angular frontend to GitHub Pages; it does not
+apply database migrations or deploy Edge Functions.
 
 ## Database verification
 
