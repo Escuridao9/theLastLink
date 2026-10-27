@@ -38,9 +38,9 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
 
-      - name: Test game connection rules
+      - name: Test connection engines
         working-directory: .
-        run: node --test test/engine.test.ts
+        run: node --test test/engine.test.ts test/movies.test.ts
 
       - name: Install dependencies
         run: npm ci

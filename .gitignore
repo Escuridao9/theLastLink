@@ -1,2 +1,22 @@
-# Dependencies
 node_modules/
+dist/
+.env*
+!.env.example
+!**/.env.example
+*.local
+__pycache__/
+credentials/
+
+.angular/
+.supabase/
+supabase/.temp/
+*.log
+web/public/config.local.json
+
+# Movie importer temporary uncompressed files
+.cache/
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+
+!.env.tmdb.example
