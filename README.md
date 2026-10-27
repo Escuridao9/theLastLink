@@ -86,10 +86,12 @@ The Angular application includes:
 - Typed room request and response models.
 - Creation loading, error and success states.
 - Stable request IDs for safe retries.
+- Backend room-joining function with transactional seat allocation.
+- Joining checks for category, capacity, room status and safe retries.
 
 Room creation is connected to an authenticated Supabase Edge Function.
 The setup page displays the saved room code and supports safe retries.
-Room joining, catalogues and multiplayer gameplay are in development.
+The room-joining database operation is implemented. Its Edge Function and Angular integration are in development, alongside catalogues and multiplayer gameplay.
 
 ## Project structure
 
@@ -169,11 +171,17 @@ npx --yes supabase@2.121.0 db push
 npx --yes supabase@2.121.0 migration list
 ```
 
-Run the complete `supabase/checks/rooms-access.sql` file in the
-Supabase SQL Editor using the postgres role.
+Run each complete file separately in the Supabase SQL Editor using the
+`postgres` role:
 
-The checks verify room membership visibility, rejected browser writes
-and two-player constraints. Test fixtures are rolled back.
+- `supabase/checks/rooms-access.sql`
+- `supabase/checks/create-room.sql`
+- `supabase/checks/join-room.sql`
+
+The checks verify membership visibility, rejected browser writes,
+transactional room creation and room joining. Joining checks cover both
+categories, validation, capacity, lobby status and retry-safe membership.
+Test fixtures are rolled back.
 
 Database checks are currently run separately from the Angular
 GitHub Actions checks.
