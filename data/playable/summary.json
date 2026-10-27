@@ -1,0 +1,17 @@
+{
+  "datasetId": "games-reviewed-2026-10-21-v1",
+  "games": 35,
+  "eligibleCredits": 165,
+  "entities": 88,
+  "edges": 61,
+  "components": [
+    20,
+    5,
+    4,
+    3,
+    2,
+    1
+  ],
+  "seedPool": 20,
+  "engineSha256": "9f45469cd5420e6a945f8c357730ce595fb3f8fc6b6030ec5f568f044f234a09"
+}

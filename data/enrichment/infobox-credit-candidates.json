@@ -1,0 +1,2776 @@
+[
+  {
+    "gameId": "wikidata:Q761815",
+    "type": "developer",
+    "targetTitle": "Square (video game company)",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Chrono Trigger",
+      "pageId": 6614,
+      "gameId": "wikidata:Q761815",
+      "revision": 1376216677,
+      "timestamp": "2026-09-22T20:30:17Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1376216677",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Chrono+Trigger&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Square (video game company)|Square]]{{efn|Ported to [[PlayStation (console)|PlayStation]] and [[Nintendo DS]] by [[Tose (company)|Tose]]. All subsequent versions of the game are developed by [[Square Enix]].}}"
+  },
+  {
+    "gameId": "wikidata:Q761815",
+    "type": "developer",
+    "targetTitle": "PlayStation (console)",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Chrono Trigger",
+      "pageId": 6614,
+      "gameId": "wikidata:Q761815",
+      "revision": 1376216677,
+      "timestamp": "2026-09-22T20:30:17Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1376216677",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Chrono+Trigger&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Square (video game company)|Square]]{{efn|Ported to [[PlayStation (console)|PlayStation]] and [[Nintendo DS]] by [[Tose (company)|Tose]]. All subsequent versions of the game are developed by [[Square Enix]].}}"
+  },
+  {
+    "gameId": "wikidata:Q761815",
+    "type": "developer",
+    "targetTitle": "Nintendo DS",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Chrono Trigger",
+      "pageId": 6614,
+      "gameId": "wikidata:Q761815",
+      "revision": 1376216677,
+      "timestamp": "2026-09-22T20:30:17Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1376216677",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Chrono+Trigger&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Square (video game company)|Square]]{{efn|Ported to [[PlayStation (console)|PlayStation]] and [[Nintendo DS]] by [[Tose (company)|Tose]]. All subsequent versions of the game are developed by [[Square Enix]].}}"
+  },
+  {
+    "gameId": "wikidata:Q761815",
+    "type": "developer",
+    "targetTitle": "Tose (company)",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Chrono Trigger",
+      "pageId": 6614,
+      "gameId": "wikidata:Q761815",
+      "revision": 1376216677,
+      "timestamp": "2026-09-22T20:30:17Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1376216677",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Chrono+Trigger&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Square (video game company)|Square]]{{efn|Ported to [[PlayStation (console)|PlayStation]] and [[Nintendo DS]] by [[Tose (company)|Tose]]. All subsequent versions of the game are developed by [[Square Enix]].}}"
+  },
+  {
+    "gameId": "wikidata:Q761815",
+    "type": "developer",
+    "targetTitle": "Square Enix",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Chrono Trigger",
+      "pageId": 6614,
+      "gameId": "wikidata:Q761815",
+      "revision": 1376216677,
+      "timestamp": "2026-09-22T20:30:17Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1376216677",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Chrono+Trigger&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Square (video game company)|Square]]{{efn|Ported to [[PlayStation (console)|PlayStation]] and [[Nintendo DS]] by [[Tose (company)|Tose]]. All subsequent versions of the game are developed by [[Square Enix]].}}"
+  },
+  {
+    "gameId": "wikidata:Q761815",
+    "type": "composer",
+    "targetTitle": "Yasunori Mitsuda",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Chrono Trigger",
+      "pageId": 6614,
+      "gameId": "wikidata:Q761815",
+      "revision": 1376216677,
+      "timestamp": "2026-09-22T20:30:17Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1376216677",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Chrono+Trigger&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{unbulleted list|[[Yasunori Mitsuda]]|[[Nobuo Uematsu]]|[[Noriko Matsueda]]}}"
+  },
+  {
+    "gameId": "wikidata:Q761815",
+    "type": "composer",
+    "targetTitle": "Nobuo Uematsu",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Chrono Trigger",
+      "pageId": 6614,
+      "gameId": "wikidata:Q761815",
+      "revision": 1376216677,
+      "timestamp": "2026-09-22T20:30:17Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1376216677",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Chrono+Trigger&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{unbulleted list|[[Yasunori Mitsuda]]|[[Nobuo Uematsu]]|[[Noriko Matsueda]]}}"
+  },
+  {
+    "gameId": "wikidata:Q761815",
+    "type": "composer",
+    "targetTitle": "Noriko Matsueda",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Chrono Trigger",
+      "pageId": 6614,
+      "gameId": "wikidata:Q761815",
+      "revision": 1376216677,
+      "timestamp": "2026-09-22T20:30:17Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1376216677",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Chrono+Trigger&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{unbulleted list|[[Yasunori Mitsuda]]|[[Nobuo Uematsu]]|[[Noriko Matsueda]]}}"
+  },
+  {
+    "gameId": "wikidata:Q57270",
+    "type": "developer",
+    "targetTitle": "2K Boston",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "BioShock",
+      "pageId": 1519160,
+      "gameId": "wikidata:Q57270",
+      "revision": 1381043462,
+      "timestamp": "2026-10-19T17:18:02Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381043462",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=BioShock&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "{{Unbulleted list|[[2K Boston]]|[[2K Australia]]{{efn|Ported to PlayStation 3 by [[2K Boston]], [[2K Australia]], [[2K Marin]], and [[Digital Extremes]]; to Mac OS X by [[Feral Interactive]]; and to iOS by [[2K China]].}}}}"
+  },
+  {
+    "gameId": "wikidata:Q57270",
+    "type": "developer",
+    "targetTitle": "2K Australia",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "BioShock",
+      "pageId": 1519160,
+      "gameId": "wikidata:Q57270",
+      "revision": 1381043462,
+      "timestamp": "2026-10-19T17:18:02Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381043462",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=BioShock&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "{{Unbulleted list|[[2K Boston]]|[[2K Australia]]{{efn|Ported to PlayStation 3 by [[2K Boston]], [[2K Australia]], [[2K Marin]], and [[Digital Extremes]]; to Mac OS X by [[Feral Interactive]]; and to iOS by [[2K China]].}}}}"
+  },
+  {
+    "gameId": "wikidata:Q57270",
+    "type": "developer",
+    "targetTitle": "2K Boston",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "BioShock",
+      "pageId": 1519160,
+      "gameId": "wikidata:Q57270",
+      "revision": 1381043462,
+      "timestamp": "2026-10-19T17:18:02Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381043462",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=BioShock&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "{{Unbulleted list|[[2K Boston]]|[[2K Australia]]{{efn|Ported to PlayStation 3 by [[2K Boston]], [[2K Australia]], [[2K Marin]], and [[Digital Extremes]]; to Mac OS X by [[Feral Interactive]]; and to iOS by [[2K China]].}}}}"
+  },
+  {
+    "gameId": "wikidata:Q57270",
+    "type": "developer",
+    "targetTitle": "2K Australia",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "BioShock",
+      "pageId": 1519160,
+      "gameId": "wikidata:Q57270",
+      "revision": 1381043462,
+      "timestamp": "2026-10-19T17:18:02Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381043462",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=BioShock&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "{{Unbulleted list|[[2K Boston]]|[[2K Australia]]{{efn|Ported to PlayStation 3 by [[2K Boston]], [[2K Australia]], [[2K Marin]], and [[Digital Extremes]]; to Mac OS X by [[Feral Interactive]]; and to iOS by [[2K China]].}}}}"
+  },
+  {
+    "gameId": "wikidata:Q57270",
+    "type": "developer",
+    "targetTitle": "2K Marin",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "BioShock",
+      "pageId": 1519160,
+      "gameId": "wikidata:Q57270",
+      "revision": 1381043462,
+      "timestamp": "2026-10-19T17:18:02Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381043462",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=BioShock&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "{{Unbulleted list|[[2K Boston]]|[[2K Australia]]{{efn|Ported to PlayStation 3 by [[2K Boston]], [[2K Australia]], [[2K Marin]], and [[Digital Extremes]]; to Mac OS X by [[Feral Interactive]]; and to iOS by [[2K China]].}}}}"
+  },
+  {
+    "gameId": "wikidata:Q57270",
+    "type": "developer",
+    "targetTitle": "Digital Extremes",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "BioShock",
+      "pageId": 1519160,
+      "gameId": "wikidata:Q57270",
+      "revision": 1381043462,
+      "timestamp": "2026-10-19T17:18:02Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381043462",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=BioShock&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "{{Unbulleted list|[[2K Boston]]|[[2K Australia]]{{efn|Ported to PlayStation 3 by [[2K Boston]], [[2K Australia]], [[2K Marin]], and [[Digital Extremes]]; to Mac OS X by [[Feral Interactive]]; and to iOS by [[2K China]].}}}}"
+  },
+  {
+    "gameId": "wikidata:Q57270",
+    "type": "developer",
+    "targetTitle": "Feral Interactive",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "BioShock",
+      "pageId": 1519160,
+      "gameId": "wikidata:Q57270",
+      "revision": 1381043462,
+      "timestamp": "2026-10-19T17:18:02Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381043462",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=BioShock&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "{{Unbulleted list|[[2K Boston]]|[[2K Australia]]{{efn|Ported to PlayStation 3 by [[2K Boston]], [[2K Australia]], [[2K Marin]], and [[Digital Extremes]]; to Mac OS X by [[Feral Interactive]]; and to iOS by [[2K China]].}}}}"
+  },
+  {
+    "gameId": "wikidata:Q57270",
+    "type": "developer",
+    "targetTitle": "2K China",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "BioShock",
+      "pageId": 1519160,
+      "gameId": "wikidata:Q57270",
+      "revision": 1381043462,
+      "timestamp": "2026-10-19T17:18:02Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381043462",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=BioShock&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "{{Unbulleted list|[[2K Boston]]|[[2K Australia]]{{efn|Ported to PlayStation 3 by [[2K Boston]], [[2K Australia]], [[2K Marin]], and [[Digital Extremes]]; to Mac OS X by [[Feral Interactive]]; and to iOS by [[2K China]].}}}}"
+  },
+  {
+    "gameId": "wikidata:Q57270",
+    "type": "composer",
+    "targetTitle": "Garry Schyman",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "BioShock",
+      "pageId": 1519160,
+      "gameId": "wikidata:Q57270",
+      "revision": 1381043462,
+      "timestamp": "2026-10-19T17:18:02Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381043462",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=BioShock&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Garry Schyman]]"
+  },
+  {
+    "gameId": "wikidata:Q2074746",
+    "type": "developer",
+    "targetTitle": "Irrational Games",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "BioShock Infinite",
+      "pageId": 28344576,
+      "gameId": "wikidata:Q2074746",
+      "revision": 1374947524,
+      "timestamp": "2026-09-15T00:29:30Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1374947524",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=BioShock+Infinite&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Irrational Games]]{{efn|Additional work by [[2K Australia]] and [[Human Head Studios]]. Ported to OS X by [[Aspyr]], and to Linux by Virtual Programming.}}"
+  },
+  {
+    "gameId": "wikidata:Q2074746",
+    "type": "developer",
+    "targetTitle": "2K Australia",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "BioShock Infinite",
+      "pageId": 28344576,
+      "gameId": "wikidata:Q2074746",
+      "revision": 1374947524,
+      "timestamp": "2026-09-15T00:29:30Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1374947524",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=BioShock+Infinite&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Irrational Games]]{{efn|Additional work by [[2K Australia]] and [[Human Head Studios]]. Ported to OS X by [[Aspyr]], and to Linux by Virtual Programming.}}"
+  },
+  {
+    "gameId": "wikidata:Q2074746",
+    "type": "developer",
+    "targetTitle": "Human Head Studios",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "BioShock Infinite",
+      "pageId": 28344576,
+      "gameId": "wikidata:Q2074746",
+      "revision": 1374947524,
+      "timestamp": "2026-09-15T00:29:30Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1374947524",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=BioShock+Infinite&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Irrational Games]]{{efn|Additional work by [[2K Australia]] and [[Human Head Studios]]. Ported to OS X by [[Aspyr]], and to Linux by Virtual Programming.}}"
+  },
+  {
+    "gameId": "wikidata:Q2074746",
+    "type": "developer",
+    "targetTitle": "Aspyr",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "BioShock Infinite",
+      "pageId": 28344576,
+      "gameId": "wikidata:Q2074746",
+      "revision": 1374947524,
+      "timestamp": "2026-09-15T00:29:30Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1374947524",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=BioShock+Infinite&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Irrational Games]]{{efn|Additional work by [[2K Australia]] and [[Human Head Studios]]. Ported to OS X by [[Aspyr]], and to Linux by Virtual Programming.}}"
+  },
+  {
+    "gameId": "wikidata:Q2074746",
+    "type": "composer",
+    "targetTitle": "Garry Schyman",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "BioShock Infinite",
+      "pageId": 28344576,
+      "gameId": "wikidata:Q2074746",
+      "revision": 1374947524,
+      "timestamp": "2026-09-15T00:29:30Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1374947524",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=BioShock+Infinite&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Garry Schyman]]"
+  },
+  {
+    "gameId": "wikidata:Q810662",
+    "type": "developer",
+    "targetTitle": "Supergiant Games",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Bastion (video game)",
+      "pageId": 30602654,
+      "gameId": "wikidata:Q810662",
+      "revision": 1380386561,
+      "timestamp": "2026-10-15T12:44:42Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380386561",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Bastion+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Supergiant Games]]"
+  },
+  {
+    "gameId": "wikidata:Q810662",
+    "type": "composer",
+    "targetTitle": "Darren Korb",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Bastion (video game)",
+      "pageId": 30602654,
+      "gameId": "wikidata:Q810662",
+      "revision": 1380386561,
+      "timestamp": "2026-10-15T12:44:42Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380386561",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Bastion+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Darren Korb]]"
+  },
+  {
+    "gameId": "wikidata:Q1166232",
+    "type": "developer",
+    "targetTitle": "FromSoftware",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Dark Souls (video game)",
+      "pageId": 30715282,
+      "gameId": "wikidata:Q1166232",
+      "revision": 1379990237,
+      "timestamp": "2026-10-13T03:04:33Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1379990237",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Dark+Souls+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[FromSoftware]]{{efn|''Dark Souls: Remastered'' was developed by QLOC for PlayStation 4, Windows and Xbox One, and by [[Virtuos]] for Nintendo Switch.}}"
+  },
+  {
+    "gameId": "wikidata:Q1166232",
+    "type": "developer",
+    "targetTitle": "Virtuos",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Dark Souls (video game)",
+      "pageId": 30715282,
+      "gameId": "wikidata:Q1166232",
+      "revision": 1379990237,
+      "timestamp": "2026-10-13T03:04:33Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1379990237",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Dark+Souls+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[FromSoftware]]{{efn|''Dark Souls: Remastered'' was developed by QLOC for PlayStation 4, Windows and Xbox One, and by [[Virtuos]] for Nintendo Switch.}}"
+  },
+  {
+    "gameId": "wikidata:Q1166232",
+    "type": "composer",
+    "targetTitle": "Motoi Sakuraba",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Dark Souls (video game)",
+      "pageId": 30715282,
+      "gameId": "wikidata:Q1166232",
+      "revision": 1379990237,
+      "timestamp": "2026-10-13T03:04:33Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1379990237",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Dark+Souls+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Motoi Sakuraba]]"
+  },
+  {
+    "gameId": "wikidata:Q17154554",
+    "type": "developer",
+    "targetTitle": "FromSoftware",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Bloodborne",
+      "pageId": 43013126,
+      "gameId": "wikidata:Q17154554",
+      "revision": 1380918055,
+      "timestamp": "2026-10-18T19:41:50Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380918055",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Bloodborne&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[FromSoftware]]{{Efn|Co-produced and supervised by [[Japan Studio]]}}"
+  },
+  {
+    "gameId": "wikidata:Q17154554",
+    "type": "developer",
+    "targetTitle": "Japan Studio",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Bloodborne",
+      "pageId": 43013126,
+      "gameId": "wikidata:Q17154554",
+      "revision": 1380918055,
+      "timestamp": "2026-10-18T19:41:50Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380918055",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Bloodborne&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[FromSoftware]]{{Efn|Co-produced and supervised by [[Japan Studio]]}}"
+  },
+  {
+    "gameId": "wikidata:Q17154554",
+    "type": "composer",
+    "targetTitle": "Ryan Amon",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Bloodborne",
+      "pageId": 43013126,
+      "gameId": "wikidata:Q17154554",
+      "revision": 1380918055,
+      "timestamp": "2026-10-18T19:41:50Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380918055",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Bloodborne&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{Unbulleted list|[[Ryan Amon]]|Tsukasa Saitoh|[[Yuka Kitamura]]|Nobuyoshi Suzuki|[[Cris Velasco]]|[[Michael Wandmacher]]}}"
+  },
+  {
+    "gameId": "wikidata:Q17154554",
+    "type": "composer",
+    "targetTitle": "Yuka Kitamura",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Bloodborne",
+      "pageId": 43013126,
+      "gameId": "wikidata:Q17154554",
+      "revision": 1380918055,
+      "timestamp": "2026-10-18T19:41:50Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380918055",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Bloodborne&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{Unbulleted list|[[Ryan Amon]]|Tsukasa Saitoh|[[Yuka Kitamura]]|Nobuyoshi Suzuki|[[Cris Velasco]]|[[Michael Wandmacher]]}}"
+  },
+  {
+    "gameId": "wikidata:Q17154554",
+    "type": "composer",
+    "targetTitle": "Cris Velasco",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Bloodborne",
+      "pageId": 43013126,
+      "gameId": "wikidata:Q17154554",
+      "revision": 1380918055,
+      "timestamp": "2026-10-18T19:41:50Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380918055",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Bloodborne&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{Unbulleted list|[[Ryan Amon]]|Tsukasa Saitoh|[[Yuka Kitamura]]|Nobuyoshi Suzuki|[[Cris Velasco]]|[[Michael Wandmacher]]}}"
+  },
+  {
+    "gameId": "wikidata:Q17154554",
+    "type": "composer",
+    "targetTitle": "Michael Wandmacher",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Bloodborne",
+      "pageId": 43013126,
+      "gameId": "wikidata:Q17154554",
+      "revision": 1380918055,
+      "timestamp": "2026-10-18T19:41:50Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380918055",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Bloodborne&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{Unbulleted list|[[Ryan Amon]]|Tsukasa Saitoh|[[Yuka Kitamura]]|Nobuyoshi Suzuki|[[Cris Velasco]]|[[Michael Wandmacher]]}}"
+  },
+  {
+    "gameId": "wikidata:Q20899382",
+    "type": "developer",
+    "targetTitle": "Giant Squid (company)",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Abzû",
+      "pageId": 43013404,
+      "gameId": "wikidata:Q20899382",
+      "revision": 1366590793,
+      "timestamp": "2026-07-28T23:11:40Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1366590793",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Abz%C3%BB&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Giant Squid (company)|Giant Squid]]"
+  },
+  {
+    "gameId": "wikidata:Q20899382",
+    "type": "composer",
+    "targetTitle": "Austin Wintory",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Abzû",
+      "pageId": 43013404,
+      "gameId": "wikidata:Q20899382",
+      "revision": 1366590793,
+      "timestamp": "2026-07-28T23:11:40Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1366590793",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Abz%C3%BB&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Austin Wintory]]"
+  },
+  {
+    "gameId": "wikidata:Q24666782",
+    "type": "developer",
+    "targetTitle": "Kojima Productions",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Death Stranding",
+      "pageId": 50802695,
+      "gameId": "wikidata:Q24666782",
+      "revision": 1381286782,
+      "timestamp": "2026-10-21T09:28:54Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381286782",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Death+Stranding&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Kojima Productions]]{{efn|Additional work by [[Guerrilla Games]]}}"
+  },
+  {
+    "gameId": "wikidata:Q24666782",
+    "type": "developer",
+    "targetTitle": "Guerrilla Games",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Death Stranding",
+      "pageId": 50802695,
+      "gameId": "wikidata:Q24666782",
+      "revision": 1381286782,
+      "timestamp": "2026-10-21T09:28:54Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381286782",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Death+Stranding&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Kojima Productions]]{{efn|Additional work by [[Guerrilla Games]]}}"
+  },
+  {
+    "gameId": "wikidata:Q28451532",
+    "type": "developer",
+    "targetTitle": "Maddy Makes Games",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Celeste (video game)",
+      "pageId": 51124781,
+      "gameId": "wikidata:Q28451532",
+      "revision": 1380761761,
+      "timestamp": "2026-10-17T18:33:09Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380761761",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Celeste+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Maddy Makes Games]]"
+  },
+  {
+    "gameId": "wikidata:Q28451532",
+    "type": "composer",
+    "targetTitle": "Lena Raine",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Celeste (video game)",
+      "pageId": 51124781,
+      "gameId": "wikidata:Q28451532",
+      "revision": 1380761761,
+      "timestamp": "2026-10-17T18:33:09Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380761761",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Celeste+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Lena Raine]]"
+  },
+  {
+    "gameId": "wikidata:Q96240037",
+    "type": "developer",
+    "targetTitle": "Arkane Studios",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Deathloop",
+      "pageId": 61004225,
+      "gameId": "wikidata:Q96240037",
+      "revision": 1379561433,
+      "timestamp": "2026-10-10T18:51:54Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1379561433",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Deathloop&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Arkane Studios|Arkane Lyon]]"
+  },
+  {
+    "gameId": "wikidata:Q96240037",
+    "type": "composer",
+    "targetTitle": "Tom Salta",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Deathloop",
+      "pageId": 61004225,
+      "gameId": "wikidata:Q96240037",
+      "revision": 1379561433,
+      "timestamp": "2026-10-10T18:51:54Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1379561433",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Deathloop&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Tom Salta]]"
+  },
+  {
+    "gameId": "wikidata:Q214232",
+    "type": "developer",
+    "targetTitle": "Square (video game company)",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Final Fantasy VII",
+      "pageId": 52756,
+      "gameId": "wikidata:Q214232",
+      "revision": 1381032554,
+      "timestamp": "2026-10-19T15:51:06Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381032554",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Final+Fantasy+VII&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Square (video game company)|Square]]{{efn|Ported to iOS and Android by [[D4 Enterprise]]. Ported to modern Windows PC, PlayStation 4, Nintendo Switch, and Xbox One by [[DotEmu]].}}"
+  },
+  {
+    "gameId": "wikidata:Q214232",
+    "type": "developer",
+    "targetTitle": "D4 Enterprise",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Final Fantasy VII",
+      "pageId": 52756,
+      "gameId": "wikidata:Q214232",
+      "revision": 1381032554,
+      "timestamp": "2026-10-19T15:51:06Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381032554",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Final+Fantasy+VII&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Square (video game company)|Square]]{{efn|Ported to iOS and Android by [[D4 Enterprise]]. Ported to modern Windows PC, PlayStation 4, Nintendo Switch, and Xbox One by [[DotEmu]].}}"
+  },
+  {
+    "gameId": "wikidata:Q214232",
+    "type": "developer",
+    "targetTitle": "DotEmu",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Final Fantasy VII",
+      "pageId": 52756,
+      "gameId": "wikidata:Q214232",
+      "revision": 1381032554,
+      "timestamp": "2026-10-19T15:51:06Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381032554",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Final+Fantasy+VII&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Square (video game company)|Square]]{{efn|Ported to iOS and Android by [[D4 Enterprise]]. Ported to modern Windows PC, PlayStation 4, Nintendo Switch, and Xbox One by [[DotEmu]].}}"
+  },
+  {
+    "gameId": "wikidata:Q214232",
+    "type": "composer",
+    "targetTitle": "Nobuo Uematsu",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Final Fantasy VII",
+      "pageId": 52756,
+      "gameId": "wikidata:Q214232",
+      "revision": 1381032554,
+      "timestamp": "2026-10-19T15:51:06Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381032554",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Final+Fantasy+VII&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Nobuo Uematsu]]"
+  },
+  {
+    "gameId": "wikidata:Q223381",
+    "type": "developer",
+    "targetTitle": "Square Enix",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Final Fantasy X",
+      "pageId": 52759,
+      "gameId": "wikidata:Q223381",
+      "revision": 1378168420,
+      "timestamp": "2026-10-03T07:00:37Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1378168420",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Final+Fantasy+X&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Square Enix#Product development divisions|Square Product Development Division 1]]"
+  },
+  {
+    "gameId": "wikidata:Q223381",
+    "type": "composer",
+    "targetTitle": "Nobuo Uematsu",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Final Fantasy X",
+      "pageId": 52759,
+      "gameId": "wikidata:Q223381",
+      "revision": 1378168420,
+      "timestamp": "2026-10-03T07:00:37Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1378168420",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Final+Fantasy+X&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{Plainlist|\n* [[Nobuo Uematsu]]\n* [[Masashi Hamauzu]]\n* [[Junya Nakano]]\n}}"
+  },
+  {
+    "gameId": "wikidata:Q223381",
+    "type": "composer",
+    "targetTitle": "Masashi Hamauzu",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Final Fantasy X",
+      "pageId": 52759,
+      "gameId": "wikidata:Q223381",
+      "revision": 1378168420,
+      "timestamp": "2026-10-03T07:00:37Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1378168420",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Final+Fantasy+X&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{Plainlist|\n* [[Nobuo Uematsu]]\n* [[Masashi Hamauzu]]\n* [[Junya Nakano]]\n}}"
+  },
+  {
+    "gameId": "wikidata:Q223381",
+    "type": "composer",
+    "targetTitle": "Junya Nakano",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Final Fantasy X",
+      "pageId": 52759,
+      "gameId": "wikidata:Q223381",
+      "revision": 1378168420,
+      "timestamp": "2026-10-03T07:00:37Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1378168420",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Final+Fantasy+X&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{Plainlist|\n* [[Nobuo Uematsu]]\n* [[Masashi Hamauzu]]\n* [[Junya Nakano]]\n}}"
+  },
+  {
+    "gameId": "wikidata:Q735926",
+    "type": "developer",
+    "targetTitle": "BioWare",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Dragon Age: Origins",
+      "pageId": 1015657,
+      "gameId": "wikidata:Q735926",
+      "revision": 1380959797,
+      "timestamp": "2026-10-19T02:06:43Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380959797",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Dragon+Age%3A+Origins&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[BioWare]]{{efn|Ported to PlayStation 3 and Xbox 360 by [[Edge of Reality]]. Ported to Mac OS X by [[TransGaming]] via the [[Cider (software)|Cider]] engine.}}"
+  },
+  {
+    "gameId": "wikidata:Q735926",
+    "type": "developer",
+    "targetTitle": "Edge of Reality",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Dragon Age: Origins",
+      "pageId": 1015657,
+      "gameId": "wikidata:Q735926",
+      "revision": 1380959797,
+      "timestamp": "2026-10-19T02:06:43Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380959797",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Dragon+Age%3A+Origins&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[BioWare]]{{efn|Ported to PlayStation 3 and Xbox 360 by [[Edge of Reality]]. Ported to Mac OS X by [[TransGaming]] via the [[Cider (software)|Cider]] engine.}}"
+  },
+  {
+    "gameId": "wikidata:Q735926",
+    "type": "developer",
+    "targetTitle": "TransGaming",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Dragon Age: Origins",
+      "pageId": 1015657,
+      "gameId": "wikidata:Q735926",
+      "revision": 1380959797,
+      "timestamp": "2026-10-19T02:06:43Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380959797",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Dragon+Age%3A+Origins&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[BioWare]]{{efn|Ported to PlayStation 3 and Xbox 360 by [[Edge of Reality]]. Ported to Mac OS X by [[TransGaming]] via the [[Cider (software)|Cider]] engine.}}"
+  },
+  {
+    "gameId": "wikidata:Q735926",
+    "type": "developer",
+    "targetTitle": "Cider (software)",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Dragon Age: Origins",
+      "pageId": 1015657,
+      "gameId": "wikidata:Q735926",
+      "revision": 1380959797,
+      "timestamp": "2026-10-19T02:06:43Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380959797",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Dragon+Age%3A+Origins&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[BioWare]]{{efn|Ported to PlayStation 3 and Xbox 360 by [[Edge of Reality]]. Ported to Mac OS X by [[TransGaming]] via the [[Cider (software)|Cider]] engine.}}"
+  },
+  {
+    "gameId": "wikidata:Q735926",
+    "type": "composer",
+    "targetTitle": "Inon Zur",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Dragon Age: Origins",
+      "pageId": 1015657,
+      "gameId": "wikidata:Q735926",
+      "revision": 1380959797,
+      "timestamp": "2026-10-19T02:06:43Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380959797",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Dragon+Age%3A+Origins&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Inon Zur]]"
+  },
+  {
+    "gameId": "wikidata:Q221164",
+    "type": "developer",
+    "targetTitle": "Bethesda Game Studios",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Fallout 3",
+      "pageId": 4533683,
+      "gameId": "wikidata:Q221164",
+      "revision": 1379835153,
+      "timestamp": "2026-10-12T04:54:55Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1379835153",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Fallout+3&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Bethesda Game Studios]]"
+  },
+  {
+    "gameId": "wikidata:Q221164",
+    "type": "composer",
+    "targetTitle": "Inon Zur",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Fallout 3",
+      "pageId": 4533683,
+      "gameId": "wikidata:Q221164",
+      "revision": 1379835153,
+      "timestamp": "2026-10-12T04:54:55Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1379835153",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Fallout+3&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Inon Zur]]"
+  },
+  {
+    "gameId": "wikidata:Q1153708",
+    "type": "developer",
+    "targetTitle": "FromSoftware",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Demon's Souls",
+      "pageId": 20324939,
+      "gameId": "wikidata:Q1153708",
+      "revision": 1371116771,
+      "timestamp": "2026-08-24T17:57:00Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1371116771",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Demon%27s+Souls&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[FromSoftware]]{{efn|Supervision and support from [[Japan Studio]]}}"
+  },
+  {
+    "gameId": "wikidata:Q1153708",
+    "type": "developer",
+    "targetTitle": "Japan Studio",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Demon's Souls",
+      "pageId": 20324939,
+      "gameId": "wikidata:Q1153708",
+      "revision": 1371116771,
+      "timestamp": "2026-08-24T17:57:00Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1371116771",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Demon%27s+Souls&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[FromSoftware]]{{efn|Supervision and support from [[Japan Studio]]}}"
+  },
+  {
+    "gameId": "wikidata:Q771541",
+    "type": "developer",
+    "targetTitle": "Valve Corporation",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Dota 2",
+      "pageId": 29177750,
+      "gameId": "wikidata:Q771541",
+      "revision": 1373903454,
+      "timestamp": "2026-09-08T17:03:04Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1373903454",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Dota+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Valve Corporation|Valve]]"
+  },
+  {
+    "gameId": "wikidata:Q771541",
+    "type": "composer",
+    "targetTitle": "Tim Larkin (composer)",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Dota 2",
+      "pageId": 29177750,
+      "gameId": "wikidata:Q771541",
+      "revision": 1373903454,
+      "timestamp": "2026-09-08T17:03:04Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1373903454",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Dota+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{Unbulleted list|Jason Hayes|[[Tim Larkin (composer)|Tim Larkin]]}}"
+  },
+  {
+    "gameId": "wikidata:Q323264",
+    "type": "developer",
+    "targetTitle": "Arkane Studios",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Dishonored",
+      "pageId": 32436778,
+      "gameId": "wikidata:Q323264",
+      "revision": 1381031518,
+      "timestamp": "2026-10-19T15:42:27Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381031518",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Dishonored&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Arkane Studios]]"
+  },
+  {
+    "gameId": "wikidata:Q323264",
+    "type": "composer",
+    "targetTitle": "Daniel Licht",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Dishonored",
+      "pageId": 32436778,
+      "gameId": "wikidata:Q323264",
+      "revision": 1381031518,
+      "timestamp": "2026-10-19T15:42:27Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381031518",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Dishonored&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Daniel Licht]]"
+  },
+  {
+    "gameId": "wikidata:Q10493813",
+    "type": "developer",
+    "targetTitle": "Bethesda Game Studios",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Fallout 4",
+      "pageId": 40703379,
+      "gameId": "wikidata:Q10493813",
+      "revision": 1380962209,
+      "timestamp": "2026-10-19T02:29:26Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380962209",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Fallout+4&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Bethesda Game Studios]]{{efn|Additional work by [[id Software]]. [[Iron Galaxy]] co-developed the VR version.}}"
+  },
+  {
+    "gameId": "wikidata:Q10493813",
+    "type": "developer",
+    "targetTitle": "id Software",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Fallout 4",
+      "pageId": 40703379,
+      "gameId": "wikidata:Q10493813",
+      "revision": 1380962209,
+      "timestamp": "2026-10-19T02:29:26Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380962209",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Fallout+4&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Bethesda Game Studios]]{{efn|Additional work by [[id Software]]. [[Iron Galaxy]] co-developed the VR version.}}"
+  },
+  {
+    "gameId": "wikidata:Q10493813",
+    "type": "developer",
+    "targetTitle": "Iron Galaxy",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Fallout 4",
+      "pageId": 40703379,
+      "gameId": "wikidata:Q10493813",
+      "revision": 1380962209,
+      "timestamp": "2026-10-19T02:29:26Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380962209",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Fallout+4&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Bethesda Game Studios]]{{efn|Additional work by [[id Software]]. [[Iron Galaxy]] co-developed the VR version.}}"
+  },
+  {
+    "gameId": "wikidata:Q10493813",
+    "type": "composer",
+    "targetTitle": "Inon Zur",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Fallout 4",
+      "pageId": 40703379,
+      "gameId": "wikidata:Q10493813",
+      "revision": 1380962209,
+      "timestamp": "2026-10-19T02:29:26Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380962209",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Fallout+4&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Inon Zur]]"
+  },
+  {
+    "gameId": "wikidata:Q64826862",
+    "type": "developer",
+    "targetTitle": "FromSoftware",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Elden Ring",
+      "pageId": 61002621,
+      "gameId": "wikidata:Q64826862",
+      "revision": 1380918397,
+      "timestamp": "2026-10-18T19:44:50Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380918397",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Elden+Ring&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[FromSoftware]]"
+  },
+  {
+    "gameId": "wikidata:Q64826862",
+    "type": "composer",
+    "targetTitle": "Yuka Kitamura",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Elden Ring",
+      "pageId": 61002621,
+      "gameId": "wikidata:Q64826862",
+      "revision": 1380918397,
+      "timestamp": "2026-10-18T19:44:50Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380918397",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Elden+Ring&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{Unbulleted list|Tsukasa Saitoh|Shoi Miyazawa|Tai Tomisawa|[[Yuka Kitamura]]<!--FromSoftware-->|Yoshimi Kudo<!--Basiscape-->|Soma Tanizaki{{efn|''Shadow of the Erdtree'' only}}}}"
+  },
+  {
+    "gameId": "wikidata:Q71693825",
+    "type": "composer",
+    "targetTitle": "British Sea Power",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Disco Elysium",
+      "pageId": 62070770,
+      "gameId": "wikidata:Q71693825",
+      "revision": 1380530985,
+      "timestamp": "2026-10-16T08:00:06Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380530985",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Disco+Elysium&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[British Sea Power]]<!--List the band by how they were credited at the time of the game's release-->"
+  },
+  {
+    "gameId": "wikidata:Q279744",
+    "type": "developer",
+    "targetTitle": "Valve Corporation",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Half-Life (video game)",
+      "pageId": 52816,
+      "gameId": "wikidata:Q279744",
+      "revision": 1380962162,
+      "timestamp": "2026-10-19T02:28:58Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380962162",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Half-Life+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Valve Corporation|Valve]]{{efn|Ported to the PlayStation 2 by [[Gearbox Software]]}}"
+  },
+  {
+    "gameId": "wikidata:Q279744",
+    "type": "developer",
+    "targetTitle": "Gearbox Software",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Half-Life (video game)",
+      "pageId": 52816,
+      "gameId": "wikidata:Q279744",
+      "revision": 1380962162,
+      "timestamp": "2026-10-19T02:28:58Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380962162",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Half-Life+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Valve Corporation|Valve]]{{efn|Ported to the PlayStation 2 by [[Gearbox Software]]}}"
+  },
+  {
+    "gameId": "wikidata:Q279744",
+    "type": "composer",
+    "targetTitle": "Kelly Bailey (composer)",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Half-Life (video game)",
+      "pageId": 52816,
+      "gameId": "wikidata:Q279744",
+      "revision": 1380962162,
+      "timestamp": "2026-10-19T02:28:58Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380962162",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Half-Life+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Kelly Bailey (composer)|Kelly Bailey]]"
+  },
+  {
+    "gameId": "wikidata:Q225912",
+    "type": "developer",
+    "targetTitle": "Square (video game company)",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Kingdom Hearts (video game)",
+      "pageId": 210873,
+      "gameId": "wikidata:Q225912",
+      "revision": 1377598104,
+      "timestamp": "2026-09-30T03:23:41Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1377598104",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Kingdom+Hearts+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Square (video game company)|Square]]"
+  },
+  {
+    "gameId": "wikidata:Q225912",
+    "type": "composer",
+    "targetTitle": "Yoko Shimomura",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Kingdom Hearts (video game)",
+      "pageId": 210873,
+      "gameId": "wikidata:Q225912",
+      "revision": 1377598104,
+      "timestamp": "2026-09-30T03:23:41Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1377598104",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Kingdom+Hearts+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Yoko Shimomura]]"
+  },
+  {
+    "gameId": "wikidata:Q193581",
+    "type": "developer",
+    "targetTitle": "Valve Corporation",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Half-Life 2",
+      "pageId": 575509,
+      "gameId": "wikidata:Q193581",
+      "revision": 1381061776,
+      "timestamp": "2026-10-19T19:31:29Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381061776",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Half-Life+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Valve Corporation|Valve]]"
+  },
+  {
+    "gameId": "wikidata:Q193581",
+    "type": "composer",
+    "targetTitle": "Kelly Bailey (composer)",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Half-Life 2",
+      "pageId": 575509,
+      "gameId": "wikidata:Q193581",
+      "revision": 1381061776,
+      "timestamp": "2026-10-19T19:31:29Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381061776",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Half-Life+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Kelly Bailey (composer)|Kelly Bailey]]"
+  },
+  {
+    "gameId": "wikidata:Q275960",
+    "type": "developer",
+    "targetTitle": "BioWare",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Mass Effect (video game)",
+      "pageId": 2933388,
+      "gameId": "wikidata:Q275960",
+      "revision": 1361928201,
+      "timestamp": "2026-06-30T22:10:39Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1361928201",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Mass+Effect+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[BioWare]]{{efn|Ported to Windows by [[Demiurge Studios]] and to PlayStation 3 by [[Edge of Reality]].}}"
+  },
+  {
+    "gameId": "wikidata:Q275960",
+    "type": "developer",
+    "targetTitle": "Demiurge Studios",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Mass Effect (video game)",
+      "pageId": 2933388,
+      "gameId": "wikidata:Q275960",
+      "revision": 1361928201,
+      "timestamp": "2026-06-30T22:10:39Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1361928201",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Mass+Effect+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[BioWare]]{{efn|Ported to Windows by [[Demiurge Studios]] and to PlayStation 3 by [[Edge of Reality]].}}"
+  },
+  {
+    "gameId": "wikidata:Q275960",
+    "type": "developer",
+    "targetTitle": "Edge of Reality",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Mass Effect (video game)",
+      "pageId": 2933388,
+      "gameId": "wikidata:Q275960",
+      "revision": 1361928201,
+      "timestamp": "2026-06-30T22:10:39Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1361928201",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Mass+Effect+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[BioWare]]{{efn|Ported to Windows by [[Demiurge Studios]] and to PlayStation 3 by [[Edge of Reality]].}}"
+  },
+  {
+    "gameId": "wikidata:Q275960",
+    "type": "composer",
+    "targetTitle": "Jack Wall (composer)",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Mass Effect (video game)",
+      "pageId": 2933388,
+      "gameId": "wikidata:Q275960",
+      "revision": 1361928201,
+      "timestamp": "2026-06-30T22:10:39Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1361928201",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Mass+Effect+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{ubl|[[Jack Wall (composer)|Jack Wall]]|Sam Hulick|[[Richard Jacques]]|David Kates}}"
+  },
+  {
+    "gameId": "wikidata:Q275960",
+    "type": "composer",
+    "targetTitle": "Richard Jacques",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Mass Effect (video game)",
+      "pageId": 2933388,
+      "gameId": "wikidata:Q275960",
+      "revision": 1361928201,
+      "timestamp": "2026-06-30T22:10:39Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1361928201",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Mass+Effect+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{ubl|[[Jack Wall (composer)|Jack Wall]]|Sam Hulick|[[Richard Jacques]]|David Kates}}"
+  },
+  {
+    "gameId": "wikidata:Q725057",
+    "type": "developer",
+    "targetTitle": "BioWare",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Mass Effect 2",
+      "pageId": 16361229,
+      "gameId": "wikidata:Q725057",
+      "revision": 1376153839,
+      "timestamp": "2026-09-22T11:32:43Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1376153839",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Mass+Effect+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[BioWare]]"
+  },
+  {
+    "gameId": "wikidata:Q725057",
+    "type": "composer",
+    "targetTitle": "Jack Wall (composer)",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Mass Effect 2",
+      "pageId": 16361229,
+      "gameId": "wikidata:Q725057",
+      "revision": 1376153839,
+      "timestamp": "2026-09-22T11:32:43Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1376153839",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Mass+Effect+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{Unbulleted list|[[Jack Wall (composer)|Jack Wall]]|[[Jimmy Hinson]]|Sam Hulick|David Kates}}"
+  },
+  {
+    "gameId": "wikidata:Q725057",
+    "type": "composer",
+    "targetTitle": "Jimmy Hinson",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Mass Effect 2",
+      "pageId": 16361229,
+      "gameId": "wikidata:Q725057",
+      "revision": 1376153839,
+      "timestamp": "2026-09-22T11:32:43Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1376153839",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Mass+Effect+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{Unbulleted list|[[Jack Wall (composer)|Jack Wall]]|[[Jimmy Hinson]]|Sam Hulick|David Kates}}"
+  },
+  {
+    "gameId": "wikidata:Q472909",
+    "type": "developer",
+    "targetTitle": "Valve Corporation",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Left 4 Dead 2",
+      "pageId": 23047483,
+      "gameId": "wikidata:Q472909",
+      "revision": 1380053847,
+      "timestamp": "2026-10-13T14:11:12Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380053847",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Left+4+Dead+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Valve Corporation|Valve]]"
+  },
+  {
+    "gameId": "wikidata:Q472909",
+    "type": "composer",
+    "targetTitle": "Mike Morasky",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Left 4 Dead 2",
+      "pageId": 23047483,
+      "gameId": "wikidata:Q472909",
+      "revision": 1380053847,
+      "timestamp": "2026-10-13T14:11:12Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380053847",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Left+4+Dead+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Mike Morasky]]"
+  },
+  {
+    "gameId": "wikidata:Q677274",
+    "type": "developer",
+    "targetTitle": "Thatgamecompany",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Journey (2012 video game)",
+      "pageId": 27730446,
+      "gameId": "wikidata:Q677274",
+      "revision": 1379766570,
+      "timestamp": "2026-10-11T20:53:12Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1379766570",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Journey+%282012+video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "{{ubl|[[Thatgamecompany]]{{efn|Additional work and assistance by [[Santa Monica Studio]]. Ported to PlayStation 4 by Tricky Pixels, and to Windows and iOS by Inline Assembly Ltd.}}}}"
+  },
+  {
+    "gameId": "wikidata:Q677274",
+    "type": "developer",
+    "targetTitle": "Santa Monica Studio",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Journey (2012 video game)",
+      "pageId": 27730446,
+      "gameId": "wikidata:Q677274",
+      "revision": 1379766570,
+      "timestamp": "2026-10-11T20:53:12Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1379766570",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Journey+%282012+video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "{{ubl|[[Thatgamecompany]]{{efn|Additional work and assistance by [[Santa Monica Studio]]. Ported to PlayStation 4 by Tricky Pixels, and to Windows and iOS by Inline Assembly Ltd.}}}}"
+  },
+  {
+    "gameId": "wikidata:Q677274",
+    "type": "composer",
+    "targetTitle": "Austin Wintory",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Journey (2012 video game)",
+      "pageId": 27730446,
+      "gameId": "wikidata:Q677274",
+      "revision": 1379766570,
+      "timestamp": "2026-10-11T20:53:12Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1379766570",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Journey+%282012+video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Austin Wintory]]"
+  },
+  {
+    "gameId": "wikidata:Q18345138",
+    "type": "developer",
+    "targetTitle": "Santa Monica Studio",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "God of War (2018 video game)",
+      "pageId": 50810460,
+      "gameId": "wikidata:Q18345138",
+      "revision": 1380538304,
+      "timestamp": "2026-10-16T09:39:20Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380538304",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=God+of+War+%282018+video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Santa Monica Studio]]{{efn|Windows version ported by Jetpack Interactive}}"
+  },
+  {
+    "gameId": "wikidata:Q18345138",
+    "type": "composer",
+    "targetTitle": "Bear McCreary",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "God of War (2018 video game)",
+      "pageId": 50810460,
+      "gameId": "wikidata:Q18345138",
+      "revision": 1380538304,
+      "timestamp": "2026-10-16T09:39:20Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380538304",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=God+of+War+%282018+video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Bear McCreary]]"
+  },
+  {
+    "gameId": "wikidata:Q29300592",
+    "type": "composer",
+    "targetTitle": "Christopher Larkin (composer)",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Hollow Knight",
+      "pageId": 53391134,
+      "gameId": "wikidata:Q29300592",
+      "revision": 1378702465,
+      "timestamp": "2026-10-05T19:32:32Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1378702465",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Hollow+Knight&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Christopher Larkin (composer)|Christopher Larkin]]"
+  },
+  {
+    "gameId": "wikidata:Q59756366",
+    "type": "developer",
+    "targetTitle": "Supergiant Games",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Hades (video game)",
+      "pageId": 59284486,
+      "gameId": "wikidata:Q59756366",
+      "revision": 1379073272,
+      "timestamp": "2026-10-07T19:53:24Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1379073272",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Hades+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Supergiant Games]]{{efn|iOS version ported by Secret 6}}"
+  },
+  {
+    "gameId": "wikidata:Q59756366",
+    "type": "composer",
+    "targetTitle": "Darren Korb",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Hades (video game)",
+      "pageId": 59284486,
+      "gameId": "wikidata:Q59756366",
+      "revision": 1379073272,
+      "timestamp": "2026-10-07T19:53:24Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1379073272",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Hades+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Darren Korb]]"
+  },
+  {
+    "gameId": "wikidata:Q6582527",
+    "type": "developer",
+    "targetTitle": "Konami Computer Entertainment Japan",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Metal Gear Solid (video game)",
+      "pageId": 216017,
+      "gameId": "wikidata:Q6582527",
+      "revision": 1381180580,
+      "timestamp": "2026-10-20T14:13:09Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381180580",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Metal+Gear+Solid+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Konami Computer Entertainment Japan]]{{efn|Ported to Windows by Digital Dialect}}"
+  },
+  {
+    "gameId": "wikidata:Q1070984",
+    "type": "developer",
+    "targetTitle": "Sonic Team USA",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Sonic Adventure 2",
+      "pageId": 336539,
+      "gameId": "wikidata:Q1070984",
+      "revision": 1380918274,
+      "timestamp": "2026-10-18T19:43:37Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380918274",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Sonic+Adventure+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Sonic Team USA]]"
+  },
+  {
+    "gameId": "wikidata:Q1070984",
+    "type": "composer",
+    "targetTitle": "Jun Senoue",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Sonic Adventure 2",
+      "pageId": 336539,
+      "gameId": "wikidata:Q1070984",
+      "revision": 1380918274,
+      "timestamp": "2026-10-18T19:43:37Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380918274",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Sonic+Adventure+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{unbulleted list|[[Jun Senoue]]|Fumie Kumatani|[[Tomoya Ohtani]]|Kenichi Tokoi}}"
+  },
+  {
+    "gameId": "wikidata:Q1070984",
+    "type": "composer",
+    "targetTitle": "Tomoya Ohtani",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Sonic Adventure 2",
+      "pageId": 336539,
+      "gameId": "wikidata:Q1070984",
+      "revision": 1380918274,
+      "timestamp": "2026-10-18T19:43:37Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380918274",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Sonic+Adventure+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{unbulleted list|[[Jun Senoue]]|Fumie Kumatani|[[Tomoya Ohtani]]|Kenichi Tokoi}}"
+  },
+  {
+    "gameId": "wikidata:Q752835",
+    "type": "developer",
+    "targetTitle": "Team Silent",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Silent Hill 2",
+      "pageId": 1955720,
+      "gameId": "wikidata:Q752835",
+      "revision": 1381228406,
+      "timestamp": "2026-10-20T20:51:53Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381228406",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Silent+Hill+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Team Silent]]{{Efn|Team Silent was a group in [[Konami Computer Entertainment Tokyo]]. Ported to Windows by [[Creature Labs]].|lead=yes}}"
+  },
+  {
+    "gameId": "wikidata:Q752835",
+    "type": "developer",
+    "targetTitle": "Konami Computer Entertainment Tokyo",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Silent Hill 2",
+      "pageId": 1955720,
+      "gameId": "wikidata:Q752835",
+      "revision": 1381228406,
+      "timestamp": "2026-10-20T20:51:53Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381228406",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Silent+Hill+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Team Silent]]{{Efn|Team Silent was a group in [[Konami Computer Entertainment Tokyo]]. Ported to Windows by [[Creature Labs]].|lead=yes}}"
+  },
+  {
+    "gameId": "wikidata:Q752835",
+    "type": "developer",
+    "targetTitle": "Creature Labs",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Silent Hill 2",
+      "pageId": 1955720,
+      "gameId": "wikidata:Q752835",
+      "revision": 1381228406,
+      "timestamp": "2026-10-20T20:51:53Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381228406",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Silent+Hill+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Team Silent]]{{Efn|Team Silent was a group in [[Konami Computer Entertainment Tokyo]]. Ported to Windows by [[Creature Labs]].|lead=yes}}"
+  },
+  {
+    "gameId": "wikidata:Q752835",
+    "type": "composer",
+    "targetTitle": "Akira Yamaoka",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Silent Hill 2",
+      "pageId": 1955720,
+      "gameId": "wikidata:Q752835",
+      "revision": 1381228406,
+      "timestamp": "2026-10-20T20:51:53Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381228406",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Silent+Hill+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Akira Yamaoka]]"
+  },
+  {
+    "gameId": "wikidata:Q837338",
+    "type": "developer",
+    "targetTitle": "Team Silent",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Silent Hill 3",
+      "pageId": 3652578,
+      "gameId": "wikidata:Q837338",
+      "revision": 1380422593,
+      "timestamp": "2026-10-15T16:56:04Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380422593",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Silent+Hill+3&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Team Silent]]{{Efn|Team Silent was a group in [[Konami Computer Entertainment Tokyo]].|lead=yes}}"
+  },
+  {
+    "gameId": "wikidata:Q837338",
+    "type": "developer",
+    "targetTitle": "Konami Computer Entertainment Tokyo",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Silent Hill 3",
+      "pageId": 3652578,
+      "gameId": "wikidata:Q837338",
+      "revision": 1380422593,
+      "timestamp": "2026-10-15T16:56:04Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380422593",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Silent+Hill+3&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Team Silent]]{{Efn|Team Silent was a group in [[Konami Computer Entertainment Tokyo]].|lead=yes}}"
+  },
+  {
+    "gameId": "wikidata:Q274897",
+    "type": "developer",
+    "targetTitle": "Valve Corporation",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Portal (video game)",
+      "pageId": 5956143,
+      "gameId": "wikidata:Q274897",
+      "revision": 1381030882,
+      "timestamp": "2026-10-19T15:36:36Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381030882",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Portal+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Valve Corporation|Valve]]{{efn|[[Nvidia Lightspeed Studios]] developed the Nvidia Shield, Nintendo Switch versions and the RTX mod version for Windows.|lead=yes}}"
+  },
+  {
+    "gameId": "wikidata:Q274897",
+    "type": "developer",
+    "targetTitle": "Nvidia Lightspeed Studios",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Portal (video game)",
+      "pageId": 5956143,
+      "gameId": "wikidata:Q274897",
+      "revision": 1381030882,
+      "timestamp": "2026-10-19T15:36:36Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381030882",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Portal+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Valve Corporation|Valve]]{{efn|[[Nvidia Lightspeed Studios]] developed the Nvidia Shield, Nintendo Switch versions and the RTX mod version for Windows.|lead=yes}}"
+  },
+  {
+    "gameId": "wikidata:Q274897",
+    "type": "composer",
+    "targetTitle": "Kelly Bailey (composer)",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Portal (video game)",
+      "pageId": 5956143,
+      "gameId": "wikidata:Q274897",
+      "revision": 1381030882,
+      "timestamp": "2026-10-19T15:36:36Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381030882",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Portal+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{Unbulleted list|[[Kelly Bailey (composer)|Kelly Bailey]]|[[Mike Morasky]]}}"
+  },
+  {
+    "gameId": "wikidata:Q274897",
+    "type": "composer",
+    "targetTitle": "Mike Morasky",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Portal (video game)",
+      "pageId": 5956143,
+      "gameId": "wikidata:Q274897",
+      "revision": 1381030882,
+      "timestamp": "2026-10-19T15:36:36Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381030882",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Portal+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{Unbulleted list|[[Kelly Bailey (composer)|Kelly Bailey]]|[[Mike Morasky]]}}"
+  },
+  {
+    "gameId": "wikidata:Q4047343",
+    "type": "developer",
+    "targetTitle": "Arkane Austin",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Prey (2017 video game)",
+      "pageId": 11718979,
+      "gameId": "wikidata:Q4047343",
+      "revision": 1370743562,
+      "timestamp": "2026-08-22T21:31:28Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1370743562",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Prey+%282017+video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Arkane Austin]]"
+  },
+  {
+    "gameId": "wikidata:Q4047343",
+    "type": "composer",
+    "targetTitle": "Mick Gordon",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Prey (2017 video game)",
+      "pageId": 11718979,
+      "gameId": "wikidata:Q4047343",
+      "revision": 1370743562,
+      "timestamp": "2026-08-22T21:31:28Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1370743562",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Prey+%282017+video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Mick Gordon]]<!--Lead composer only, do not add the additional composers here-->"
+  },
+  {
+    "gameId": "wikidata:Q279446",
+    "type": "developer",
+    "targetTitle": "Valve Corporation",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Portal 2",
+      "pageId": 15888290,
+      "gameId": "wikidata:Q279446",
+      "revision": 1379442692,
+      "timestamp": "2026-10-10T01:06:03Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1379442692",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Portal+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Valve Corporation|Valve]]{{efn|[[Nvidia Lightspeed Studios]] ported the game to the Nintendo Switch.|lead=yes}}"
+  },
+  {
+    "gameId": "wikidata:Q279446",
+    "type": "developer",
+    "targetTitle": "Nvidia Lightspeed Studios",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Portal 2",
+      "pageId": 15888290,
+      "gameId": "wikidata:Q279446",
+      "revision": 1379442692,
+      "timestamp": "2026-10-10T01:06:03Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1379442692",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Portal+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Valve Corporation|Valve]]{{efn|[[Nvidia Lightspeed Studios]] ported the game to the Nintendo Switch.|lead=yes}}"
+  },
+  {
+    "gameId": "wikidata:Q279446",
+    "type": "composer",
+    "targetTitle": "Mike Morasky",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Portal 2",
+      "pageId": 15888290,
+      "gameId": "wikidata:Q279446",
+      "revision": 1379442692,
+      "timestamp": "2026-10-10T01:06:03Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1379442692",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Portal+2&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Mike Morasky]]"
+  },
+  {
+    "gameId": "wikidata:Q717600",
+    "type": "developer",
+    "targetTitle": "Kojima Productions",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Metal Gear Solid V: The Phantom Pain",
+      "pageId": 36874131,
+      "gameId": "wikidata:Q717600",
+      "revision": 1376999062,
+      "timestamp": "2026-09-27T10:20:48Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1376999062",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Metal+Gear+Solid+V%3A+The+Phantom+Pain&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Kojima Productions]]{{efn|''Metal Gear Online 3'' developed by Kojima Productions Los Angeles}}"
+  },
+  {
+    "gameId": "wikidata:Q717600",
+    "type": "composer",
+    "targetTitle": "Justin Burnett",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Metal Gear Solid V: The Phantom Pain",
+      "pageId": 36874131,
+      "gameId": "wikidata:Q717600",
+      "revision": 1376999062,
+      "timestamp": "2026-09-27T10:20:48Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1376999062",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Metal+Gear+Solid+V%3A+The+Phantom+Pain&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{Unbulleted list|Ludvig Forssell|[[Justin Burnett]]|[[Harry Gregson-Williams]]|[[Daniel James (music producer)|Daniel James]]}}"
+  },
+  {
+    "gameId": "wikidata:Q717600",
+    "type": "composer",
+    "targetTitle": "Harry Gregson-Williams",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Metal Gear Solid V: The Phantom Pain",
+      "pageId": 36874131,
+      "gameId": "wikidata:Q717600",
+      "revision": 1376999062,
+      "timestamp": "2026-09-27T10:20:48Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1376999062",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Metal+Gear+Solid+V%3A+The+Phantom+Pain&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{Unbulleted list|Ludvig Forssell|[[Justin Burnett]]|[[Harry Gregson-Williams]]|[[Daniel James (music producer)|Daniel James]]}}"
+  },
+  {
+    "gameId": "wikidata:Q717600",
+    "type": "composer",
+    "targetTitle": "Daniel James (music producer)",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Metal Gear Solid V: The Phantom Pain",
+      "pageId": 36874131,
+      "gameId": "wikidata:Q717600",
+      "revision": 1376999062,
+      "timestamp": "2026-09-27T10:20:48Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1376999062",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Metal+Gear+Solid+V%3A+The+Phantom+Pain&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{Unbulleted list|Ludvig Forssell|[[Justin Burnett]]|[[Harry Gregson-Williams]]|[[Daniel James (music producer)|Daniel James]]}}"
+  },
+  {
+    "gameId": "wikidata:Q21078985",
+    "type": "developer",
+    "targetTitle": "PlatinumGames",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Nier: Automata",
+      "pageId": 47013626,
+      "gameId": "wikidata:Q21078985",
+      "revision": 1381032546,
+      "timestamp": "2026-10-19T15:51:06Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381032546",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Nier%3A+Automata&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[PlatinumGames]]{{efn|Additional production support and supervision by [[Square Enix]]. ''Become as Gods Edition'' ported to Microsoft Store by QLOC. ''The End of YoRHa Edition'' ported by [[Virtuos]].}}"
+  },
+  {
+    "gameId": "wikidata:Q21078985",
+    "type": "developer",
+    "targetTitle": "Square Enix",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Nier: Automata",
+      "pageId": 47013626,
+      "gameId": "wikidata:Q21078985",
+      "revision": 1381032546,
+      "timestamp": "2026-10-19T15:51:06Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381032546",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Nier%3A+Automata&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[PlatinumGames]]{{efn|Additional production support and supervision by [[Square Enix]]. ''Become as Gods Edition'' ported to Microsoft Store by QLOC. ''The End of YoRHa Edition'' ported by [[Virtuos]].}}"
+  },
+  {
+    "gameId": "wikidata:Q21078985",
+    "type": "developer",
+    "targetTitle": "Virtuos",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Nier: Automata",
+      "pageId": 47013626,
+      "gameId": "wikidata:Q21078985",
+      "revision": 1381032546,
+      "timestamp": "2026-10-19T15:51:06Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381032546",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Nier%3A+Automata&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[PlatinumGames]]{{efn|Additional production support and supervision by [[Square Enix]]. ''Become as Gods Edition'' ported to Microsoft Store by QLOC. ''The End of YoRHa Edition'' ported by [[Virtuos]].}}"
+  },
+  {
+    "gameId": "wikidata:Q21078985",
+    "type": "composer",
+    "targetTitle": "Keiichi Okabe",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Nier: Automata",
+      "pageId": 47013626,
+      "gameId": "wikidata:Q21078985",
+      "revision": 1381032546,
+      "timestamp": "2026-10-19T15:51:06Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381032546",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Nier%3A+Automata&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{Unbulleted list|[[Keiichi Okabe]]|Keigo Hoashi|Kuniyuki Takahashi}}"
+  },
+  {
+    "gameId": "wikidata:Q23013817",
+    "type": "developer",
+    "targetTitle": "ConcernedApe",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Stardew Valley",
+      "pageId": 47581011,
+      "gameId": "wikidata:Q23013817",
+      "revision": 1380640848,
+      "timestamp": "2026-10-17T00:39:48Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380640848",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Stardew+Valley&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[ConcernedApe]]"
+  },
+  {
+    "gameId": "wikidata:Q216995",
+    "type": "developer",
+    "targetTitle": "Nintendo EAD",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Super Mario 64",
+      "pageId": 100062,
+      "gameId": "wikidata:Q216995",
+      "revision": 1381219093,
+      "timestamp": "2026-10-20T19:34:17Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381219093",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Super+Mario+64&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Nintendo EAD]]"
+  },
+  {
+    "gameId": "wikidata:Q216995",
+    "type": "composer",
+    "targetTitle": "Koji Kondo",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Super Mario 64",
+      "pageId": 100062,
+      "gameId": "wikidata:Q216995",
+      "revision": 1381219093,
+      "timestamp": "2026-10-20T19:34:17Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381219093",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Super+Mario+64&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Koji Kondo]]{{sfn|NOA|1996|p=24}}"
+  },
+  {
+    "gameId": "wikidata:Q213911",
+    "type": "developer",
+    "targetTitle": "Nintendo EAD",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "The Legend of Zelda: Ocarina of Time",
+      "pageId": 165561,
+      "gameId": "wikidata:Q213911",
+      "revision": 1381204555,
+      "timestamp": "2026-10-20T17:35:15Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381204555",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=The+Legend+of+Zelda%3A+Ocarina+of+Time&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Nintendo EAD]]"
+  },
+  {
+    "gameId": "wikidata:Q213911",
+    "type": "composer",
+    "targetTitle": "Koji Kondo",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "The Legend of Zelda: Ocarina of Time",
+      "pageId": 165561,
+      "gameId": "wikidata:Q213911",
+      "revision": 1381204555,
+      "timestamp": "2026-10-20T17:35:15Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381204555",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=The+Legend+of+Zelda%3A+Ocarina+of+Time&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Koji Kondo]]"
+  },
+  {
+    "gameId": "wikidata:Q1133204",
+    "type": "developer",
+    "targetTitle": "Capcom",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Street Fighter II",
+      "pageId": 236033,
+      "gameId": "wikidata:Q1133204",
+      "revision": 1381246766,
+      "timestamp": "2026-10-21T00:03:52Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381246766",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Street+Fighter+II&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Capcom]]{{efn|Amiga, Atari ST, Commodore 64 and MS-DOS versions developed by Creative Materials; ZX Spectrum version developed by [[Tiertex Design Studios|Tiertex]]; Game Boy version developed by Sun L.}}"
+  },
+  {
+    "gameId": "wikidata:Q1133204",
+    "type": "developer",
+    "targetTitle": "Tiertex Design Studios",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Street Fighter II",
+      "pageId": 236033,
+      "gameId": "wikidata:Q1133204",
+      "revision": 1381246766,
+      "timestamp": "2026-10-21T00:03:52Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381246766",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Street+Fighter+II&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Capcom]]{{efn|Amiga, Atari ST, Commodore 64 and MS-DOS versions developed by Creative Materials; ZX Spectrum version developed by [[Tiertex Design Studios|Tiertex]]; Game Boy version developed by Sun L.}}"
+  },
+  {
+    "gameId": "wikidata:Q1133204",
+    "type": "composer",
+    "targetTitle": "Yoko Shimomura",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Street Fighter II",
+      "pageId": 236033,
+      "gameId": "wikidata:Q1133204",
+      "revision": 1381246766,
+      "timestamp": "2026-10-21T00:03:52Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381246766",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Street+Fighter+II&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "{{ubl|[[Yoko Shimomura]]|Isao Abe}}"
+  },
+  {
+    "gameId": "wikidata:Q49607",
+    "type": "developer",
+    "targetTitle": "Bethesda Game Studios",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "The Elder Scrolls IV: Oblivion",
+      "pageId": 1042993,
+      "gameId": "wikidata:Q49607",
+      "revision": 1381030974,
+      "timestamp": "2026-10-19T15:37:20Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381030974",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=The+Elder+Scrolls+IV%3A+Oblivion&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Bethesda Game Studios]]"
+  },
+  {
+    "gameId": "wikidata:Q49607",
+    "type": "composer",
+    "targetTitle": "Jeremy Soule",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "The Elder Scrolls IV: Oblivion",
+      "pageId": 1042993,
+      "gameId": "wikidata:Q49607",
+      "revision": 1381030974,
+      "timestamp": "2026-10-19T15:37:20Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381030974",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=The+Elder+Scrolls+IV%3A+Oblivion&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Jeremy Soule]]"
+  },
+  {
+    "gameId": "wikidata:Q323862",
+    "type": "developer",
+    "targetTitle": "Bethesda Game Studios",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "The Elder Scrolls V: Skyrim",
+      "pageId": 30014712,
+      "gameId": "wikidata:Q323862",
+      "revision": 1380192101,
+      "timestamp": "2026-10-14T09:10:40Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380192101",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=The+Elder+Scrolls+V%3A+Skyrim&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Bethesda Game Studios]]{{efn|name=\"switch\"|[[Iron Galaxy]] co-developed the Nintendo Switch and VR versions.}}"
+  },
+  {
+    "gameId": "wikidata:Q323862",
+    "type": "developer",
+    "targetTitle": "Iron Galaxy",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "The Elder Scrolls V: Skyrim",
+      "pageId": 30014712,
+      "gameId": "wikidata:Q323862",
+      "revision": 1380192101,
+      "timestamp": "2026-10-14T09:10:40Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380192101",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=The+Elder+Scrolls+V%3A+Skyrim&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Bethesda Game Studios]]{{efn|name=\"switch\"|[[Iron Galaxy]] co-developed the Nintendo Switch and VR versions.}}"
+  },
+  {
+    "gameId": "wikidata:Q323862",
+    "type": "composer",
+    "targetTitle": "Jeremy Soule",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "The Elder Scrolls V: Skyrim",
+      "pageId": 30014712,
+      "gameId": "wikidata:Q323862",
+      "revision": 1380192101,
+      "timestamp": "2026-10-14T09:10:40Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380192101",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=The+Elder+Scrolls+V%3A+Skyrim&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Jeremy Soule]]"
+  },
+  {
+    "gameId": "wikidata:Q1986744",
+    "type": "developer",
+    "targetTitle": "Naughty Dog",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "The Last of Us (video game)",
+      "pageId": 33955100,
+      "gameId": "wikidata:Q1986744",
+      "revision": 1381076778,
+      "timestamp": "2026-10-19T21:34:40Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381076778",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=The+Last+of+Us+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Naughty Dog]]"
+  },
+  {
+    "gameId": "wikidata:Q1986744",
+    "type": "composer",
+    "targetTitle": "Gustavo Santaolalla",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "The Last of Us (video game)",
+      "pageId": 33955100,
+      "gameId": "wikidata:Q1986744",
+      "revision": 1381076778,
+      "timestamp": "2026-10-19T21:34:40Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1381076778",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=The+Last+of+Us+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Gustavo Santaolalla]]"
+  },
+  {
+    "gameId": "wikidata:Q16681843",
+    "type": "developer",
+    "targetTitle": "Naughty Dog",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Uncharted 4: A Thief's End",
+      "pageId": 34694216,
+      "gameId": "wikidata:Q16681843",
+      "revision": 1377152198,
+      "timestamp": "2026-09-28T02:52:05Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1377152198",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Uncharted+4%3A+A+Thief%27s+End&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Naughty Dog]]{{efn|Ported to Windows by [[Iron Galaxy]]}}"
+  },
+  {
+    "gameId": "wikidata:Q16681843",
+    "type": "developer",
+    "targetTitle": "Iron Galaxy",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Uncharted 4: A Thief's End",
+      "pageId": 34694216,
+      "gameId": "wikidata:Q16681843",
+      "revision": 1377152198,
+      "timestamp": "2026-09-28T02:52:05Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1377152198",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Uncharted+4%3A+A+Thief%27s+End&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Naughty Dog]]{{efn|Ported to Windows by [[Iron Galaxy]]}}"
+  },
+  {
+    "gameId": "wikidata:Q16681843",
+    "type": "composer",
+    "targetTitle": "Henry Jackman",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Uncharted 4: A Thief's End",
+      "pageId": 34694216,
+      "gameId": "wikidata:Q16681843",
+      "revision": 1377152198,
+      "timestamp": "2026-09-28T02:52:05Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1377152198",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Uncharted+4%3A+A+Thief%27s+End&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Henry Jackman]]"
+  },
+  {
+    "gameId": "wikidata:Q13417084",
+    "type": "developer",
+    "targetTitle": "Supergiant Games",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Transistor (video game)",
+      "pageId": 38860140,
+      "gameId": "wikidata:Q13417084",
+      "revision": 1376689845,
+      "timestamp": "2026-09-25T17:57:46Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1376689845",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Transistor+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Supergiant Games]]"
+  },
+  {
+    "gameId": "wikidata:Q13417084",
+    "type": "composer",
+    "targetTitle": "Darren Korb",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Transistor (video game)",
+      "pageId": 38860140,
+      "gameId": "wikidata:Q13417084",
+      "revision": 1376689845,
+      "timestamp": "2026-09-25T17:57:46Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1376689845",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Transistor+%28video+game%29&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Darren Korb]]"
+  },
+  {
+    "gameId": "wikidata:Q21039924",
+    "type": "developer",
+    "targetTitle": "Toby Fox",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Undertale",
+      "pageId": 47952646,
+      "gameId": "wikidata:Q21039924",
+      "revision": 1380941187,
+      "timestamp": "2026-10-18T23:07:39Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380941187",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Undertale&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Toby Fox]]{{efn|[[8-4]] developed the console versions.}}"
+  },
+  {
+    "gameId": "wikidata:Q21039924",
+    "type": "developer",
+    "targetTitle": "8-4",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Undertale",
+      "pageId": 47952646,
+      "gameId": "wikidata:Q21039924",
+      "revision": 1380941187,
+      "timestamp": "2026-10-18T23:07:39Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1380941187",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Undertale&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "[[Toby Fox]]{{efn|[[8-4]] developed the console versions.}}"
+  },
+  {
+    "gameId": "wikidata:Q54093632",
+    "type": "developer",
+    "targetTitle": "Bandai Namco Studios",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Super Smash Bros. Ultimate",
+      "pageId": 57665928,
+      "gameId": "wikidata:Q54093632",
+      "revision": 1378890361,
+      "timestamp": "2026-10-06T19:22:19Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1378890361",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Super+Smash+Bros.+Ultimate&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "{{ubl|[[Bandai Namco Studios]]|[[Sora Ltd.]]}}"
+  },
+  {
+    "gameId": "wikidata:Q54093632",
+    "type": "developer",
+    "targetTitle": "Sora Ltd.",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Super Smash Bros. Ultimate",
+      "pageId": 57665928,
+      "gameId": "wikidata:Q54093632",
+      "revision": 1378890361,
+      "timestamp": "2026-10-06T19:22:19Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1378890361",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Super+Smash+Bros.+Ultimate&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "developer",
+    "fieldWikitext": "{{ubl|[[Bandai Namco Studios]]|[[Sora Ltd.]]}}"
+  },
+  {
+    "gameId": "wikidata:Q54093632",
+    "type": "composer",
+    "targetTitle": "Hideki Sakamoto",
+    "evidenceStatus": "source_asserted",
+    "source": {
+      "title": "Super Smash Bros. Ultimate",
+      "pageId": 57665928,
+      "gameId": "wikidata:Q54093632",
+      "revision": 1378890361,
+      "timestamp": "2026-10-06T19:22:19Z",
+      "sourceUrl": "https://en.wikipedia.org/w/index.php?oldid=1378890361",
+      "historyUrl": "https://en.wikipedia.org/w/index.php?title=Super+Smash+Bros.+Ultimate&action=history",
+      "attribution": "English Wikipedia contributors",
+      "license": "CC-BY-SA-4.0"
+    },
+    "field": "composer",
+    "fieldWikitext": "[[Hideki Sakamoto]]<!--Most of the original music is based around Hideki Sakamoto's main theme \"Lifelight\"; too many other composers to list here-->"
+  }
+]
