@@ -1,34 +1,58 @@
-import { Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import { Router, Routes } from '@angular/router';
 
 export const routes: Routes = [
+  {
+    path: 'design-review',
+    title: 'Interactive design preview — The Last Link',
+    loadChildren: () => import('./design-review/review.routes').then((m) => m.REVIEW_ROUTES),
+  },
   {
     path: '',
     pathMatch: 'full',
     title: 'The Last Link — One life. Make it count.',
-    loadComponent: () => import('./pages/home/home.component').then((module) => module.Home),
+    loadComponent: () => import('./pages/home.component').then((m) => m.HomeComponent),
   },
   {
     path: 'play',
-    pathMatch: 'full',
-    title: 'Choose your category — The Last Link',
-    loadComponent: () =>
-      import('./pages/category-selection/category-selection.component').then(
-        (module) => module.CategorySelection,
-      ),
+    title: 'Choose your arena — The Last Link',
+    loadComponent: () => import('./pages/categories.component').then((m) => m.CategoriesComponent),
   },
   {
     path: 'play/:categoryId',
-    title: 'Set up your room — The Last Link',
-    loadComponent: () =>
-      import('./pages/room-setup/room-setup.component').then((module) => module.RoomSetup),
+    redirectTo: ({ params }) => inject(Router).createUrlTree(['/rooms'], {
+      queryParams: { category: params['categoryId'] === 'games' ? 'games' : 'movies' },
+    }),
   },
   {
-    path: 'rooms/:roomId',
-    title: 'Your lobby — The Last Link',
-    loadComponent: () => import('./pages/lobby/lobby.component').then((module) => module.Lobby),
+    path: 'catalogue',
+    title: 'Movies & Games catalogue — The Last Link',
+    loadComponent: () => import('./pages/catalogue.component').then((m) => m.CatalogueComponent),
   },
   {
-    path: '**',
-    redirectTo: '',
+    path: 'rooms',
+    title: 'Private rooms — The Last Link',
+    loadComponent: () => import('./pages/rooms.component').then((m) => m.RoomsComponent),
   },
+  {
+    path: 'rooms/:id',
+    title: 'Your room — The Last Link',
+    loadComponent: () => import('./pages/rooms.component').then((m) => m.RoomsComponent),
+  },
+  {
+    path: 'match/:id',
+    title: 'Sudden Death — The Last Link',
+    loadComponent: () => import('./pages/match.component').then((m) => m.MatchComponent),
+  },
+  {
+    path: 'results/:id',
+    title: 'Match result — The Last Link',
+    loadComponent: () => import('./pages/results.component').then((m) => m.ResultsComponent),
+  },
+  {
+    path: 'credits',
+    title: 'Data & credits — The Last Link',
+    loadComponent: () => import('./pages/credits.component').then((m) => m.CreditsComponent),
+  },
+  { path: '**', redirectTo: '' },
 ];

@@ -1,0 +1,13 @@
+<div
+  class="turn-clock"
+  [class.urgent]="seconds <= 5"
+  [class.expired]="seconds === 0"
+  role="timer"
+  [attr.aria-label]="seconds + ' seconds remaining'"
+  [style.--progress]="progress + '%'"
+>
+  <div>
+    <strong>{{ seconds | number: '2.0-0' }}</strong
+    ><small>{{ seconds === 0 ? 'TIME’S UP' : 'SECONDS' }}</small>
+  </div>
+</div>

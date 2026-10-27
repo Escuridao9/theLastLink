@@ -1,0 +1,86 @@
+<div class="review-label">
+  <span
+    ><b>DESIGN PREVIEW</b> Local examples · no live multiplayer{{
+      onMatch ? (preview.paused() ? ' · clock paused at 09s' : ' · sample clock running') : ''
+    }}</span
+  >
+  <details>
+    <summary>Review controls</summary>
+    <div class="review-tools">
+      @if (onLobby) {
+        <button (click)="preview.addRival()">Add example rival</button
+        ><button (click)="preview.waitForRival()">Waiting lobby</button>
+      }
+      @if (onMatch) {
+        <button (click)="preview.changeTurn()">Switch active player</button
+        ><button (click)="preview.toggleClock()">
+          {{ preview.paused() ? 'Run 20s clock' : 'Pause clock' }}</button
+        ><button (click)="result(true)">Show victory</button
+        ><button (click)="result(false)">Show defeat</button>
+        <p>
+          One sample answer per match, using receipts from the unchanged engine. Return to the Room
+          step, then Match, to try another.
+        </p>
+      }
+      @if (onResult) {
+        <button (click)="result(true)">Victory</button
+        ><button (click)="result(false)">Defeat</button>
+      }
+      @if (onCatalogue) {
+        <a
+          routerLink="/design-review/catalogue"
+          [queryParams]="{ category: category, state: 'loading' }"
+          >Loading</a
+        ><a
+          routerLink="/design-review/catalogue"
+          [queryParams]="{ category: category, state: 'empty' }"
+          >Empty</a
+        ><a
+          routerLink="/design-review/catalogue"
+          [queryParams]="{ category: category, state: 'error' }"
+          >Error</a
+        ><a routerLink="/design-review/catalogue" [queryParams]="{ category: category }"
+          >Reset catalogue</a
+        >
+      }
+      <a routerLink="/design-review/catalogue" [queryParams]="{ category: 'movies' }"
+        >Movies catalogue</a
+      ><a routerLink="/design-review/catalogue" [queryParams]="{ category: 'games' }"
+        >Games catalogue</a
+      >
+    </div>
+  </details>
+</div>
+<nav class="review-journey" aria-label="Example journey">
+  <a
+    routerLink="/design-review"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    ><small>01</small> Home</a
+  ><span>→</span
+  ><a routerLink="/design-review/play" routerLinkActive="active"><small>02</small> Category</a
+  ><span>→</span
+  ><a
+    routerLink="/design-review/rooms"
+    [queryParams]="{ category: category }"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    ><small>03</small> Room</a
+  ><span>→</span
+  ><a [routerLink]="['/design-review/rooms', 'design-review-' + category + '-room']"
+    ><small>04</small> Lobby</a
+  ><span>→</span
+  ><a [routerLink]="['/design-review/match', 'design-review-' + category + '-match']"
+    ><small>05</small> Match</a
+  ><span>→</span
+  ><a [routerLink]="['/design-review/results', 'design-review-' + category + '-match']"
+    ><small>06</small> Result</a
+  >
+</nav>
+@if (onLobby && preview.room()?.status === 'waiting') {
+  <div class="review-waiting">
+    <span>Local example: invite a simulated challenger to continue.</span
+    ><button (click)="preview.addRival()">Add Alex to the room ↗</button>
+  </div>
+}
+<router-outlet />

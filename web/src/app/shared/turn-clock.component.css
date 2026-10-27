@@ -1,0 +1,57 @@
+.turn-clock {
+  width: 106px;
+  height: 106px;
+  padding: 4px;
+  background: conic-gradient(#eb6c55 var(--progress), #d7ccc5 0);
+  border-radius: 50%;
+}
+.turn-clock > div {
+  background: var(--ll-cream);
+  color: #624a50;
+}
+.turn-clock strong {
+  font-family: 'Bricolage Grotesque', Arial, sans-serif;
+  font-size: 52px;
+  line-height: 1;
+  letter-spacing: -3px;
+  font-weight: 800;
+  color: #d95f48;
+}
+.turn-clock small {
+  font-family: 'Bricolage Grotesque', Arial, sans-serif;
+  font-size: 6px;
+  letter-spacing: 1.1px;
+  margin-top: 5px;
+}
+.turn-clock.urgent {
+  background: conic-gradient(#cc4036 var(--progress), #e6bfb5 0);
+}
+.turn-clock.urgent > div {
+  background: #fbe1d6;
+}
+.turn-clock.urgent strong {
+  color: #b5362d;
+}
+.turn-clock.urgent:not(.expired) {
+  animation: none;
+  box-shadow: 0 0 0 4px #cc403620;
+}
+.turn-clock.expired strong {
+  color: #b5362d;
+}
+@media (max-width: 760px) {
+  .turn-clock {
+    width: 77px;
+    height: 77px;
+    padding: 3px;
+  }
+  .turn-clock strong {
+    font-size: 38px;
+    letter-spacing: -2px;
+  }
+  .turn-clock small {
+    font-size: 5px;
+    letter-spacing: 0.7px;
+    margin-top: 4px;
+  }
+}

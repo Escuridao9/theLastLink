@@ -1,0 +1,46 @@
+<div class="autocomplete">
+  <label for="answer-search">{{
+    category === 'movies' ? 'YOUR NEXT MOVIE' : 'YOUR NEXT GAME'
+  }}</label>
+  <div class="answer-search-wrap">
+    <span aria-hidden="true">⌕</span
+    ><input
+      id="answer-search"
+      type="search"
+      [formControl]="query"
+      [readOnly]="disabled"
+      [attr.aria-disabled]="disabled"
+      autocomplete="off"
+      [placeholder]="category === 'movies' ? 'Movie title or release year…' : 'Game title…'"
+      role="combobox"
+      aria-autocomplete="list"
+      aria-controls="game-options"
+      [attr.aria-expanded]="!disabled && open() && suggestions.length > 0"
+      [attr.aria-activedescendant]="
+        !disabled && open() && suggestions.length ? 'game-option-' + active : null
+      "
+      (keydown)="key($event)"
+      (focus)="open.set(true)"
+    />
+  </div>
+  @if (open() && text().trim().length >= 2 && !disabled) {
+    <div class="suggestions" id="game-options" role="listbox" aria-label="Matching titles">
+      @for (entry of suggestions; track entry.id; let i = $index) {
+        <button
+          type="button"
+          role="option"
+          [id]="'game-option-' + i"
+          [attr.aria-selected]="i === active"
+          [class.highlight]="i === active"
+          (click)="choose(entry)"
+        >
+          <span>{{ entry.title }}</span
+          ><small>{{ entry.releaseYear }}</small>
+        </button>
+      } @empty {
+        <p>No unplayed title found in this catalogue.</p>
+      }
+    </div>
+  }
+  <small class="field-hint">↑ ↓ to browse · Enter to select.</small>
+</div>

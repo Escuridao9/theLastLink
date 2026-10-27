@@ -1,0 +1,209 @@
+@if (game.match(); as match) {
+  <section class="ll-match" aria-label="Active match">
+    <div class="ll-match-meta">
+      <span>{{ categories[match.category] }} <b>/</b> Sudden Death</span
+      ><span class="ll-match-connection"
+        ><i></i>{{ game.connection()
+        }}<span class="ll-room-code"> · {{ match.room.code }}</span></span
+      >
+    </div>
+    <div class="ll-duel-score">
+      @for (player of match.room.players; track player.id; let i = $index) {
+        @if (i === 1) {
+          <div class="ll-score-middle">
+            <strong>{{ match.state.version }}</strong
+            ><small>LINKS</small>
+          </div>
+        }
+        <div
+          class="ll-duelist"
+          [class.ll-on-clock]="player.id === match.activePlayer"
+          [class.ll-rival]="player.id !== game.backend.playerId()"
+        >
+          <span class="ll-player-avatar">{{ player.name.slice(0, 1).toUpperCase() }}</span>
+          <div>
+            <strong
+              >{{ player.name }}
+              <small>{{ player.id === game.backend.playerId() ? '(you)' : '' }}</small></strong
+            ><span>{{
+              player.id === match.activePlayer ? 'ON THE CLOCK' : 'WAITING IN THE WINGS'
+            }}</span>
+          </div>
+          <span class="ll-player-life" aria-label="One life">♥</span>
+        </div>
+      }
+    </div>
+    <div class="ll-match-layout">
+      <section class="ll-play-zone">
+        <div class="ll-play-field" [class.ll-opponent-turn]="!myTurn">
+          <div class="ll-field-top">
+            <span class="ll-turn-label"><i></i>{{ myTurn ? 'YOUR TURN' : 'OPPONENT’S TURN' }}</span
+            ><span class="ll-format"
+              >{{ match.category === 'movies' ? 'MOVIE' : 'GAME' }}
+              {{ match.state.history.length.toString().padStart(2, '0') }}</span
+            >
+          </div>
+          <div class="ll-current-title">
+            <div>
+              <p>Find a connection to</p>
+              <h1>{{ current?.title || 'Loading title…' }}</h1>
+              <span class="ll-entry-year">{{ current?.releaseYear }}</span>
+            </div>
+            <app-turn-clock
+              [deadline]="match.deadline"
+              [offset]="game.clockOffset()"
+              (elapsed)="elapsed()"
+            />
+          </div>
+          <div class="ll-field-foot">
+            <span>{{
+              myTurn ? 'The next move is yours.' : 'Your clock starts after their accepted answer.'
+            }}</span
+            ><span>One life. Make it count.</span>
+          </div>
+        </div>
+        @if (game.error()) {
+          <p class="ll-answer-notice ll-rejected" role="alert">
+            {{ game.error() }}. Reconnecting automatically; the server timer continues.
+          </p>
+        }
+        @if (error()) {
+          <p class="ll-answer-notice ll-rejected" role="alert"><b>TRY AGAIN.</b> {{ error() }}</p>
+        }
+        @if (feedback()) {
+          <p class="ll-answer-notice ll-accepted" role="status">
+            <b>GOOD LINK.</b> {{ feedback() }}
+          </p>
+        }
+        @if (responseConnectors().length) {
+          <div class="ll-response-connectors">
+            @for (c of responseConnectors(); track c.entityId) {
+              <span [class.ll-credit-out]="(match.state.usage[c.entityId] || 0) >= 3"
+                >{{ connector(c.entityId) }} <b>{{ match.state.usage[c.entityId] || 0 }}/3</b
+                ><small
+                  >{{ roleText(c.fromTypes ?? c.types) }}
+                  @if (c.toTypes && roleText(c.toTypes) !== roleText(c.fromTypes ?? c.types)) {
+                    → {{ roleText(c.toTypes) }}
+                  }
+                </small></span
+              >
+            }
+          </div>
+        }
+        @if (dataset(); as data) {
+          @for (version of [match.state.version]; track version) {
+            <form class="ll-answer-form" (submit)="$event.preventDefault(); submit()">
+              <app-game-search
+                [category]="match.category"
+                [games]="data.games"
+                [played]="match.state.history"
+                [disabled]="!myTurn || busy()"
+                (selected)="selected.set($event)"
+              /><button
+                class="ll-lock-answer"
+                type="submit"
+                [disabled]="!myTurn || !selected() || busy()"
+              >
+                {{ busy() ? 'Checking…' : 'Lock it in' }} <span aria-hidden="true">↗</span>
+              </button>
+            </form>
+          }
+        }
+        <p class="ll-answer-hint">
+          {{
+            myTurn
+              ? 'Invalid answer? Keep going. The clock doesn’t reset.'
+              : 'Stay sharp. You’re up next.'
+          }}
+        </p>
+      </section>
+      <aside class="ll-credit-rail" aria-labelledby="credits-title">
+        <div class="ll-rail-heading">
+          <div>
+            <span class="ll-small-label">SHARED BY BOTH PLAYERS</span>
+            <h2 id="credits-title">Watch your links.</h2>
+          </div>
+          <span class="ll-three-icon" aria-hidden="true">● ● ●</span>
+        </div>
+        <p>
+          Three uses per connector.<br />
+          An exhausted one blocks the whole move.
+        </p>
+        <div class="ll-credit-list">
+          @for (c of usage; track c.id) {
+            <div
+              class="ll-credit-row"
+              [class.ll-credit-warning]="c.count === 2"
+              [class.ll-credit-out]="c.count >= 3"
+            >
+              <div>
+                <strong>{{ c.name }}</strong
+                ><small>{{
+                  c.count >= 3 ? 'EXHAUSTED' : c.count === 2 ? 'ONE USE LEFT' : 'IN PLAY'
+                }}</small>
+              </div>
+              <span class="ll-use-dots" aria-hidden="true"
+                ><i [class.filled]="c.count >= 1"></i><i [class.filled]="c.count >= 2"></i
+                ><i [class.filled]="c.count >= 3"></i></span
+              ><b>{{ c.count }}/3</b>
+            </div>
+          } @empty {
+            <p class="ll-no-counters">A clean slate. No credits used yet.</p>
+          }
+        </div>
+        <div class="ll-trap-tip">
+          <span aria-hidden="true">↳</span>
+          <p>
+            <strong>Yes, you can leave a trap.</strong><br />No legal reply? The clock keeps
+            running.
+          </p>
+        </div>
+      </aside>
+      <section class="ll-match-history" aria-labelledby="chain-title">
+        <div class="ll-history-heading">
+          <h2 id="chain-title">The chain so far<span>.</span></h2>
+          <span>NEWEST FIRST</span>
+        </div>
+        <ol>
+          @for (turn of match.turns.slice().reverse(); track turn.index) {
+            <li [class.ll-latest-turn]="turn.index === match.state.version">
+              <span class="ll-turn-index">{{ turn.index.toString().padStart(2, '0') }}</span>
+              <div class="ll-history-entry">
+                <div>
+                  <strong>{{ title(turn.entryId) }}</strong
+                  ><span>{{ player(turn.playerId) }}</span>
+                </div>
+                <p>
+                  @for (c of turn.connectors; track c.entityId) {
+                    <span
+                      >{{ connector(c.entityId)
+                      }}<small
+                        >{{ roleText(c.fromTypes ?? c.types) }}
+                        @if (
+                          c.toTypes && roleText(c.toTypes) !== roleText(c.fromTypes ?? c.types)
+                        ) {
+                          → {{ roleText(c.toTypes) }}
+                        }
+                      </small></span
+                    >
+                  } @empty {
+                    <span class="ll-opening-label">Server-selected opening</span>
+                  }
+                </p>
+              </div>
+            </li>
+          }
+        </ol>
+      </section>
+    </div>
+  </section>
+} @else {
+  <section class="page-head">
+    <span class="eyebrow">Joining the arena</span>
+    <h1>Finding your match…</h1>
+    @if (error() || game.error()) {
+      <p class="notice error" role="alert">{{ error() || game.error() }}</p>
+      <a [routerLink]="links.to('/rooms')" class="text-link">Back to rooms →</a>
+    }
+  </section>
+}

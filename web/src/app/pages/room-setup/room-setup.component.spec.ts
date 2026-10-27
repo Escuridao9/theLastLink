@@ -3,7 +3,42 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router, withComponentInputBinding } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { routes } from '../../app.routes';
+import type { Routes } from '@angular/router';
+
+// Explicit routes keep these component regression tests independent of app navigation.
+const componentRoutes: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    title: 'The Last Link — One life. Make it count.',
+    loadComponent: () => import('../home/home.component').then((module) => module.Home),
+  },
+  {
+    path: 'play',
+    pathMatch: 'full',
+    title: 'Choose your category — The Last Link',
+    loadComponent: () =>
+      import('../category-selection/category-selection.component').then(
+        (module) => module.CategorySelection,
+      ),
+  },
+  {
+    path: 'play/:categoryId',
+    title: 'Set up your room — The Last Link',
+    loadComponent: () =>
+      import('../room-setup/room-setup.component').then((module) => module.RoomSetup),
+  },
+  {
+    path: 'rooms/:roomId',
+    title: 'Your lobby — The Last Link',
+    loadComponent: () => import('../lobby/lobby.component').then((module) => module.Lobby),
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
+];
+
 import { AuthService } from '../../core/services/auth.service';
 import { RoomService } from '../../core/services/room.service';
 import { RoomSetup } from './room-setup.component';
@@ -32,7 +67,7 @@ describe('Room setup', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        provideRouter(routes, withComponentInputBinding()),
+        provideRouter(componentRoutes, withComponentInputBinding()),
         {
           provide: RoomService,
           useValue: { createRoom, joinRoom },

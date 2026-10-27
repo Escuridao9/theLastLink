@@ -1,0 +1,218 @@
+<section class="ll-page ll-catalogue-page">
+  <header class="ll-page-heading ll-catalogue-heading">
+    <div>
+      <span class="ll-label">THE SCOUTING ROOM</span>
+      <h1>Know your<br /><em>escape routes.</em></h1>
+      <p>Study the credits. Spot a connection. Set a trap.</p>
+    </div>
+    <a
+      class="ll-action ll-action-outline"
+      [routerLink]="links.to('/rooms')"
+      [queryParams]="{ category: category() }"
+      >Challenge a friend <span aria-hidden="true">↗</span></a
+    >
+  </header>
+  <nav class="ll-tabs" aria-label="Catalogue category">
+    <a
+      [routerLink]="links.to('/catalogue')"
+      [queryParams]="{ category: 'movies' }"
+      [class.active]="category() === 'movies'"
+      [attr.aria-current]="category() === 'movies' ? 'page' : null"
+      >01 <strong>Movies</strong></a
+    ><a
+      [routerLink]="links.to('/catalogue')"
+      [queryParams]="{ category: 'games' }"
+      [class.active]="category() === 'games'"
+      [attr.aria-current]="category() === 'games' ? 'page' : null"
+      >02 <strong>Games</strong></a
+    ><span aria-disabled="true">03 <strong>Music</strong><small>SOON</small></span>
+  </nav>
+  @if (loading()) {
+    <div class="ll-catalogue-loading" role="status">
+      <h2>Opening the rabbit hole…</h2>
+      <p>Loading the published catalogue.</p>
+      <div class="ll-skeletons" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    </div>
+  }
+  @if (error()) {
+    <div class="ll-note ll-note-error" role="alert">
+      <strong>We lost the thread.</strong>
+      <p>{{ error() }}</p>
+      <button class="ll-action ll-action-outline" (click)="load()">Try again ↗</button>
+    </div>
+  }
+  @if (dataset(); as data) {
+    <div class="ll-library-toolbar">
+      <label class="ll-library-search"
+        ><span class="sr-only">Search catalogue</span><span aria-hidden="true">⌕</span
+        ><input
+          #catalogueSearch
+          type="search"
+          [(ngModel)]="query"
+          (ngModelChange)="limit = 36"
+          placeholder="Search a title or release year…"
+      /></label>
+      @if (genres.length) {
+        <label class="ll-genre"
+          ><span class="sr-only">Filter genre</span
+          ><select [(ngModel)]="genre" (ngModelChange)="limit = 36">
+            <option value="">All genres</option>
+            @for (g of genres; track g) {
+              <option [value]="g">{{ g }}</option>
+            }
+          </select></label
+        >
+      }
+      <span class="ll-title-count" role="status"
+        >{{ filtered.length | number }}
+        <small>{{ category() === 'movies' ? 'FILMS' : 'GAMES' }}</small></span
+      >
+    </div>
+    <div class="ll-library-layout">
+      <div class="ll-title-browser">
+        <div class="ll-title-list">
+          @for (entry of visible; track entry.id) {
+            <app-game-card
+              [game]="entry"
+              [selected]="selected()?.id === entry.id"
+              (inspect)="inspect($event)"
+            />
+          } @empty {
+            <div class="ll-empty-state" role="status">
+              <span aria-hidden="true">⌕</span>
+              <h2>No link here. Yet.</h2>
+              @if (data.games.length) {
+                <p>
+                  No titles match {{ query ? '“' + query + '”' : 'these filters'
+                  }}{{ genre ? ' in ' + genre : '' }}. Try another title or year.
+                </p>
+                <button
+                  class="ll-action ll-action-outline"
+                  (click)="query = ''; genre = ''; limit = 36"
+                >
+                  Clear filters ↗
+                </button>
+              } @else {
+                <p>
+                  There are no published titles in this category to browse right now. Try the other
+                  arena.
+                </p>
+                <a
+                  class="ll-action ll-action-outline"
+                  [routerLink]="links.to('/catalogue')"
+                  [queryParams]="{ category: category() === 'games' ? 'movies' : 'games' }"
+                  >Explore {{ category() === 'games' ? 'Movies' : 'Games' }} ↗</a
+                >
+              }
+            </div>
+          }
+        </div>
+        @if (visible.length < filtered.length) {
+          <button class="ll-action ll-action-outline ll-load-more" (click)="limit = limit + 36">
+            More rabbit hole <span aria-hidden="true">↓</span>
+          </button>
+        }
+      </div>
+      <aside
+        #detailPanel
+        id="catalogue-credits"
+        class="ll-credit-detail"
+        tabindex="-1"
+        aria-label="Selected title credits"
+      >
+        @if (selected(); as entry) {
+          <button
+            class="ll-back ll-back-titles"
+            (click)="selected.set(null); catalogueSearch.focus()"
+          >
+            ← Back to titles</button
+          ><span class="ll-label"
+            >{{ entry.releaseYear }} /
+            {{ category() === 'movies' ? 'MOVIE' : 'GAME' }} CREDITS</span
+          >
+          <h2>{{ entry.title }}</h2>
+          @if (detailLoading()) {
+            <p role="status">Loading credits…</p>
+            <div class="ll-loading-bar" aria-hidden="true"></div>
+          }
+          @if (detailError()) {
+            <div class="ll-note ll-note-error" role="alert">
+              <p>{{ detailError() }}</p>
+              <button class="ll-inline-link" (click)="inspect(entry)">Retry credits ↗</button>
+            </div>
+          }
+          @if (!detailLoading() && !detailError()) {
+            <div
+              class="ll-credit-role-picks"
+              role="group"
+              aria-label="Browse eligible credit roles"
+            >
+              @for (role of roles; track role) {
+                <button
+                  type="button"
+                  [class.active]="activeRole() === role"
+                  [attr.aria-pressed]="activeRole() === role"
+                  (click)="activeRole.set(role)"
+                >
+                  {{ labels[role] }} <small>{{ entry.credits[role]?.length ?? 0 }}</small>
+                </button>
+              }
+            </div>
+            @for (role of roles; track role) {
+              @if (activeRole() === role) {
+                <h3>
+                  <span class="ll-role-dot" [attr.data-role]="role" aria-hidden="true"></span
+                  >{{ labels[role] }}
+                </h3>
+                <ul class="ll-credit-names">
+                  @for (credit of creditsFor(entry, role); track credit.entityId) {
+                    <li>
+                      <a [href]="source(credit.entityId)" target="_blank" rel="noopener noreferrer"
+                        >{{ person(credit.entityId)?.name ?? credit.entityId }}
+                        <span aria-hidden="true">↗</span
+                        ><span class="sr-only"> (source, opens in new tab)</span></a
+                      >
+                      @if (jobs(credit)) {
+                        <small>{{ jobs(credit) }}</small>
+                      }
+                    </li>
+                  } @empty {
+                    <li class="ll-footnote">Not observed in this version. Coverage unknown.</li>
+                  }
+                </ul>
+              }
+            }
+          }
+          <p class="ll-detail-note">
+            Published credits define playable connections. A missing credit means unknown coverage,
+            not real-world absence.
+          </p>
+        } @else {
+          <div class="ll-detail-arrow" aria-hidden="true">↖</div>
+          <span class="ll-label">THE THREAD IS IN THE CREDITS</span>
+          <h2>Pick a title.<br />Find an edge.</h2>
+          <p>
+            {{
+              category() === 'movies'
+                ? 'Explore actors, directors, writers, composers and cinematographers. One person can link different roles.'
+                : 'Explore developers, composers, voice actors and recurring characters. Games connect through the same eligible role.'
+            }}
+          </p>
+          <span class="ll-detail-dots" aria-hidden="true">● ● ●</span>
+          <p class="ll-footnote">
+            Each shared connector has three uses across both players. Every shared credit counts.
+          </p>
+        }
+      </aside>
+    </div>
+    <p class="ll-catalogue-version">
+      {{ data.datasetId }}
+      @if (data.sourceDate) {
+        · TMDB source: {{ data.sourceDate }} · Machine validated; credits may be incomplete.
+      } @else {
+        · Selected reviewed Games credits · Wikidata CC0; Wikipedia-derived additions CC BY-SA 4.0.
+      }
+      <a [routerLink]="links.to('/credits')">Data & attribution ↗</a>
+    </p>
+  }
+</section>

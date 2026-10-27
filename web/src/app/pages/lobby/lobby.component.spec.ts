@@ -9,7 +9,42 @@ import {
   it,
   vi,
 } from 'vitest';
-import { routes } from '../../app.routes';
+import type { Routes } from '@angular/router';
+
+// Explicit routes keep these component regression tests independent of app navigation.
+const componentRoutes: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    title: 'The Last Link — One life. Make it count.',
+    loadComponent: () => import('../home/home.component').then((module) => module.Home),
+  },
+  {
+    path: 'play',
+    pathMatch: 'full',
+    title: 'Choose your category — The Last Link',
+    loadComponent: () =>
+      import('../category-selection/category-selection.component').then(
+        (module) => module.CategorySelection,
+      ),
+  },
+  {
+    path: 'play/:categoryId',
+    title: 'Set up your room — The Last Link',
+    loadComponent: () =>
+      import('../room-setup/room-setup.component').then((module) => module.RoomSetup),
+  },
+  {
+    path: 'rooms/:roomId',
+    title: 'Your lobby — The Last Link',
+    loadComponent: () => import('../lobby/lobby.component').then((module) => module.Lobby),
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
+];
+
 import type { LobbyRoom } from '../../core/models/room';
 import { AuthService } from '../../core/services/auth.service';
 import { LobbyService } from '../../core/services/lobby.service';
@@ -50,7 +85,7 @@ describe('Lobby', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        provideRouter(routes),
+        provideRouter(componentRoutes),
         {
           provide: LobbyService,
           useValue: { load, watch },

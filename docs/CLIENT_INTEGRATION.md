@@ -75,3 +75,8 @@ transport errors, publication pinning, HTTP retries, static asset paths, stale
 snapshots, and Realtime cleanup. Its Auth, database, and Realtime responses are
 test doubles. It does not certify hosted two-player behavior; verify that
 separately with two independent browser sessions.
+
+## Interface and live verification
+
+See [UI and multiplayer](UI_AND_MULTIPLAYER.md) for routes, the isolated visual
+preview, and the two-player verification journey.

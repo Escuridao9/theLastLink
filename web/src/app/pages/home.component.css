@@ -1,0 +1,637 @@
+app-home {
+  display: block;
+  font-family: 'Bricolage Grotesque', Arial, sans-serif;
+  color: var(--ll-cream);
+}
+app-home .ll-home-hero {
+  display: grid;
+  grid-template-columns: 1.08fr 1fr;
+  gap: 35px;
+  align-items: center;
+  padding: 66px 0 70px;
+}
+app-home .ll-kicker {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--ll-quiet);
+  margin: 0 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+app-home .ll-kicker > span {
+  width: 7px;
+  height: 7px;
+  background: var(--ll-coral);
+  border-radius: 50%;
+}
+app-home h1,
+app-home h2,
+app-home h3 {
+  font-family: inherit;
+  font-weight: 800;
+  letter-spacing: -1.6px;
+}
+app-home h1 {
+  font-size: clamp(52px, 6.4vw, 83px);
+  line-height: 1.02;
+  margin: 0 0 25px;
+  letter-spacing: -4.2px;
+}
+app-home h1 em {
+  color: var(--ll-coral);
+  font-style: normal;
+  position: relative;
+}
+app-home h1 em:after {
+  content: '';
+  position: absolute;
+  height: 4px;
+  background: var(--ll-coral);
+  left: 2px;
+  right: 0;
+  bottom: -7px;
+  transform: rotate(-2deg);
+}
+app-home .ll-intro {
+  font-size: 18px;
+  line-height: 1.55;
+  color: #beb5bc;
+  margin-bottom: 28px;
+}
+app-home .ll-play-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 55px;
+  background: var(--ll-coral);
+  color: #20151a;
+  padding: 16px 24px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 18px;
+  box-shadow: 0 4px 0 #803e37;
+  transition: transform 0.15s;
+}
+app-home .ll-play-button:hover {
+  transform: translateY(-2px);
+}
+app-home .ll-play-button > span {
+  font-size: 28px;
+  line-height: 1;
+}
+app-home .ll-rules-link {
+  font-size: 12px;
+  display: inline-block;
+  color: var(--ll-cream);
+  margin-left: 22px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+app-home .ll-hero-facts {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  color: #a99da7;
+  font-size: 11px;
+  margin-top: 27px;
+}
+app-home .ll-hero-facts i {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #786b77;
+}
+app-home .ll-hero-art {
+  height: 400px;
+  position: relative;
+  max-width: 530px;
+  width: 100%;
+  justify-self: end;
+}
+app-home .ll-art-caption {
+  position: absolute;
+  top: 2px;
+  left: 22px;
+  font-size: 9px;
+  letter-spacing: 1.7px;
+  color: #a99da7;
+  font-weight: 700;
+}
+app-home .ll-film-slip {
+  position: absolute;
+  padding: 27px 28px;
+  width: 210px;
+  height: 285px;
+  color: #251e25;
+  border-radius: 7px;
+  background: var(--ll-cream);
+  box-shadow: 7px 9px 0 #0003;
+  overflow: hidden;
+}
+app-home .ll-film-slip:after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 16px;
+  border-bottom: 2px dashed #251e2540;
+}
+app-home .ll-film-slip small {
+  display: block;
+  font-weight: 800;
+  font-size: 8px;
+  letter-spacing: 1.2px;
+  margin-bottom: 32px;
+}
+app-home .ll-film-slip strong {
+  font-size: 42px;
+  line-height: 0.95;
+  letter-spacing: -2px;
+  font-weight: 800;
+  display: block;
+}
+app-home .ll-film-slip > span {
+  font-size: 15px;
+  display: block;
+  margin-top: 9px;
+}
+app-home .ll-film-slip > b {
+  position: absolute;
+  right: 22px;
+  bottom: 30px;
+  font-size: 30px;
+  opacity: 0.25;
+}
+app-home .ll-jaws {
+  top: 44px;
+  left: 10px;
+  transform: rotate(-10deg);
+  background: #b7c4ad;
+}
+app-home .ll-jurassic {
+  right: 4px;
+  top: 91px;
+  transform: rotate(9deg);
+}
+app-home .ll-shark-fin {
+  width: 58px;
+  height: 55px;
+  background: #273d35;
+  clip-path: polygon(90% 0, 100% 100%, 0 100%);
+  transform: rotate(-10deg);
+  margin-top: 23px;
+}
+app-home .ll-slip-dots {
+  margin-top: 27px;
+  font-size: 18px;
+  letter-spacing: 7px;
+  color: var(--ll-coral);
+}
+app-home .ll-credit-bridge {
+  position: absolute;
+  z-index: 3;
+  top: 111px;
+  left: 169px;
+  transform: rotate(-5deg);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+app-home .ll-credit-bridge > span {
+  font-size: 10px;
+  background: #241b27;
+  color: var(--ll-cream);
+  border: 1px solid #716271;
+  padding: 5px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+app-home .ll-credit-bridge svg {
+  width: 115px;
+  height: 65px;
+  fill: none;
+  stroke: var(--ll-coral);
+  stroke-width: 3;
+  margin: 3px 0 0 8px;
+}
+app-home .ll-time-sticker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ll-coral);
+  color: #261b22;
+  border-radius: 10px;
+  position: absolute;
+  left: 114px;
+  bottom: 15px;
+  z-index: 4;
+  padding: 11px 20px;
+  transform: rotate(-7deg);
+  border: 3px solid #241b27;
+  box-shadow: 0 0 0 2px var(--ll-coral);
+}
+app-home .ll-time-sticker strong {
+  font-size: 54px;
+  line-height: 1;
+  letter-spacing: -4px;
+  font-weight: 800;
+}
+app-home .ll-time-sticker > span {
+  font-size: 11px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+app-home .ll-both-count {
+  position: absolute;
+  bottom: -16px;
+  right: 0;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #a99da7;
+}
+app-home .ll-both-count > span {
+  color: var(--ll-coral);
+  font-size: 20px;
+}
+app-home .ll-arenas {
+  padding: 0 0 54px;
+  scroll-margin-top: 25px;
+}
+app-home .ll-section-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  gap: 15px;
+}
+app-home .ll-section-title h2 {
+  font-size: 29px;
+  margin: 0;
+  letter-spacing: -1px;
+}
+app-home .ll-section-title p {
+  font-size: 12px;
+  color: #a99da7;
+  margin: 0;
+}
+app-home .ll-category-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+app-home .ll-category {
+  border-radius: 12px;
+  padding: 23px 24px 20px;
+  color: #281d27;
+  min-width: 0;
+  transition: transform 0.18s;
+}
+app-home .ll-category:hover:is(a) {
+  transform: translateY(-5px);
+}
+app-home .ll-movies {
+  background: var(--ll-coral);
+}
+app-home .ll-games {
+  background: var(--ll-lilac);
+}
+app-home .ll-music {
+  background: #2c2730;
+  color: #a89baa;
+  border: 1px dashed #544755;
+}
+app-home .ll-category-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  gap: 10px;
+}
+app-home .ll-category-top small {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+app-home .ll-category-icon {
+  font-size: 32px;
+  line-height: 1;
+}
+app-home .ll-game-icon {
+  font-size: 29px;
+}
+app-home .ll-category h3 {
+  font-size: 36px;
+  letter-spacing: -1.5px;
+  margin: 0 0 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+app-home .ll-category h3 > span {
+  font-size: 28px;
+}
+app-home .ll-category p {
+  color: inherit;
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0 0 22px;
+}
+app-home .ll-category-foot {
+  display: block;
+  padding-top: 13px;
+  border-top: 1px solid #281d2735;
+  font-size: 9px;
+  line-height: 1.6;
+  font-weight: 600;
+}
+app-home .ll-music .ll-category-foot {
+  border-color: #544755;
+}
+app-home .ll-quick-rules {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 60px;
+  padding: 44px 0 10px;
+  border-top: 1px solid #433845;
+}
+app-home .ll-rules-heading .ll-kicker {
+  margin-bottom: 13px;
+}
+app-home .ll-rules-heading h2 {
+  font-size: 33px;
+  line-height: 1.1;
+  margin: 0 0 16px;
+  letter-spacing: -1.2px;
+}
+app-home .ll-rules-heading > p:last-child {
+  font-size: 12px;
+  color: var(--ll-coral);
+}
+app-home .ll-quick-rules ol {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+app-home .ll-quick-rules li {
+  display: flex;
+  gap: 20px;
+  padding: 0 0 20px;
+}
+app-home .ll-quick-rules li > span {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ll-coral);
+  padding-top: 3px;
+}
+app-home .ll-quick-rules h3 {
+  font-size: 17px;
+  letter-spacing: -0.4px;
+  margin: 0 0 6px;
+}
+app-home .ll-quick-rules li p {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #ab9faa;
+  margin: 0;
+  max-width: 440px;
+}
+@media (max-width: 1000px) {
+  app-home .ll-home-hero {
+    gap: 15px;
+    padding-top: 45px;
+  }
+  app-home h1 {
+    font-size: 65px;
+    letter-spacing: -3.7px;
+  }
+  app-home .ll-hero-art {
+    transform: scale(0.86);
+    transform-origin: center right;
+    margin-left: -30px;
+    width: 430px;
+  }
+  app-home .ll-rules-link {
+    display: block;
+    margin: 23px 0 0;
+  }
+  app-home .ll-category {
+    padding: 20px;
+  }
+  app-home .ll-category-top small {
+    font-size: 7px;
+  }
+  app-home .ll-category-foot {
+    font-size: 8px;
+  }
+}
+@media (max-width: 700px) {
+  app-home .ll-home-hero {
+    grid-template-columns: 1fr;
+    padding: 36px 0 32px;
+    gap: 22px;
+  }
+  app-home .ll-kicker {
+    font-size: 8px;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+  app-home h1 {
+    font-size: 57px;
+    letter-spacing: -3px;
+    line-height: 1.02;
+    margin-bottom: 22px;
+  }
+  app-home .ll-intro {
+    font-size: 16px;
+    margin-bottom: 22px;
+  }
+  app-home .ll-play-button {
+    font-size: 16px;
+    gap: 50px;
+    padding: 14px 23px;
+    min-height: 50px;
+  }
+  app-home .ll-rules-link {
+    display: inline-block;
+    margin: 0 0 0 18px;
+    font-size: 10px;
+    max-width: 90px;
+    vertical-align: middle;
+    line-height: 1.5;
+  }
+  app-home .ll-hero-facts {
+    font-size: 9px;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  app-home .ll-hero-art {
+    transform: none;
+    margin: 0;
+    height: 285px;
+    max-width: 350px;
+    width: 100%;
+    justify-self: center;
+  }
+  app-home .ll-art-caption {
+    font-size: 7px;
+    left: 5px;
+    top: 0;
+    letter-spacing: 1px;
+  }
+  app-home .ll-film-slip {
+    width: 150px;
+    height: 208px;
+    padding: 19px 22px;
+  }
+  app-home .ll-film-slip small {
+    font-size: 6px;
+    margin-bottom: 24px;
+  }
+  app-home .ll-film-slip strong {
+    font-size: 32px;
+    letter-spacing: -1.5px;
+  }
+  app-home .ll-film-slip > span {
+    font-size: 12px;
+    margin-top: 6px;
+  }
+  app-home .ll-film-slip > b {
+    font-size: 23px;
+    bottom: 24px;
+    right: 20px;
+  }
+  app-home .ll-jaws {
+    left: 4px;
+    top: 32px;
+  }
+  app-home .ll-jurassic {
+    right: 2px;
+    top: 65px;
+  }
+  app-home .ll-shark-fin {
+    width: 44px;
+    height: 40px;
+    margin-top: 17px;
+  }
+  app-home .ll-slip-dots {
+    font-size: 13px;
+    margin-top: 18px;
+    letter-spacing: 5px;
+  }
+  app-home .ll-credit-bridge {
+    top: 82px;
+    left: 112px;
+  }
+  app-home .ll-credit-bridge > span {
+    font-size: 7px;
+    padding: 4px 6px;
+  }
+  app-home .ll-credit-bridge svg {
+    height: 45px;
+    width: 80px;
+  }
+  app-home .ll-time-sticker {
+    left: 72px;
+    bottom: 8px;
+    padding: 8px 14px;
+    gap: 8px;
+    border-width: 2px;
+    border-radius: 7px;
+  }
+  app-home .ll-time-sticker strong {
+    font-size: 38px;
+    letter-spacing: -2px;
+  }
+  app-home .ll-time-sticker > span {
+    font-size: 8px;
+  }
+  app-home .ll-both-count {
+    font-size: 6px;
+    bottom: -16px;
+    right: 0;
+    letter-spacing: 0.4px;
+  }
+  app-home .ll-both-count > span {
+    font-size: 15px;
+  }
+  app-home .ll-section-title {
+    display: block;
+    margin-bottom: 18px;
+  }
+  app-home .ll-section-title h2 {
+    font-size: 26px;
+  }
+  app-home .ll-section-title p {
+    margin-top: 7px;
+    font-size: 11px;
+  }
+  app-home .ll-category-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  app-home .ll-category {
+    padding: 19px 21px;
+    position: relative;
+  }
+  app-home .ll-category-top {
+    margin-bottom: 10px;
+  }
+  app-home .ll-category-top small {
+    font-size: 8px;
+  }
+  app-home .ll-category-icon {
+    font-size: 26px;
+  }
+  app-home .ll-category h3 {
+    font-size: 31px;
+    margin: 0 0 6px;
+  }
+  app-home .ll-category p {
+    margin-bottom: 13px;
+    font-size: 12px;
+  }
+  app-home .ll-category-foot {
+    font-size: 9px;
+    padding-top: 11px;
+  }
+  app-home .ll-arenas {
+    padding-bottom: 34px;
+  }
+  app-home .ll-quick-rules {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding-top: 28px;
+  }
+  app-home .ll-rules-heading h2 {
+    font-size: 29px;
+  }
+  app-home .ll-rules-heading h2 br {
+    display: none;
+  }
+  app-home .ll-rules-heading > p:last-child {
+    display: none;
+  }
+  app-home .ll-quick-rules li {
+    gap: 17px;
+    padding-bottom: 21px;
+  }
+  app-home .ll-quick-rules h3 {
+    font-size: 17px;
+  }
+  app-home .ll-quick-rules li p {
+    font-size: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  app-home .ll-play-button,
+  app-home .ll-category {
+    transition: none;
+  }
+}
+/* Keep the title inside its illustrated ticket at narrow widths. */
+app-home .ll-jurassic strong { font-size: 35px; letter-spacing: -1.8px; }
+@media (max-width: 700px) { app-home .ll-jurassic strong { font-size: 24px; letter-spacing: -1.3px; } }

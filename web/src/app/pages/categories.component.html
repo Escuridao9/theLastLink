@@ -1,0 +1,44 @@
+<section class="ll-page ll-pick-page" aria-labelledby="pick-title">
+  <a class="ll-back" [routerLink]="links.to('/')">← Back to the good stuff</a>
+  <header class="ll-page-heading">
+    <span class="ll-label">01 / CHOOSE YOUR ARENA</span>
+    <h1 id="pick-title">What’s your<br /><em>unfair advantage?</em></h1>
+    <p>Pick an obsession. Bring a friend. Try to stay friends.</p>
+  </header>
+  <div class="ll-arena-choices">
+    <a
+      class="ll-arena-choice ll-choice-movies"
+      [routerLink]="links.to('/rooms')"
+      [queryParams]="{ category: 'movies' }"
+    >
+      <span class="ll-choice-number">01 <b aria-hidden="true">▥</b></span>
+      <h2>Movies<span aria-hidden="true">↗</span></h2>
+      <p>That “I know them from somewhere” moment is finally useful.</p>
+      <div class="ll-choice-roles">
+        Actors · Directors · Writers<br />Composers · Cinematographers
+      </div>
+      <strong>Set up a Movies room <span aria-hidden="true">→</span></strong>
+    </a>
+    <a
+      class="ll-arena-choice ll-choice-games"
+      [routerLink]="links.to('/rooms')"
+      [queryParams]="{ category: 'games' }"
+    >
+      <span class="ll-choice-number">02 <b aria-hidden="true">✚</b></span>
+      <h2>Games<span aria-hidden="true">↗</span></h2>
+      <p>You didn’t spend all those hours for nothing.</p>
+      <div class="ll-choice-roles">Developers · Composers<br />Voice actors · Characters</div>
+      <strong>Set up a Games room <span aria-hidden="true">→</span></strong>
+    </a>
+    <section class="ll-arena-choice ll-choice-music" aria-labelledby="music-title">
+      <span class="ll-choice-number">03 <b aria-hidden="true">♫</b></span>
+      <h2 id="music-title">Music<span aria-hidden="true">⌁</span></h2>
+      <p>We’re still putting the playlist together.</p>
+      <div class="ll-choice-roles">A new rabbit hole.<br />Same last-link energy.</div>
+      <button type="button" disabled>Coming soon</button>
+    </section>
+  </div>
+  <p class="ll-footnote">
+    Same stakes everywhere: 1 life · 20 seconds · 3 uses per shared connector.
+  </p>
+</section>

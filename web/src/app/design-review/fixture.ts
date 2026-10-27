@@ -1,0 +1,346 @@
+// Design fixture only. Real published films; history replayed through the unchanged engine.
+export const REVIEW_DATASET = {
+  datasetId: 'movies-tmdb-2017-v1',
+  category: 'movies',
+  entities: {
+    'tmdb:person:2157': {
+      id: 'tmdb:person:2157',
+      name: 'Robin Williams',
+      aliases: [],
+      externalIds: {
+        tmdb: 2157,
+      },
+    },
+    'tmdb:person:2690': {
+      id: 'tmdb:person:2690',
+      name: 'Peter Weir',
+      aliases: [],
+      externalIds: {
+        tmdb: 2690,
+      },
+    },
+    'tmdb:person:228': {
+      id: 'tmdb:person:228',
+      name: 'Ed Harris',
+      aliases: [],
+      externalIds: {
+        tmdb: 228,
+      },
+    },
+    'tmdb:person:31': {
+      id: 'tmdb:person:31',
+      name: 'Tom Hanks',
+      aliases: [],
+      externalIds: {
+        tmdb: 31,
+      },
+    },
+    'tmdb:person:488': {
+      id: 'tmdb:person:488',
+      name: 'Steven Spielberg',
+      aliases: [],
+      externalIds: {
+        tmdb: 488,
+      },
+    },
+    'tmdb:person:491': {
+      id: 'tmdb:person:491',
+      name: 'John Williams',
+      aliases: [],
+      externalIds: {
+        tmdb: 491,
+      },
+    },
+    'tmdb:person:8591': {
+      id: 'tmdb:person:8591',
+      name: 'Ted Grossman',
+      aliases: [],
+      externalIds: {
+        tmdb: 8591,
+      },
+    },
+  },
+  games: [
+    {
+      id: 'tmdb:movie:85',
+      category: 'movies',
+      title: 'Raiders of the Lost Ark',
+      releaseYear: 1981,
+      credits: {},
+    },
+    {
+      id: 'tmdb:movie:177',
+      category: 'movies',
+      title: 'The Fisher King',
+      releaseYear: 1991,
+      credits: {},
+    },
+    {
+      id: 'tmdb:movie:207',
+      category: 'movies',
+      title: 'Dead Poets Society',
+      releaseYear: 1989,
+      credits: {},
+    },
+    {
+      id: 'tmdb:movie:329',
+      category: 'movies',
+      title: 'Jurassic Park',
+      releaseYear: 1993,
+      credits: {},
+    },
+    {
+      id: 'tmdb:movie:330',
+      category: 'movies',
+      title: 'The Lost World: Jurassic Park',
+      releaseYear: 1997,
+      credits: {},
+    },
+    {
+      id: 'tmdb:movie:489',
+      category: 'movies',
+      title: 'Good Will Hunting',
+      releaseYear: 1997,
+      credits: {},
+    },
+    {
+      id: 'tmdb:movie:568',
+      category: 'movies',
+      title: 'Apollo 13',
+      releaseYear: 1995,
+      credits: {},
+    },
+    {
+      id: 'tmdb:movie:578',
+      category: 'movies',
+      title: 'Jaws',
+      releaseYear: 1975,
+      credits: {},
+    },
+    {
+      id: 'tmdb:movie:602',
+      category: 'movies',
+      title: 'Independence Day',
+      releaseYear: 1996,
+      credits: {},
+    },
+    {
+      id: 'tmdb:movie:857',
+      category: 'movies',
+      title: 'Saving Private Ryan',
+      releaseYear: 1998,
+      credits: {},
+    },
+    {
+      id: 'tmdb:movie:37165',
+      category: 'movies',
+      title: 'The Truman Show',
+      releaseYear: 1998,
+      credits: {},
+    },
+    {
+      id: 'tmdb:movie:47933',
+      category: 'movies',
+      title: 'Independence Day: Resurgence',
+      releaseYear: 2016,
+      credits: {},
+    },
+    {
+      id: 'tmdb:movie:120467',
+      category: 'movies',
+      title: 'The Grand Budapest Hotel',
+      releaseYear: 2014,
+      credits: {},
+    },
+    {
+      id: 'tmdb:movie:135397',
+      category: 'movies',
+      title: 'Jurassic World',
+      releaseYear: 2015,
+      credits: {},
+    },
+  ],
+};
+export const REVIEW_STATE = {
+  datasetId: 'movies-tmdb-2017-v1',
+  category: 'movies',
+  currentGameId: 'tmdb:movie:329',
+  history: [
+    'tmdb:movie:177',
+    'tmdb:movie:489',
+    'tmdb:movie:207',
+    'tmdb:movie:37165',
+    'tmdb:movie:568',
+    'tmdb:movie:857',
+    'tmdb:movie:578',
+    'tmdb:movie:85',
+    'tmdb:movie:329',
+  ],
+  usage: {
+    'tmdb:person:2157': 2,
+    'tmdb:person:2690': 1,
+    'tmdb:person:228': 1,
+    'tmdb:person:31': 1,
+    'tmdb:person:488': 3,
+    'tmdb:person:491': 3,
+    'tmdb:person:8591': 1,
+  },
+  version: 8,
+};
+export const REVIEW_TURNS = [
+  {
+    index: 0,
+    playerId: null,
+    entryId: 'tmdb:movie:177',
+    connectors: [],
+    acceptedAt: '2026-10-22T12:00:00Z',
+  },
+  {
+    index: 1,
+    playerId: 'preview-diogo',
+    entryId: 'tmdb:movie:489',
+    connectors: [
+      {
+        entityId: 'tmdb:person:2157',
+        types: ['actor'],
+        fromTypes: ['actor'],
+        toTypes: ['actor'],
+        name: 'Robin Williams',
+      },
+    ],
+    acceptedAt: '2026-10-22T12:00:09.000Z',
+  },
+  {
+    index: 2,
+    playerId: 'preview-alex',
+    entryId: 'tmdb:movie:207',
+    connectors: [
+      {
+        entityId: 'tmdb:person:2157',
+        types: ['actor'],
+        fromTypes: ['actor'],
+        toTypes: ['actor'],
+        name: 'Robin Williams',
+      },
+    ],
+    acceptedAt: '2026-10-22T12:00:18.000Z',
+  },
+  {
+    index: 3,
+    playerId: 'preview-diogo',
+    entryId: 'tmdb:movie:37165',
+    connectors: [
+      {
+        entityId: 'tmdb:person:2690',
+        types: ['director'],
+        fromTypes: ['director'],
+        toTypes: ['director'],
+        name: 'Peter Weir',
+      },
+    ],
+    acceptedAt: '2026-10-22T12:00:27.000Z',
+  },
+  {
+    index: 4,
+    playerId: 'preview-alex',
+    entryId: 'tmdb:movie:568',
+    connectors: [
+      {
+        entityId: 'tmdb:person:228',
+        types: ['actor'],
+        fromTypes: ['actor'],
+        toTypes: ['actor'],
+        name: 'Ed Harris',
+      },
+    ],
+    acceptedAt: '2026-10-22T12:00:36.000Z',
+  },
+  {
+    index: 5,
+    playerId: 'preview-diogo',
+    entryId: 'tmdb:movie:857',
+    connectors: [
+      {
+        entityId: 'tmdb:person:31',
+        types: ['actor'],
+        fromTypes: ['actor'],
+        toTypes: ['actor'],
+        name: 'Tom Hanks',
+      },
+    ],
+    acceptedAt: '2026-10-22T12:00:45.000Z',
+  },
+  {
+    index: 6,
+    playerId: 'preview-alex',
+    entryId: 'tmdb:movie:578',
+    connectors: [
+      {
+        entityId: 'tmdb:person:488',
+        types: ['director'],
+        fromTypes: ['director'],
+        toTypes: ['director'],
+        name: 'Steven Spielberg',
+      },
+      {
+        entityId: 'tmdb:person:491',
+        types: ['composer'],
+        fromTypes: ['composer'],
+        toTypes: ['composer'],
+        name: 'John Williams',
+      },
+    ],
+    acceptedAt: '2026-10-22T12:00:54.000Z',
+  },
+  {
+    index: 7,
+    playerId: 'preview-diogo',
+    entryId: 'tmdb:movie:85',
+    connectors: [
+      {
+        entityId: 'tmdb:person:488',
+        types: ['director'],
+        fromTypes: ['director'],
+        toTypes: ['director'],
+        name: 'Steven Spielberg',
+      },
+      {
+        entityId: 'tmdb:person:491',
+        types: ['composer'],
+        fromTypes: ['composer'],
+        toTypes: ['composer'],
+        name: 'John Williams',
+      },
+      {
+        entityId: 'tmdb:person:8591',
+        types: ['actor'],
+        fromTypes: ['actor'],
+        toTypes: ['actor'],
+        name: 'Ted Grossman',
+      },
+    ],
+    acceptedAt: '2026-10-22T12:01:03.000Z',
+  },
+  {
+    index: 8,
+    playerId: 'preview-alex',
+    entryId: 'tmdb:movie:329',
+    connectors: [
+      {
+        entityId: 'tmdb:person:488',
+        types: ['director'],
+        fromTypes: ['director'],
+        toTypes: ['director'],
+        name: 'Steven Spielberg',
+      },
+      {
+        entityId: 'tmdb:person:491',
+        types: ['composer'],
+        fromTypes: ['composer'],
+        toTypes: ['composer'],
+        name: 'John Williams',
+      },
+    ],
+    acceptedAt: '2026-10-22T12:01:12.000Z',
+  },
+];

@@ -1,0 +1,21 @@
+<button
+  class="library-entry"
+  [class.selected]="selected"
+  [attr.aria-pressed]="selected"
+  aria-controls="catalogue-credits"
+  (click)="inspect.emit(game)"
+  [attr.aria-label]="game.title + ' (' + game.releaseYear + ') — inspect credits'"
+>
+  <span class="entry-category-icon" aria-hidden="true">{{
+    game.category === 'movies' ? '▤' : '✚'
+  }}</span
+  ><span class="entry-name"
+    ><strong>{{ game.title }}</strong
+    ><small
+      >{{ game.releaseYear }}
+      @if (game.genres?.length) {
+        · {{ game.genres?.[0] }}
+      }
+    </small></span
+  ><span class="entry-open" aria-hidden="true">↗</span>
+</button>

@@ -1,0 +1,137 @@
+@if (game.match(); as match) {
+  <section class="ll-page ll-result-page" [class.ll-defeat]="!won">
+    <div class="ll-room-meta">
+      <span class="ll-label">{{ categories[match.category] }} / SUDDEN DEATH</span
+      ><span class="ll-label">FINAL RESULT · {{ won ? 'VICTORY' : 'DEFEAT' }}</span>
+    </div>
+    <header class="ll-result-stage">
+      <span class="ll-result-flourish" aria-hidden="true">{{ won ? '✦' : '⌁' }}</span>
+      <div>
+        <span class="ll-label">{{
+          won ? 'NICELY PLAYED. SLIGHTLY RUTHLESS.' : 'EVEN GREAT MINDS GO BLANK.'
+        }}</span>
+        <h1>
+          {{ won ? 'You had the' : 'The chain ends' }}<br /><em>{{
+            won ? 'last link.' : 'here.'
+          }}</em>
+        </h1>
+        <p>
+          <strong>{{ winner }} wins.</strong>
+          {{
+            match.endReason === 'timeout'
+              ? 'The clock had the final say.'
+              : 'The other player conceded.'
+          }}
+        </p>
+      </div>
+      <span class="ll-result-seal"
+        >ONE LIFE.<br /><b>{{ won ? 'WELL PLAYED.' : 'NEXT TIME.' }}</b></span
+      >
+    </header>
+    <div class="ll-result-bottom">
+      <div class="ll-result-stats">
+        <div>
+          <strong>{{ match.state.version }}</strong
+          ><span>CONNECTIONS</span>
+        </div>
+        <div>
+          <strong>{{ match.state.history.length }}</strong
+          ><span>TITLES PLAYED</span>
+        </div>
+        <div>
+          <strong>20<small>s</small></strong
+          ><span>PER TURN</span>
+        </div>
+      </div>
+      <div class="ll-result-actions">
+        <a
+          [routerLink]="links.to('/rooms')"
+          [queryParams]="{ category: match.category }"
+          class="ll-action ll-action-coral"
+          >Another worthy opponent? <span aria-hidden="true">↗</span></a
+        ><a
+          [routerLink]="links.to('/catalogue')"
+          [queryParams]="{ category: match.category }"
+          class="ll-inline-link"
+          >Study the connections →</a
+        >
+      </div>
+    </div>
+    <div class="ll-result-recap">
+      <section>
+        <div class="ll-recap-heading">
+          <h2>A chain worth keeping<span>.</span></h2>
+          <span class="ll-label">FIRST TO LAST</span>
+        </div>
+        <ol class="ll-recap-list">
+          @for (turn of match.turns; track turn.index) {
+            <li>
+              <span>{{ turn.index.toString().padStart(2, '0') }}</span>
+              <div>
+                <strong>{{ title(turn.entryId) }}</strong
+                ><small>{{ player(turn.playerId) }}</small>
+                <p>
+                  @for (c of turn.connectors; track c.entityId) {
+                    <span
+                      >{{ connector(c.entityId) }}
+                      <small
+                        >{{ roleText(c.fromTypes ?? c.types) }}
+                        @if (
+                          c.toTypes && roleText(c.toTypes) !== roleText(c.fromTypes ?? c.types)
+                        ) {
+                          → {{ roleText(c.toTypes) }}
+                        }
+                      </small></span
+                    >
+                  } @empty {
+                    <span>Server-selected opening</span>
+                  }
+                </p>
+              </div>
+            </li>
+          }
+        </ol>
+      </section>
+      <aside class="ll-recap-usage">
+        <span class="ll-label">SHARED BY BOTH PLAYERS</span>
+        <h2>The final tally.</h2>
+        <p>Every shared connector counted.</p>
+        @for (c of usage; track c.id) {
+          <div class="ll-recap-counter" [class.exhausted]="c.count >= 3">
+            <span
+              >{{ c.name
+              }}<small>{{
+                c.count >= 3 ? 'EXHAUSTED' : c.count === 2 ? 'ONE USE LEFT' : 'IN PLAY'
+              }}</small></span
+            ><strong>{{ c.count }}/3</strong>
+          </div>
+        } @empty {
+          <p>No connectors used.</p>
+        }
+      </aside>
+    </div>
+    <p class="ll-footnote">
+      Finished {{ match.endedAt | date: 'medium' }} · Single round · No extra lives.
+    </p>
+    <p class="ll-footnote">
+      {{
+        links.reviewing
+          ? 'Example result only. Nothing is saved to a multiplayer server.'
+          : 'Result saved on the server. Keep this link and the same browser identity to return.'
+      }}
+    </p>
+  </section>
+} @else {
+  <section class="ll-page ll-state-page" role="status">
+    <span class="ll-label">THE CLOCK HAS SPOKEN</span>
+    <h1>Finding the<br /><em>last word…</em></h1>
+    <p>Loading the final match state.</p>
+    <div class="ll-loading-bar" aria-hidden="true"></div>
+  </section>
+}
+@if (error() || game.error()) {
+  <div class="ll-note ll-note-error" role="alert">
+    {{ error() || game.error() }}
+    <a class="ll-inline-link" [routerLink]="links.to('/rooms')">Back to rooms →</a>
+  </div>
+}

@@ -10,7 +10,9 @@
     "test": "node --test test/*.test.ts",
     "typecheck": "tsc --noEmit",
     "typecheck:edge": "node scripts/check-edge.mjs",
-    "verify": "npm run typecheck && npm run typecheck:edge && npm test"
+    "verify": "npm run typecheck && npm run typecheck:edge && npm test",
+    "catalogue:build": "node scripts/build-playable.ts",
+    "pretest": "npm run catalogue:build"
   },
   "devDependencies": {
     "@electric-sql/pglite": "0.5.10",

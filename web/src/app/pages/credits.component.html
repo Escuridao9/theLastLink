@@ -1,0 +1,65 @@
+<div class="credits-page">
+  <section class="page-head">
+    <span class="eyebrow">BEHIND THE CONNECTIONS</span>
+    <h1>DATA.<br /><em>NOT GUESSWORK.</em></h1>
+    <p>
+      The Last Link connects real credits through stable identities. Every match uses one published
+      catalogue version.
+    </p>
+  </section>
+  <section>
+    <img class="tmdb-logo" src="attribution/tmdb.svg" alt="The Movie Database (TMDB)" />
+    <h2>MOVIES / THE MOVIE DATABASE</h2>
+    <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+    <p>
+      Movie data comes from
+      <a href="https://www.themoviedb.org" target="_blank" rel="noopener noreferrer">TMDB</a>,
+      through Kaggle’s TMDB 5000 archive, version 2, dated 28 September 2017. This release imports
+      4,803 films and publishes 3,505 after automated validation. It includes all eligible credits
+      in the source, rather than a top-three cast selection. It is an archived selection, not a
+      current or exhaustive film database.
+    </p>
+    <p>
+      Connections use actors (including credited voices), directors, writers, original score
+      composers and cinematographers. Writers are mapped from Writer, Screenplay, Teleplay, Novel,
+      Book and Short Story. Original Music Composer and Director of Photography are the precise
+      score and camera jobs. Explicitly uncredited cast appearances are excluded.
+    </p>
+    <p>
+      The same TMDB person ID has one identity across eligible roles and a shared three-use
+      allowance. A role need not be the same on both films. Names, titles, genres and fictional
+      characters never create movie connections.
+    </p>
+    <p>
+      Missing source credits remain unknown. Automated validation checks structure and eligibility;
+      it does not independently verify every screen credit. See the project’s MOVIES_DATA_REPORT.md
+      and provenance database for the complete audit.
+    </p>
+    <p>
+      TMDB’s free data use is for noncommercial projects with attribution. Commercial use requires
+      the appropriate TMDB agreement. The archive does not grant a new unrestricted licence.
+    </p>
+  </section>
+  <section>
+    <h2>GAMES / REVIEWED CREDITS</h2>
+    <p>
+      The preserved 35-game playable catalogue uses selected, reviewed credits backed by Wikidata
+      and cited Wikipedia sources. Wikidata structured data is CC0. Wikipedia-derived facts and
+      additions retain English Wikipedia contributor attribution and CC BY-SA 4.0 provenance in the
+      project. The 200-game research collection remains separate from play.
+    </p>
+  </section>
+  <section>
+    <h2>DESIGN & TYPE</h2>
+    <p>
+      The Last Link’s linked mark, ticket, controller and record illustrations are original interface
+      artwork. Bricolage Grotesque is by Mathieu Triay. Anton is by Vernon Adams. Both are
+      distributed under the SIL Open Font License, included with the fonts.
+    </p>
+    <p>
+      CineNerdle inspired the competitive movie-trivia atmosphere. The Last Link is an independent
+      project, with its own branding, 20-second Sudden Death rules, interface and assets.
+    </p>
+    <a [routerLink]="links.to('/')" class="text-link">BACK TO LAST LINK ↗</a>
+  </section>
+</div>

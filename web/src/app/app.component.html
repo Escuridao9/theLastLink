@@ -1,53 +1,44 @@
-<a
-  class="skip-link"
-  href="#main-content"
-  (click)="skipToContent($event)"
->
-  Skip to content
-</a>
-
+<a class="skip-link" href="#main-content" (click)="skipToContent($event)">Skip to content</a>
 <header class="site-header">
-  <a class="wordmark" routerLink="/" aria-label="The Last Link home">
-    <svg
-      class="brand-mark"
-      viewBox="0 0 40 40"
-      aria-hidden="true"
-      focusable="false"
+  <a [routerLink]="links.to('/')" class="wordmark" aria-label="The Last Link home"
+    ><svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+      <rect x="4" y="8" width="23" height="15" rx="7" transform="rotate(-35 15 15)" />
+      <rect x="14" y="18" width="23" height="15" rx="7" transform="rotate(-35 25 25)" /></svg
+    ><span class="wordmark-name"
+      >{{ title }}<span class="brand-stop">.</span><small>ONE LIFE. MAKE IT COUNT.</small></span
+    ></a
+  >
+  <nav aria-label="Main navigation">
+    <a
+      [routerLink]="links.to('/play')"
+      routerLinkActive="current"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Play</a
+    ><a [routerLink]="links.to('/catalogue')" routerLinkActive="current">Explore the catalogue</a>
+    @if (resume(); as matchId) {
+      <a [routerLink]="[links.to('/match'), matchId]">Resume</a>
+    }
+    <a [routerLink]="links.to('/rooms')" class="nav-cta"
+      >Have a room code? <span aria-hidden="true">↗</span></a
     >
-      <rect
-        x="4"
-        y="8"
-        width="23"
-        height="15"
-        rx="7"
-        transform="rotate(-35 15 15)"
-      />
-      <rect
-        x="14"
-        y="18"
-        width="23"
-        height="15"
-        rx="7"
-        transform="rotate(-35 25 25)"
-      />
-    </svg>
-
-    <span>
-      <span class="wordmark-name">
-        {{ title }}<span class="brand-stop" aria-hidden="true">.</span>
-      </span>
-      <span class="wordmark-tagline">{{ tagline }}</span>
-    </span>
-  </a>
+  </nav>
 </header>
-
-<main id="main-content" class="page-content" tabindex="-1">
+<main id="main-content" tabindex="-1">
+  @if (config.issue()) {
+    <div class="notice error" role="alert">
+      <strong>Check your local configuration.</strong>
+      <p>{{ config.issue() }}</p>
+      <p>Catalogue preview is available. Correct the configuration to enable online play.</p>
+    </div>
+  }
   <router-outlet />
 </main>
-
-<footer class="site-footer">
-  <p class="footer-brand">
-    {{ title }}<span class="brand-stop" aria-hidden="true">.</span>
-  </p>
-  <p class="footer-line">A LITTLE KNOWLEDGE. A LOT OF TROUBLE.</p>
+<footer>
+  <a [routerLink]="links.to('/')" class="footer-logo"
+    >the last link.<span>ONE LIFE. MAKE IT COUNT.</span></a
+  >
+  <div class="footer-meta">
+    <span>A LITTLE KNOWLEDGE. A LOT OF TROUBLE.</span
+    ><a [routerLink]="links.to('/credits')">Data & credits ↗</a>
+  </div>
 </footer>
