@@ -260,3 +260,13 @@ For deployment, create the repository variables `SUPABASE_URL` and
 Actions → Variables.
 
 Under Settings → Pages, select GitHub Actions as the publishing source.
+
+## Shared code and database tests
+
+From the repository root, run `npm ci` followed by `npm run verify`.
+The root package checks shared TypeScript and runs unit tests and
+embedded PostgreSQL tests. The Angular application has its own package
+inside `web`.
+
+Hosted Supabase Authentication, Realtime, Cron scheduling and simultaneous
+database connections require separate live verification.

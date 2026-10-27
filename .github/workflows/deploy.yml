@@ -36,15 +36,25 @@ jobs:
         with:
           node-version: '24'
           cache: npm
-          cache-dependency-path: web/package-lock.json
+          cache-dependency-path: |
+            package-lock.json
+            web/package-lock.json
+
+      - name: Install shared-code test dependencies
+        working-directory: .
+        run: npm ci
+
+      - name: Check shared TypeScript
+        working-directory: .
+        run: npm run typecheck
 
       - name: Build Games catalogue
         working-directory: .
         run: node scripts/build-playable.ts
 
-      - name: Test connection engines and utilities
+      - name: Run shared and database tests
         working-directory: .
-        run: node --test test/*.test.ts
+        run: npm test
 
       - name: Generate and verify public configuration
         working-directory: .
