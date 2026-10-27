@@ -47,7 +47,7 @@ jobs:
       - name: Run automated tests
         run: npm test -- --watch=false
 
-            - name: Check Edge Function TypeScript
+      - name: Check Edge Function TypeScript
         working-directory: .
         run: npx --yes deno@2.9.6 check --config supabase/functions/create-room/deno.json supabase/functions/create-room/index.ts
 
