@@ -20,3 +20,6 @@ web/public/config.local.json
 *.sqlite-shm
 
 !.env.tmdb.example
+
+# Generated frontend public configuration
+web/public/config.json

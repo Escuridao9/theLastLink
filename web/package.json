@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
   "ng": "ng",
-  "configure": "node --env-file-if-exists=.env scripts/configure-supabase.mjs",
+  "configure": "node --env-file-if-exists=.env scripts/configure-supabase.mjs && node --env-file-if-exists=.env ../scripts/configure-web.mjs",
   "prestart": "npm run configure",
   "start": "ng serve",
   "prebuild": "npm run configure",

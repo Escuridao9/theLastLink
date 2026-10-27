@@ -285,3 +285,9 @@ Deploy the function with
 `npx --yes supabase@2.121.0 functions deploy match-api --use-api`.
 GitHub Actions verifies the function. Backend deployment is performed
 separately from the Angular deployment to GitHub Pages.
+
+## Angular client services
+
+See [Angular services and configuration](docs/CLIENT_INTEGRATION.md)
+for configuration, catalogue loading, authenticated commands,
+Realtime synchronization, and verification instructions.
