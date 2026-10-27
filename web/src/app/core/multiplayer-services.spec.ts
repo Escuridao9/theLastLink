@@ -265,13 +265,17 @@ describe('Authoritative match synchronization', () => {
       subscribe: vi.fn((callback: (status: string) => void) => { statusChanged = callback; return channel; }),
     };
     const removeChannel = vi.fn().mockResolvedValue('ok');
+    const openChannel = vi.fn(() => channel);
     const command = vi.fn().mockResolvedValue({ ...success, match: snapshot(1) });
     TestBed.configureTestingModule({ providers: [{ provide: BackendService, useValue: {
       identity: async () => {}, command,
-      client: { channel: vi.fn(() => channel), removeChannel },
+      client: { channel: openChannel, removeChannel },
     } }] });
     const service = TestBed.inject(MatchService);
     await service.watch('match', 'match-one');
+    expect(openChannel).toHaveBeenCalledWith('last-link:match:match-one', {
+      config: { postgres_changes_options: { wait: true, timeout: 10000 } },
+    });
     expect(channel.on).toHaveBeenCalledWith('postgres_changes', {
       event: 'UPDATE', schema: 'public', table: 'matches', filter: 'id=eq.match-one',
     }, expect.any(Function));

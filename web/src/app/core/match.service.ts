@@ -77,7 +77,9 @@ export class MatchService {
     };
     this.refresh = refresh;
     this.channel = this.backend.client
-      .channel(`last-link:${kind}:${id}`)
+      .channel(`last-link:${kind}:${id}`, {
+        config: { postgres_changes_options: { wait: true, timeout: 10000 } },
+      })
       .on(
         'postgres_changes',
         {
