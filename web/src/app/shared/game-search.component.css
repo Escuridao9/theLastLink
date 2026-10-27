@@ -35,6 +35,11 @@
 .answer-search-wrap input::placeholder {
   color: #aa94ac;
 }
+.answer-search-wrap input:focus,
+.answer-search-wrap input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
 .answer-search-wrap input:read-only {
   opacity: 0.6;
 }
@@ -50,6 +55,8 @@
   background: #36283b;
   border-radius: 8px;
   box-shadow: 0 12px 25px #0006;
+  max-height: min(320px, 42dvh);
+  overflow-y: auto;
 }
 .suggestions button {
   font-family: 'Bricolage Grotesque', Arial, sans-serif;
@@ -75,18 +82,26 @@
 @media (max-width: 760px) {
   .answer-search-wrap input {
     font-size: 16px;
-    padding: 13px 12px;
+    padding: 11px 10px;
   }
   .answer-search-wrap {
-    min-height: 52px;
+    min-height: 48px;
   }
   .autocomplete > label {
-    font-size: 8px;
-    margin-bottom: 9px;
+    font-size: 9px;
+    margin-bottom: 6px;
   }
   .suggestions button {
-    font-size: 12px;
-    padding: 15px;
+    font-size: 13px;
+    padding: 12px;
+    min-height: 44px;
+  }
+  .suggestions button > span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .suggestions small {
+    flex-shrink: 0;
   }
 }
 

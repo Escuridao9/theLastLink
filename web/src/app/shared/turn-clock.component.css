@@ -41,17 +41,17 @@
 }
 @media (max-width: 760px) {
   .turn-clock {
-    width: 77px;
-    height: 77px;
+    width: 68px;
+    height: 68px;
     padding: 3px;
   }
   .turn-clock strong {
-    font-size: 38px;
+    font-size: 34px;
     letter-spacing: -2px;
   }
   .turn-clock small {
-    font-size: 5px;
+    font-size: 6px;
     letter-spacing: 0.7px;
-    margin-top: 4px;
+    margin-top: 2px;
   }
 }

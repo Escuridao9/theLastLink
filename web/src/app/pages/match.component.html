@@ -129,7 +129,7 @@
           Three uses per connector.<br />
           An exhausted one blocks the whole move.
         </p>
-        <div class="ll-credit-list">
+        <div class="ll-credit-list" role="region" aria-label="Connector usage" tabindex="0">
           @for (c of usage; track c.id) {
             <div
               class="ll-credit-row"
@@ -164,7 +164,7 @@
           <h2 id="chain-title">The chain so far<span>.</span></h2>
           <span>NEWEST FIRST</span>
         </div>
-        <ol>
+        <ol aria-label="Connection history" tabindex="0">
           @for (turn of match.turns.slice().reverse(); track turn.index) {
             <li [class.ll-latest-turn]="turn.index === match.state.version">
               <span class="ll-turn-index">{{ turn.index.toString().padStart(2, '0') }}</span>

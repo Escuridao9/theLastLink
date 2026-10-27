@@ -558,7 +558,7 @@ app-match .ll-history-entry .ll-opening-label {
 }
 @media (max-width: 760px) {
   app-match .ll-match-meta {
-    padding: 18px 0 15px;
+    padding: 12px 0 10px;
     font-size: 11px;
     gap: 12px;
   }
@@ -569,29 +569,29 @@ app-match .ll-history-entry .ll-opening-label {
     display: none;
   }
   app-match .ll-duel-score {
-    grid-template-columns: 1fr 50px 1fr;
-    gap: 9px;
-    padding: 15px 0;
-    margin-bottom: 20px;
+    grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr);
+    gap: 8px;
+    padding: 10px 0;
+    margin-bottom: 12px;
   }
   app-match .ll-player-avatar {
-    width: 34px;
-    height: 34px;
-    font-size: 16px;
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
   }
   app-match .ll-duelist {
-    gap: 9px;
+    gap: 7px;
   }
   app-match .ll-duelist strong {
-    font-size: 15px;
+    font-size: 13px;
   }
   app-match .ll-duelist strong > small {
     font-size: 8px;
   }
   app-match .ll-duelist > div > span {
-    font-size: 6px;
-    letter-spacing: 0.4px;
-    margin-top: 6px;
+    font-size: 7px;
+    letter-spacing: 0.2px;
+    margin-top: 3px;
   }
   app-match .ll-player-life {
     display: none;
@@ -610,7 +610,7 @@ app-match .ll-history-entry .ll-opening-label {
     grid-column: 1;
   }
   app-match .ll-play-field {
-    padding: 18px 18px 0;
+    padding: 14px;
     border-radius: 9px;
     border-top-width: 4px;
   }
@@ -622,88 +622,112 @@ app-match .ll-history-entry .ll-opening-label {
     font-size: 8px;
   }
   app-match .ll-current-title {
-    padding: 22px 0;
-    gap: 10px;
-    min-height: 152px;
+    padding: 14px 0 0;
+    gap: 12px;
+    min-height: 0;
+  }
+  app-match .ll-current-title > div {
+    flex: 1;
+  }
+  app-match app-turn-clock {
+    flex-shrink: 0;
   }
   app-match .ll-current-title h1 {
-    font-size: 37px;
-    letter-spacing: -1.7px;
-    line-height: 1.02;
-    max-width: 220px;
+    font-size: clamp(26px, 7vw, 32px);
+    letter-spacing: -1px;
+    line-height: 1.08;
+    max-width: none;
+    margin-bottom: 6px;
   }
   app-match .ll-current-title p {
     font-size: 10px;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
   }
   app-match .ll-entry-year {
     font-size: 13px;
   }
   app-match .ll-field-foot {
-    font-size: 8px;
-    padding: 12px 0;
+    display: none;
   }
   app-match .ll-answer-form {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 11px;
-    margin-top: 20px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 8px;
+    margin-top: 14px;
   }
   app-match .ll-lock-answer {
     margin: 0;
-    min-height: 47px;
-    width: 100%;
-    font-size: 14px;
-    padding: 11px 17px;
+    min-height: 48px;
+    width: auto;
+    min-width: 100px;
+    font-size: 12px;
+    padding: 11px 12px;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  app-match .ll-lock-answer > span {
+    font-size: 18px;
   }
   app-match .ll-answer-hint {
-    font-size: 9px;
+    font-size: 11px;
     line-height: 1.5;
+    margin-top: 7px;
+  }
+  app-match .ll-answer-notice {
+    padding: 10px 12px;
+    margin-top: 10px;
+    font-size: 11px;
+  }
+  app-match .ll-response-connectors {
     margin-top: 10px;
   }
   app-match .ll-credit-rail {
     grid-column: 1;
     grid-row: auto;
     border-left: 0;
-    padding: 23px 0 0;
-    margin-top: 25px;
+    padding: 16px 0 0;
+    margin-top: 18px;
     border-top: 1px solid #4a3a49;
   }
   app-match .ll-small-label {
-    font-size: 6px;
+    font-size: 8px;
     letter-spacing: 0.8px;
-    margin-bottom: 7px;
+    margin-bottom: 5px;
   }
   app-match .ll-rail-heading h2 {
-    font-size: 21px;
+    font-size: 20px;
   }
   app-match .ll-three-icon {
-    padding-top: 20px;
-    display: block;
+    display: none;
   }
   app-match .ll-credit-rail > p {
-    font-size: 10px;
+    font-size: 11px;
     line-height: 1.6;
-    margin: 10px 0 15px;
+    margin: 8px 0 10px;
   }
   app-match .ll-credit-rail > p br {
     display: none;
   }
   app-match .ll-credit-list {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0 18px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0 14px;
+    max-height: 180px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    padding-right: 4px;
   }
   app-match .ll-credit-row {
-    padding: 11px 0;
+    padding: 8px 0;
     gap: 6px;
   }
   app-match .ll-credit-row strong {
-    font-size: 10px;
+    font-size: 12px;
   }
   app-match .ll-credit-row small {
-    font-size: 7px;
-    letter-spacing: 0.4px;
+    font-size: 8px;
+    letter-spacing: 0.2px;
   }
   app-match .ll-credit-row > b {
     font-size: 12px;
@@ -713,32 +737,38 @@ app-match .ll-history-entry .ll-opening-label {
     display: none;
   }
   app-match .ll-trap-tip {
-    margin-top: 13px;
-    padding-top: 13px;
+    margin-top: 10px;
+    padding-top: 10px;
     gap: 10px;
   }
   app-match .ll-trap-tip p {
-    font-size: 9px;
+    font-size: 10px;
   }
   app-match .ll-trap-tip strong {
     font-size: 10px;
   }
   app-match .ll-match-history {
     grid-column: 1;
-    margin-top: 27px;
+    margin-top: 18px;
   }
   app-match .ll-history-heading h2 {
-    font-size: 23px;
+    font-size: 21px;
   }
   app-match .ll-history-heading > span {
     font-size: 6px;
   }
   app-match .ll-history-heading {
-    padding-bottom: 14px;
+    padding-bottom: 10px;
+  }
+  app-match .ll-match-history ol {
+    max-height: 320px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    padding-right: 4px;
   }
   app-match .ll-match-history li {
     gap: 10px;
-    padding: 14px 0;
+    padding: 10px 0;
   }
   app-match .ll-history-entry strong {
     font-size: 12px;
