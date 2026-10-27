@@ -37,7 +37,7 @@
             aria-describedby="create-name-hint create-name-error"
             [attr.aria-invalid]="displayName.touched && displayName.invalid"
             (blur)="normalizePlayerName(displayName)"
-            [readOnly]="creatingRoom() || createdRoom() !== null"
+            [readOnly]="busy() || createdRoom() !== null"
           />
 
           <p id="create-name-hint" class="field-hint">2–24 characters. Visible to your opponent.</p>
@@ -57,7 +57,7 @@
           <button
             class="room-button"
             type="submit"
-            [disabled]="createRoomForm.invalid || creatingRoom() || createdRoom() !== null"
+            [disabled]="createRoomForm.invalid || busy() || createdRoom() !== null"
             aria-describedby="create-room-feedback"
           >
             {{ creatingRoom() ? 'Creating…' : createdRoom() ? 'Room created' : 'Create a room' }}
@@ -79,6 +79,7 @@
                   <strong class="created-room-code">
                     {{ room.code }}
                   </strong>
+                  <a [routerLink]="['/rooms', room.id]" class="room-button"> Enter lobby ↗ </a>
                 </div>
               }
             </div>
@@ -91,7 +92,12 @@
         <h2>Already invited?</h2>
         <p>Use your friend's room code to join them.</p>
 
-        <form class="room-form" [formGroup]="joinRoomForm">
+        <form
+          class="room-form"
+          [formGroup]="joinRoomForm"
+          [attr.aria-busy]="joiningRoom()"
+          (ngSubmit)="joinRoom()"
+        >
           <div class="form-field">
             <label for="join-player-name">Your player name</label>
 
@@ -107,6 +113,7 @@
               aria-describedby="join-name-hint join-name-error"
               [attr.aria-invalid]="joinDisplayName.touched && joinDisplayName.invalid"
               (blur)="normalizePlayerName(joinDisplayName)"
+              [readOnly]="busy()"
             />
 
             <p id="join-name-hint" class="field-hint">2–24 characters. Visible to your opponent.</p>
@@ -140,6 +147,7 @@
               aria-describedby="join-code-hint join-code-error"
               [attr.aria-invalid]="roomCode.touched && roomCode.invalid"
               (blur)="normalizeRoomCode()"
+              [readOnly]="busy()"
             />
 
             <p id="join-code-hint" class="field-hint">
@@ -157,14 +165,24 @@
             </p>
           </div>
 
-          <button class="room-button" type="submit" disabled aria-describedby="room-availability">
-            Join a room <span aria-hidden="true">↗</span>
+          <button
+            class="room-button"
+            type="submit"
+            [disabled]="joinRoomForm.invalid || busy()"
+            aria-describedby="join-room-feedback"
+          >
+            {{ joiningRoom() ? 'Joining…' : 'Join a room' }}
+            <span aria-hidden="true">↗</span>
           </button>
+
+          <div id="join-room-feedback">
+            @if (joinError(); as error) {
+              <p class="creation-error" role="alert">{{ error }}</p>
+            }
+          </div>
         </form>
       </article>
     </div>
-
-    <p id="room-availability" class="availability">Joining rooms is coming soon.</p>
   } @else {
     <header class="room-header">
       <p class="eyebrow">UNAVAILABLE CATEGORY</p>

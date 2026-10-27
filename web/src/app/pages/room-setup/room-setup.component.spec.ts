@@ -10,8 +10,10 @@ import { RoomSetup } from './room-setup.component';
 
 describe('Room setup', () => {
   const createRoom = vi.fn<RoomService['createRoom']>();
+  const joinRoom = vi.fn<RoomService['joinRoom']>();
   beforeEach(() => {
     createRoom.mockReset();
+    joinRoom.mockReset();
 
     createRoom.mockImplementation(async (request) => ({
       id: request.roomId,
@@ -20,12 +22,20 @@ describe('Room setup', () => {
       displayName: request.displayName,
     }));
 
+    joinRoom.mockImplementation(async (request) => ({
+      id: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
+      code: request.roomCode,
+      categoryId: request.categoryId,
+      displayName: request.displayName,
+      seat: 2,
+    }));
+
     TestBed.configureTestingModule({
       providers: [
         provideRouter(routes, withComponentInputBinding()),
         {
           provide: RoomService,
-          useValue: { createRoom },
+          useValue: { createRoom, joinRoom },
         },
         {
           provide: ErrorHandler,
@@ -40,6 +50,8 @@ describe('Room setup', () => {
         },
       ],
     });
+
+    vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
   });
 
   it('updates the room category when the URL changes', async () => {
@@ -243,6 +255,11 @@ describe('Room setup', () => {
     expect(
       harness.routeNativeElement?.querySelector<HTMLInputElement>('#create-player-name')?.readOnly,
     ).toBe(true);
+
+    expect(TestBed.inject(Router).navigate).toHaveBeenCalledWith([
+      '/rooms',
+      createRoom.mock.calls[0][0].roomId,
+    ]);
   });
 
   it('reuses the request ID after a failed attempt', async () => {
@@ -329,5 +346,98 @@ describe('Room setup', () => {
     harness.detectChanges();
 
     expect(harness.routeNativeElement?.querySelector('.created-room-code')).toBeNull();
+  });
+  function submitJoin(harness: RouterTestingHarness): void {
+    const form = harness.routeNativeElement?.querySelectorAll('form')[1];
+
+    if (!form) throw new Error('Join form was not rendered.');
+
+    form.dispatchEvent(
+      new Event('submit', {
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
+
+    harness.detectChanges();
+  }
+
+  it('joins with normalized details and opens the lobby', async () => {
+    const harness = await RouterTestingHarness.create('/play/games');
+
+    enterTextField(harness, '#join-player-name', ' Marta ');
+    enterTextField(harness, '#join-room-code', ' ab7k2q ');
+    submitJoin(harness);
+
+    await harness.fixture.whenStable();
+
+    expect(joinRoom).toHaveBeenCalledWith({
+      roomCode: 'AB7K2Q',
+      categoryId: 'games',
+      displayName: 'Marta',
+    });
+
+    expect(TestBed.inject(Router).navigate).toHaveBeenCalledWith([
+      '/rooms',
+      'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
+    ]);
+  });
+
+  it('shows a joining failure without navigating', async () => {
+    joinRoom.mockRejectedValueOnce(new Error('This room is full.'));
+
+    const harness = await RouterTestingHarness.create('/play/movies');
+
+    enterTextField(harness, '#join-player-name', 'Marta');
+    enterTextField(harness, '#join-room-code', 'AB7K2Q');
+    submitJoin(harness);
+
+    await harness.fixture.whenStable();
+    harness.detectChanges();
+
+    expect(harness.routeNativeElement?.querySelector('#join-room-feedback')?.textContent).toContain(
+      'This room is full.',
+    );
+
+    expect(TestBed.inject(Router).navigate).not.toHaveBeenCalled();
+  });
+
+  it('blocks duplicate joining and ignores a late result after changing category', async () => {
+    let finish = () => {};
+
+    joinRoom.mockImplementationOnce(
+      (request) =>
+        new Promise((resolve) => {
+          finish = () =>
+            resolve({
+              id: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
+              code: request.roomCode,
+              categoryId: request.categoryId,
+              displayName: request.displayName,
+              seat: 2,
+            });
+        }),
+    );
+
+    const harness = await RouterTestingHarness.create('/play/games');
+
+    enterTextField(harness, '#join-player-name', 'Marta');
+    enterTextField(harness, '#join-room-code', 'AB7K2Q');
+
+    submitJoin(harness);
+    submitJoin(harness);
+
+    expect(joinRoom).toHaveBeenCalledTimes(1);
+
+    expect(
+      harness.routeNativeElement?.querySelector<HTMLInputElement>('#join-room-code')?.readOnly,
+    ).toBe(true);
+
+    await harness.navigateByUrl('/play/movies', RoomSetup);
+
+    finish();
+    await harness.fixture.whenStable();
+
+    expect(TestBed.inject(Router).navigate).not.toHaveBeenCalled();
   });
 });

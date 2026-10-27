@@ -90,12 +90,16 @@ The Angular application includes:
 - Joining checks for category, capacity, room status and safe retries.
 - Authenticated join-room Edge Function with verified player identity.
 - Room-joining validation and safe HTTP error responses.
+- Angular room joining with loading, validation and error feedback.
+- Shared lobby routes for room creation and joining.
+- Membership-protected lobby loading and Supabase Realtime updates.
+- Lobby recovery after refresh using the saved player session.
+- Subscription cleanup and protection against stale room responses.
 
-Room creation is connected to an authenticated Supabase Edge Function.
-The setup page displays the saved room code and supports safe retries.
-Room joining is implemented in PostgreSQL and exposed through an
-authenticated Edge Function. Angular joining, catalogues and multiplayer
-gameplay are in development.
+Room creation and joining open a shared lobby backed by Supabase.
+The lobby displays saved room membership and updates through Realtime.
+Refreshing restores the lobby using the saved player session.
+Readiness controls, match starting, catalogues and gameplay are in development.
 
 ## Project structure
 
@@ -161,6 +165,14 @@ The generated configuration is included in the frontend bundle.
 Authentication, RLS and server authorization will enforce access to data as backend features are implemented.
 Private backend credentials must never be included in frontend
 configuration.
+
+For live lobby checks, use separate browser contexts for the host and
+guest. Verify both categories, automatic player updates, refresh recovery,
+full-room errors and rejection of nonmember lobby access.
+
+Room membership persists when navigating away. Leaving and closing rooms
+will be added with lobby controls. The live-update indicator describes
+the Realtime connection, rather than player presence.
 
 ## Edge Function verification
 

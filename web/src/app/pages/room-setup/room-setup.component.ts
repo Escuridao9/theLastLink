@@ -14,12 +14,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CATEGORY_OPTIONS } from '../../core/config/categories';
 import { createPlayerNameControl } from '../../core/forms/player-name.control';
 import type {
   CreatedRoom,
   CreateRoomRequest,
+  JoinRoomRequest,
 } from '../../core/models/room';
 import { RoomService } from '../../core/services/room.service';
 
@@ -31,14 +32,22 @@ import { RoomService } from '../../core/services/room.service';
 })
 export class RoomSetup {
   private readonly rooms = inject(RoomService);
+  private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   private readonly errorHandler = inject(ErrorHandler);
 
   private pendingCreation: CreateRoomRequest | null = null;
+  private pendingJoin: JoinRoomRequest | null = null;
 
   readonly creatingRoom = signal(false);
   readonly creationError = signal<string | null>(null);
   readonly createdRoom = signal<CreatedRoom | null>(null);
+
+  readonly joiningRoom = signal(false);
+  readonly joinError = signal<string | null>(null);
+  readonly busy = computed(
+    () => this.creatingRoom() || this.joiningRoom(),
+  );
 
   readonly categoryId = input.required<string>();
 
@@ -46,8 +55,7 @@ export class RoomSetup {
     const categoryId = this.categoryId();
 
     return CATEGORY_OPTIONS.find(
-      (option) =>
-        option.id === categoryId && option.selectable,
+      (option) => option.id === categoryId && option.selectable,
     );
   });
 
@@ -77,15 +85,15 @@ export class RoomSetup {
       this.categoryId();
 
       this.pendingCreation = null;
+      this.pendingJoin = null;
       this.createdRoom.set(null);
       this.creationError.set(null);
+      this.joinError.set(null);
     });
   }
 
   async createRoom(): Promise<void> {
-    if (this.creatingRoom() || this.createdRoom()) {
-      return;
-    }
+    if (this.busy() || this.createdRoom()) return;
 
     this.normalizePlayerName(this.displayName);
     this.createRoomForm.markAllAsTouched();
@@ -95,9 +103,7 @@ export class RoomSetup {
     if (
       this.createRoomForm.invalid
       || (categoryId !== 'games' && categoryId !== 'movies')
-    ) {
-      return;
-    }
+    ) return;
 
     const displayName = this.displayName.value;
 
@@ -126,6 +132,7 @@ export class RoomSetup {
         && this.pendingCreation === request
       ) {
         this.createdRoom.set(room);
+        await this.router.navigate(['/rooms', room.id]);
       }
     } catch (error) {
       if (
@@ -147,9 +154,60 @@ export class RoomSetup {
     }
   }
 
-  normalizePlayerName(
-    control: FormControl<string>,
-  ): void {
+  async joinRoom(): Promise<void> {
+    if (this.busy()) return;
+
+    this.normalizePlayerName(this.joinDisplayName);
+    this.normalizeRoomCode();
+    this.joinRoomForm.markAllAsTouched();
+
+    const categoryId = this.category()?.id;
+
+    if (
+      this.joinRoomForm.invalid
+      || (categoryId !== 'games' && categoryId !== 'movies')
+    ) return;
+
+    const request: JoinRoomRequest = {
+      categoryId,
+      roomCode: this.roomCode.value,
+      displayName: this.joinDisplayName.value,
+    };
+
+    this.pendingJoin = request;
+    this.joiningRoom.set(true);
+    this.joinError.set(null);
+
+    try {
+      const room = await this.rooms.joinRoom(request);
+
+      if (
+        !this.destroyRef.destroyed
+        && this.pendingJoin === request
+      ) {
+        await this.router.navigate(['/rooms', room.id]);
+      }
+    } catch (error) {
+      if (
+        !this.destroyRef.destroyed
+        && this.pendingJoin === request
+      ) {
+        this.joinError.set(
+          error instanceof Error
+            ? error.message
+            : 'Please try joining again.',
+        );
+
+        this.errorHandler.handleError(error);
+      }
+    } finally {
+      if (!this.destroyRef.destroyed) {
+        this.joiningRoom.set(false);
+      }
+    }
+  }
+
+  normalizePlayerName(control: FormControl<string>): void {
     control.setValue(control.value.trim());
   }
 

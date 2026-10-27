@@ -1,0 +1,112 @@
+<section
+  class="lobby-page"
+  aria-labelledby="lobby-title"
+  [attr.aria-busy]="loading()"
+>
+  <a routerLink="/play" class="back-link">← Categories</a>
+
+  <header class="lobby-header">
+    <p class="eyebrow">PRIVATE ROOM. PUBLIC BRAGGING RIGHTS.</p>
+    <h1 id="lobby-title">
+      Bring your<br />
+      <em>best links.</em>
+    </h1>
+    <p class="intro">20-second turns. One rival. One life.</p>
+  </header>
+
+  @if (error(); as message) {
+    <div class="error-state">
+      <p role="alert">{{ message }}</p>
+      <button
+        type="button"
+        (click)="retry()"
+        [disabled]="loading()"
+      >
+        Reconnect
+      </button>
+    </div>
+  }
+
+  @if (room(); as current) {
+    <div class="room-strip">
+      <div>
+        <p class="eyebrow">
+          {{ current.categoryId | titlecase }} · PRIVATE LOBBY
+        </p>
+        <p class="quiet">
+          Opened {{ current.createdAt | date:'shortTime' }}
+        </p>
+      </div>
+
+      <div class="invite">
+        <p class="quiet">Share this room code</p>
+        <strong class="room-code">{{ current.code }}</strong>
+      </div>
+    </div>
+
+    <div class="players" aria-live="polite" aria-atomic="true">
+      @for (seat of seats; track seat) {
+        @if (seat === 2) {
+          <span class="versus" aria-hidden="true">VS</span>
+        }
+
+        <article class="player" [attr.data-seat]="seat">
+          <span class="seat-number" aria-hidden="true">
+            0{{ seat }}
+          </span>
+
+          @if (playerAt(seat); as player) {
+            <p class="player-label">
+              {{ seat === 1 ? 'HOST' : 'CHALLENGER' }}
+              @if (player.userId === auth.user()?.id) {
+                <span> · YOU</span>
+              }
+            </p>
+
+            <h2 class="player-name">{{ player.displayName }}</h2>
+
+            <p class="quiet">
+              {{ player.isReady ? 'Ready' : 'Joined' }}
+            </p>
+          } @else {
+            <p class="player-label">OPEN SEAT</p>
+            <h2 class="player-name">Your rival?</h2>
+            <p class="quiet">Send them the code.</p>
+          }
+        </article>
+      }
+    </div>
+
+    <div class="lobby-status" role="status" aria-atomic="true">
+      @if (current.status !== 'lobby') {
+        <p>This room is {{ current.status }}.</p>
+      } @else {
+        <p>
+          {{
+            current.players.length === 2
+              ? 'Both players have joined.'
+              : 'Waiting for your opponent…'
+          }}
+        </p>
+      }
+
+      <p class="quiet">
+        @switch (connection()) {
+          @case ('live') {
+            Live updates connected.
+          }
+          @case ('connecting') {
+            Connecting live updates…
+          }
+          @case ('reconnecting') {
+            Connection interrupted. Reconnecting…
+          }
+        }
+      </p>
+    </div>
+  } @else if (loading()) {
+    <p class="loading-state" role="status">
+      Finding your room…
+    </p>
+  }
+</section>
