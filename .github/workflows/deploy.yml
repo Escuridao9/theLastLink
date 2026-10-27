@@ -42,9 +42,15 @@ jobs:
         working-directory: .
         run: node scripts/build-playable.ts
 
-      - name: Test connection engines and search
+      - name: Test connection engines and utilities
         working-directory: .
-        run: node --test test/engine.test.ts test/movies.test.ts test/movie-search.test.ts
+        run: node --test test/*.test.ts
+
+      - name: Generate and verify public configuration
+        working-directory: .
+        run: |
+          node scripts/configure-web.mjs
+          node scripts/check-public-config.mjs
 
       - name: Install dependencies
         run: npm ci
