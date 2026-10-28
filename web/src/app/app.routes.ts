@@ -1,5 +1,6 @@
 import { inject } from '@angular/core';
 import { Router, Routes } from '@angular/router';
+import { readCategory } from './core/models';
 
 export const routes: Routes = [
   {
@@ -22,12 +23,12 @@ export const routes: Routes = [
     path: 'play/:categoryId',
     redirectTo: ({ params }) =>
       inject(Router).createUrlTree(['/rooms'], {
-        queryParams: { category: params['categoryId'] === 'games' ? 'games' : 'movies' },
+        queryParams: { category: readCategory(params['categoryId']) },
       }),
   },
   {
     path: 'catalogue',
-    title: 'Movies & Games catalogue — The Last Link',
+    title: 'Browse the catalogues — The Last Link',
     loadComponent: () => import('./pages/catalogue.component').then((m) => m.CatalogueComponent),
   },
   {

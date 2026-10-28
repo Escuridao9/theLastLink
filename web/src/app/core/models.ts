@@ -1,4 +1,5 @@
-export type Category = 'games' | 'movies';
+export type Category = 'games' | 'movies' | 'football';
+export type OpeningMode = 'standard' | 'familiar';
 export type ConnectorType =
   | 'developer'
   | 'composer'
@@ -7,7 +8,9 @@ export type ConnectorType =
   | 'actor'
   | 'director'
   | 'writer'
-  | 'cinematographer';
+  | 'cinematographer'
+  | 'player'
+  | 'manager';
 export interface UICredit {
   entityId: string;
   sourceCredits?: { job?: string; character?: string; credit_id?: string }[];
@@ -29,6 +32,8 @@ export interface Game {
   credits: Partial<Record<ConnectorType, UICredit[]>>;
   genres?: string[];
   countries?: string[];
+  region?: string;
+  foundedYear?: number;
   externalIds?: Record<string, unknown>;
   detailShard?: number;
   people?: Record<string, Entity>;
@@ -70,6 +75,9 @@ export interface Room {
   guestId: string | null;
   category: Category;
   status: 'waiting' | 'ready' | 'playing' | 'finished';
+  /** Optional while clients roll forward from the schema without opening pools. */
+  openingMode?: OpeningMode;
+  openingPoolId?: string | null;
   matchId: string | null;
   revision: number;
   players: Player[];
@@ -116,10 +124,17 @@ export const ROLE_LABELS: Record<ConnectorType, string> = {
   director: 'Director',
   writer: 'Writer',
   cinematographer: 'Cinematographer',
+  player: 'Player',
+  manager: 'Manager',
 };
 export const CATEGORY_ROLES: Record<Category, ConnectorType[]> = {
   games: ['developer', 'composer', 'voiceActor', 'character'],
   movies: ['actor', 'director', 'writer', 'composer', 'cinematographer'],
+  football: ['player', 'manager'],
 };
-export const CATEGORY_LABELS = { games: 'Games', movies: 'Movies' };
+export const CATEGORY_LABELS = { games: 'Games', movies: 'Movies', football: 'Football' };
 export const MOVIES_VERSION = 'movies-tmdb-2017-v1';
+export const FOOTBALL_VERSION = 'football-clubs-2026-10-28-v1';
+export function readCategory(value: unknown): Category {
+  return value === 'games' ? 'games' : value === 'football' ? 'football' : 'movies';
+}

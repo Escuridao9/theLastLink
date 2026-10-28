@@ -521,6 +521,20 @@ app-match .ll-history-entry .ll-opening-label {
   color: #7f6e83;
   font-size: 9px;
 }
+@media (min-width: 761px) {
+  app-match .ll-credit-list {
+    max-height: 480px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    padding-right: 8px;
+  }
+  app-match .ll-match-history ol {
+    max-height: 640px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    padding-right: 8px;
+  }
+}
 @media (max-width: 1000px) {
   app-match .ll-match-layout {
     grid-template-columns: minmax(0, 1fr) 255px;

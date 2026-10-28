@@ -1,6 +1,6 @@
 <div class="autocomplete">
   <label for="answer-search">{{
-    category === 'movies' ? 'YOUR NEXT MOVIE' : 'YOUR NEXT GAME'
+    category === 'movies' ? 'YOUR NEXT MOVIE' : category === 'football' ? 'YOUR NEXT CLUB' : 'YOUR NEXT GAME'
   }}</label>
   <div class="answer-search-wrap">
     <span aria-hidden="true">⌕</span
@@ -11,7 +11,7 @@
       [readOnly]="disabled"
       [attr.aria-disabled]="disabled"
       autocomplete="off"
-      [placeholder]="category === 'movies' ? 'Movie title or release year…' : 'Game title…'"
+      [placeholder]="category === 'movies' ? 'Movie title or release year…' : category === 'football' ? 'Club name…' : 'Game title…'"
       role="combobox"
       aria-autocomplete="list"
       aria-controls="game-options"
@@ -35,10 +35,10 @@
           (click)="choose(entry)"
         >
           <span>{{ entry.title }}</span
-          ><small>{{ entry.releaseYear }}</small>
+          ><small>{{ category === 'football' ? entry.countries?.[0] : entry.releaseYear }}</small>
         </button>
       } @empty {
-        <p>No unplayed title found in this catalogue.</p>
+        <p>No unplayed {{ category === 'football' ? 'club' : 'title' }} found in this catalogue.</p>
       }
     </div>
   }

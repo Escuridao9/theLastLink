@@ -4,15 +4,15 @@
   [attr.aria-pressed]="selected"
   aria-controls="catalogue-credits"
   (click)="inspect.emit(game)"
-  [attr.aria-label]="game.title + ' (' + game.releaseYear + ') — inspect credits'"
+  [attr.aria-label]="game.title + (game.releaseYear ? ' (' + game.releaseYear + ')' : '') + ' — inspect credits'"
 >
   <span class="entry-category-icon" aria-hidden="true">{{
-    game.category === 'movies' ? '▤' : '✚'
+    game.category === 'movies' ? '▤' : game.category === 'football' ? '⚽' : '✚'
   }}</span
   ><span class="entry-name"
     ><strong>{{ game.title }}</strong
     ><small
-      >{{ game.releaseYear }}
+      >{{ game.category === 'football' ? game.countries?.[0] : game.releaseYear }}
       @if (game.genres?.length) {
         · {{ game.genres?.[0] }}
       }

@@ -2,209 +2,87 @@
 
 **One life. Make it count.**
 
-The Last Link is a competitive multiplayer connection game being developed
-with Angular, TypeScript and Supabase.
+A competitive connection game built with Angular, TypeScript and Supabase. Challenge a friend in a private one-versus-one room, connect the current entry to another, and keep the chain alive before the clock runs out.
 
-Two players connect games or movies through shared eligible credits.
-Each accepted answer passes the turn to the opponent.
+[Play The Last Link](https://escuridao9.github.io/theLastLink/)
 
-## Gameplay
+## Rules
 
-- Private online one-versus-one matches.
-- One life per player, with a single-round Sudden Death format.
-- Twenty-second turns, enforced by the server.
-- Unlimited invalid-answer retries while time remains.
-- No repeated playable entries within a match.
-- Each connector can be used three times total across both players.
-- Every eligible shared connector is counted on an accepted move.
-- An answer is rejected if any shared connector is exhausted.
-- Rejected answers do not change history, connector usage or the deadline.
-- Strategic traps are permitted.
-- Matches use a fixed, published catalogue version.
-- Categories remain independent.
+- One round of Sudden Death, with a server-authoritative **20-second turn**.
+- Every accepted answer passes the turn to the other player.
+- Invalid answers can be retried while time remains; they do not reset the deadline.
+- Entries cannot repeat, including the opening entry.
+- Each connector has **three uses total across both players**.
+- Every eligible shared connector is consumed on an accepted answer. If **any** shared connector is already exhausted, the entire answer is rejected without changing state.
+- Deliberate traps are allowed. Running out of legal answers does not itself end the match; the deadline or a concession does.
+- The server chooses the first player and opening entry. Each match uses one immutable catalogue version.
 
-## Categories
+## Categories and starting options
 
-### Games
+| Category | Playable entries | Eligible connections |
+| --- | ---: | --- |
+| Games | 35 | Developers, composers, voice actors and recurring characters; matching eligible roles |
+| Movies | 3,505 | Actors, directors, writers, original score composers and cinematographers; the same person may connect different roles |
+| Football | 90 clubs | Historical senior players and head managers; a player at one club can connect to a manager at another |
+| Music | Coming soon | Unavailable for room creation |
 
-Connections through developers, composers, voice actors and recurring characters.
+Football includes curated major senior men's clubs worldwide, with no national, youth or reserve teams. Movie and Football identities are canonical people, with one allowance per person across eligible roles. Names alone never create a connection.
 
-### Movies
+Movies and Football offer **Standard** or **Familiar favourites** during room creation. Standard selects any eligible starter. Familiar favourites selects the first entry randomly from a curated pool: 55 movies or 27 clubs. The full category catalogue remains available for every later answer. These pools are editorial selections, not current popularity rankings or a guarantee of difficulty. Both players see the saved setting in the lobby.
 
-Connections through actors, directors, writers, composers and cinematographers.
+## Architecture
 
-### Music
+The Angular application uses standalone components, lazy routes, typed models, Reactive Forms and reusable search, clock and entry components. `CatalogueService` uses typed Angular `HttpClient` observables for published catalogue indexes and credit details. Components subscribe with explicit loading, error and cleanup handling.
 
-Planned as an independent category.
+Supabase Authentication provides persistent email accounts and anonymous guest identities. Guests can register their current identity, preserving their room membership. Email confirmation, recovery links and production redirect settings are described in [Accounts](docs/ACCOUNTS.md).
 
-## Technology
+Normal multiplayer commands go through `BackendService` to the **`match-api` Edge Function**. It verifies Supabase Auth and forwards the user's token to PostgreSQL's `public.game_command`. PostgreSQL enforces membership, host permissions, the two-player limit, pinned catalogues, turn order, all connection rules, idempotency and deadlines. Browser code never decides whether a move is valid. Database locks serialize competing submissions; the server samples time after acquiring the match lock.
 
-- Frontend: Angular, TypeScript, HTML and CSS.
-- Planned backend: Supabase, PostgreSQL, Auth, Realtime and Edge Functions.
-- Database access will use authentication and Row Level Security.
-- Match validation and deadlines will be server-authoritative.
+Supabase Realtime delivers room and match changes. The UI restores snapshots after reconnecting. `pg_cron` independently calls `expire_due_matches()` so a timeout can finish a match even when neither player is connected. RLS protects private room and match reads, and browser roles have no direct write privileges on gameplay tables.
 
-## Current status
+## Structure
 
-The Angular application includes:
+| Path | Purpose |
+| --- | --- |
+| `web/` | Angular frontend, local fonts/assets and component/service tests; its own npm package |
+| `web/src/app/core/` | Configuration, accounts, catalogue HTTP and multiplayer synchronization |
+| `web/src/app/pages/` | Home, category selection, catalogues, rooms/lobby, match, results and accounts |
+| `web/src/app/shared/` | Search, turn clock, entry cards and shared UI helpers |
+| `web/src/app/design-review/` | Route-scoped, clearly labelled visual preview fixtures |
+| `src/` | Shared TypeScript rules, search and catalogue tools |
+| `src/movies/`, `src/football/` | Category normalization and person-based connection engines |
+| `data/` | Frozen catalogues, starter-pool manifests, provenance and research audits |
+| `supabase/migrations/` | Ordered schema, authorization and frozen publication migrations |
+| `supabase/functions/` | Authenticated Edge Functions and handler tests |
+| `scripts/` | Configuration, catalogue generation, source collection and live smoke checks |
+| `test/` | Rules, normalization, migration, RLS and configuration tests |
+| `docs/` | Backend setup, integration and feature documentation |
+| `.github/workflows/deploy.yml` | Verification and GitHub Pages deployment |
 
-- Application startup and branding.
-- A lazy-loaded homepage route.
-- Shared charcoal, coral and lilac colour palette.
-- Locally served Bricolage Grotesque typography.
-- Responsive header and footer.
-- Homepage hero, connection illustration and rules section.
-- Fragment navigation to the rules section.
-- Keyboard skip link and visible focus indicators.
-- Component smoke tests.
-- Routed category selection with Games and Movies options.
-- Reactive category selection using Angular signals.
-- Music category marked as coming soon.
-- Shared category configuration.
-- Category-specific room setup routes.
-- Unavailable-category handling.
-- Automated routing tests.
-- Create-room player-name field with typed reactive forms and accessible validation feedback.
-- Join-room form with player-name and room-code validation.
-- Case-insensitive six-character room codes, normalized to uppercase.
-- Supabase client service with local and production environment configuration.
-- GitHub Actions verification and GitHub Pages deployment configuration.
-- Shared authentication state, session-event handling and sign-out support.
-- Automatic Supabase guest authentication with saved-session reuse.
-- Player connection loading, error and retry states.
-- Reusable player connection component with @Input properties and
-@Output/EventEmitter retry communication.
-- Persistent room and player-membership schema.
-- Database constraints enforcing two-player rooms.
-- Membership-based Row Level Security.
-- Room tables registered for Supabase Realtime.
-- Authenticated create-room Edge Function.
-- Transactional room and host-membership creation.
-- Safe retries using a stable creation request ID.
-- Backend TypeScript checks and handler tests in GitHub Actions.
-- Angular room creation connected to the authenticated Edge Function.
-- Typed room request and response models.
-- Creation loading, error and success states.
-- Stable request IDs for safe retries.
-- Backend room-joining function with transactional seat allocation.
-- Joining checks for category, capacity, room status and safe retries.
-- Authenticated join-room Edge Function with verified player identity.
-- Room-joining validation and safe HTTP error responses.
-- Angular room joining with loading, validation and error feedback.
-- Shared lobby routes for room creation and joining.
-- Membership-protected lobby loading and Supabase Realtime updates.
-- Lobby recovery after refresh using the saved player session.
-- Subscription cleanup and protection against stale room responses.
-
-Room creation and joining open a shared lobby backed by Supabase.
-The lobby displays saved room membership and updates through Realtime.
-Refreshing restores the lobby using the saved player session.
-Readiness controls, match starting, catalogues and gameplay are in development.
-
-## Project structure
-
-- `web/`: Angular frontend, dependencies and component tests.
-
-Database migrations define rooms, player membership and access policies.
-Room creation, joining and multiplayer gameplay are being implemented.
-
-- `supabase/`: backend configuration, database migrations and SQL checks.
-- `supabase/migrations/`: versioned database schema changes.
-- `supabase/checks/`: database constraint and access-policy checks.
-
-## Requirements
-
-- Node.js 24.x.
-- npm.
-- Git.
+The root package and `web/package.json` are separate. Install and verify both from the repository root.
 
 ## Local development
 
-From the project root:
+Requirements: Node.js 24.x, npm and Git. Supabase CLI and Deno are invoked at the pinned versions used by the project scripts.
 
 ```bash
-cd web
 npm ci
-cp .env.example .env
+npm --prefix web ci
+cp web/.env.example web/.env
 ```
 
-Open `web/.env` and fill in `SUPABASE_URL` and
-`SUPABASE_PUBLISHABLE_KEY` using your Supabase project's public
-connection details.
-
-Then, from `web/`, start the application:
+Fill in `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` in `web/.env`. Use your project's public URL and publishable key. Do not commit this file. Enable anonymous sign-ins in Supabase Auth if guest play is required. Configure email and redirects using [ACCOUNTS.md](docs/ACCOUNTS.md).
 
 ```bash
-npm start
+npm run catalogue:build
+npm --prefix web start
 ```
 
-Open the local URL printed by the development server.
+Open the local address printed by Angular. Local development does not deploy anything. Configuration scripts generate ignored frontend configuration files from the environment before Angular starts, tests or builds.
 
-Enable anonymous sign-ins in the Supabase project's Authentication →
-Sign In / Providers settings.
+## Backend setup
 
-The category page restores an existing session or creates a guest
-session. Player names are entered in the room forms. Guest identities cannot be recovered after signing out or clearing browser storage.
-
-## Verification
-
-Run from `web/`:
-
-```bash
-npm run build
-npm run typecheck
-npm test -- --watch=false
-```
-
-Public Supabase configuration is generated before development,
-typechecking, tests and production builds. Local values come from
-`web/.env`; GitHub Actions supplies production values through repository
-variables.
-
-The generated configuration is included in the frontend bundle.
-Authentication, RLS and server authorization will enforce access to data as backend features are implemented.
-Private backend credentials must never be included in frontend
-configuration.
-
-For live lobby checks, use separate browser contexts for the host and
-guest. Verify both categories, automatic player updates, refresh recovery,
-full-room errors and rejection of nonmember lobby access.
-
-Room membership persists when navigating away. Leaving and closing rooms
-will be added with lobby controls. The live-update indicator describes
-the Realtime connection, rather than player presence.
-
-## Edge Function verification
-
-Run from the repository root:
-
-```bash
-npx --yes deno@2.9.6 check --config supabase/functions/create-room/deno.json supabase/functions/create-room/index.ts
-npx --yes deno@2.9.6 test --config supabase/functions/create-room/deno.json supabase/functions/create-room/handler.test.ts
-npx --yes deno@2.9.6 check --config supabase/functions/join-room/deno.json supabase/functions/join-room/index.ts
-npx --yes deno@2.9.6 test --config supabase/functions/join-room/deno.json supabase/functions/join-room/handler.test.ts
-```
-
-Handler tests use injected database callbacks and require no live
-Supabase credentials. They run in GitHub Actions. Authenticated live
-requests are verified separately.
-
-Deploy Edge Functions manually from the repository root:
-
-```bash
-npx --yes supabase@2.121.0 functions deploy create-room --use-api
-npx --yes supabase@2.121.0 functions deploy join-room --use-api
-```
-
-GitHub Actions deploys the Angular frontend to GitHub Pages; it does not
-apply database migrations or deploy Edge Functions.
-
-## Database verification
-
-Database changes are managed through versioned migrations using
-Supabase CLI 2.121.0.
-
-Run CLI commands from the repository root:
+An existing linked Supabase project can apply pending migrations with:
 
 ```bash
 npx --yes supabase@2.121.0 db push --dry-run
@@ -212,82 +90,59 @@ npx --yes supabase@2.121.0 db push
 npx --yes supabase@2.121.0 migration list
 ```
 
-Run each complete file separately in the Supabase SQL Editor using the
-`postgres` role:
+Review the dry run before applying it. Do not reset the remote database or rerun recorded migrations. [Football and familiar starter setup](docs/FOOTBALL_SETUP.md) explains the bounded new import and verification queries. Existing Games and Movies publications retain their identities and hashes.
 
-- `supabase/checks/rooms-access.sql`
-- `supabase/checks/create-room.sql`
-- `supabase/checks/join-room.sql`
+Deploy the authoritative match API separately when it has changed:
 
-The checks verify membership visibility, rejected browser writes,
-transactional room creation and room joining. Joining checks cover both
-categories, validation, capacity, lobby status and retry-safe membership.
-Test fixtures are rolled back.
+```bash
+npx --yes supabase@2.121.0 functions deploy match-api --use-api
+```
 
-Database checks are currently run separately from the Angular
-GitHub Actions checks.
+The additional `create-room` and `join-room` functions have dedicated handler tests. The current multiplayer interface sends its commands through `match-api`.
 
-## Routing and deployment
+## Verification
 
-The application uses hash-based Angular routing, with routes such as
-`/#/play/games`. This supports direct navigation and page refreshes
-on static hosting.
+Run these from the repository root:
 
-GitHub Pages is the production hosting target. Production builds must
-set `--base-href` to the site's deployment directory, including its
-trailing slash.
+```bash
+npm run verify
+npm --prefix web run typecheck
+npm --prefix web test -- --watch=false
+npm --prefix web run build -- --base-href=/theLastLink/
+```
 
-The development base URL remains `/`. Public assets use relative URLs
-so they also work when the application is hosted beneath a repository
-directory.
+Root verification checks shared TypeScript, the match API and automated Node/PostgreSQL tests. The Angular commands check its TypeScript, component/service/navigation tests and production build. Catalogue builds use frozen local files and do not query third-party data sources.
 
-[Open the live application](https://escuridao9.github.io/theLastLink/)
+Embedded PostgreSQL tests run the real migrations, RLS policies and game functions, including the complete publication chain. They cannot establish hosted Realtime delivery, separate-connection locking, email delivery or actual Cron scheduling. Run those checks against the owner's configured Supabase project:
 
-The workflow in `.github/workflows/deploy.yml` installs dependencies,
-checks TypeScript, runs automated tests and builds the production
-application.
+```bash
+node --env-file=web/.env scripts/live-smoke.mjs
+node --env-file=web/.env scripts/live-smoke.mjs --category=movies --opening=familiar
+node --env-file=web/.env scripts/live-smoke.mjs --category=football --opening=familiar
+```
 
-Successful checks on `main` are followed by deployment to GitHub Pages.
-Pull requests run the checks without publishing. The workflow can also
-be started manually from the repository's Actions tab.
+Each live smoke test creates two real guest identities and a test room. It verifies accepted/rejected answers, idempotency, two-client Realtime delivery, session restoration and independent server expiry. See [Client integration](docs/CLIENT_INTEGRATION.md) for manual two-browser checks. Simulations and automated checks do not predict human performance under the timer.
 
-The production base path is obtained from the GitHub Pages configuration.
-GitHub Pages hosts the Angular frontend; Supabase will provide
-authentication, persistent storage and multiplayer backend services.
+## Visual preview and real multiplayer
 
-For deployment, create the repository variables `SUPABASE_URL` and
-`SUPABASE_PUBLISHABLE_KEY` under Settings → Secrets and variables →
-Actions → Variables.
+`/#/design-review` is an explicitly labelled, local-fixture journey through the actual Angular pages. Its route-scoped services mock players, room commands, match state, timers and account flows. Match histories and answer receipts are checked against the category engines and published data. No preview account or result is sent to Supabase.
 
-Under Settings → Pages, select GitHub Actions as the publishing source.
+Try `/#/design-review/rooms?category=football` to review room options and `/#/design-review/match/design-review-football-match` for a populated match. The review toolbar can pause the clock and show waiting, error and result states.
 
-## Shared code and database tests
+Normal `/rooms`, `/match/:id`, `/results/:id` and `/account` routes use the real Supabase services. Mock providers do not replace production providers. Source-backed catalogue browsing has local static assets when multiplayer is unconfigured; that does not create a playable online match.
 
-From the repository root, run `npm ci` followed by `npm run verify`.
-The root package checks shared TypeScript and runs unit tests and
-embedded PostgreSQL tests. The Angular application has its own package
-inside `web`.
+## Deployment and public configuration
 
-Hosted Supabase Authentication, Realtime, Cron scheduling and simultaneous
-database connections require separate live verification.
+GitHub Pages hosts the Angular frontend. Hash routing supports direct links and refreshes without a custom web server. Asset URLs are relative, and the workflow obtains the production base path from GitHub Pages. For manual builds under this repository path, use `/theLastLink/` with the trailing slash.
 
-## Match API
+Select **GitHub Actions** under repository Settings → Pages. Set `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` under Settings → Secrets and variables → Actions → Variables. The workflow verifies shared code, Edge handlers and Angular, then deploys successful `main` builds. Pull requests verify without deploying. SQL migrations, Edge deployments and Auth dashboard settings are managed separately.
 
-The `match-api` Edge Function verifies the caller with Supabase Auth
-and forwards their access token to `public.game_command`. PostgreSQL
-enforces authorization, match state, connector usage, and the
-20-second turn deadline.
+The publishable key is intentionally public. Environment variables configure the frontend; they do not conceal its values. Authentication, RLS and server authorization enforce access. Database passwords, Supabase secret/service-role keys and private mail credentials must never enter frontend configuration, assets or Git history.
 
-From the repository root, run `npm run verify` to check shared
-TypeScript, the Edge entry point, and automated tests.
+## Data and licences
 
-Deploy the function with
-`npx --yes supabase@2.121.0 functions deploy match-api --use-api`.
-GitHub Actions verifies the function. Backend deployment is performed
-separately from the Angular deployment to GitHub Pages.
+Movies use TMDB data through the 2017 TMDB 5000 archive, with attribution and validation documented in `MOVIES_DATA_REPORT.md`. This is not an exhaustive or current movie database. TMDB's use conditions still apply.
 
-## Angular client services
+Football uses Wikidata structured data under CC0, collected on 28 October 2026 through the public QLever Wikidata endpoint. The source-backed catalogue retains statement IDs, available career dates and reference hashes. Positive recorded appearances are required for players; ambiguous roles, future appointments and unconfirmed identities are quarantined. Coverage is incomplete, especially for managers. Missing credits can affect both accepted and rejected answers; see [Football data audit](docs/FOOTBALL_DATA_REPORT.md).
 
-See [Angular services and configuration](docs/CLIENT_INTEGRATION.md)
-for configuration, catalogue loading, authenticated commands,
-Realtime synchronization, and verification instructions.
+Games retain their reviewed credits and provenance. Research datasets remain separate from the playable publication. Local Bricolage Grotesque and Anton font files include their SIL Open Font License files. Data attribution is also visible at `/#/credits`.

@@ -1,0 +1,117 @@
+{
+  "poolId": "football-familiar-2026-10-28-v1",
+  "catalogueId": "football-clubs-2026-10-28-v1",
+  "mode": "familiar",
+  "label": "Familiar favourites",
+  "selectionNotes": "A curated, unranked selection of internationally recognizable major clubs, with Portuguese and worldwide representation. Only the first club is restricted; the complete published catalogue remains playable.",
+  "entries": [
+    {
+      "id": "wikidata:club:Q18656",
+      "title": "Manchester United"
+    },
+    {
+      "id": "wikidata:club:Q1130849",
+      "title": "Liverpool"
+    },
+    {
+      "id": "wikidata:club:Q9617",
+      "title": "Arsenal"
+    },
+    {
+      "id": "wikidata:club:Q9616",
+      "title": "Chelsea"
+    },
+    {
+      "id": "wikidata:club:Q50602",
+      "title": "Manchester City"
+    },
+    {
+      "id": "wikidata:club:Q8682",
+      "title": "Real Madrid"
+    },
+    {
+      "id": "wikidata:club:Q7156",
+      "title": "Barcelona"
+    },
+    {
+      "id": "wikidata:club:Q8701",
+      "title": "Atlético Madrid"
+    },
+    {
+      "id": "wikidata:club:Q1422",
+      "title": "Juventus"
+    },
+    {
+      "id": "wikidata:club:Q1543",
+      "title": "AC Milan"
+    },
+    {
+      "id": "wikidata:club:Q631",
+      "title": "Inter Milan"
+    },
+    {
+      "id": "wikidata:club:Q15789",
+      "title": "Bayern Munich"
+    },
+    {
+      "id": "wikidata:club:Q41420",
+      "title": "Borussia Dortmund"
+    },
+    {
+      "id": "wikidata:club:Q483020",
+      "title": "Paris Saint-Germain"
+    },
+    {
+      "id": "wikidata:club:Q81888",
+      "title": "Ajax"
+    },
+    {
+      "id": "wikidata:club:Q131499",
+      "title": "Benfica"
+    },
+    {
+      "id": "wikidata:club:Q128446",
+      "title": "Porto"
+    },
+    {
+      "id": "wikidata:club:Q75729",
+      "title": "Sporting CP"
+    },
+    {
+      "id": "wikidata:club:Q170703",
+      "title": "Boca Juniors"
+    },
+    {
+      "id": "wikidata:club:Q15799",
+      "title": "River Plate"
+    },
+    {
+      "id": "wikidata:club:Q17479",
+      "title": "Flamengo"
+    },
+    {
+      "id": "wikidata:club:Q459090",
+      "title": "Club América"
+    },
+    {
+      "id": "wikidata:club:Q16844931",
+      "title": "Inter Miami"
+    },
+    {
+      "id": "wikidata:club:Q204357",
+      "title": "LA Galaxy"
+    },
+    {
+      "id": "wikidata:club:Q223566",
+      "title": "Al Ahly"
+    },
+    {
+      "id": "wikidata:club:Q73965",
+      "title": "Al Hilal"
+    },
+    {
+      "id": "wikidata:club:Q482764",
+      "title": "Al Nassr"
+    }
+  ]
+}

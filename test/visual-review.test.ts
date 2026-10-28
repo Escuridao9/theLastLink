@@ -3,13 +3,14 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { ConnectionEngine } from "../src/engine.ts";
 import { MovieConnectionEngine } from "../src/movies/engine.ts";
+import { FootballConnectionEngine } from "../src/football/engine.ts";
 import {
   REVIEW_STATE,
   REVIEW_TURNS,
 } from "../web/src/app/design-review/fixture.ts";
 import { GAMES_REVIEW } from "../web/src/app/design-review/games-fixture.ts";
 
-test("both visual match histories and every preview receipt replay through the unchanged engines", () => {
+test("all visual match histories and every preview receipt replay through the category engines", () => {
   const games = JSON.parse(
     readFileSync(
       new URL("../web/public/catalogue-v1.json", import.meta.url),
@@ -34,8 +35,11 @@ test("both visual match histories and every preview receipt replay through the u
       "utf8",
     ),
   );
+  const football = JSON.parse(readFileSync(new URL('../data/football/published/football-clubs-2026-10-28-v1/catalogue.json', import.meta.url), 'utf8'));
+  const footballFixture = JSON.parse(readFileSync(new URL('../web/public/design-review/football-fixture.json', import.meta.url), 'utf8'));
   for (const [category, data, engine, fixture] of [
     ["games", games, new ConnectionEngine(games), GAMES_REVIEW],
+    ["football", football, new FootballConnectionEngine(football), footballFixture],
     [
       "movies",
       movies,
@@ -54,7 +58,7 @@ test("both visual match histories and every preview receipt replay through the u
       );
     }
     assert.deepEqual(state, fixture.state);
-    const entries = data.games ?? data.movies;
+    const entries = data.games ?? data.movies ?? data.clubs;
     assert.equal(Object.keys(receipts[category].moves).length, entries.length);
     assert.equal(receipts[category].version, state.version);
     for (const entry of entries) {

@@ -1547,3 +1547,35 @@ a.ll-arena-choice:hover {
     min-height: 44px;
   }
 }
+
+/* Shared Movies and Football opening preference; native radios retain keyboard semantics. */
+.ll-opening-options { border: 0; margin: 0 0 24px; padding: 0; min-width: 0; }
+.ll-opening-options legend { padding: 0; margin-bottom: 12px; }
+.ll-opening-choice { display: flex; align-items: center; gap: 12px; padding: 13px 14px; min-height: 64px; border: 1px solid #715c76; border-radius: 7px; margin-bottom: 9px; cursor: pointer; }
+.ll-opening-choice input { margin: 0; width: 18px; height: 18px; flex: 0 0 18px; accent-color: var(--ll-coral); }
+.ll-opening-choice strong { display: block; font-size: 14px; }
+.ll-opening-choice small { display: block; color: var(--ll-quiet); font-size: 12px; line-height: 1.5; margin-top: 3px; }
+.ll-opening-choice.selected { border-color: var(--ll-coral); background: #30232c; }
+.ll-opening-choice:focus-within { outline: 2px solid var(--ll-lilac); outline-offset: 2px; }
+.ll-opening-options:disabled { opacity: .65; }
+.ll-opening-options .ll-footnote { line-height: 1.6; }
+.ll-opening-summary { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; border-top: 1px solid #4a3a49; border-bottom: 1px solid #4a3a49; padding: 15px 0; margin: 0 0 28px; font-size: 12px; color: var(--ll-quiet); }
+.ll-opening-summary .ll-label { margin: 0; }
+.ll-opening-summary strong { color: var(--ll-lilac); font-size: 14px; }
+.ll-choice-football { background: #f0e8d8; }
+.ll-choice-football .ll-choice-number b { color: #35283c; }
+.ll-role-dot[data-role='player'] { background: var(--ll-coral); }
+.ll-role-dot[data-role='manager'] { background: var(--ll-lilac); }
+.ll-arena-choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ll-tabs { flex-wrap: wrap; }
+@media (max-width: 600px) {
+  .ll-arena-choices { grid-template-columns: minmax(0, 1fr); }
+  .ll-room-picks { gap: 8px; }
+  .ll-room-picks button { padding: 12px 8px; font-size: 15px; gap: 6px; }
+  .ll-room-picks button > span { font-size: 20px; }
+  .ll-room-picks button small { font-size: 8px; letter-spacing: .5px; }
+  .ll-tabs { gap: 0 20px; }
+  .ll-tabs > * { gap: 6px; }
+  .ll-tabs strong { font-size: 15px; }
+  .ll-opening-summary { font-size: 11px; }
+}

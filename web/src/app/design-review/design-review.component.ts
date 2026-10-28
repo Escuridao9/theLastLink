@@ -19,7 +19,7 @@ export class DesignReviewComponent implements OnDestroy {
     return this.router.url.includes('/account');
   }
   get category(): string {
-    return this.router.url.includes('games') ? 'games' : 'movies';
+    return this.router.url.includes('football') ? 'football' : this.router.url.includes('games') ? 'games' : 'movies';
   }
   get onMatch(): boolean {
     return this.router.url.includes('/match/');

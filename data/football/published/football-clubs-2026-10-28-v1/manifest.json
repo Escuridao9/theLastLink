@@ -1,0 +1,928 @@
+{
+  "datasetId": "football-clubs-2026-10-28-v1",
+  "source": "Wikidata",
+  "sourceEndpoint": "https://qlever.dev/api/wikidata",
+  "sourceLicense": "CC0-1.0",
+  "sourceDate": "2026-10-28",
+  "sourceUpdatesCompleteUntil": "2026-10-28T10:28:26Z",
+  "sha256": "f003dc98c8b4986eb36940fe9c38900d18cac4ac544e35faae275ff24ca3606d",
+  "clubs": 90,
+  "observedRows": 60605,
+  "distinctObservedClaims": 59777,
+  "acceptedClaims": 34039,
+  "people": 22974,
+  "playerCredits": 30467,
+  "managerCredits": 819,
+  "quarantinedClaims": 25738,
+  "reasons": {
+    "unknown_senior_appearances": 21329,
+    "zero_or_invalid_appearances": 3987,
+    "invalid_career_date": 52,
+    "missing_person_label": 349,
+    "unverified_human_identity": 13,
+    "conflicting_career_dates": 9,
+    "future_appointment": 1
+  },
+  "independentHistoricalVerification": false,
+  "complete": false,
+  "regions": {
+    "Europe": 44,
+    "South America": 15,
+    "North America": 7,
+    "Africa": 9,
+    "Asia": 12,
+    "Oceania": 3
+  },
+  "components": [
+    90
+  ],
+  "largestComponent": 90,
+  "isolates": [],
+  "averageConnections": 48.266666666666666,
+  "sourceHashes": [
+    {
+      "requestSha256": "639ec0ce4008cf803dd0b26ebf1a4ca7fb3f773d667b69243ef68089a44ff695",
+      "responseSha256": "3810523b67fe7ddc57deea3060905d7f7be7fef7d146f4adee4fc93168646375"
+    },
+    {
+      "requestSha256": "7b26ffbd35a6c8355429ad2275cd1d3d6ef9fef090d699851fb493afc298dd48",
+      "responseSha256": "51e11106d1f538e569de22caa1f8c6dce9481220791324918805711226e89970"
+    },
+    {
+      "requestSha256": "be4cb9052f3a9187d50869143e9a4888f2c39c51db9f112b599c4efbfeba2253",
+      "responseSha256": "f95e73e71b8456bb941e01b66401b60ef4dd2edf33f48e68b1030ae039cb6532"
+    },
+    {
+      "requestSha256": "6de5b5645c66f30191705169e46511c62ad2eeb260623add0e34516b0ede9398",
+      "responseSha256": "42d4be3d41473821f942a4a7ad07c7bcde71ef0af6159454e5ff4b8eebe7fe93"
+    },
+    {
+      "requestSha256": "2b144762de437d97dbac844c0cd816d614d9f458389ceaa1efb6f9b07bc77b10",
+      "responseSha256": "4e2ae8df9cc8f91c965ac78daed02745c45551ca7ffd443a229bf252948114bc"
+    },
+    {
+      "requestSha256": "5db8bb5f86acaa1abb81a72f67ce243720097060ba82d612565835866500478d",
+      "responseSha256": "2060b08de8771c54a166e5bc098d906d6bc5486d8aa0db9cd2d42124740c179b"
+    },
+    {
+      "requestSha256": "9b0438e57ff0ef65f0fec953c8a7223ccebc9fabe7b13fe8197239e1781baf44",
+      "responseSha256": "c6906f17caa5bbefaffeb2871a645910f17ec246df87309da5704370196eaab2"
+    },
+    {
+      "requestSha256": "c2ef2c99db5901fbc7dc3de246ce910f7e76a7c9e0b98188c4a42d83871832ef",
+      "responseSha256": "ad1d5fa26dc2b58eaefe7ab552564e86d4d6ade8d072d66578d3336a5a7ed8f1"
+    },
+    {
+      "requestSha256": "95b9ae4705a8d4d35df1f6bf088b7295562238eb8431cda07fcfea9b9aaaf7ae",
+      "responseSha256": "83005a7d21cab614aea5712d800a424df7d0fe250ae3604a87a862383a725c2c"
+    },
+    {
+      "requestSha256": "87f1bbf7639459e899a1004252eb89ac240c49a98d1e6eb0fcc73a0061cd049c",
+      "responseSha256": "df24bff303caf2308dd6e9710ad4f75b42bf74820aa48a94f5cb7cef524582fc"
+    },
+    {
+      "requestSha256": "fba4026b14e730f1b1d0b6b052cc53e350e5f49cbd437dca442e953b1eb980b9",
+      "responseSha256": "a6bc92ebb4451252d917418397e2dab1ea3fbf704d3a6a6574e2c23bbb5998b8"
+    },
+    {
+      "requestSha256": "ba0b12e3b942704b797242088fad3624452b485b68b6fb1af0839780779e4114",
+      "responseSha256": "62e97476e3aae9b06e9d79fdad0a5a97921e1b1baa68ca2cd6ceb0084cbb7314"
+    },
+    {
+      "requestSha256": "5f838a463ccaee1106a30315f28f58a0397429bc7f7cbb739179df190996cd95",
+      "responseSha256": "002b8734b35113bc64e8d5ef85ce50b5cba3f2be9caad87d95c5ca5652ae2d0d"
+    },
+    {
+      "requestSha256": "23c164ecf005d1fa2683a110bd2f57ab2945922e0de15f79a2bab74d94f0355f",
+      "responseSha256": "9215347cd5aa98585b8e83d940e68d2983b5d803e44574a0ee6ec797b6b50af8"
+    },
+    {
+      "requestSha256": "ed4ce9563e363ab6f6c60ab11f7b1cb0f4e18ac5663e6d0a7622026c8157660a",
+      "responseSha256": "a7e5bbf42ee116655cf72f84ccec4a7799cd6c27ed05b44cc4bd48fc216fd044"
+    },
+    {
+      "requestSha256": "77f53e58971e5d17d31e33d0f33ac110252379c7924bc6d7c093ba35d7e1d143",
+      "responseSha256": "1b1449ec8814536b9cf56cf25f720d4b6d99df2914f9864343074ae9b53b50b3"
+    },
+    {
+      "requestSha256": "a3032e1b0d812292f044b4cf3ebb7569bb541cbcabe16902296306eee211deca",
+      "responseSha256": "45bd1cfbbb3c39818a7a3992c33c0689d42913d1de912de0fbbcf17420cdff63"
+    },
+    {
+      "requestSha256": "0161b495d503968a032f1807eb4f22f8781d421bd4946f31a32ff75105c53132",
+      "responseSha256": "0aa1228bc229556cf120751254e81380953def96121a32091b005c0185637ee2"
+    }
+  ],
+  "clubCoverage": [
+    {
+      "id": "wikidata:club:Q18656",
+      "title": "Manchester United",
+      "country": "United Kingdom",
+      "region": "Europe",
+      "players": 645,
+      "managers": 11,
+      "connections": 64
+    },
+    {
+      "id": "wikidata:club:Q1130849",
+      "title": "Liverpool",
+      "country": "United Kingdom",
+      "region": "Europe",
+      "players": 575,
+      "managers": 5,
+      "connections": 62
+    },
+    {
+      "id": "wikidata:club:Q9617",
+      "title": "Arsenal",
+      "country": "United Kingdom",
+      "region": "Europe",
+      "players": 644,
+      "managers": 10,
+      "connections": 59
+    },
+    {
+      "id": "wikidata:club:Q9616",
+      "title": "Chelsea",
+      "country": "United Kingdom",
+      "region": "Europe",
+      "players": 608,
+      "managers": 14,
+      "connections": 63
+    },
+    {
+      "id": "wikidata:club:Q50602",
+      "title": "Manchester City",
+      "country": "United Kingdom",
+      "region": "Europe",
+      "players": 767,
+      "managers": 4,
+      "connections": 62
+    },
+    {
+      "id": "wikidata:club:Q18741",
+      "title": "Tottenham Hotspur",
+      "country": "United Kingdom",
+      "region": "Europe",
+      "players": 689,
+      "managers": 13,
+      "connections": 62
+    },
+    {
+      "id": "wikidata:club:Q18716",
+      "title": "Newcastle United",
+      "country": "United Kingdom",
+      "region": "Europe",
+      "players": 678,
+      "managers": 4,
+      "connections": 55
+    },
+    {
+      "id": "wikidata:club:Q18711",
+      "title": "Aston Villa",
+      "country": "United Kingdom",
+      "region": "Europe",
+      "players": 655,
+      "managers": 4,
+      "connections": 54
+    },
+    {
+      "id": "wikidata:club:Q8682",
+      "title": "Real Madrid",
+      "country": "Spain",
+      "region": "Europe",
+      "players": 452,
+      "managers": 9,
+      "connections": 65
+    },
+    {
+      "id": "wikidata:club:Q7156",
+      "title": "Barcelona",
+      "country": "Spain",
+      "region": "Europe",
+      "players": 520,
+      "managers": 59,
+      "connections": 68
+    },
+    {
+      "id": "wikidata:club:Q8701",
+      "title": "Atlético Madrid",
+      "country": "Spain",
+      "region": "Europe",
+      "players": 439,
+      "managers": 9,
+      "connections": 66
+    },
+    {
+      "id": "wikidata:club:Q10329",
+      "title": "Sevilla",
+      "country": "Spain",
+      "region": "Europe",
+      "players": 373,
+      "managers": 13,
+      "connections": 67
+    },
+    {
+      "id": "wikidata:club:Q10333",
+      "title": "Valencia",
+      "country": "Spain",
+      "region": "Europe",
+      "players": 371,
+      "managers": 12,
+      "connections": 68
+    },
+    {
+      "id": "wikidata:club:Q8687",
+      "title": "Athletic Club",
+      "country": "Spain",
+      "region": "Europe",
+      "players": 418,
+      "managers": 6,
+      "connections": 28
+    },
+    {
+      "id": "wikidata:club:Q10315",
+      "title": "Real Sociedad",
+      "country": "Spain",
+      "region": "Europe",
+      "players": 334,
+      "managers": 4,
+      "connections": 64
+    },
+    {
+      "id": "wikidata:club:Q1422",
+      "title": "Juventus",
+      "country": "Italy",
+      "region": "Europe",
+      "players": 739,
+      "managers": 20,
+      "connections": 60
+    },
+    {
+      "id": "wikidata:club:Q1543",
+      "title": "AC Milan",
+      "country": "Italy",
+      "region": "Europe",
+      "players": 857,
+      "managers": 18,
+      "connections": 67
+    },
+    {
+      "id": "wikidata:club:Q631",
+      "title": "Inter Milan",
+      "country": "Italy",
+      "region": "Europe",
+      "players": 868,
+      "managers": 17,
+      "connections": 68
+    },
+    {
+      "id": "wikidata:club:Q2739",
+      "title": "Roma",
+      "country": "Italy",
+      "region": "Europe",
+      "players": 714,
+      "managers": 16,
+      "connections": 64
+    },
+    {
+      "id": "wikidata:club:Q2641",
+      "title": "Napoli",
+      "country": "Italy",
+      "region": "Europe",
+      "players": 740,
+      "managers": 18,
+      "connections": 63
+    },
+    {
+      "id": "wikidata:club:Q2609",
+      "title": "Lazio",
+      "country": "Italy",
+      "region": "Europe",
+      "players": 701,
+      "managers": 12,
+      "connections": 61
+    },
+    {
+      "id": "wikidata:club:Q15789",
+      "title": "Bayern Munich",
+      "country": "Germany",
+      "region": "Europe",
+      "players": 486,
+      "managers": 13,
+      "connections": 68
+    },
+    {
+      "id": "wikidata:club:Q41420",
+      "title": "Borussia Dortmund",
+      "country": "Germany",
+      "region": "Europe",
+      "players": 390,
+      "managers": 11,
+      "connections": 56
+    },
+    {
+      "id": "wikidata:club:Q104761",
+      "title": "Bayer Leverkusen",
+      "country": "Germany",
+      "region": "Europe",
+      "players": 331,
+      "managers": 11,
+      "connections": 59
+    },
+    {
+      "id": "wikidata:club:Q702455",
+      "title": "RB Leipzig",
+      "country": "Germany",
+      "region": "Europe",
+      "players": 111,
+      "managers": 10,
+      "connections": 35
+    },
+    {
+      "id": "wikidata:club:Q38245",
+      "title": "Eintracht Frankfurt",
+      "country": "Germany",
+      "region": "Europe",
+      "players": 429,
+      "managers": 53,
+      "connections": 50
+    },
+    {
+      "id": "wikidata:club:Q483020",
+      "title": "Paris Saint-Germain",
+      "country": "France",
+      "region": "Europe",
+      "players": 398,
+      "managers": 23,
+      "connections": 65
+    },
+    {
+      "id": "wikidata:club:Q132885",
+      "title": "Marseille",
+      "country": "France",
+      "region": "Europe",
+      "players": 503,
+      "managers": 18,
+      "connections": 68
+    },
+    {
+      "id": "wikidata:club:Q704",
+      "title": "Lyon",
+      "country": "France",
+      "region": "Europe",
+      "players": 293,
+      "managers": 9,
+      "connections": 54
+    },
+    {
+      "id": "wikidata:club:Q180305",
+      "title": "Monaco",
+      "country": "Monaco",
+      "region": "Europe",
+      "players": 422,
+      "managers": 10,
+      "connections": 72
+    },
+    {
+      "id": "wikidata:club:Q81888",
+      "title": "Ajax",
+      "country": "Netherlands",
+      "region": "Europe",
+      "players": 401,
+      "managers": 16,
+      "connections": 61
+    },
+    {
+      "id": "wikidata:club:Q11938",
+      "title": "PSV Eindhoven",
+      "country": "Netherlands",
+      "region": "Europe",
+      "players": 319,
+      "managers": 7,
+      "connections": 67
+    },
+    {
+      "id": "wikidata:club:Q134241",
+      "title": "Feyenoord",
+      "country": "Netherlands",
+      "region": "Europe",
+      "players": 357,
+      "managers": 6,
+      "connections": 55
+    },
+    {
+      "id": "wikidata:club:Q19593",
+      "title": "Celtic",
+      "country": "United Kingdom",
+      "region": "Europe",
+      "players": 509,
+      "managers": 4,
+      "connections": 53
+    },
+    {
+      "id": "wikidata:club:Q19597",
+      "title": "Rangers",
+      "country": "United Kingdom",
+      "region": "Europe",
+      "players": 553,
+      "managers": 9,
+      "connections": 48
+    },
+    {
+      "id": "wikidata:club:Q495299",
+      "title": "Galatasaray",
+      "country": "Turkey",
+      "region": "Europe",
+      "players": 346,
+      "managers": 55,
+      "connections": 67
+    },
+    {
+      "id": "wikidata:club:Q6601875",
+      "title": "Fenerbahçe",
+      "country": "Turkey",
+      "region": "Europe",
+      "players": 356,
+      "managers": 12,
+      "connections": 67
+    },
+    {
+      "id": "wikidata:club:Q172567",
+      "title": "Beşiktaş",
+      "country": "Turkey",
+      "region": "Europe",
+      "players": 323,
+      "managers": 10,
+      "connections": 64
+    },
+    {
+      "id": "wikidata:club:Q19628",
+      "title": "Olympiacos",
+      "country": "Greece",
+      "region": "Europe",
+      "players": 291,
+      "managers": 10,
+      "connections": 65
+    },
+    {
+      "id": "wikidata:club:Q172969",
+      "title": "Shakhtar Donetsk",
+      "country": "Ukraine",
+      "region": "Europe",
+      "players": 242,
+      "managers": 8,
+      "connections": 44
+    },
+    {
+      "id": "wikidata:club:Q131499",
+      "title": "Benfica",
+      "country": "Portugal",
+      "region": "Europe",
+      "players": 480,
+      "managers": 18,
+      "connections": 66
+    },
+    {
+      "id": "wikidata:club:Q128446",
+      "title": "Porto",
+      "country": "Portugal",
+      "region": "Europe",
+      "players": 373,
+      "managers": 13,
+      "connections": 62
+    },
+    {
+      "id": "wikidata:club:Q75729",
+      "title": "Sporting CP",
+      "country": "Portugal",
+      "region": "Europe",
+      "players": 403,
+      "managers": 6,
+      "connections": 70
+    },
+    {
+      "id": "wikidata:club:Q75684",
+      "title": "Braga",
+      "country": "Portugal",
+      "region": "Europe",
+      "players": 308,
+      "managers": 11,
+      "connections": 58
+    },
+    {
+      "id": "wikidata:club:Q170703",
+      "title": "Boca Juniors",
+      "country": "Argentina",
+      "region": "South America",
+      "players": 512,
+      "managers": 2,
+      "connections": 63
+    },
+    {
+      "id": "wikidata:club:Q15799",
+      "title": "River Plate",
+      "country": "Argentina",
+      "region": "South America",
+      "players": 522,
+      "managers": 2,
+      "connections": 65
+    },
+    {
+      "id": "wikidata:club:Q17479",
+      "title": "Flamengo",
+      "country": "Brazil",
+      "region": "South America",
+      "players": 465,
+      "managers": 11,
+      "connections": 67
+    },
+    {
+      "id": "wikidata:club:Q80964",
+      "title": "Palmeiras",
+      "country": "Brazil",
+      "region": "South America",
+      "players": 427,
+      "managers": 1,
+      "connections": 64
+    },
+    {
+      "id": "wikidata:club:Q80955",
+      "title": "Santos",
+      "country": "Brazil",
+      "region": "South America",
+      "players": 380,
+      "managers": 12,
+      "connections": 62
+    },
+    {
+      "id": "wikidata:club:Q38568",
+      "title": "São Paulo",
+      "country": "Brazil",
+      "region": "South America",
+      "players": 360,
+      "managers": 6,
+      "connections": 67
+    },
+    {
+      "id": "wikidata:club:Q35933",
+      "title": "Corinthians",
+      "country": "Brazil",
+      "region": "South America",
+      "players": 397,
+      "managers": 15,
+      "connections": 67
+    },
+    {
+      "id": "wikidata:club:Q80987",
+      "title": "Fluminense",
+      "country": "Brazil",
+      "region": "South America",
+      "players": 368,
+      "managers": 8,
+      "connections": 57
+    },
+    {
+      "id": "wikidata:club:Q221695",
+      "title": "Grêmio",
+      "country": "Brazil",
+      "region": "South America",
+      "players": 361,
+      "managers": 5,
+      "connections": 69
+    },
+    {
+      "id": "wikidata:club:Q16320",
+      "title": "Peñarol",
+      "country": "Uruguay",
+      "region": "South America",
+      "players": 263,
+      "managers": 0,
+      "connections": 45
+    },
+    {
+      "id": "wikidata:club:Q499616",
+      "title": "Nacional",
+      "country": "Uruguay",
+      "region": "South America",
+      "players": 266,
+      "managers": 5,
+      "connections": 49
+    },
+    {
+      "id": "wikidata:club:Q207373",
+      "title": "Colo-Colo",
+      "country": "Chile",
+      "region": "South America",
+      "players": 264,
+      "managers": 2,
+      "connections": 40
+    },
+    {
+      "id": "wikidata:club:Q604589",
+      "title": "Olimpia",
+      "country": "Paraguay",
+      "region": "South America",
+      "players": 171,
+      "managers": 2,
+      "connections": 37
+    },
+    {
+      "id": "wikidata:club:Q332605",
+      "title": "Atlético Nacional",
+      "country": "Colombia",
+      "region": "South America",
+      "players": 193,
+      "managers": 4,
+      "connections": 41
+    },
+    {
+      "id": "wikidata:club:Q249643",
+      "title": "LDU Quito",
+      "country": "Ecuador",
+      "region": "South America",
+      "players": 149,
+      "managers": 1,
+      "connections": 28
+    },
+    {
+      "id": "wikidata:club:Q459090",
+      "title": "Club América",
+      "country": "Mexico",
+      "region": "North America",
+      "players": 246,
+      "managers": 4,
+      "connections": 48
+    },
+    {
+      "id": "wikidata:club:Q503321",
+      "title": "Guadalajara",
+      "country": "Mexico",
+      "region": "North America",
+      "players": 166,
+      "managers": 7,
+      "connections": 19
+    },
+    {
+      "id": "wikidata:club:Q849823",
+      "title": "Tigres UANL",
+      "country": "Mexico",
+      "region": "North America",
+      "players": 222,
+      "managers": 6,
+      "connections": 37
+    },
+    {
+      "id": "wikidata:club:Q768253",
+      "title": "Monterrey",
+      "country": "Mexico",
+      "region": "North America",
+      "players": 182,
+      "managers": 10,
+      "connections": 46
+    },
+    {
+      "id": "wikidata:club:Q16844931",
+      "title": "Inter Miami",
+      "country": "United States",
+      "region": "North America",
+      "players": 24,
+      "managers": 7,
+      "connections": 25
+    },
+    {
+      "id": "wikidata:club:Q204357",
+      "title": "LA Galaxy",
+      "country": "United States",
+      "region": "North America",
+      "players": 230,
+      "managers": 12,
+      "connections": 54
+    },
+    {
+      "id": "wikidata:club:Q632511",
+      "title": "Seattle Sounders",
+      "country": "United States",
+      "region": "North America",
+      "players": 88,
+      "managers": 2,
+      "connections": 22
+    },
+    {
+      "id": "wikidata:club:Q223566",
+      "title": "Al Ahly",
+      "country": "Egypt",
+      "region": "Africa",
+      "players": 98,
+      "managers": 2,
+      "connections": 12
+    },
+    {
+      "id": "wikidata:club:Q286504",
+      "title": "Zamalek",
+      "country": "Egypt",
+      "region": "Africa",
+      "players": 116,
+      "managers": 4,
+      "connections": 25
+    },
+    {
+      "id": "wikidata:club:Q44897",
+      "title": "Espérance de Tunis",
+      "country": "Tunisia",
+      "region": "Africa",
+      "players": 100,
+      "managers": 0,
+      "connections": 11
+    },
+    {
+      "id": "wikidata:club:Q1139095",
+      "title": "Wydad AC",
+      "country": "Morocco",
+      "region": "Africa",
+      "players": 67,
+      "managers": 4,
+      "connections": 17
+    },
+    {
+      "id": "wikidata:club:Q1051514",
+      "title": "Raja CA",
+      "country": "Morocco",
+      "region": "Africa",
+      "players": 73,
+      "managers": 3,
+      "connections": 12
+    },
+    {
+      "id": "wikidata:club:Q784965",
+      "title": "Mamelodi Sundowns",
+      "country": "South Africa",
+      "region": "Africa",
+      "players": 105,
+      "managers": 4,
+      "connections": 13
+    },
+    {
+      "id": "wikidata:club:Q247731",
+      "title": "Kaizer Chiefs",
+      "country": "South Africa",
+      "region": "Africa",
+      "players": 108,
+      "managers": 1,
+      "connections": 8
+    },
+    {
+      "id": "wikidata:club:Q607939",
+      "title": "Orlando Pirates",
+      "country": "South Africa",
+      "region": "Africa",
+      "players": 112,
+      "managers": 1,
+      "connections": 12
+    },
+    {
+      "id": "wikidata:club:Q695340",
+      "title": "TP Mazembe",
+      "country": "Democratic Republic of the Congo",
+      "region": "Africa",
+      "players": 15,
+      "managers": 0,
+      "connections": 5
+    },
+    {
+      "id": "wikidata:club:Q73965",
+      "title": "Al Hilal",
+      "country": "Saudi Arabia",
+      "region": "Asia",
+      "players": 110,
+      "managers": 3,
+      "connections": 57
+    },
+    {
+      "id": "wikidata:club:Q482764",
+      "title": "Al Nassr",
+      "country": "Saudi Arabia",
+      "region": "Asia",
+      "players": 137,
+      "managers": 9,
+      "connections": 64
+    },
+    {
+      "id": "wikidata:club:Q309480",
+      "title": "Al Ittihad",
+      "country": "Saudi Arabia",
+      "region": "Asia",
+      "players": 131,
+      "managers": 3,
+      "connections": 54
+    },
+    {
+      "id": "wikidata:club:Q283545",
+      "title": "Al Sadd",
+      "country": "Qatar",
+      "region": "Asia",
+      "players": 72,
+      "managers": 3,
+      "connections": 39
+    },
+    {
+      "id": "wikidata:club:Q812720",
+      "title": "Al Ain",
+      "country": "United Arab Emirates",
+      "region": "Asia",
+      "players": 75,
+      "managers": 4,
+      "connections": 47
+    },
+    {
+      "id": "wikidata:club:Q218883",
+      "title": "Urawa Red Diamonds",
+      "country": "Japan",
+      "region": "Asia",
+      "players": 169,
+      "managers": 2,
+      "connections": 31
+    },
+    {
+      "id": "wikidata:club:Q16932",
+      "title": "Kashima Antlers",
+      "country": "Japan",
+      "region": "Asia",
+      "players": 114,
+      "managers": 6,
+      "connections": 26
+    },
+    {
+      "id": "wikidata:club:Q854932",
+      "title": "Yokohama F. Marinos",
+      "country": "Japan",
+      "region": "Asia",
+      "players": 169,
+      "managers": 5,
+      "connections": 37
+    },
+    {
+      "id": "wikidata:club:Q483152",
+      "title": "Jeonbuk Hyundai Motors",
+      "country": "South Korea",
+      "region": "Asia",
+      "players": 165,
+      "managers": 1,
+      "connections": 19
+    },
+    {
+      "id": "wikidata:club:Q129673",
+      "title": "Ulsan HD",
+      "country": "South Korea",
+      "region": "Asia",
+      "players": 227,
+      "managers": 14,
+      "connections": 28
+    },
+    {
+      "id": "wikidata:club:Q242260",
+      "title": "Persepolis",
+      "country": "Iran",
+      "region": "Asia",
+      "players": 183,
+      "managers": 1,
+      "connections": 18
+    },
+    {
+      "id": "wikidata:club:Q455971",
+      "title": "Esteghlal",
+      "country": "Iran",
+      "region": "Asia",
+      "players": 145,
+      "managers": 1,
+      "connections": 15
+    },
+    {
+      "id": "wikidata:club:Q330143",
+      "title": "Sydney FC",
+      "country": "Australia",
+      "region": "Oceania",
+      "players": 123,
+      "managers": 1,
+      "connections": 31
+    },
+    {
+      "id": "wikidata:club:Q316789",
+      "title": "Melbourne Victory",
+      "country": "Australia",
+      "region": "Oceania",
+      "players": 103,
+      "managers": 1,
+      "connections": 24
+    },
+    {
+      "id": "wikidata:club:Q630544",
+      "title": "Auckland City",
+      "country": "New Zealand",
+      "region": "Oceania",
+      "players": 83,
+      "managers": 1,
+      "connections": 3
+    }
+  ]
+}

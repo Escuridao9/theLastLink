@@ -8,6 +8,7 @@ import { pathToFileURL } from 'node:url';
 import { performance } from 'node:perf_hooks';
 import { MovieConnectionEngine } from '../src/movies/engine.ts';
 import { ConnectionEngine } from '../src/engine.ts';
+import { FootballConnectionEngine } from '../src/football/engine.ts';
 import { PREVIEW_CONFIGURATION, validatePublicConfiguration } from '../src/configuration.ts';
 
 const pause = ms => new Promise(done => setTimeout(done, ms));
@@ -146,7 +147,10 @@ export async function requireIndependentTimeout(readMatch, match, clock, {
 export async function runLiveSmoke() {
   const option = process.argv.find(value => value.startsWith('--category='));
   const category = option?.slice('--category='.length) ?? 'games';
-  assert.ok(['games', 'movies'].includes(category), 'Category must be games or movies.');
+  assert.ok(['games', 'movies', 'football'].includes(category), 'Category must be games, movies or football.');
+  const opening = process.argv.find(value => value.startsWith('--opening='))?.slice('--opening='.length) ?? 'standard';
+  assert.ok(['standard', 'familiar'].includes(opening), 'Opening must be standard or familiar.');
+  assert.ok(category !== 'games' || opening === 'standard', 'Familiar starters are available for Movies and Football.');
   const configuration = validatePublicConfiguration({
     ...PREVIEW_CONFIGURATION,
     supabaseUrl: process.env.SUPABASE_URL ?? '',
@@ -188,11 +192,11 @@ export async function runLiveSmoke() {
       .select('id,snapshot').eq('published', true).eq('category_id', category)
       .order('created_at', { ascending: false }).order('id', { ascending: false }).limit(1).single();
     if (catalogueError) throw catalogueError;
-    const data = category === 'movies'
-      ? JSON.parse(readFileSync(new URL('../data/movies/published/' + publication.id + '/catalogue.json', import.meta.url), 'utf8'))
+    const data = category !== 'games'
+      ? JSON.parse(readFileSync(new URL('../data/' + category + '/published/' + publication.id + '/catalogue.json', import.meta.url), 'utf8'))
       : publication.snapshot;
     assert.equal(data.datasetId, publication.id, 'The local engine must use the published catalogue version.');
-    const engine = category === 'movies' ? new MovieConnectionEngine(data) : new ConnectionEngine(data);
+    const engine = category === 'movies' ? new MovieConnectionEngine(data) : category === 'football' ? new FootballConnectionEngine(data) : new ConnectionEngine(data);
     const indexFor = match => {
       const index = identities.indexOf(match.activePlayer);
       assert.ok(index >= 0, 'The active player must be one of the authenticated guests.');
@@ -200,15 +204,16 @@ export async function runLiveSmoke() {
     };
     const best = match => {
       const available = engine.availableMoves(match.state);
-      if (category === 'movies') return available[0];
+      if (category !== 'games') return available[0];
       return available.sort((a, b) => {
         const aa = engine.applyMove(match.state, a), bb = engine.applyMove(match.state, b);
         return engine.availableMoves(bb.state).length - engine.availableMoves(aa.state).length;
       })[0];
     };
     phase = 'room';
-    const room = (await command(0, 'create', { name: 'Smoke A', category })).room;
+    const room = (await command(0, 'create', { name: 'Smoke A', category, openingMode: opening })).room;
     assert.ok(room, 'Room creation did not return a room.');
+    assert.equal(room.openingMode ?? 'standard', opening, 'The server must persist the selected opening mode.');
     await command(1, 'join', { code: room.code, name: 'Smoke B' });
     phase = 'database subscription readiness';
     console.log('[' + category + '] Waiting for both database streams before starting the match…');
@@ -219,6 +224,13 @@ export async function runLiveSmoke() {
     let match = (await command(0, 'start', { roomId: room.id })).match;
     assert.equal(match.category, category);
     assert.equal(match.catalogueId, publication.id);
+    if (opening === 'familiar') {
+      const { data: member, error } = await clients[0].from('opening_pool_entries').select('entry_id')
+        .eq('pool_id', room.openingPoolId).eq('entry_id', match.state.currentGameId).single();
+      if (error) throw error;
+      assert.equal(member.entry_id, match.state.currentGameId, 'The seed must belong to the pinned familiar pool.');
+      verified.push('saved familiar opening pool restricts the seed');
+    }
     await Promise.all(clients.map(async (client, i) => {
       const { data: readable, error } = await client.from('matches').select('id,revision,status').eq('id', match.id).single();
       if (error) throw new Error('Player ' + (i + 1) + ' cannot read its own match: ' + error.message);

@@ -25,7 +25,8 @@
       [class.active]="category() === 'games'"
       [attr.aria-current]="category() === 'games' ? 'page' : null"
       >02 <strong>Games</strong></a
-    ><span aria-disabled="true">03 <strong>Music</strong><small>SOON</small></span>
+    ><a [routerLink]="links.to('/catalogue')" [queryParams]="{ category: 'football' }" [class.active]="category() === 'football'" [attr.aria-current]="category() === 'football' ? 'page' : null">03 <strong>Football</strong></a
+    ><span aria-disabled="true">04 <strong>Music</strong><small>SOON</small></span>
   </nav>
   @if (loading()) {
     <div class="ll-catalogue-loading" role="status">
@@ -50,7 +51,7 @@
           type="search"
           [(ngModel)]="query"
           (ngModelChange)="limit = 36"
-          placeholder="Search a title or release year…"
+          [placeholder]="category() === 'football' ? 'Search a club name…' : 'Search a title or release year…'"
       /></label>
       @if (genres.length) {
         <label class="ll-genre"
@@ -63,9 +64,12 @@
           </select></label
         >
       }
+      @if (category() === 'football' && regions.length) {
+        <label class="ll-genre"><span class="sr-only">Filter region</span><select [(ngModel)]="region" (ngModelChange)="limit = 36"><option value="">All regions</option>@for (r of regions; track r) { <option [value]="r">{{ r }}</option> }</select></label>
+      }
       <span class="ll-title-count" role="status"
         >{{ filtered.length | number }}
-        <small>{{ category() === 'movies' ? 'FILMS' : 'GAMES' }}</small></span
+        <small>{{ category() === 'movies' ? 'FILMS' : category() === 'football' ? 'CLUBS' : 'GAMES' }}</small></span
       >
     </div>
     <div class="ll-library-layout">
@@ -83,18 +87,18 @@
               <h2>No link here. Yet.</h2>
               @if (data.games.length) {
                 <p>
-                  No titles match {{ query ? '“' + query + '”' : 'these filters'
-                  }}{{ genre ? ' in ' + genre : '' }}. Try another title or year.
+                  No {{ category() === 'football' ? 'clubs' : 'titles' }} match {{ query ? '“' + query + '”' : 'these filters'
+                  }}{{ genre ? ' in ' + genre : '' }}. Try another {{ category() === 'football' ? 'club or region' : 'title or year' }}.
                 </p>
                 <button
                   class="ll-action ll-action-outline"
-                  (click)="query = ''; genre = ''; limit = 36"
+                  (click)="query = ''; genre = ''; region = ''; limit = 36"
                 >
                   Clear filters ↗
                 </button>
               } @else {
                 <p>
-                  There are no published titles in this category to browse right now. Try the other
+                  There are no published {{ category() === 'football' ? 'clubs' : 'titles' }} in this category to browse right now. Try another
                   arena.
                 </p>
                 <a
@@ -118,17 +122,17 @@
         id="catalogue-credits"
         class="ll-credit-detail"
         tabindex="-1"
-        aria-label="Selected title credits"
+        [attr.aria-label]="category() === 'football' ? 'Selected club careers' : 'Selected title credits'"
       >
         @if (selected(); as entry) {
           <button
             class="ll-back ll-back-titles"
             (click)="selected.set(null); catalogueSearch.focus()"
           >
-            ← Back to titles</button
+            ← Back to {{ category() === 'football' ? 'clubs' : 'titles' }}</button
           ><span class="ll-label"
-            >{{ entry.releaseYear }} /
-            {{ category() === 'movies' ? 'MOVIE' : 'GAME' }} CREDITS</span
+            >{{ category() === 'football' ? entry.countries?.[0] : entry.releaseYear }} /
+            {{ category() === 'movies' ? 'MOVIE' : category() === 'football' ? 'CLUB' : 'GAME' }} CREDITS</span
           >
           <h2>{{ entry.title }}</h2>
           @if (detailLoading()) {
@@ -190,12 +194,12 @@
         } @else {
           <div class="ll-detail-arrow" aria-hidden="true">↖</div>
           <span class="ll-label">THE THREAD IS IN THE CREDITS</span>
-          <h2>Pick a title.<br />Find an edge.</h2>
+          <h2>Pick a {{ category() === 'football' ? 'club' : 'title' }}.<br />Find an edge.</h2>
           <p>
             {{
               category() === 'movies'
                 ? 'Explore actors, directors, writers, composers and cinematographers. One person can link different roles.'
-                : 'Explore developers, composers, voice actors and recurring characters. Games connect through the same eligible role.'
+                : category() === 'football' ? 'Explore recorded senior players and head managers. A person can link clubs across playing and managing roles. National teams are excluded.' : 'Explore developers, composers, voice actors and recurring characters. Games connect through the same eligible role.'
             }}
           </p>
           <span class="ll-detail-dots" aria-hidden="true">● ● ●</span>
@@ -207,7 +211,9 @@
     </div>
     <p class="ll-catalogue-version">
       {{ data.datasetId }}
-      @if (data.sourceDate) {
+      @if (category() === 'football') {
+        · Wikidata CC0 snapshot: {{ data.sourceDate }} · Historical senior careers; coverage is incomplete.
+      } @else if (data.sourceDate) {
         · TMDB source: {{ data.sourceDate }} · Machine validated; credits may be incomplete.
       } @else {
         · Selected reviewed Games credits · Wikidata CC0; Wikipedia-derived additions CC BY-SA 4.0.

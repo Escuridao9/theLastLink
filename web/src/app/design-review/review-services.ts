@@ -11,7 +11,8 @@ import type {
   Room,
   SharedConnector,
 } from '../core/models';
-import { MOVIES_VERSION } from '../core/models';
+import { MOVIES_VERSION, FOOTBALL_VERSION, readCategory, type OpeningMode } from '../core/models';
+import type { OpeningOption } from '../core/catalogue.service';
 import { REVIEW_DATASET, REVIEW_STATE, REVIEW_TURNS } from './fixture';
 import { GAMES_REVIEW } from './games-fixture';
 
@@ -32,12 +33,12 @@ export class ReviewCatalogueService {
         id,
         this.http
           .get<Dataset & { movies?: Game[] }>(
-            id === MOVIES_VERSION ? 'movies-index-v1.json' : 'catalogue-v1.json',
+            id === MOVIES_VERSION ? 'movies-index-v1.json' : id === FOOTBALL_VERSION ? 'football-index-v1.json' : 'catalogue-v1.json',
           )
           .pipe(
             map((data) => ({
               ...data,
-              category: id === MOVIES_VERSION ? ('movies' as const) : ('games' as const),
+              category: id === MOVIES_VERSION ? ('movies' as const) : id === FOOTBALL_VERSION ? ('football' as const) : ('games' as const),
               games: data.movies ?? data.games,
               entities: {
                 ...data.entities,
@@ -55,13 +56,16 @@ export class ReviewCatalogueService {
       return throwError(() =>
         Error('Example connection error. Your catalogue could not be reached.'),
       );
-    return this.load(category === 'movies' ? MOVIES_VERSION : GAMES_ID).pipe(
+    return this.load(category === 'movies' ? MOVIES_VERSION : category === 'football' ? FOOTBALL_VERSION : GAMES_ID).pipe(
       map((data) => (this.state === 'empty' ? { ...data, games: [] } : data)),
     );
   }
+  openingOptions(id: string): Observable<OpeningOption[]> {
+    return this.http.get<Record<string, OpeningOption[]>>('opening-pools-v1.json').pipe(map(pools => pools[id] ?? []));
+  }
   details(data: Dataset, entry: Game): Observable<Game> {
     if (entry.category === 'games') return of(entry);
-    const path = `movies/${data.datasetId}/credits-${entry.detailShard}.json`;
+    const path = `${entry.category === 'football' ? 'football' : 'movies'}/${data.datasetId}/credits-${entry.detailShard}.json`;
     if (!this.shards.has(path))
       this.shards.set(
         path,
@@ -104,16 +108,17 @@ export class ReviewMatchService {
   private generation = 0;
   private readonly rooms = new Map<string, Room>();
   private get category(): Category {
-    return this.router.url.includes('games') ? 'games' : 'movies';
+    return this.router.url.includes('football') ? 'football' : this.router.url.includes('games') ? 'games' : 'movies';
   }
   private get state(): string {
     return new URLSearchParams(this.router.url.split('?')[1]).get('state') ?? '';
   }
-  makeRoom(category: Category, ready = false): Room {
+  makeRoom(category: Category, ready = false, openingMode: OpeningMode = 'standard'): Room {
     return {
       id: `design-review-${category}-room`,
       code: 'LASTLINK2026',
       category,
+      openingMode,
       hostId: 'preview-diogo',
       guestId: ready ? 'preview-alex' : null,
       matchId: null,
@@ -153,18 +158,22 @@ export class ReviewMatchService {
       if (previous.status !== 'finished') this.finish(this.state !== 'defeat');
       return;
     }
-    const category = id.includes('games') ? 'games' : 'movies';
-    const room = this.makeRoom(category, true);
+    const category: Category = id.includes('football') ? 'football' : id.includes('games') ? 'games' : 'movies';
+    const savedRoom = this.rooms.get(`design-review-${category}-room`);
+    const room = this.makeRoom(category, true, savedRoom?.openingMode ?? 'standard');
     room.status = 'playing';
     room.matchId = id;
     const fixture =
-      category === 'games' ? GAMES_REVIEW : { state: REVIEW_STATE, turns: REVIEW_TURNS };
+      category === 'games' ? GAMES_REVIEW : category === 'football'
+        ? await firstValueFrom(this.http.get<{ state: Match['state']; turns: Match['turns'] }>('design-review/football-fixture.json'))
+        : { state: REVIEW_STATE, turns: REVIEW_TURNS };
+    if (generation !== this.generation) return;
     this.room.set(room);
     this.match.set({
       id,
       roomId: room.id,
       category,
-      catalogueId: category === 'games' ? GAMES_ID : MOVIES_VERSION,
+      catalogueId: category === 'games' ? GAMES_ID : category === 'football' ? FOOTBALL_VERSION : MOVIES_VERSION,
       status: 'active',
       activePlayer: 'preview-diogo',
       deadline: new Date(Date.now() + 20000).toISOString(),
@@ -250,8 +259,9 @@ export class ReviewMatchService {
       if (action === 'join' && String(payload['code']) !== 'LASTLINK2026')
         throw Error('Example room not found. In this preview, use LASTLINK2026.');
       const room = this.makeRoom(
-        payload['category'] === 'games' ? 'games' : this.category,
+        action === 'create' ? readCategory(payload['category']) : this.category,
         action === 'join',
+        payload['openingMode'] === 'familiar' ? 'familiar' : 'standard',
       );
       room.players[0]!.name = String(payload['name']);
       if (action === 'join') {

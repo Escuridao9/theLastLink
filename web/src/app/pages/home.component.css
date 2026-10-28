@@ -635,3 +635,7 @@ app-home .ll-quick-rules li p {
 /* Keep the title inside its illustrated ticket at narrow widths. */
 app-home .ll-jurassic strong { font-size: 35px; letter-spacing: -1.8px; }
 @media (max-width: 700px) { app-home .ll-jurassic strong { font-size: 24px; letter-spacing: -1.3px; } }
+
+app-home .ll-football { background: #f0e8d8; color: #2a202d; }
+@media (min-width: 1001px) { app-home .ll-category-row { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 601px) and (max-width: 1000px) { app-home .ll-category-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

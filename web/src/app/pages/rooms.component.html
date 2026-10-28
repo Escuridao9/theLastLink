@@ -22,6 +22,13 @@
     @if (error() || game.error()) {
       <div class="ll-note ll-note-error" role="alert">{{ error() || game.error() }}</div>
     }
+    @if (room.category !== 'games') {
+    <p class="ll-opening-summary">
+      <span class="ll-label">OPENING {{ room.category === 'football' ? 'CLUB' : room.category === 'movies' ? 'MOVIE' : 'GAME' }}</span>
+      <strong>{{ room.openingMode === 'familiar' ? 'Familiar favourites' : 'Standard' }}</strong>
+      @if (room.openingMode === 'familiar') { <span>A familiar start. The full catalogue stays in play.</span> }
+    </p>
+    }
     <div class="ll-lobby-layout">
       <section class="ll-seats" aria-label="Players">
         @for (player of room.players; track player.id) {
@@ -73,7 +80,7 @@
           }
         }
         <p class="ll-footnote">
-          The starting title and first player are selected by the server. The 20-second clock starts
+          The starting {{ room.category === 'football' ? 'club' : 'title' }} and first player are selected by the server. The 20-second clock starts
           immediately.
         </p>
       </section>
@@ -175,7 +182,25 @@
               <span aria-hidden="true">✚</span> Games
               <small>{{ category() === 'games' ? '✓ SELECTED' : 'CHOOSE' }}</small>
             </button>
+            <button type="button" [class.selected]="category() === 'football'" [attr.aria-pressed]="category() === 'football'" (click)="chooseCategory('football')">
+              <span aria-hidden="true">⚽</span> Football
+              <small>{{ category() === 'football' ? '✓ SELECTED' : 'CHOOSE' }}</small>
+            </button>
           </div>
+          @if (category() !== 'games') {
+            <fieldset class="ll-opening-options" [disabled]="busy()">
+              <legend class="ll-label">OPENING {{ category() === 'football' ? 'CLUB' : 'MOVIE' }}</legend>
+              <label class="ll-opening-choice" [class.selected]="form.controls.openingMode.value === 'standard'">
+                <input type="radio" formControlName="openingMode" value="standard" />
+                <span><strong>Standard</strong><small>Any eligible {{ category() === 'football' ? 'club' : 'movie' }}.</small></span>
+              </label>
+              <label class="ll-opening-choice" [class.selected]="form.controls.openingMode.value === 'familiar'">
+                <input type="radio" formControlName="openingMode" value="familiar" />
+                <span><strong>Familiar favourites</strong><small>Start from a curated pool of recognizable {{ category() === 'football' ? 'clubs' : 'movies' }}.</small></span>
+              </label>
+              <p class="ll-footnote">Only the opening changes. Every published {{ category() === 'football' ? 'club' : 'movie' }} remains a possible answer.</p>
+            </fieldset>
+          }
           <button
             class="ll-action ll-action-coral"
             type="submit"

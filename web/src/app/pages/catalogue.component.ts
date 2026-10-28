@@ -8,6 +8,7 @@ import { CatalogueService } from '../core/catalogue.service';
 import { GameCardComponent } from '../shared/game-card.component';
 import {
   ROLE_LABELS,
+  readCategory,
   CATEGORY_ROLES,
   type Dataset,
   type Game,
@@ -39,6 +40,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
   query = '';
   limit = 36;
   genre = '';
+  region = '';
   private subscription?: Subscription;
   private detailSubscription?: Subscription;
   private routeSubscription?: Subscription;
@@ -47,7 +49,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
   }
   get filtered(): Game[] {
     return searchEntries(this.dataset()?.games ?? [], this.query, [], 100000).filter(
-      (g) => !this.genre || g.genres?.includes(this.genre),
+      (g) => (!this.genre || g.genres?.includes(this.genre)) && (!this.region || g.region === this.region),
     );
   }
   get visible(): Game[] {
@@ -55,6 +57,9 @@ export class CatalogueComponent implements OnInit, OnDestroy {
   }
   get genres(): string[] {
     return [...new Set(this.dataset()?.games.flatMap((g) => g.genres ?? []) ?? [])].sort();
+  }
+  get regions(): string[] {
+    return [...new Set(this.dataset()?.games.map(g => g.region).filter((r): r is string => !!r) ?? [])].sort();
   }
   creditsFor(entry: Game, role: ConnectorType) {
     return [...(entry.credits[role] ?? [])].sort((a, b) => {
@@ -100,7 +105,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
         this.detailLoading.set(false);
       },
       error: () => {
-        this.detailError.set('Credits could not be loaded. Select this title to retry.');
+        this.detailError.set('Credits could not be loaded. Select this entry to retry.');
         this.detailLoading.set(false);
       },
     });
@@ -125,10 +130,11 @@ export class CatalogueComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.routeSubscription = this.route.queryParamMap.subscribe((params) => {
-      this.category.set(params.get('category') === 'games' ? 'games' : 'movies');
-      this.activeRole.set(this.category() === 'movies' ? 'director' : 'developer');
+      this.category.set(readCategory(params.get('category')));
+      this.activeRole.set(this.category() === 'movies' ? 'director' : this.category() === 'football' ? 'player' : 'developer');
       this.query = '';
       this.genre = '';
+      this.region = '';
       this.limit = 36;
       this.load();
     });

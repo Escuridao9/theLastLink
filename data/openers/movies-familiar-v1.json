@@ -1,0 +1,284 @@
+{
+  "poolId": "movies-familiar-2026-10-28-v1",
+  "catalogueId": "movies-tmdb-2017-v1",
+  "mode": "familiar",
+  "label": "Familiar favourites",
+  "selectionNotes": "A curated, unranked selection of recognizable published films across decades and genres. Not a live popularity chart. Only the first film is restricted; the full published catalogue remains playable.",
+  "entries": [
+    {
+      "id": "tmdb:movie:278",
+      "title": "The Shawshank Redemption",
+      "releaseYear": 1994
+    },
+    {
+      "id": "tmdb:movie:238",
+      "title": "The Godfather",
+      "releaseYear": 1972
+    },
+    {
+      "id": "tmdb:movie:155",
+      "title": "The Dark Knight",
+      "releaseYear": 2008
+    },
+    {
+      "id": "tmdb:movie:680",
+      "title": "Pulp Fiction",
+      "releaseYear": 1994
+    },
+    {
+      "id": "tmdb:movie:13",
+      "title": "Forrest Gump",
+      "releaseYear": 1994
+    },
+    {
+      "id": "tmdb:movie:603",
+      "title": "The Matrix",
+      "releaseYear": 1999
+    },
+    {
+      "id": "tmdb:movie:27205",
+      "title": "Inception",
+      "releaseYear": 2010
+    },
+    {
+      "id": "tmdb:movie:157336",
+      "title": "Interstellar",
+      "releaseYear": 2014
+    },
+    {
+      "id": "tmdb:movie:597",
+      "title": "Titanic",
+      "releaseYear": 1997
+    },
+    {
+      "id": "tmdb:movie:19995",
+      "title": "Avatar",
+      "releaseYear": 2009
+    },
+    {
+      "id": "tmdb:movie:329",
+      "title": "Jurassic Park",
+      "releaseYear": 1993
+    },
+    {
+      "id": "tmdb:movie:578",
+      "title": "Jaws",
+      "releaseYear": 1975
+    },
+    {
+      "id": "tmdb:movie:85",
+      "title": "Raiders of the Lost Ark",
+      "releaseYear": 1981
+    },
+    {
+      "id": "tmdb:movie:105",
+      "title": "Back to the Future",
+      "releaseYear": 1985
+    },
+    {
+      "id": "tmdb:movie:601",
+      "title": "E.T. the Extra-Terrestrial",
+      "releaseYear": 1982
+    },
+    {
+      "id": "tmdb:movie:11",
+      "title": "Star Wars",
+      "releaseYear": 1977
+    },
+    {
+      "id": "tmdb:movie:1891",
+      "title": "The Empire Strikes Back",
+      "releaseYear": 1980
+    },
+    {
+      "id": "tmdb:movie:1892",
+      "title": "Return of the Jedi",
+      "releaseYear": 1983
+    },
+    {
+      "id": "tmdb:movie:671",
+      "title": "Harry Potter and the Philosopher's Stone",
+      "releaseYear": 2001
+    },
+    {
+      "id": "tmdb:movie:672",
+      "title": "Harry Potter and the Chamber of Secrets",
+      "releaseYear": 2002
+    },
+    {
+      "id": "tmdb:movie:673",
+      "title": "Harry Potter and the Prisoner of Azkaban",
+      "releaseYear": 2004
+    },
+    {
+      "id": "tmdb:movie:120",
+      "title": "The Lord of the Rings: The Fellowship of the Ring",
+      "releaseYear": 2001
+    },
+    {
+      "id": "tmdb:movie:121",
+      "title": "The Lord of the Rings: The Two Towers",
+      "releaseYear": 2002
+    },
+    {
+      "id": "tmdb:movie:122",
+      "title": "The Lord of the Rings: The Return of the King",
+      "releaseYear": 2003
+    },
+    {
+      "id": "tmdb:movie:22",
+      "title": "Pirates of the Caribbean: The Curse of the Black Pearl",
+      "releaseYear": 2003
+    },
+    {
+      "id": "tmdb:movie:557",
+      "title": "Spider-Man",
+      "releaseYear": 2002
+    },
+    {
+      "id": "tmdb:movie:558",
+      "title": "Spider-Man 2",
+      "releaseYear": 2004
+    },
+    {
+      "id": "tmdb:movie:1726",
+      "title": "Iron Man",
+      "releaseYear": 2008
+    },
+    {
+      "id": "tmdb:movie:24428",
+      "title": "The Avengers",
+      "releaseYear": 2012
+    },
+    {
+      "id": "tmdb:movie:218",
+      "title": "The Terminator",
+      "releaseYear": 1984
+    },
+    {
+      "id": "tmdb:movie:280",
+      "title": "Terminator 2: Judgment Day",
+      "releaseYear": 1991
+    },
+    {
+      "id": "tmdb:movie:348",
+      "title": "Alien",
+      "releaseYear": 1979
+    },
+    {
+      "id": "tmdb:movie:679",
+      "title": "Aliens",
+      "releaseYear": 1986
+    },
+    {
+      "id": "tmdb:movie:98",
+      "title": "Gladiator",
+      "releaseYear": 2000
+    },
+    {
+      "id": "tmdb:movie:197",
+      "title": "Braveheart",
+      "releaseYear": 1995
+    },
+    {
+      "id": "tmdb:movie:1366",
+      "title": "Rocky",
+      "releaseYear": 1976
+    },
+    {
+      "id": "tmdb:movie:954",
+      "title": "Mission: Impossible",
+      "releaseYear": 1996
+    },
+    {
+      "id": "tmdb:movie:12",
+      "title": "Finding Nemo",
+      "releaseYear": 2003
+    },
+    {
+      "id": "tmdb:movie:808",
+      "title": "Shrek",
+      "releaseYear": 2001
+    },
+    {
+      "id": "tmdb:movie:8587",
+      "title": "The Lion King",
+      "releaseYear": 1994
+    },
+    {
+      "id": "tmdb:movie:812",
+      "title": "Aladdin",
+      "releaseYear": 1992
+    },
+    {
+      "id": "tmdb:movie:109445",
+      "title": "Frozen",
+      "releaseYear": 2013
+    },
+    {
+      "id": "tmdb:movie:274",
+      "title": "The Silence of the Lambs",
+      "releaseYear": 1991
+    },
+    {
+      "id": "tmdb:movie:550",
+      "title": "Fight Club",
+      "releaseYear": 1999
+    },
+    {
+      "id": "tmdb:movie:497",
+      "title": "The Green Mile",
+      "releaseYear": 1999
+    },
+    {
+      "id": "tmdb:movie:771",
+      "title": "Home Alone",
+      "releaseYear": 1990
+    },
+    {
+      "id": "tmdb:movie:607",
+      "title": "Men in Black",
+      "releaseYear": 1997
+    },
+    {
+      "id": "tmdb:movie:489",
+      "title": "Good Will Hunting",
+      "releaseYear": 1997
+    },
+    {
+      "id": "tmdb:movie:857",
+      "title": "Saving Private Ryan",
+      "releaseYear": 1998
+    },
+    {
+      "id": "tmdb:movie:424",
+      "title": "Schindler's List",
+      "releaseYear": 1993
+    },
+    {
+      "id": "tmdb:movie:129",
+      "title": "Spirited Away",
+      "releaseYear": 2001
+    },
+    {
+      "id": "tmdb:movie:146",
+      "title": "Crouching Tiger, Hidden Dragon",
+      "releaseYear": 2000
+    },
+    {
+      "id": "tmdb:movie:598",
+      "title": "City of God",
+      "releaseYear": 2002
+    },
+    {
+      "id": "tmdb:movie:1417",
+      "title": "Pan's Labyrinth",
+      "releaseYear": 2006
+    },
+    {
+      "id": "tmdb:movie:11770",
+      "title": "Shaolin Soccer",
+      "releaseYear": 2001
+    }
+  ]
+}

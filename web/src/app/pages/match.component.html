@@ -39,7 +39,7 @@
           <div class="ll-field-top">
             <span class="ll-turn-label"><i></i>{{ myTurn ? 'YOUR TURN' : 'OPPONENT’S TURN' }}</span
             ><span class="ll-format"
-              >{{ match.category === 'movies' ? 'MOVIE' : 'GAME' }}
+              >{{ match.category === 'movies' ? 'MOVIE' : match.category === 'football' ? 'CLUB' : 'GAME' }}
               {{ match.state.history.length.toString().padStart(2, '0') }}</span
             >
           </div>

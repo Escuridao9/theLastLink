@@ -3,7 +3,7 @@ import { UiLinks } from '../shared/ui-links.service';
 import { Component, OnInit, OnDestroy, inject, signal, effect } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import type { Category } from '../core/models';
+import { readCategory, type Category, type OpeningMode } from '../core/models';
 import { firstValueFrom } from 'rxjs';
 import { CatalogueService } from '../core/catalogue.service';
 import { ConfigService } from '../core/config.service';
@@ -30,8 +30,10 @@ export class RoomsComponent implements OnInit, OnDestroy {
   readonly category = signal<Category>('movies');
   chooseCategory(category: Category): void {
     this.category.set(category);
+    if (category === 'games') this.form.controls.openingMode.setValue('standard');
   }
   readonly form = new FormGroup({
+    openingMode: new FormControl<OpeningMode>('standard', { nonNullable: true }),
     name: new FormControl(localStorage.getItem('last-link-name') ?? '', {
       nonNullable: true,
       validators: [
@@ -62,9 +64,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
     );
   }
   ngOnInit(): void {
-    this.category.set(
-      this.route.snapshot.queryParamMap.get('category') === 'games' ? 'games' : 'movies',
-    );
+    this.category.set(readCategory(this.route.snapshot.queryParamMap.get('category')));
     const code = this.route.snapshot.queryParamMap.get('code');
     if (code) this.form.controls.code.setValue(code);
     this.game.room.set(null);
@@ -87,6 +87,8 @@ export class RoomsComponent implements OnInit, OnDestroy {
     const payload = {
       name: this.form.controls.name.value.trim(),
       ...(action === 'create' ? { category: this.category() } : {}),
+      ...(action === 'create' && this.category() !== 'games' && this.form.controls.openingMode.value === 'familiar'
+        ? { openingMode: 'familiar' as const } : {}),
       ...(action === 'join' ? { code: this.form.controls.code.value.trim().toUpperCase() } : {}),
     };
     if (
@@ -97,8 +99,14 @@ export class RoomsComponent implements OnInit, OnDestroy {
     this.busy.set(true);
     this.error.set('');
     try {
-      if (action === 'create' && this.category() === 'movies')
-        await firstValueFrom(this.catalogue.loadCategory('movies'));
+      if (action === 'create' && this.category() !== 'games') {
+        const data = await firstValueFrom(this.catalogue.loadCategory(this.category()));
+        if (payload.openingMode === 'familiar') {
+          const pools = await firstValueFrom(this.catalogue.openingOptions(data.datasetId));
+          if (!pools.some(pool => pool.mode === 'familiar' && Number(pool.entries) > 0))
+            throw Error('Familiar starters are not published for this catalogue yet. Choose Standard or ask the host to apply the catalogue update.');
+        }
+      }
       const response = await this.game.send(action, payload, this.pending.id);
       this.pending = undefined;
       localStorage.setItem('last-link-name', payload.name);

@@ -1,0 +1,545 @@
+[
+  {
+    "article": "Manchester United F.C.",
+    "name": "Manchester United",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "Liverpool F.C.",
+    "name": "Liverpool",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "Arsenal F.C.",
+    "name": "Arsenal",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "Chelsea F.C.",
+    "name": "Chelsea",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "Manchester City F.C.",
+    "name": "Manchester City",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "Tottenham Hotspur F.C.",
+    "name": "Tottenham Hotspur",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Newcastle United F.C.",
+    "name": "Newcastle United",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Aston Villa F.C.",
+    "name": "Aston Villa",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Real Madrid CF",
+    "name": "Real Madrid",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "FC Barcelona",
+    "name": "Barcelona",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "Atlético Madrid",
+    "name": "Atlético Madrid",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "Sevilla FC",
+    "name": "Sevilla",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Valencia CF",
+    "name": "Valencia",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Athletic Bilbao",
+    "name": "Athletic Club",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Real Sociedad",
+    "name": "Real Sociedad",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Juventus FC",
+    "name": "Juventus",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "AC Milan",
+    "name": "AC Milan",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "Inter Milan",
+    "name": "Inter Milan",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "AS Roma",
+    "name": "Roma",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "SSC Napoli",
+    "name": "Napoli",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "SS Lazio",
+    "name": "Lazio",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "FC Bayern Munich",
+    "name": "Bayern Munich",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "Borussia Dortmund",
+    "name": "Borussia Dortmund",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "Bayer 04 Leverkusen",
+    "name": "Bayer Leverkusen",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "RB Leipzig",
+    "name": "RB Leipzig",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Eintracht Frankfurt",
+    "name": "Eintracht Frankfurt",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Paris Saint-Germain FC",
+    "name": "Paris Saint-Germain",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "Olympique de Marseille",
+    "name": "Marseille",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Olympique Lyonnais",
+    "name": "Lyon",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "AS Monaco FC",
+    "name": "Monaco",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "AFC Ajax",
+    "name": "Ajax",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "PSV Eindhoven",
+    "name": "PSV Eindhoven",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Feyenoord",
+    "name": "Feyenoord",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Celtic F.C.",
+    "name": "Celtic",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Rangers F.C.",
+    "name": "Rangers",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Galatasaray S.K. (football)",
+    "name": "Galatasaray",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Fenerbahçe S.K. (football)",
+    "name": "Fenerbahçe",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Beşiktaş J.K.",
+    "name": "Beşiktaş",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Olympiacos F.C.",
+    "name": "Olympiacos",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "FC Shakhtar Donetsk",
+    "name": "Shakhtar Donetsk",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "S.L. Benfica",
+    "name": "Benfica",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "FC Porto",
+    "name": "Porto",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "Sporting CP",
+    "name": "Sporting CP",
+    "region": "Europe",
+    "familiar": true
+  },
+  {
+    "article": "S.C. Braga",
+    "name": "Braga",
+    "region": "Europe",
+    "familiar": false
+  },
+  {
+    "article": "Boca Juniors",
+    "name": "Boca Juniors",
+    "region": "South America",
+    "familiar": true
+  },
+  {
+    "article": "Club Atlético River Plate",
+    "name": "River Plate",
+    "region": "South America",
+    "familiar": true
+  },
+  {
+    "article": "CR Flamengo",
+    "name": "Flamengo",
+    "region": "South America",
+    "familiar": true
+  },
+  {
+    "article": "SE Palmeiras",
+    "name": "Palmeiras",
+    "region": "South America",
+    "familiar": false
+  },
+  {
+    "article": "Santos FC",
+    "name": "Santos",
+    "region": "South America",
+    "familiar": false
+  },
+  {
+    "article": "São Paulo FC",
+    "name": "São Paulo",
+    "region": "South America",
+    "familiar": false
+  },
+  {
+    "article": "Sport Club Corinthians Paulista",
+    "name": "Corinthians",
+    "region": "South America",
+    "familiar": false,
+    "wikidataId": "Q35933"
+  },
+  {
+    "article": "Fluminense FC",
+    "name": "Fluminense",
+    "region": "South America",
+    "familiar": false
+  },
+  {
+    "article": "Grêmio FBPA",
+    "name": "Grêmio",
+    "region": "South America",
+    "familiar": false
+  },
+  {
+    "article": "Peñarol",
+    "name": "Peñarol",
+    "region": "South America",
+    "familiar": false
+  },
+  {
+    "article": "Club Nacional de Football",
+    "name": "Nacional",
+    "region": "South America",
+    "familiar": false
+  },
+  {
+    "article": "Colo-Colo",
+    "name": "Colo-Colo",
+    "region": "South America",
+    "familiar": false
+  },
+  {
+    "article": "Club Olimpia",
+    "name": "Olimpia",
+    "region": "South America",
+    "familiar": false
+  },
+  {
+    "article": "Atlético Nacional",
+    "name": "Atlético Nacional",
+    "region": "South America",
+    "familiar": false
+  },
+  {
+    "article": "L.D.U. Quito",
+    "name": "LDU Quito",
+    "region": "South America",
+    "familiar": false,
+    "wikidataId": "Q249643"
+  },
+  {
+    "article": "Club América",
+    "name": "Club América",
+    "region": "North America",
+    "familiar": true
+  },
+  {
+    "article": "C.D. Guadalajara",
+    "name": "Guadalajara",
+    "region": "North America",
+    "familiar": false
+  },
+  {
+    "article": "Tigres UANL",
+    "name": "Tigres UANL",
+    "region": "North America",
+    "familiar": false
+  },
+  {
+    "article": "C.F. Monterrey",
+    "name": "Monterrey",
+    "region": "North America",
+    "familiar": false
+  },
+  {
+    "article": "Inter Miami CF",
+    "name": "Inter Miami",
+    "region": "North America",
+    "familiar": true
+  },
+  {
+    "article": "LA Galaxy",
+    "name": "LA Galaxy",
+    "region": "North America",
+    "familiar": true
+  },
+  {
+    "article": "Seattle Sounders FC",
+    "name": "Seattle Sounders",
+    "region": "North America",
+    "familiar": false
+  },
+  {
+    "article": "Al Ahly SC",
+    "name": "Al Ahly",
+    "region": "Africa",
+    "familiar": true
+  },
+  {
+    "article": "Zamalek SC",
+    "name": "Zamalek",
+    "region": "Africa",
+    "familiar": false
+  },
+  {
+    "article": "Espérance Sportive de Tunis",
+    "name": "Espérance de Tunis",
+    "region": "Africa",
+    "familiar": false
+  },
+  {
+    "article": "Wydad AC",
+    "name": "Wydad AC",
+    "region": "Africa",
+    "familiar": false
+  },
+  {
+    "article": "Raja CA",
+    "name": "Raja CA",
+    "region": "Africa",
+    "familiar": false
+  },
+  {
+    "article": "Mamelodi Sundowns F.C.",
+    "name": "Mamelodi Sundowns",
+    "region": "Africa",
+    "familiar": false
+  },
+  {
+    "article": "Kaizer Chiefs F.C.",
+    "name": "Kaizer Chiefs",
+    "region": "Africa",
+    "familiar": false
+  },
+  {
+    "article": "Orlando Pirates F.C.",
+    "name": "Orlando Pirates",
+    "region": "Africa",
+    "familiar": false
+  },
+  {
+    "article": "TP Mazembe",
+    "name": "TP Mazembe",
+    "region": "Africa",
+    "familiar": false
+  },
+  {
+    "article": "Al Hilal SFC",
+    "name": "Al Hilal",
+    "region": "Asia",
+    "familiar": true
+  },
+  {
+    "article": "Al Nassr FC",
+    "name": "Al Nassr",
+    "region": "Asia",
+    "familiar": true,
+    "wikidataId": "Q482764"
+  },
+  {
+    "article": "Al-Ittihad Club (Jeddah)",
+    "name": "Al Ittihad",
+    "region": "Asia",
+    "familiar": false
+  },
+  {
+    "article": "Al Sadd SC",
+    "name": "Al Sadd",
+    "region": "Asia",
+    "familiar": false
+  },
+  {
+    "article": "Al Ain FC",
+    "name": "Al Ain",
+    "region": "Asia",
+    "familiar": false
+  },
+  {
+    "article": "Urawa Red Diamonds",
+    "name": "Urawa Red Diamonds",
+    "region": "Asia",
+    "familiar": false
+  },
+  {
+    "article": "Kashima Antlers",
+    "name": "Kashima Antlers",
+    "region": "Asia",
+    "familiar": false
+  },
+  {
+    "article": "Yokohama F. Marinos",
+    "name": "Yokohama F. Marinos",
+    "region": "Asia",
+    "familiar": false
+  },
+  {
+    "article": "Jeonbuk Hyundai Motors",
+    "name": "Jeonbuk Hyundai Motors",
+    "region": "Asia",
+    "familiar": false
+  },
+  {
+    "article": "Ulsan HD FC",
+    "name": "Ulsan HD",
+    "region": "Asia",
+    "familiar": false
+  },
+  {
+    "article": "Persepolis F.C.",
+    "name": "Persepolis",
+    "region": "Asia",
+    "familiar": false
+  },
+  {
+    "article": "Esteghlal F.C.",
+    "name": "Esteghlal",
+    "region": "Asia",
+    "familiar": false
+  },
+  {
+    "article": "Sydney FC",
+    "name": "Sydney FC",
+    "region": "Oceania",
+    "familiar": false
+  },
+  {
+    "article": "Melbourne Victory FC",
+    "name": "Melbourne Victory",
+    "region": "Oceania",
+    "familiar": false
+  },
+  {
+    "article": "Auckland City FC",
+    "name": "Auckland City",
+    "region": "Oceania",
+    "familiar": false
+  }
+]

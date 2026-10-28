@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, signal } fro
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { searchEntries } from '../../../../src/entry-search';
-import type { Game } from '../core/models';
+import type { Game, Category } from '../core/models';
 @Component({
   selector: 'app-game-search',
   standalone: true,
@@ -11,7 +11,7 @@ import type { Game } from '../core/models';
   styleUrl: './game-search.component.css',
 })
 export class GameSearchComponent implements OnInit, OnDestroy {
-  @Input() category: 'games' | 'movies' = 'games';
+  @Input() category: Category = 'games';
   @Input() games: Game[] = [];
   @Input() played: readonly string[] = [];
   @Input() disabled = false;
