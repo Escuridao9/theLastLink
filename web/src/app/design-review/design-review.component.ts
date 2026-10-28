@@ -2,6 +2,8 @@ import { Component, inject, OnDestroy } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatchService } from '../core/match.service';
 import { ReviewMatchService } from './review-services';
+import { AccountService } from '../core/account.service';
+import { ReviewAccountService } from './review-account.service';
 @Component({
   selector: 'app-design-review',
   standalone: true,
@@ -12,6 +14,10 @@ import { ReviewMatchService } from './review-services';
 export class DesignReviewComponent implements OnDestroy {
   readonly preview = inject(MatchService) as unknown as ReviewMatchService;
   readonly router = inject(Router);
+  readonly accounts = inject(AccountService) as unknown as ReviewAccountService;
+  get onAccount(): boolean {
+    return this.router.url.includes('/account');
+  }
   get category(): string {
     return this.router.url.includes('games') ? 'games' : 'movies';
   }

@@ -54,8 +54,12 @@ export class RoomsComponent implements OnInit, OnDestroy {
     });
   }
   get invite(): string {
-    return buildInviteUrl(document.baseURI, this.links.to('/rooms'),
-      this.game.room()?.code ?? '', this.game.room()?.category ?? this.category());
+    return buildInviteUrl(
+      document.baseURI,
+      this.links.to('/rooms'),
+      this.game.room()?.code ?? '',
+      this.game.room()?.category ?? this.category(),
+    );
   }
   ngOnInit(): void {
     this.category.set(
@@ -65,6 +69,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
     if (code) this.form.controls.code.setValue(code);
     this.game.room.set(null);
     this.game.match.set(null);
+    this.game.error.set('');
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.opening.set(true);

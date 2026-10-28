@@ -1,8 +1,5 @@
 import { provideHttpClient } from '@angular/common/http';
-import {
-  HttpTestingController,
-  provideHttpClientTesting,
-} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { createClient } from '@supabase/supabase-js';
 import { firstValueFrom } from 'rxjs';
@@ -32,7 +29,9 @@ const success: CommandResponse = {
 
 function deferred<T>() {
   let resolve!: (value: T) => void;
-  const promise = new Promise<T>((done) => { resolve = done; });
+  const promise = new Promise<T>((done) => {
+    resolve = done;
+  });
   return { promise, resolve };
 }
 
@@ -82,7 +81,8 @@ describe('Public configuration', () => {
     const { service, http } = fixture();
     const pending = service.load();
     http.expectOne('config.json').flush('unavailable', {
-      status: 503, statusText: 'Service Unavailable',
+      status: 503,
+      statusText: 'Service Unavailable',
     });
     await pending;
     expect(service.configured).toBe(false);
@@ -94,14 +94,21 @@ describe('Public configuration', () => {
 describe('Authenticated match transport', () => {
   function fixture() {
     const getSession = vi.fn().mockResolvedValue({
-      data: { session: { user: { id: 'player-one' } } }, error: null,
+      data: { session: { user: { id: 'player-one' } } },
+      error: null,
     });
     const signInAnonymously = vi.fn().mockResolvedValue({
-      data: { user: { id: 'new-player' } }, error: null,
+      data: { user: { id: 'new-player' } },
+      error: null,
     });
     const invoke = vi.fn().mockResolvedValue({ data: success, error: null });
     const rpc = vi.fn();
-    const client = { auth: { getSession, signInAnonymously }, functions: { invoke }, rpc };
+    const onAuthStateChange = vi.fn(() => ({ data: { subscription: { unsubscribe: vi.fn() } } }));
+    const client = {
+      auth: { getSession, signInAnonymously, onAuthStateChange },
+      functions: { invoke },
+      rpc,
+    };
     vi.mocked(createClient).mockReturnValue(client as unknown as ReturnType<typeof createClient>);
     TestBed.configureTestingModule({
       providers: [{ provide: ConfigService, useValue: { configured: true, value: configuration } }],
@@ -138,19 +145,27 @@ describe('Authenticated match transport', () => {
 
   it('exposes an API error instead of treating it as an accepted answer', async () => {
     const { service, invoke } = fixture();
-    invoke.mockResolvedValue({ data: null, error: {
-      message: 'HTTP error',
-      context: new Response(JSON.stringify({ error: 'authentication_required' }), {
-        status: 401, headers: { 'Content-Type': 'application/json' },
-      }),
-    } });
-    await expect(service.command('submit', {}, receiptId)).rejects.toThrow('authentication_required');
+    invoke.mockResolvedValue({
+      data: null,
+      error: {
+        message: 'HTTP error',
+        context: new Response(JSON.stringify({ error: 'authentication_required' }), {
+          status: 401,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      },
+    });
+    await expect(service.command('submit', {}, receiptId)).rejects.toThrow(
+      'authentication_required',
+    );
   });
 
   it('allows a later attempt after session restoration fails', async () => {
     const { service, getSession, invoke } = fixture();
     getSession.mockRejectedValueOnce(new Error('Connection interrupted'));
-    await expect(service.command('snapshot', {}, receiptId)).rejects.toThrow('Connection interrupted');
+    await expect(service.command('snapshot', {}, receiptId)).rejects.toThrow(
+      'Connection interrupted',
+    );
     expect(invoke).not.toHaveBeenCalled();
     await expect(service.command('snapshot', {}, receiptId)).resolves.toEqual(success);
     expect(getSession).toHaveBeenCalledTimes(2);
@@ -159,30 +174,53 @@ describe('Authenticated match transport', () => {
 
 describe('Published catalogue HTTP requests', () => {
   function fixture(configured = true) {
-    TestBed.configureTestingModule({ providers: [
-      provideHttpClient(), provideHttpClientTesting(),
-      { provide: ConfigService, useValue: { configured, value: configuration } },
-    ] });
-    return { service: TestBed.inject(CatalogueService), http: TestBed.inject(HttpTestingController) };
+    TestBed.configureTestingModule({
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: ConfigService, useValue: { configured, value: configuration } },
+      ],
+    });
+    return {
+      service: TestBed.inject(CatalogueService),
+      http: TestBed.inject(HttpTestingController),
+    };
   }
 
   it('pins the requested publication and retains all five Movie credit roles', async () => {
     const { service, http } = fixture();
-    const entry = { id: 'tmdb:movie:1', category: 'movies' as const, title: 'Test title', credits: {} };
+    const entry = {
+      id: 'tmdb:movie:1',
+      category: 'movies' as const,
+      title: 'Test title',
+      credits: {},
+    };
     const pending = firstValueFrom(service.load('movies-fixture-v1'));
     const request = http.expectOne((r) => r.url.endsWith('/rest/v1/catalogues'));
     expect(request.request.params.get('id')).toBe('eq.movies-fixture-v1');
     expect(request.request.params.get('published')).toBe('eq.true');
     expect(request.request.headers.get('apikey')).toBe(configuration.supabasePublishableKey);
-    request.flush([{ snapshot: { datasetId: 'movies-fixture-v1', category: 'movies', movies: [entry] } }]);
+    request.flush([
+      { snapshot: { datasetId: 'movies-fixture-v1', category: 'movies', movies: [entry] } },
+    ]);
     const catalogue = await pending;
     const detail = firstValueFrom(service.details(catalogue, entry));
-    const detailsRequest = http.expectOne(configuration.supabaseUrl + '/rest/v1/rpc/movie_credit_details');
-    expect(detailsRequest.request.body).toEqual({ p_catalogue_id: catalogue.datasetId, p_entry_id: entry.id });
+    const detailsRequest = http.expectOne(
+      configuration.supabaseUrl + '/rest/v1/rpc/movie_credit_details',
+    );
+    expect(detailsRequest.request.body).toEqual({
+      p_catalogue_id: catalogue.datasetId,
+      p_entry_id: entry.id,
+    });
     const roles = ['actor', 'director', 'writer', 'composer', 'cinematographer'] as const;
-    detailsRequest.flush(roles.map((role) => ({
-      entityId: 'tmdb:person:1', name: 'Test person', role, sourceCredits: [{ job: role }],
-    })));
+    detailsRequest.flush(
+      roles.map((role) => ({
+        entityId: 'tmdb:person:1',
+        name: 'Test person',
+        role,
+        sourceCredits: [{ job: role }],
+      })),
+    );
     const result = await detail;
     expect(Object.keys(result.credits)).toEqual([...roles]);
     expect(Object.keys(result.people ?? {})).toEqual(['tmdb:person:1']);
@@ -194,14 +232,21 @@ describe('Published catalogue HTTP requests', () => {
     const request$ = service.load();
     const failed = firstValueFrom(request$);
     const rejected = expect(failed).rejects.toThrow();
-    http.expectOne((r) => r.url.endsWith('/rest/v1/catalogues')).flush('unavailable', {
-      status: 503, statusText: 'Service Unavailable',
-    });
+    http
+      .expectOne((r) => r.url.endsWith('/rest/v1/catalogues'))
+      .flush('unavailable', {
+        status: 503,
+        statusText: 'Service Unavailable',
+      });
     await rejected;
     const retried = firstValueFrom(request$);
-    http.expectOne((r) => r.url.endsWith('/rest/v1/catalogues')).flush([{
-      snapshot: { datasetId: configuration.catalogueId, category: 'games', games: [] },
-    }]);
+    http
+      .expectOne((r) => r.url.endsWith('/rest/v1/catalogues'))
+      .flush([
+        {
+          snapshot: { datasetId: configuration.catalogueId, category: 'games', games: [] },
+        },
+      ]);
     expect((await retried).datasetId).toBe(configuration.catalogueId);
     http.verify();
   });
@@ -209,12 +254,17 @@ describe('Published catalogue HTTP requests', () => {
   it('uses relative published-data assets when multiplayer is unconfigured', async () => {
     const { service, http } = fixture(false);
     const entry = {
-      id: 'tmdb:movie:1', category: 'movies' as const,
-      title: 'Test title', credits: {}, detailShard: 7,
+      id: 'tmdb:movie:1',
+      category: 'movies' as const,
+      title: 'Test title',
+      credits: {},
+      detailShard: 7,
     };
     const pending = firstValueFrom(service.load(MOVIES_VERSION));
     http.expectOne('movies-index-v1.json').flush({
-      datasetId: MOVIES_VERSION, category: 'movies', movies: [entry],
+      datasetId: MOVIES_VERSION,
+      category: 'movies',
+      movies: [entry],
     });
     const catalogue = await pending;
     const detail = firstValueFrom(service.details(catalogue, entry));
@@ -227,20 +277,57 @@ describe('Published catalogue HTTP requests', () => {
 describe('Authoritative match synchronization', () => {
   function snapshot(revision: number): Match {
     return {
-      id: 'match-one', roomId: 'room-one', catalogueId: configuration.catalogueId,
-      category: 'games', status: 'active', activePlayer: 'player-one',
-      deadline: '2026-10-27T18:00:20.000Z', revision,
-      winnerId: null, endReason: null, endedAt: null, turns: [],
-      state: { datasetId: configuration.catalogueId, category: 'games', currentGameId: 'game-one', history: ['game-one'], usage: {}, version: revision },
-      room: { id: 'room-one', code: 'ABCDEF123456', hostId: 'player-one', guestId: 'player-two', category: 'games', status: 'playing', matchId: 'match-one', revision, players: [] },
+      id: 'match-one',
+      roomId: 'room-one',
+      catalogueId: configuration.catalogueId,
+      category: 'games',
+      status: 'active',
+      activePlayer: 'player-one',
+      deadline: '2026-10-27T18:00:20.000Z',
+      revision,
+      winnerId: null,
+      endReason: null,
+      endedAt: null,
+      turns: [],
+      state: {
+        datasetId: configuration.catalogueId,
+        category: 'games',
+        currentGameId: 'game-one',
+        history: ['game-one'],
+        usage: {},
+        version: revision,
+      },
+      room: {
+        id: 'room-one',
+        code: 'ABCDEF123456',
+        hostId: 'player-one',
+        guestId: 'player-two',
+        category: 'games',
+        status: 'playing',
+        matchId: 'match-one',
+        revision,
+        players: [],
+      },
     };
   }
 
   it('rejects older revisions and responses that arrive after stop', async () => {
     const pending: ReturnType<typeof deferred<CommandResponse>>[] = [];
-    TestBed.configureTestingModule({ providers: [{ provide: BackendService, useValue: {
-      command: () => { const result = deferred<CommandResponse>(); pending.push(result); return result.promise; },
-    } }] });
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: BackendService,
+          useValue: {
+            onIdentityChange: () => () => {},
+            command: () => {
+              const result = deferred<CommandResponse>();
+              pending.push(result);
+              return result.promise;
+            },
+          },
+        },
+      ],
+    });
     const service = TestBed.inject(MatchService);
     const first = service.send('snapshot', {}, receiptId);
     const second = service.send('snapshot', {}, receiptId);
@@ -261,24 +348,46 @@ describe('Authoritative match synchronization', () => {
     let updated!: () => void;
     let statusChanged!: (status: string) => void;
     const channel = {
-      on: vi.fn((_event: string, _filter: unknown, callback: () => void) => { updated = callback; return channel; }),
-      subscribe: vi.fn((callback: (status: string) => void) => { statusChanged = callback; return channel; }),
+      on: vi.fn((_event: string, _filter: unknown, callback: () => void) => {
+        updated = callback;
+        return channel;
+      }),
+      subscribe: vi.fn((callback: (status: string) => void) => {
+        statusChanged = callback;
+        return channel;
+      }),
     };
     const removeChannel = vi.fn().mockResolvedValue('ok');
     const openChannel = vi.fn(() => channel);
     const command = vi.fn().mockResolvedValue({ ...success, match: snapshot(1) });
-    TestBed.configureTestingModule({ providers: [{ provide: BackendService, useValue: {
-      identity: async () => {}, command,
-      client: { channel: openChannel, removeChannel },
-    } }] });
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: BackendService,
+          useValue: {
+            onIdentityChange: () => () => {},
+            identity: async () => {},
+            command,
+            client: { channel: openChannel, removeChannel },
+          },
+        },
+      ],
+    });
     const service = TestBed.inject(MatchService);
     await service.watch('match', 'match-one');
     expect(openChannel).toHaveBeenCalledWith('last-link:match:match-one', {
       config: { postgres_changes_options: { wait: true, timeout: 10000 } },
     });
-    expect(channel.on).toHaveBeenCalledWith('postgres_changes', {
-      event: 'UPDATE', schema: 'public', table: 'matches', filter: 'id=eq.match-one',
-    }, expect.any(Function));
+    expect(channel.on).toHaveBeenCalledWith(
+      'postgres_changes',
+      {
+        event: 'UPDATE',
+        schema: 'public',
+        table: 'matches',
+        filter: 'id=eq.match-one',
+      },
+      expect.any(Function),
+    );
     statusChanged('SUBSCRIBED');
     expect(service.connection()).toBe('Live');
     updated();

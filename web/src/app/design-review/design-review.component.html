@@ -7,6 +7,17 @@
   <details>
     <summary>Review controls</summary>
     <div class="review-tools">
+      <a routerLink="/design-review/account">Login</a>
+      <a routerLink="/design-review/account" [queryParams]="{ mode: 'signup' }">Create account</a>
+      @if (onAccount) {
+        <button (click)="accounts.showLogin()">Show logged-out state</button>
+        <button (click)="accounts.showGuest()">Show guest upgrade</button>
+        <button (click)="accounts.showAccount()">Show account</button>
+        <p>
+          Example confirmation code: 123456. No emails are sent. Use error@example.invalid to
+          preview a login error.
+        </p>
+      }
       @if (onLobby) {
         <button (click)="preview.addRival()">Add example rival</button
         ><button (click)="preview.waitForRival()">Waiting lobby</button>

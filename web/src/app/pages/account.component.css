@@ -1,0 +1,215 @@
+:host {
+  display: block;
+}
+.account-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+  gap: 80px;
+  padding: 35px 0 30px;
+  align-items: start;
+}
+.account-heading h1 {
+  margin: 24px 0;
+  font-size: clamp(62px, 7vw, 94px);
+  line-height: 0.98;
+  letter-spacing: -4px;
+}
+.account-heading > p {
+  max-width: 380px;
+  color: var(--ll-quiet);
+  font-size: 15px;
+}
+.account-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-top: 40px;
+  padding-top: 23px;
+  border-top: 1px solid #4a3a49;
+  max-width: 380px;
+}
+.account-facts > span {
+  font-size: 11px;
+  color: var(--ll-quiet);
+}
+.account-facts b {
+  display: block;
+  font-size: 29px;
+  line-height: 1;
+  color: var(--ll-coral);
+  margin-bottom: 9px;
+}
+.account-panel {
+  min-width: 0;
+  padding-top: 4px;
+}
+.account-panel h2 {
+  font-size: 30px;
+  letter-spacing: -1px;
+  margin: 24px 0;
+}
+.account-panel label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--ll-cream);
+}
+.account-modes {
+  display: flex;
+  gap: 26px;
+  border-bottom: 1px solid #59455c;
+}
+.account-modes a {
+  min-height: 46px;
+  padding: 10px 0;
+  font-size: 14px;
+  font-weight: 700;
+  border-bottom: 3px solid transparent;
+  color: var(--ll-quiet);
+}
+.account-modes a.active {
+  border-color: var(--ll-coral);
+  color: var(--ll-cream);
+}
+.account-hint,
+.account-field-error {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 7px 0 18px;
+  min-height: 18px;
+}
+.account-hint {
+  color: var(--ll-quiet);
+}
+.account-field-error {
+  color: #ff9c8a;
+}
+.account-submit {
+  width: 100%;
+  margin-top: 10px;
+}
+.account-copy {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ll-quiet);
+  margin-bottom: 20px;
+  overflow-wrap: anywhere;
+}
+.account-copy strong {
+  color: var(--ll-cream);
+  font-weight: 600;
+}
+.account-password-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.account-password-label label {
+  margin: 0;
+}
+.account-text-button {
+  background: none;
+  border: 0;
+  color: var(--ll-lilac);
+  font: inherit;
+  font-size: 12px;
+  padding: 11px 0;
+  min-height: 44px;
+}
+.account-text-button:disabled {
+  background: none;
+}
+.account-secondary {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.account-footnote {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ll-quiet);
+  margin: 18px 0 0;
+}
+.account-guest-link {
+  display: inline-block;
+  font-size: 12px;
+  color: var(--ll-lilac);
+  margin-top: 24px;
+  padding: 11px 0;
+  min-height: 44px;
+}
+.account-message {
+  padding: 14px 16px;
+  border-left: 3px solid var(--ll-lilac);
+  background: #32263a;
+  color: var(--ll-cream);
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.account-panel .ll-note {
+  margin: 0 0 24px;
+}
+.account-code {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 8px;
+  font-size: 24px;
+}
+.account-confirmed {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--ll-lilac);
+}
+.account-email {
+  overflow-wrap: anywhere;
+  color: var(--ll-cream);
+  font-size: 16px;
+}
+.account-stop {
+  color: var(--ll-coral);
+}
+@media (max-width: 800px) {
+  .account-layout {
+    gap: 38px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  }
+  .account-heading h1 {
+    font-size: 66px;
+    letter-spacing: -3px;
+  }
+}
+@media (max-width: 600px) {
+  .account-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    padding: 18px 0 8px;
+  }
+  .account-heading h1 {
+    font-size: 58px;
+    letter-spacing: -2.8px;
+    margin: 15px 0;
+  }
+  .account-heading > p {
+    font-size: 13px;
+    margin-bottom: 0;
+  }
+  .account-facts {
+    display: none;
+  }
+  .account-panel h2 {
+    font-size: 26px;
+    margin: 21px 0;
+  }
+  .account-panel .ll-input {
+    min-height: 50px;
+    padding: 13px 14px;
+  }
+  .account-copy {
+    font-size: 13px;
+  }
+  .account-modes a {
+    font-size: 14px;
+  }
+}

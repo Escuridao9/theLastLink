@@ -2,6 +2,8 @@ import { REQUEST_ID } from '../shared/request-id';
 import { signal } from '@angular/core';
 import { Routes } from '@angular/router';
 import { ConfigService } from '../core/config.service';
+import { AccountService } from '../core/account.service';
+import { ReviewAccountService } from './review-account.service';
 import { MatchService } from '../core/match.service';
 import { CatalogueService } from '../core/catalogue.service';
 import { ReviewMatchService, ReviewCatalogueService } from './review-services';
@@ -18,6 +20,7 @@ export const REVIEW_ROUTES: Routes = [
         },
       },
       { provide: MatchService, useClass: ReviewMatchService },
+      { provide: AccountService, useClass: ReviewAccountService },
       { provide: CatalogueService, useClass: ReviewCatalogueService },
       {
         provide: ConfigService,
@@ -60,6 +63,10 @@ export const REVIEW_ROUTES: Routes = [
       {
         path: 'credits',
         loadComponent: () => import('../pages/credits.component').then((m) => m.CreditsComponent),
+      },
+      {
+        path: 'account',
+        loadComponent: () => import('../pages/account.component').then((m) => m.AccountComponent),
       },
     ],
   },

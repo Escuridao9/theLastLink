@@ -20,9 +20,10 @@ export const routes: Routes = [
   },
   {
     path: 'play/:categoryId',
-    redirectTo: ({ params }) => inject(Router).createUrlTree(['/rooms'], {
-      queryParams: { category: params['categoryId'] === 'games' ? 'games' : 'movies' },
-    }),
+    redirectTo: ({ params }) =>
+      inject(Router).createUrlTree(['/rooms'], {
+        queryParams: { category: params['categoryId'] === 'games' ? 'games' : 'movies' },
+      }),
   },
   {
     path: 'catalogue',
@@ -48,6 +49,11 @@ export const routes: Routes = [
     path: 'results/:id',
     title: 'Match result — The Last Link',
     loadComponent: () => import('./pages/results.component').then((m) => m.ResultsComponent),
+  },
+  {
+    path: 'account',
+    title: 'Your account — The Last Link',
+    loadComponent: () => import('./pages/account.component').then((m) => m.AccountComponent),
   },
   {
     path: 'credits',

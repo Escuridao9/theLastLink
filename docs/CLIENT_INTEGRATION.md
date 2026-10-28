@@ -3,13 +3,13 @@
 The Angular client uses injectable services to keep transport, catalogue loading,
 and match synchronization separate from page templates.
 
-| File in `web/src/app/core/` | Responsibility |
-| --- | --- |
-| `models.ts` | Typed catalogue, room, command, and match contracts |
-| `config.service.ts` | Loads and validates the public `config.json` asset |
-| `backend.service.ts` | Restores or creates a Supabase Auth session and invokes `match-api` |
-| `catalogue.service.ts` | Loads published catalogues and credits through typed Angular HTTP requests and Observables |
-| `match.service.ts` | Applies authoritative snapshots and refreshes them after Realtime notifications |
+| File in `web/src/app/core/` | Responsibility                                                                             |
+| --------------------------- | ------------------------------------------------------------------------------------------ |
+| `models.ts`                 | Typed catalogue, room, command, and match contracts                                        |
+| `config.service.ts`         | Loads and validates the public `config.json` asset                                         |
+| `backend.service.ts`        | Restores or creates a Supabase Auth session and invokes `match-api`                        |
+| `catalogue.service.ts`      | Loads published catalogues and credits through typed Angular HTTP requests and Observables |
+| `match.service.ts`          | Applies authoritative snapshots and refreshes them after Realtime notifications            |
 
 `provideHttpClient()` configures Angular HTTP dependency injection.
 `provideAppInitializer()` waits for public configuration loading before the app
@@ -80,3 +80,9 @@ separately with two independent browser sessions.
 
 See [UI and multiplayer](UI_AND_MULTIPLAYER.md) for routes, the isolated visual
 preview, and the two-player verification journey.
+
+## Accounts
+
+Email/password login, account creation, email confirmation, and guest conversion
+share the production multiplayer session. See [Accounts](ACCOUNTS.md) for Auth
+settings, email templates, confirmation URLs, and hosted acceptance checks.

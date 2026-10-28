@@ -1,0 +1,481 @@
+import { TestBed } from '@angular/core/testing';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { createClient, type User } from '@supabase/supabase-js';
+import { BackendService } from './backend.service';
+import { AccountService } from './account.service';
+import { ConfigService } from './config.service';
+import { MatchService } from './match.service';
+import type { Match } from './models';
+
+vi.mock('@supabase/supabase-js', () => ({ createClient: vi.fn() }));
+const password = 'A test password 123!';
+const configuration = {
+  configured: true,
+  value: {
+    supabaseUrl: 'https://example.supabase.co',
+    supabasePublishableKey: 'sb_publishable_synthetic_test',
+    transport: 'edge',
+  },
+};
+function person(id = 'account-one', guest = false): User {
+  return {
+    id,
+    is_anonymous: guest,
+    email: guest ? undefined : 'diogo@example.invalid',
+    email_confirmed_at: guest ? undefined : '2026-10-27T12:00:00Z',
+    user_metadata: { display_name: 'Diogo' },
+    app_metadata: {},
+    aud: 'authenticated',
+    created_at: '2026-10-27T12:00:00Z',
+  };
+}
+function fixture(initial: User | null = null) {
+  let current = initial;
+  const callbacks = new Set<(event: string, session: { user: User } | null) => void>();
+  const unsubscribe = vi.fn();
+  const session = (user: User | null) =>
+    user ? { user, access_token: 'test-access-token', refresh_token: 'test-refresh-token' } : null;
+  const emit = (user: User | null, event = user ? 'SIGNED_IN' : 'SIGNED_OUT') => {
+    current = user;
+    for (const callback of callbacks) callback(event, session(user));
+  };
+  const auth = {
+    onAuthStateChange: vi.fn((callback: (event: string, value: { user: User } | null) => void) => {
+      callbacks.add(callback);
+      return {
+        data: {
+          subscription: {
+            unsubscribe: () => {
+              callbacks.delete(callback);
+              unsubscribe();
+            },
+          },
+        },
+      };
+    }),
+    getSession: vi.fn(async () => ({ data: { session: session(current) }, error: null })),
+    getUser: vi.fn(async () => ({
+      data: { user: current },
+      error: null as null | { code: string },
+    })),
+    signInAnonymously: vi.fn(async () => {
+      const user = person('guest-one', true);
+      emit(user);
+      return { data: { user, session: session(user) }, error: null };
+    }),
+    signInWithPassword: vi.fn(async (_credentials: unknown) => {
+      const user = person();
+      emit(user);
+      return { data: { user, session: session(user) }, error: null as null | { code: string } };
+    }),
+    signUp: vi.fn(async (_credentials: unknown) => ({
+      data: { user: person(), session: null as ReturnType<typeof session> },
+      error: null as null | { code: string },
+    })),
+    updateUser: vi.fn(
+      async (
+        attributes: { email?: string; password?: string; data?: Record<string, unknown> },
+        _options?: unknown,
+      ) => {
+        const user = { ...current!, user_metadata: attributes.data ?? current!.user_metadata };
+        if (attributes.email && !current!.is_anonymous) user.email = attributes.email;
+        emit(user, 'USER_UPDATED');
+        return { data: { user }, error: null as null | { code: string } };
+      },
+    ),
+    verifyOtp: vi.fn(async (request: { email: string; token: string; type: string }) => {
+      const user: User = { ...person(current?.id ?? 'account-one'), email: request.email };
+      emit(user);
+      return { data: { user, session: session(user) }, error: null as null | { code: string } };
+    }),
+    resend: vi.fn(async (_request: unknown) => ({ data: {}, error: null })),
+    signOut: vi.fn(async (_options: unknown) => {
+      emit(null);
+      return { error: null };
+    }),
+    exchangeCodeForSession: vi.fn(async (_code: string) => {
+      const user = person();
+      emit(user);
+      return { data: { user, session: session(user) }, error: null as null | { code: string } };
+    }),
+  };
+  const client = {
+    auth,
+    functions: { invoke: vi.fn() },
+    removeChannel: vi.fn().mockResolvedValue('ok'),
+  };
+  vi.mocked(createClient).mockReturnValue(client as unknown as ReturnType<typeof createClient>);
+  TestBed.configureTestingModule({
+    providers: [{ provide: ConfigService, useValue: configuration }],
+  });
+  return {
+    account: TestBed.inject(AccountService),
+    backend: TestBed.inject(BackendService),
+    auth,
+    client,
+    emit,
+    unsubscribe,
+  };
+}
+beforeEach(() => {
+  localStorage.clear();
+  sessionStorage.clear();
+  history.replaceState(null, '', '/');
+});
+afterEach(() => {
+  TestBed.resetTestingModule();
+  vi.restoreAllMocks();
+  history.replaceState(null, '', '/');
+});
+
+describe('Real account service with an isolated Auth transport', () => {
+  it('restores an account without creating a guest and keeps the existing SDK storage key', async () => {
+    const f = fixture(person());
+    await f.account.initialize();
+    expect(f.account.isAccount()).toBe(true);
+    expect(f.backend.playerId()).toBe('account-one');
+    expect(f.auth.signInAnonymously).not.toHaveBeenCalled();
+    expect(createClient).toHaveBeenCalledWith(
+      configuration.value.supabaseUrl,
+      configuration.value.supabasePublishableKey,
+      {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: false,
+          flowType: 'pkce',
+          storageKey: 'last-link-auth',
+        },
+      },
+    );
+  });
+  it('does not create a guest merely because a logged-out visitor opens the account page', async () => {
+    const f = fixture();
+    await f.account.initialize();
+    expect(f.account.user()).toBeNull();
+    expect(f.auth.signInAnonymously).not.toHaveBeenCalled();
+  });
+  it('keeps the SDK out of a fresh public visit until an account operation needs it', async () => {
+    vi.mocked(createClient).mockClear();
+    const f = fixture();
+    await f.backend.restoreIfPresent();
+    expect(f.auth.getSession).not.toHaveBeenCalled();
+    expect(createClient).not.toHaveBeenCalled();
+    expect(f.account.ready()).toBe(true);
+    await f.account.initialize();
+    expect(f.auth.getSession).toHaveBeenCalledTimes(1);
+  });
+  it('signs in through the same Auth client used by match-api and prefills the player name', async () => {
+    const f = fixture();
+    await f.account.login(' diogo@example.invalid ', password);
+    expect(f.auth.signInWithPassword).toHaveBeenCalledWith({
+      email: 'diogo@example.invalid',
+      password,
+    });
+    expect(f.backend.playerId()).toBe('account-one');
+    expect(localStorage.getItem('last-link-name')).toBe('Diogo');
+    expect(f.account.busy()).toBe(false);
+  });
+  it('shows a clear credential error and clears busy state after a failed login', async () => {
+    const f = fixture();
+    f.auth.signInWithPassword.mockResolvedValue({
+      data: { user: person(), session: null },
+      error: { code: 'invalid_credentials' },
+    });
+    await expect(f.account.login('diogo@example.invalid', password)).rejects.toThrow(
+      'Email or password is incorrect',
+    );
+    expect(f.account.user()).toBeNull();
+    expect(f.account.busy()).toBe(false);
+  });
+  it('registers a new visitor with email confirmation and never creates an anonymous identity', async () => {
+    const f = fixture();
+    await f.account.register(' Diogo ', 'diogo@example.invalid', password);
+    expect(f.auth.signUp).toHaveBeenCalledWith({
+      email: 'diogo@example.invalid',
+      password,
+      options: {
+        data: { display_name: 'Diogo' },
+        emailRedirectTo: new URL(document.baseURI).origin + '/',
+      },
+    });
+    expect(f.account.verification()).toEqual({
+      email: 'diogo@example.invalid',
+      type: 'signup',
+      userId: null,
+    });
+    expect(f.account.isAccount()).toBe(false);
+    expect(f.auth.signInAnonymously).not.toHaveBeenCalled();
+    expect(JSON.stringify({ ...localStorage, ...sessionStorage })).not.toContain(password);
+  });
+  it('keeps pending verification across a page reload without storing the password', async () => {
+    const f = fixture();
+    await f.account.register('Diogo', 'diogo@example.invalid', password);
+    TestBed.resetTestingModule();
+    const restored = fixture();
+    expect(restored.account.verification()?.email).toBe('diogo@example.invalid');
+    expect(JSON.stringify({ ...localStorage, ...sessionStorage })).not.toContain(password);
+  });
+  it('verifies a new account with the signup OTP type', async () => {
+    const f = fixture();
+    await f.account.register('Diogo', 'diogo@example.invalid', password);
+    await f.account.verifyEmail('123456');
+    expect(f.auth.verifyOtp).toHaveBeenCalledWith({
+      email: 'diogo@example.invalid',
+      token: '123456',
+      type: 'signup',
+    });
+    expect(f.account.isAccount()).toBe(true);
+    expect(f.account.verification()).toBeNull();
+  });
+  it('upgrades a guest in place and adds a password only after the email is verified', async () => {
+    const f = fixture(person('guest-one', true));
+    await f.account.initialize();
+    localStorage.setItem('last-link-resume', 'existing-match');
+    const changed = vi.fn();
+    f.backend.onIdentityChange(changed);
+    await f.account.register('Diogo', 'diogo@example.invalid');
+    expect(f.auth.signUp).not.toHaveBeenCalled();
+    expect(f.auth.updateUser).toHaveBeenCalledWith(
+      { email: 'diogo@example.invalid', data: { display_name: 'Diogo' } },
+      expect.objectContaining({ emailRedirectTo: expect.any(String) }),
+    );
+    expect(f.account.verification()?.type).toBe('email_change');
+    await expect(f.account.finishPassword(password)).rejects.toThrow('Confirm your email');
+    expect(f.auth.updateUser).toHaveBeenCalledTimes(1);
+    await f.account.verifyEmail('123456');
+    expect(f.account.needsPassword()).toBe(true);
+    await f.account.finishPassword(password);
+    expect(f.auth.updateUser).toHaveBeenLastCalledWith({ password });
+    expect(f.backend.playerId()).toBe('guest-one');
+    expect(f.account.needsPassword()).toBe(false);
+    expect(changed).not.toHaveBeenCalled();
+    expect(localStorage.getItem('last-link-resume')).toBe('existing-match');
+    expect(JSON.stringify({ ...localStorage, ...sessionStorage })).not.toContain(password);
+  });
+  it('clears pending guest verification when a different identity signs in', async () => {
+    const f = fixture(person('guest-one', true));
+    await f.account.register('Diogo', 'diogo@example.invalid');
+    f.emit(person('another-account'));
+    expect(f.account.verification()).toBeNull();
+    expect(sessionStorage.getItem('last-link-account-verification')).toBeNull();
+    await expect(f.account.verifyEmail('123456')).rejects.toThrow(
+      'Request a confirmation email first',
+    );
+    expect(f.auth.verifyOtp).not.toHaveBeenCalled();
+  });
+  it('locks account operations while an already-started guest sign-in finishes', async () => {
+    const f = fixture();
+    let finishGuest!: (value: Awaited<ReturnType<typeof f.auth.signInAnonymously>>) => void;
+    f.auth.signInAnonymously.mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          finishGuest = resolve;
+        }),
+    );
+    const joining = f.backend.identity();
+    await vi.waitFor(() => expect(f.auth.signInAnonymously).toHaveBeenCalledTimes(1));
+    const login = f.account.login('diogo@example.invalid', password);
+    await vi.waitFor(() => expect(f.account.busy()).toBe(true));
+    await expect(f.account.register('Diogo', 'other@example.invalid', password)).rejects.toThrow(
+      'Another account request',
+    );
+    expect(f.auth.signInWithPassword).not.toHaveBeenCalled();
+    const guest = person('guest-one', true);
+    f.emit(guest);
+    finishGuest({
+      data: {
+        user: guest,
+        session: {
+          user: guest,
+          access_token: 'test-access-token',
+          refresh_token: 'test-refresh-token',
+        },
+      },
+      error: null,
+    });
+    await joining;
+    await login;
+    expect(f.auth.signInWithPassword).toHaveBeenCalledTimes(1);
+    expect(f.auth.signUp).not.toHaveBeenCalled();
+    expect(f.backend.playerId()).toBe('account-one');
+    expect(f.account.busy()).toBe(false);
+  });
+  it('does not change another account password if identity changes during server verification', async () => {
+    const f = fixture(person('guest-one', true));
+    await f.account.register('Diogo', 'diogo@example.invalid');
+    await f.account.verifyEmail('123456');
+    let finishVerification!: (value: Awaited<ReturnType<typeof f.auth.getUser>>) => void;
+    f.auth.getUser.mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          finishVerification = resolve;
+        }),
+    );
+    const finishing = f.account.finishPassword(password);
+    const rejected = expect(finishing).rejects.toThrow('Your account changed');
+    await vi.waitFor(() => expect(f.auth.getUser).toHaveBeenCalledTimes(1));
+    f.emit(person('another-account'));
+    finishVerification({ data: { user: person('guest-one') }, error: null });
+    await rejected;
+    expect(f.auth.updateUser).not.toHaveBeenCalledWith({ password });
+    expect(f.backend.playerId()).toBe('another-account');
+    expect(f.account.busy()).toBe(false);
+  });
+  it('does not let a late guest response replace a newer signed-in account', async () => {
+    const f = fixture();
+    let finishGuest!: (value: Awaited<ReturnType<typeof f.auth.signInAnonymously>>) => void;
+    f.auth.signInAnonymously.mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          finishGuest = resolve;
+        }),
+    );
+    const joining = f.backend.identity();
+    const rejected = expect(joining).rejects.toThrow('Your account changed');
+    await vi.waitFor(() => expect(f.auth.signInAnonymously).toHaveBeenCalledTimes(1));
+    f.emit(person('new-account'));
+    const guest = person('guest-one', true);
+    finishGuest({
+      data: {
+        user: guest,
+        session: {
+          user: guest,
+          access_token: 'test-access-token',
+          refresh_token: 'test-refresh-token',
+        },
+      },
+      error: null,
+    });
+    await rejected;
+    expect(f.backend.playerId()).toBe('new-account');
+    expect(f.account.isAccount()).toBe(true);
+  });
+  it('resends the correct confirmation flow for new accounts and guests', async () => {
+    const f = fixture();
+    await f.account.register('Diogo', 'diogo@example.invalid', password);
+    await f.account.resend();
+    expect(f.auth.resend).toHaveBeenCalledWith(
+      expect.objectContaining({ type: 'signup', email: 'diogo@example.invalid' }),
+    );
+    f.emit(person('guest-one', true));
+    await f.account.register('Diogo', 'guest@example.invalid');
+    await f.account.resend();
+    expect(f.auth.updateUser).toHaveBeenLastCalledWith(
+      { email: 'guest@example.invalid' },
+      expect.any(Object),
+    );
+  });
+  it('keeps the verification form usable after an expired code', async () => {
+    const f = fixture();
+    await f.account.register('Diogo', 'diogo@example.invalid', password);
+    f.auth.verifyOtp.mockResolvedValue({
+      data: { user: person(), session: null },
+      error: { code: 'otp_expired' },
+    });
+    await expect(f.account.verifyEmail('123456')).rejects.toThrow('expired or was already used');
+    expect(f.account.verification()).not.toBeNull();
+    expect(f.account.busy()).toBe(false);
+  });
+  it('remembers resume IDs per identity and clears pending answer state on logout', async () => {
+    const f = fixture(person());
+    await f.account.initialize();
+    localStorage.setItem('last-link-resume', 'match-for-account');
+    sessionStorage.setItem('last-link-pending:private-match', 'private receipt');
+    await f.account.logout();
+    expect(f.auth.signOut).toHaveBeenCalledWith({ scope: 'local' });
+    expect(f.backend.playerId()).toBe('');
+    expect(localStorage.getItem('last-link-resume')).toBeNull();
+    expect(sessionStorage.getItem('last-link-pending:private-match')).toBeNull();
+    await f.account.login('diogo@example.invalid', password);
+    expect(localStorage.getItem('last-link-resume')).toBe('match-for-account');
+  });
+  it('does not expose an irreversible logout button action for an anonymous identity', async () => {
+    const f = fixture(person('guest-one', true));
+    await expect(f.account.logout()).rejects.toThrow('Create an account first');
+    expect(f.auth.signOut).not.toHaveBeenCalled();
+  });
+  it('consumes a PKCE callback before routing and does not expose its code in the URL', async () => {
+    history.replaceState(null, '', '/theLastLink/?code=one-time-code');
+    const f = fixture();
+    await f.account.initialize();
+    expect(f.auth.exchangeCodeForSession).toHaveBeenCalledWith('one-time-code');
+    expect(location.pathname + location.search + location.hash).toBe('/theLastLink/#/account');
+    expect(f.account.redirectNotice()).toContain('Email confirmed');
+    expect(f.account.isAccount()).toBe(true);
+  });
+  it('reports an invalid callback without stopping the application or exposing provider error details', async () => {
+    history.replaceState(null, '', '/?code=expired-code');
+    const f = fixture();
+    f.auth.exchangeCodeForSession.mockResolvedValue({
+      data: { user: person(), session: null },
+      error: { code: 'flow_state_not_found' },
+    });
+    await f.account.initialize();
+    expect(f.account.ready()).toBe(true);
+    expect(f.account.redirectIssue()).toContain('could not restore');
+    expect(location.search).toBe('');
+  });
+  it('does not let an old session restoration overwrite a newer Auth event', async () => {
+    const f = fixture();
+    let finish!: (value: Awaited<ReturnType<typeof f.auth.getSession>>) => void;
+    f.auth.getSession.mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          finish = resolve;
+        }),
+    );
+    const restoring = f.account.initialize();
+    await vi.waitFor(() => expect(f.auth.getSession).toHaveBeenCalledTimes(1));
+    f.emit(person('new-account'));
+    finish({
+      data: {
+        session: {
+          user: person('old-account'),
+          access_token: 'old-test-token',
+          refresh_token: 'old-test-refresh',
+        },
+      },
+      error: null,
+    });
+    await restoring;
+    expect(f.backend.playerId()).toBe('new-account');
+  });
+  it('unsubscribes from Auth when the application is destroyed', async () => {
+    const f = fixture();
+    await f.account.initialize();
+    TestBed.resetTestingModule();
+    expect(f.unsubscribe).toHaveBeenCalledTimes(1);
+  });
+  it('clears a live match and rejects its late response when a different account signs in', async () => {
+    const f = fixture(person('guest-one', true));
+    await f.account.initialize();
+    const game = TestBed.inject(MatchService);
+    const match = {
+      id: 'private-match',
+      revision: 1,
+      room: { id: 'private-room', revision: 1 },
+      state: { version: 1 },
+    } as unknown as Match;
+    game.match.set(match);
+    let finish!: (value: unknown) => void;
+    f.client.functions.invoke.mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          finish = resolve;
+        }),
+    );
+    const pending = game.send('snapshot', { matchId: 'private-match' });
+    await vi.waitFor(() => expect(f.client.functions.invoke).toHaveBeenCalled());
+    f.emit(person('different-account'));
+    expect(game.match()).toBeNull();
+    expect(game.room()).toBeNull();
+    finish({
+      data: { ok: true, duplicate: false, serverTime: new Date().toISOString(), match },
+      error: null,
+    });
+    await pending;
+    expect(game.match()).toBeNull();
+    expect(game.error()).toContain('account changed');
+  });
+});

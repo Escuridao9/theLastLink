@@ -19,8 +19,14 @@
       <a [routerLink]="[links.to('/match'), matchId]">Resume</a>
     }
     <a [routerLink]="links.to('/rooms')" class="nav-cta"
-      >Have a room code? <span aria-hidden="true">↗</span></a
+      ><span class="nav-room-long">Have a room code?</span><span class="nav-room-short">Room</span>
+      <span aria-hidden="true">↗</span></a
     >
+    @if (links.reviewing) {
+      <a class="preview-account-link" [routerLink]="links.to('/account')">Log in</a>
+    } @else {
+      <app-account-link />
+    }
   </nav>
 </header>
 <main id="main-content" tabindex="-1">

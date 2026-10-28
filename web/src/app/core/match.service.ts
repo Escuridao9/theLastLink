@@ -1,10 +1,10 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject, signal, OnDestroy } from '@angular/core';
 import type { RealtimeChannel } from '@supabase/supabase-js';
 import { BackendService } from './backend.service';
 import type { CommandResponse, Match, Room } from './models';
 
 @Injectable({ providedIn: 'root' })
-export class MatchService {
+export class MatchService implements OnDestroy {
   readonly backend = inject(BackendService);
   readonly room = signal<Room | null>(null);
   readonly match = signal<Match | null>(null);
@@ -17,6 +17,13 @@ export class MatchService {
   private sequence = 0;
   private clockSequence = 0;
   private refresh?: () => Promise<void>;
+  private readonly unsubscribeIdentity = this.backend.onIdentityChange(() => {
+    this.stop();
+    this.room.set(null);
+    this.match.set(null);
+    this.connection.set('Session changed');
+    this.error.set('Your account changed. Open your room again with the correct account.');
+  });
   private readonly onVisible = () => {
     if (!document.hidden) void this.refresh?.();
   };
@@ -58,6 +65,7 @@ export class MatchService {
     this.room.set(null);
     this.match.set(null);
     this.connection.set('Connecting');
+    this.error.set('');
     const generation = this.generation;
     await this.backend.identity();
     if (generation !== this.generation) return;
@@ -113,5 +121,9 @@ export class MatchService {
     this.refresh = undefined;
     document.removeEventListener('visibilitychange', this.onVisible);
     window.removeEventListener('online', this.onOnline);
+  }
+  ngOnDestroy(): void {
+    this.stop();
+    this.unsubscribeIdentity();
   }
 }
