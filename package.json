@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit",
     "typecheck:edge": "node scripts/check-edge.mjs",
     "verify": "npm run typecheck && npm run typecheck:edge && npm test",
-    "catalogue:build": "node scripts/build-playable.ts && node scripts/build-football.ts",
+    "catalogue:build": "node scripts/build-playable.ts && node scripts/build-football.ts && node scripts/build-rematch-preview.ts",
     "football:collect": "node scripts/football/collect-wikidata.mjs",
     "football:prepare": "node scripts/football/prepare-catalogue.ts",
     "pretest": "npm run catalogue:build"

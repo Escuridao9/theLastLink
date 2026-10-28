@@ -104,6 +104,15 @@ export interface Match {
   endedAt: string | null;
   room: Room;
   turns: Turn[];
+  /** Optional until the rematch database migration has been applied. */
+  rematch?: RematchState;
+}
+export interface RematchState {
+  available: boolean;
+  requestedBy: string[];
+  expiresAt: Record<string, string>;
+  nextMatchId: string | null;
+  nextStatus: 'active' | 'finished' | null;
 }
 export interface CommandResponse {
   ok: boolean;

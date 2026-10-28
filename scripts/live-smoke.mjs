@@ -89,6 +89,22 @@ export async function requireMoveDelivery(streams, match, timeoutMs = 5000) {
   }
 }
 
+/** The finished source match emits the revision that tells both results pages to advance. */
+export async function requireRematchDelivery(streams, source, timeoutMs = 5000) {
+  const until = performance.now() + timeoutMs;
+  const observed = stream => stream.events.some(event =>
+    event.id === source.id && event.revision === source.revision && event.status === 'finished');
+  while (!streams.every(observed)) {
+    if (performance.now() >= until) {
+      const error = new Error('Both independent clients must receive the rematch signal on the finished match.');
+      error.diagnostics = { sourceMatchId: source.id, expectedRevision: source.revision,
+        clients: streams.map(stream => ({ ...stream.diagnostics, rematchSignalReceived: observed(stream), receivedUpdates: stream.events.length })) };
+      throw error;
+    }
+    await pause(Math.min(50, Math.max(1, until-performance.now())));
+  }
+}
+
 /** Observe Cron through SELECT only; never invoke a command that can expire the match. */
 export async function requireIndependentTimeout(readMatch, match, clock, {
   graceMs = 5000, pollMs = 250, now = () => performance.now(), wait = pause,
@@ -149,6 +165,7 @@ export async function runLiveSmoke() {
   const category = option?.slice('--category='.length) ?? 'games';
   assert.ok(['games', 'movies', 'football'].includes(category), 'Category must be games, movies or football.');
   const opening = process.argv.find(value => value.startsWith('--opening='))?.slice('--opening='.length) ?? 'standard';
+  const checkRematch = process.argv.includes('--rematch');
   assert.ok(['standard', 'familiar'].includes(opening), 'Opening must be standard or familiar.');
   assert.ok(category !== 'games' || opening === 'standard', 'Familiar starters are available for Movies and Football.');
   const configuration = validatePublicConfiguration({
@@ -165,6 +182,7 @@ export async function runLiveSmoke() {
   const verified = [];
   const skipped = [];
   let timeoutObservation;
+  let rematchObservation;
   let phase = 'authentication';
   const command = async (index, action, payload, requestId = crypto.randomUUID()) => {
     const { data, error } = await clients[index].functions.invoke('match-api', { body: { action, payload, requestId } });
@@ -237,6 +255,10 @@ export async function runLiveSmoke() {
       assert.equal(readable.id, match.id);
     }));
     verified.push('private room join/start and both participant RLS reads');
+    if (checkRematch) {
+      await assert.rejects(command(0,'rematch',{matchId:match.id}),/match_not_finished/);
+      verified.push('rematch cannot start during an active round');
+    }
     phase = 'invalid answer';
     const actor = indexFor(match);
     const rejected = await command(actor, 'submit', {
@@ -309,7 +331,80 @@ export async function runLiveSmoke() {
     assert.equal(late.ok, false);
     assert.deepEqual(late.match.state, match.state);
     verified.push('late answer rejection');
-    return { passed: true, category, tests: verified, skipped, matchId: match.id, events: streams.map(stream => stream.events.length), timeout: timeoutObservation };
+    if (checkRematch) {
+      const original = late.match;
+      assert.equal(original.status,'finished');
+      assert.equal(original.rematch?.available,true,'Apply the rematch migration before running --rematch.');
+      const originalResult = m => ({state:m.state,turns:m.turns,deadline:m.deadline,endedAt:m.endedAt,winnerId:m.winnerId,endReason:m.endReason});
+      const frozen = originalResult(original);
+      const rematchStreams = clients.slice(0,2).map((client,i)=>watchMatchUpdates(client,original.roomId,i+1));
+      streams.push(...rematchStreams);
+      phase = 'rematch subscription readiness';
+      await Promise.all(rematchStreams.map(stream=>stream.ready));
+      const payload = {matchId:original.id}, receiptId = crypto.randomUUID();
+      phase = 'rematch request, duplicate and cancellation';
+      const pending = await Promise.all([command(0,'rematch',payload,receiptId),command(0,'rematch',payload,receiptId)]);
+      assert.equal(pending.filter(r=>r.duplicate).length,1);
+      for (const r of pending) {
+        assert.equal(r.ok,true);assert.equal(r.match.rematch.nextMatchId,null);
+        assert.deepEqual(r.match.rematch.requestedBy,[identities[0]]);
+        assert.deepEqual(originalResult(r.match),frozen);
+      }
+      const cancelled = await command(0,'cancel_rematch',payload);
+      assert.deepEqual(cancelled.match.rematch.requestedBy,[]);assert.equal(cancelled.match.rematch.nextMatchId,null);
+      verified.push('one-sided rematch waits, duplicate request is idempotent, and cancellation clears only that request');
+      await command(0,'rematch',payload);
+      phase = 'competing rematch acceptance';
+      const accepted = await Promise.all([command(1,'rematch',payload),command(1,'rematch',payload)]);
+      assert.ok(accepted.every(r=>r.ok));
+      const source = (await command(0,'snapshot',payload)).match;
+      assert.ok(source.rematch.nextMatchId);assert.equal(source.rematch.nextStatus,'active');
+      assert.ok(accepted.every(r=>r.match.rematch.nextMatchId===source.rematch.nextMatchId));
+      assert.deepEqual(originalResult(source),frozen);
+      await requireRematchDelivery(rematchStreams,source);
+      verified.push('both results subscribers received the rematch signal');
+      const {data:roomRounds,error:roundsError} = await clients[0].from('matches').select('id').eq('room_id',original.roomId);
+      if (roundsError) throw roundsError;
+      assert.equal(roomRounds.length,2,'Competing acceptance must create exactly one successor.');
+      verified.push('competing acceptance creates one successor while preserving the completed result');
+      let fresh = (await command(0,'snapshot',{matchId:source.rematch.nextMatchId})).match;
+      assert.equal(fresh.status,'active');assert.equal(fresh.roomId,original.roomId);assert.equal(fresh.room.code,original.room.code);
+      assert.equal(fresh.category,category);assert.equal(fresh.catalogueId,original.catalogueId);
+      assert.equal(fresh.room.openingMode,opening);assert.equal(fresh.room.openingPoolId,original.room.openingPoolId);
+      assert.deepEqual(fresh.room.players,original.room.players);
+      assert.deepEqual(fresh.state.usage,{});assert.equal(fresh.state.version,0);assert.equal(fresh.state.history.length,1);
+      assert.equal(fresh.turns.length,1);assert.notEqual(fresh.state.currentGameId,original.state.history[0]);
+      assert.equal(Date.parse(fresh.deadline)-Date.parse(fresh.turns[0].acceptedAt),20000);
+      if (opening==='familiar') {
+        const {data:membership,error} = await clients[0].from('opening_pool_entries').select('entry_id')
+          .eq('pool_id',fresh.room.openingPoolId).eq('entry_id',fresh.state.currentGameId).single();
+        if (error) throw error;
+        assert.equal(membership.entry_id,fresh.state.currentGameId);
+      }
+      verified.push('same room, identities, catalogue and opening option; new seed, empty counters and twenty-second turn');
+      phase = 'accepted rematch move';
+      const firstAnswer = best(fresh);assert.ok(firstAnswer);
+      const move = await command(indexFor(fresh),'submit',{matchId:fresh.id,entryId:firstAnswer,expectedVersion:0});
+      assert.equal(move.ok,true);fresh=move.match;assert.deepEqual(engine.replay(fresh.state.history),fresh.state);
+      await requireMoveDelivery(rematchStreams,fresh);
+      verified.push('fresh-round move validates and reaches both clients through Realtime');
+      phase = 'independent rematch timeout';
+      const started = performance.now();
+      const restored = await command(0,'snapshot',{matchId:fresh.id});
+      const rematchClock = {serverTime:restored.serverTime,requestStartedAt:started,receivedAt:performance.now(),wallClockAtReceipt:Date.now()};
+      fresh=restored.match;
+      await Promise.all(rematchStreams.map(stream=>stream.stop()));
+      console.log('['+category+'] Waiting for the rematch deadline with no subscribers or game commands…');
+      const timeout = await requireIndependentTimeout(async signal=>{
+        const {data:row,error} = await clients[0].from('matches').select('status,winner_id,state,end_reason,ended_at,deadline,revision')
+          .eq('id',fresh.id).abortSignal(signal).single();
+        if (error) throw error;return row;
+      },fresh,rematchClock);
+      assert.deepEqual(originalResult((await command(0,'snapshot',payload)).match),frozen);
+      verified.push('rematch expires independently and the previous result remains unchanged');
+      rematchObservation={sourceMatchId:original.id,matchId:fresh.id,timeout:timeout.diagnostics};
+    }
+    return { passed: true, category, tests: verified, skipped, matchId: match.id, events: streams.map(stream => stream.events.length), timeout: timeoutObservation, ...(rematchObservation?{rematch:rematchObservation}:{}) };
   } catch (error) {
     error.liveDiagnostics = { category, phase, completed: verified, ...(timeoutObservation ? { timeout: timeoutObservation } : {}), ...(error.diagnostics ?? {}), subscriptions: streams.map(stream => ({ ...stream.diagnostics, receivedUpdates: stream.events.length })) };
     throw error;

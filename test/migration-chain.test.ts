@@ -30,7 +30,7 @@ test('the complete migration chain preserves saved room data and enables indepen
     assert.equal((await db.query<{count:number}>("select count(*)::int count from public.entries where catalogue_id='football-clubs-2026-10-28-v1'")).rows[0]!.count,90);
     assert.equal((await db.query<{count:number}>("select count(*)::int count from public.entry_credits where catalogue_id='football-clubs-2026-10-28-v1'")).rows[0]!.count,31286);
     // Retrying a committed data publication must be safe if migration-history recording failed.
-    for (const name of additions.filter(n => !n.endsWith('football_and_familiar_starts.sql')))
+    for (const name of additions.filter(n => /_football_(catalogue_metadata|people_|careers_)|_publish_football_and_opening_pools/.test(n)))
       await db.exec(readFileSync(new URL('../supabase/migrations/' + name, import.meta.url), 'utf8'));
     assert.equal((await db.query<{allowed:boolean}>("select has_table_privilege('authenticated','public.rooms','SELECT') allowed")).rows[0]!.allowed,true);
     assert.equal((await db.query<{code:string}>('select code from public.rooms where id=$1',[saved])).rows[0]!.code,'SAVED1');

@@ -86,3 +86,11 @@ preview, and the two-player verification journey.
 Email/password login, account creation, email confirmation, and guest conversion
 share the production multiplayer session. See [Accounts](ACCOUNTS.md) for Auth
 settings, email templates, confirmation URLs, and hosted acceptance checks.
+
+## Rematches
+
+`ResultsComponent` sends `rematch` or `cancel_rematch` with the finished `matchId` and a stable request ID. Both users must consent. The server returns optional `match.rematch` metadata with availability, ready identities, expiry timestamps and a successor match ID/status. No new round starts from a client-only state change.
+
+Consent changes increase the source match's synchronization revision, so its existing Realtime subscription refreshes the result snapshot. When a successor is active, both results views navigate to its normal match route. The existing match watcher then restores the new server state. A finished successor can be viewed from the saved result without creating another match. Routing between finished result IDs reloads the correct snapshot and cleans up the prior subscription.
+
+The room code, identities, category, catalogue and opening setting carry over; history and counters reset for the new match. Pending consent expires after two minutes. Database locks, uniqueness and the shared receipt namespace prevent duplicate acceptance from creating multiple matches. See [Rematch setup and verification](REMATCHES.md).

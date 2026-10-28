@@ -1,7 +1,11 @@
 <div class="review-label">
   <span
     ><b>DESIGN PREVIEW</b> Local examples · no live multiplayer{{
-      onMatch ? (preview.paused() ? ' · clock paused at 09s' : ' · sample clock running') : ''
+      onMatch
+        ? preview.paused()
+          ? ' · clock paused at ' + preview.pausedSeconds.toString().padStart(2, '0') + 's'
+          : ' · sample clock running'
+        : ''
     }}</span
   >
   <details>
@@ -34,6 +38,7 @@
         </p>
       }
       @if (onResult) {
+        <button (click)="preview.rivalRematch()">Opponent requests / accepts rematch</button>
         <button (click)="result(true)">Victory</button
         ><button (click)="result(false)">Defeat</button>
       }
@@ -58,7 +63,9 @@
         >Movies catalogue</a
       ><a routerLink="/design-review/catalogue" [queryParams]="{ category: 'games' }"
         >Games catalogue</a
-      ><a routerLink="/design-review/catalogue" [queryParams]="{ category: 'football' }">Football catalogue</a>
+      ><a routerLink="/design-review/catalogue" [queryParams]="{ category: 'football' }"
+        >Football catalogue</a
+      >
     </div>
   </details>
 </div>
@@ -80,13 +87,8 @@
   ><span>→</span
   ><a [routerLink]="['/design-review/rooms', 'design-review-' + category + '-room']"
     ><small>04</small> Lobby</a
-  ><span>→</span
-  ><a [routerLink]="['/design-review/match', 'design-review-' + category + '-match']"
-    ><small>05</small> Match</a
-  ><span>→</span
-  ><a [routerLink]="['/design-review/results', 'design-review-' + category + '-match']"
-    ><small>06</small> Result</a
-  >
+  ><span>→</span><a [routerLink]="['/design-review/match', matchId]"><small>05</small> Match</a
+  ><span>→</span><a [routerLink]="['/design-review/results', matchId]"><small>06</small> Result</a>
 </nav>
 @if (onLobby && preview.room()?.status === 'waiting') {
   <div class="review-waiting">

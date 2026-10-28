@@ -44,17 +44,96 @@
         </div>
       </div>
       <div class="ll-result-actions">
-        <a
-          [routerLink]="links.to('/rooms')"
-          [queryParams]="{ category: match.category }"
-          class="ll-action ll-action-coral"
-          >Another worthy opponent? <span aria-hidden="true">↗</span></a
-        ><a
-          [routerLink]="links.to('/catalogue')"
-          [queryParams]="{ category: match.category }"
-          class="ll-inline-link"
-          >Study the connections →</a
-        >
+        <div class="ll-rematch-panel" [attr.aria-busy]="rematchBusy()">
+          @if (match.rematch; as rematchState) {
+            @if (rematchState.nextMatchId) {
+              <p class="ll-rematch-status" role="status">
+                {{
+                  rematchState.nextStatus === 'active'
+                    ? 'Both players are in. Opening your rematch…'
+                    : 'Your next round has already finished.'
+                }}
+              </p>
+              <a
+                class="ll-action ll-action-coral"
+                [routerLink]="[
+                  links.to(rematchState.nextStatus === 'active' ? '/match' : '/results'),
+                  rematchState.nextMatchId,
+                ]"
+              >
+                {{ rematchState.nextStatus === 'active' ? 'Open rematch' : 'View rematch result' }}
+                <span aria-hidden="true">↗</span>
+              </a>
+            } @else if (canRematch) {
+              <span class="ll-label">SAME RIVAL. FRESH SLATE.</span>
+              <p class="ll-rematch-status" role="status" aria-live="polite">
+                {{
+                  requested
+                    ? 'You’re ready. Waiting for ' + rival + '…'
+                    : rivalRequested
+                      ? rival + ' wants a rematch. Your move.'
+                      : 'One more round with ' + rival + '?'
+                }}
+              </p>
+              <button
+                type="button"
+                class="ll-action ll-action-coral"
+                [disabled]="rematchBusy() || requested"
+                (click)="rematch()"
+              >
+                {{
+                  rematchBusy() && rematchAction() === 'rematch'
+                    ? 'Sending…'
+                    : requested
+                      ? 'Waiting for opponent…'
+                      : rivalRequested
+                        ? 'Accept rematch'
+                        : 'Rematch'
+                }}
+                <span aria-hidden="true">↗</span>
+              </button>
+              @if (requested) {
+                <button
+                  type="button"
+                  class="ll-rematch-cancel"
+                  [disabled]="rematchBusy()"
+                  (click)="rematch('cancel_rematch')"
+                >
+                  {{
+                    rematchBusy() && rematchAction() === 'cancel_rematch'
+                      ? 'Cancelling…'
+                      : 'Cancel request'
+                  }}
+                </button>
+              }
+              <p class="ll-footnote">
+                Same category and starter setting. A fresh 20-second round starts when both agree.
+                Requests expire after two minutes.
+              </p>
+            } @else {
+              <p class="ll-footnote">Rematches are unavailable for this round.</p>
+            }
+          } @else {
+            <button type="button" class="ll-action ll-action-coral" disabled>Rematch</button>
+            <p class="ll-footnote">Rematches aren’t available on this server yet.</p>
+          }
+          @if (rematchError()) {
+            <p class="ll-note ll-note-error" role="alert">{{ rematchError() }}</p>
+          }
+        </div>
+        <div class="ll-result-secondary">
+          <a
+            [routerLink]="links.to('/rooms')"
+            [queryParams]="{ category: match.category }"
+            class="ll-inline-link"
+            >Find another opponent <span aria-hidden="true">↗</span></a
+          ><a
+            [routerLink]="links.to('/catalogue')"
+            [queryParams]="{ category: match.category }"
+            class="ll-inline-link"
+            >Study the connections →</a
+          >
+        </div>
       </div>
     </div>
     <div class="ll-result-recap">

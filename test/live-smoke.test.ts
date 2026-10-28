@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
 // Importing the check does not authenticate or run its live command entry point.
-const { watchMatchUpdates, requireMoveDelivery, requireIndependentTimeout } = await import(
+const { watchMatchUpdates, requireMoveDelivery, requireIndependentTimeout, requireRematchDelivery } = await import(
   new URL('../scripts/live-smoke.mjs', import.meta.url).href
 );
 
@@ -263,4 +263,17 @@ test('independent timeout refuses an invalid server clock before reading a match
     return scenario.finished;
   }, scenario.match, { ...scenario.clock, serverTime: 'invalid' }, scenario.options), /valid server timestamps/);
   assert.equal(reads, 0);
+});
+
+test('rematch signal requires the finished source revision on both clients', async () => {
+  const source={id:'finished-source',revision:7};
+  const a={events:[{id:source.id,revision:7,status:'finished'}],diagnostics:{player:1}};
+  const b={events:[{id:'different-match',revision:7,status:'finished'}],diagnostics:{player:2}};
+  await assert.rejects(requireRematchDelivery([a,b],source,5),/Both independent clients must receive the rematch signal/);
+  b.events=[{id:source.id,revision:7,status:'active'}];
+  await assert.rejects(requireRematchDelivery([a,b],source,5),/rematch signal/);
+  b.events=[{id:source.id,revision:6,status:'finished'}];
+  await assert.rejects(requireRematchDelivery([a,b],source,5),/rematch signal/);
+  b.events.push({id:source.id,revision:7,status:'finished'});
+  await requireRematchDelivery([a,b],source,5);
 });

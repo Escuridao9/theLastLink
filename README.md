@@ -30,6 +30,14 @@ Football includes curated major senior men's clubs worldwide, with no national, 
 
 Movies and Football offer **Standard** or **Familiar favourites** during room creation. Standard selects any eligible starter. Familiar favourites selects the first entry randomly from a curated pool: 55 movies or 27 clubs. The full category catalogue remains available for every later answer. These pools are editorial selections, not current popularity rankings or a guarantee of difficulty. Both players see the saved setting in the lobby.
 
+## Rematches
+
+Both players can play again from the results screen without creating another room. Click **Rematch** to request a new round; the other player sees **Accept rematch**. The server starts only after both agree. A pending request can be cancelled and expires after two minutes.
+
+Rematches retain the room code, players, category, published catalogue version and starting option. Each creates a new match ID, zero connector usage, a one-entry history, a randomly chosen first player and a fresh 20-second deadline. The opening differs from the preceding opening whenever another eligible starter exists. Finished results remain saved. All connection rules apply independently to each round.
+
+Setup requires the rematch migration and an updated `match-api` deployment. See [Rematches](docs/REMATCHES.md) for deployment and live verification. The visual review toolbar can simulate an opponent requesting or accepting a rematch.
+
 ## Architecture
 
 The Angular application uses standalone components, lazy routes, typed models, Reactive Forms and reusable search, clock and entry components. `CatalogueService` uses typed Angular `HttpClient` observables for published catalogue indexes and credit details. Components subscribe with explicit loading, error and cleanup handling.
@@ -39,6 +47,8 @@ Supabase Authentication provides persistent email accounts and anonymous guest i
 Normal multiplayer commands go through `BackendService` to the **`match-api` Edge Function**. It verifies Supabase Auth and forwards the user's token to PostgreSQL's `public.game_command`. PostgreSQL enforces membership, host permissions, the two-player limit, pinned catalogues, turn order, all connection rules, idempotency and deadlines. Browser code never decides whether a move is valid. Database locks serialize competing submissions; the server samples time after acquiring the match lock.
 
 Supabase Realtime delivers room and match changes. The UI restores snapshots after reconnecting. `pg_cron` independently calls `expire_due_matches()` so a timeout can finish a match even when neither player is connected. RLS protects private room and match reads, and browser roles have no direct write privileges on gameplay tables.
+
+Rematch consent is held in a private database table. The public command RPC dispatches rematch requests separately and delegates existing actions to the unchanged private core command. A finished match's synchronization revision signals consent changes to its existing subscribers; its outcome, deadline, history and usage remain intact.
 
 ## Structure
 

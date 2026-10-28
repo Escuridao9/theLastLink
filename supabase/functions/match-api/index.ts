@@ -6,7 +6,7 @@ const cors = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
-const actions = new Set(['create','join','room','start','snapshot','submit','expire','concede']);
+const actions = new Set(['create','join','room','start','snapshot','submit','expire','concede','rematch','cancel_rematch']);
 Deno.serve(async (request: Request) => {
   if (request.method === 'OPTIONS') return new Response('ok', { headers: cors });
   const reply = (body: unknown, status = 200) => new Response(JSON.stringify(body), {
