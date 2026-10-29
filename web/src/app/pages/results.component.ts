@@ -6,6 +6,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatchService } from '../core/match.service';
 import { CatalogueService } from '../core/catalogue.service';
+import { TurnAudioService } from '../core/turn-audio.service';
 import { CATEGORY_LABELS, ROLE_LABELS } from '../core/models';
 import type { Dataset, ConnectorType } from '../core/models';
 @Component({
@@ -18,6 +19,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   readonly links = inject(UiLinks);
   readonly game = inject(MatchService);
   readonly categories = CATEGORY_LABELS;
+  readonly audio = inject(TurnAudioService);
   private readonly requestId = inject(REQUEST_ID);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -34,6 +36,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   private observedMatchId = '';
   private watchedId = '';
   private catalogueId = '';
+  private announcedRematch = '';
   private readonly reaction = effect(() => {
     const match = this.game.match();
     if (!match) return;
@@ -54,6 +57,14 @@ export class ResultsComponent implements OnInit, OnDestroy {
         replaceUrl: true,
       });
       return;
+    }
+    if (this.incomingRematch) {
+      const rivalId = match.room.players.find((p) => p.id !== this.game.backend.playerId())!.id;
+      const key = `${match.id}:${rivalId}:${match.rematch!.expiresAt[rivalId]}`;
+      if (this.announcedRematch !== key) {
+        this.announcedRematch = key;
+        this.audio.notifyRematch(key);
+      }
     }
     if (match.catalogueId !== this.catalogueId) {
       this.catalogueId = match.catalogueId;
@@ -100,6 +111,10 @@ export class ResultsComponent implements OnInit, OnDestroy {
       .match()
       ?.room.players.find((p) => p.id !== this.game.backend.playerId())?.id;
     return !!id && this.ready(id);
+  }
+  get incomingRematch(): boolean {
+    return this.canRematch && !this.game.match()?.rematch?.nextMatchId &&
+      this.rivalRequested && !this.requested;
   }
   async rematch(action: 'rematch' | 'cancel_rematch' = 'rematch'): Promise<void> {
     const m = this.game.match();

@@ -315,6 +315,33 @@ a.ll-arena-choice:hover {
   cursor: not-allowed;
 }
 /* Room / lobby */
+.session-return {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin-top: 22px;
+  padding: 8px 16px;
+  border-left: 3px solid var(--ll-coral);
+  background: #302530;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.session-return > span { color: var(--ll-quiet); }
+.session-return a {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 44px;
+  color: var(--ll-lilac);
+  font-weight: 700;
+}
+.ll-invited-entry { max-width: 560px; }
+.ll-invited-form .ll-label { display: block; margin-bottom: 12px; }
+.ll-invited-form .ll-footnote { margin: 10px 0 18px; }
+.ll-invited-form .ll-action { width: 100%; margin-top: 4px; }
+.ll-invited-entry > .ll-inline-link { display: inline-flex; align-items: center; min-height: 44px; }
 .ll-room-page .ll-page-heading {
   padding-bottom: 30px;
 }
@@ -959,6 +986,43 @@ a.ll-arena-choice:hover {
 }
 .ll-rematch-panel .ll-label {
   color: var(--ll-lilac);
+}
+.ll-rematch-panel {
+  padding: 14px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+}
+.ll-rematch-incoming {
+  background: #342738;
+  border-color: var(--ll-lilac);
+}
+.ll-rematch-incoming > .ll-label { font-weight: 800; }
+.ll-rematch-incoming .ll-rematch-status { font-size: 17px; font-weight: 700; }
+.ll-rematch-incoming .ll-action {
+  animation: ll-rematch-pulse 1.3s ease-out 3;
+}
+.ll-result-sound-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  margin: -6px 0 6px auto;
+  padding: 8px 0 8px 12px;
+  border: 0;
+  background: transparent;
+  color: var(--ll-quiet);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+.ll-result-sound-toggle[aria-pressed='true'] > span { color: var(--ll-lilac); }
+.ll-result-sound-toggle:focus-visible { outline: 2px solid var(--ll-lilac); outline-offset: 4px; }
+@keyframes ll-rematch-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 #f58b7e00; }
+  50% { box-shadow: 0 0 0 6px #f58b7e35; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ll-rematch-incoming .ll-action { animation: none; }
 }
 .ll-rematch-status {
   margin: 9px 0 13px;

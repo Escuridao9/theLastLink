@@ -1,11 +1,13 @@
 import { Injectable, inject, signal, OnDestroy } from '@angular/core';
 import type { RealtimeChannel } from '@supabase/supabase-js';
 import { BackendService } from './backend.service';
+import { ResumeService } from './resume.service';
 import type { CommandResponse, Match, Room } from './models';
 
 @Injectable({ providedIn: 'root' })
 export class MatchService implements OnDestroy {
   readonly backend = inject(BackendService);
+  private readonly resume = inject(ResumeService);
   readonly room = signal<Room | null>(null);
   readonly match = signal<Match | null>(null);
   readonly connection = signal('Connecting');
@@ -58,6 +60,7 @@ export class MatchService implements OnDestroy {
     )
       this.match.set(match);
     this.error.set('');
+    this.resume.remember(response, this.clockOffset());
     return response;
   }
   async watch(kind: 'room' | 'match', id: string): Promise<void> {

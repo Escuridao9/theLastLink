@@ -8,6 +8,7 @@ import { routes } from './app.routes';
 import { ConfigService } from './core/config.service';
 import { CatalogueService } from './core/catalogue.service';
 import { MatchService } from './core/match.service';
+import { TurnAudioService } from './core/turn-audio.service';
 import type { CommandResponse, Dataset, Match } from './core/models';
 import { ResultsComponent } from './pages/results.component';
 import { REQUEST_ID } from './shared/request-id';
@@ -218,6 +219,63 @@ function fixture() {
 }
 
 describe('Mutual rematch interface', () => {
+  it('announces an incoming rival request once and highlights Accept rematch for both hearing and muted players', async () => {
+    const f = fixture();
+    const audio = TestBed.inject(TurnAudioService);
+    const notify = vi.spyOn(audio, 'notifyRematch');
+    const h = await RouterTestingHarness.create('/results/finished-one');
+    expect(notify).not.toHaveBeenCalled();
+    f.rival();
+    h.detectChanges();
+    const incoming = h.routeNativeElement!.querySelector('.ll-rematch-incoming');
+    expect(incoming?.textContent).toContain('REMATCH REQUEST');
+    expect(incoming?.querySelector('.ll-action')?.textContent).toContain('Accept rematch');
+    expect(incoming?.querySelector('[role=status]')?.textContent).toContain('Alex wants a rematch');
+    expect(notify).toHaveBeenCalledTimes(1);
+    f.state.match.set(structuredClone(f.state.match()!));
+    h.detectChanges();
+    expect(notify).toHaveBeenCalledTimes(1);
+    h.routeNativeElement!.querySelector<HTMLButtonElement>('.ll-result-sound-toggle')!.click();
+    h.detectChanges();
+    expect(audio.enabled()).toBe(false);
+    expect(h.routeNativeElement!.querySelector('.ll-rematch-incoming')).not.toBeNull();
+    expect(localStorage.getItem('last-link-turn-sounds')).toBe('off');
+    expect(f.state.send).not.toHaveBeenCalled();
+  });
+  it('does not sound an outgoing request or an expired incoming request', async () => {
+    const f = fixture();
+    const notify = vi.spyOn(TestBed.inject(TurnAudioService), 'notifyRematch');
+    const h = await RouterTestingHarness.create();
+    const component = await h.navigateByUrl('/results/finished-one', ResultsComponent);
+    await component.rematch();
+    h.detectChanges();
+    expect(notify).not.toHaveBeenCalled();
+    const m = result();
+    m.rematch!.requestedBy = ['guest'];
+    m.rematch!.expiresAt['guest'] = new Date(Date.now() - 1000).toISOString();
+    f.state.match.set(m);
+    h.detectChanges();
+    expect(notify).not.toHaveBeenCalled();
+    expect(h.routeNativeElement!.querySelector('.ll-rematch-incoming')).toBeNull();
+  });
+  it('announces a genuinely new request after a cancellation without replaying the earlier request', async () => {
+    const f = fixture();
+    const notify = vi.spyOn(TestBed.inject(TurnAudioService), 'notifyRematch');
+    const h = await RouterTestingHarness.create('/results/finished-one');
+    f.rival();
+    h.detectChanges();
+    const first = notify.mock.calls[0][0];
+    const m = structuredClone(f.state.match()!);
+    m.rematch!.requestedBy = [];
+    m.rematch!.expiresAt = {};
+    f.state.match.set(m);
+    h.detectChanges();
+    f.state.match.set({ ...m, rematch: { ...m.rematch!, requestedBy: ['guest'],
+      expiresAt: { guest: new Date(Date.now() + 119000).toISOString() } } });
+    h.detectChanges();
+    expect(notify).toHaveBeenCalledTimes(2);
+    expect(notify.mock.calls[1][0]).not.toBe(first);
+  });
   it('requests once, waits for the rival, then follows the server to a clean match in the same room', async () => {
     const f = fixture(),
       harness = await RouterTestingHarness.create();

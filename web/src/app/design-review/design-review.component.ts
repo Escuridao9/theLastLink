@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, effect, inject, OnDestroy } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatchService } from '../core/match.service';
 import { ReviewMatchService } from './review-services';
@@ -6,6 +6,7 @@ import { AccountService } from '../core/account.service';
 import { ReviewAccountService } from './review-account.service';
 import { AccountRecordsService } from '../core/account-records.service';
 import { ReviewAccountRecordsService } from './review-account-records.service';
+import { UiLinks } from '../shared/ui-links.service';
 @Component({
   selector: 'app-design-review',
   standalone: true,
@@ -17,6 +18,8 @@ export class DesignReviewComponent implements OnDestroy {
   readonly preview = inject(MatchService) as unknown as ReviewMatchService;
   readonly router = inject(Router);
   readonly accounts = inject(AccountService) as unknown as ReviewAccountService;
+  private readonly links = inject(UiLinks);
+  private readonly accountHeader = effect(() => this.links.previewAccount.set(this.accounts.isAccount()));
   private readonly records = inject(
     AccountRecordsService,
   ) as unknown as ReviewAccountRecordsService;
@@ -54,6 +57,8 @@ export class DesignReviewComponent implements OnDestroy {
     this.preview.finish(won);
   }
   ngOnDestroy(): void {
+    this.accountHeader.destroy();
+    this.links.previewAccount.set(false);
     this.preview.stop();
   }
 }

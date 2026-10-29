@@ -11,7 +11,8 @@
   <details>
     <summary>Review controls</summary>
     <div class="review-tools">
-      <a routerLink="/design-review/account">Login</a>
+      <a routerLink="/design-review/account">Log in / Sign up</a>
+      <a routerLink="/design-review/rooms" [queryParams]="{ code: 'LASTLINK2026', category: category }">Example invite</a>
       <a routerLink="/design-review/account" [queryParams]="{ mode: 'signup' }">Create account</a>
       @if (onAccount) {
         <button (click)="accounts.showLogin()">Show logged-out state</button>

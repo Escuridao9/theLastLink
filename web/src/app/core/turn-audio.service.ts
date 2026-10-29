@@ -57,6 +57,14 @@ export class TurnAudioService implements OnDestroy {
   }
 
   notifyTurn(key: string): void {
+    this.notify(`turn:${key}`, [[0, 659.25], [0.12, 880]]);
+  }
+
+  notifyRematch(key: string): void {
+    this.notify(`rematch:${key}`, [[0, 523.25], [0.12, 659.25], [0.24, 783.99]]);
+  }
+
+  private notify(key: string, notes: number[][]): void {
     if (this.destroyed || this.announcedTurns.has(key)) return;
     this.announcedTurns.add(key);
     if (this.announcedTurns.size > 100) {
@@ -65,8 +73,8 @@ export class TurnAudioService implements OnDestroy {
     const context = this.context;
     if (!this.enabled() || context?.state !== 'running') return;
     try {
-      // Two quiet notes, synthesized locally: no recording or external audio request.
-      for (const [delay, frequency] of [[0, 659.25], [0.12, 880]]) {
+      // Quiet notes synthesized locally: no recording or external audio request.
+      for (const [delay, frequency] of notes) {
         const start = context.currentTime + delay;
         const oscillator = context.createOscillator();
         const gain = context.createGain();

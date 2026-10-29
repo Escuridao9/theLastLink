@@ -7,7 +7,7 @@ import { accountReturnPath } from '../core/auth-navigation';
   standalone: true,
   imports: [RouterLink],
   template: `<a class="nav-account" routerLink="/account" [queryParams]="{ returnTo: returnTo }">{{
-    account.isAccount() ? 'Account' : 'Log in'
+    account.isAccount() ? 'My Account' : 'Log in / Sign up'
   }}</a>`,
   styles: `
     :host {
@@ -24,6 +24,12 @@ import { accountReturnPath } from '../core/auth-navigation';
       font: inherit;
       white-space: nowrap;
       padding: 10px 0;
+    }
+    @media (max-width: 600px) {
+      .nav-account { max-width: 75px; white-space: normal; text-align: center; line-height: 1.4; }
+    }
+    @media (max-width: 360px) {
+      .nav-account { max-width: 62px; font-size: 10px; }
     }
   `,
 })

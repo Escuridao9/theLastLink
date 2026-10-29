@@ -30,6 +30,28 @@ beforeEach(() => localStorage.clear());
 afterEach(() => { TestBed.resetTestingModule(); vi.restoreAllMocks(); });
 
 describe('Optional turn audio', () => {
+  it('uses a distinct three-note rematch cue and deduplicates request snapshots separately from turns', () => {
+    const { service, context } = audioDevice();
+    document.dispatchEvent(new Event('pointerdown'));
+    service.notifyRematch('match:guest:request-one');
+    service.notifyRematch('match:guest:request-one');
+    expect(context.createOscillator).toHaveBeenCalledTimes(3);
+    service.notifyTurn('match:guest:request-one');
+    expect(context.createOscillator).toHaveBeenCalledTimes(5);
+    service.notifyRematch('match:guest:request-two');
+    expect(context.createOscillator).toHaveBeenCalledTimes(8);
+  });
+  it('shares the existing mute preference with rematch notifications', () => {
+    const { service, context } = audioDevice();
+    document.dispatchEvent(new Event('pointerdown'));
+    service.toggle();
+    service.notifyRematch('request-one');
+    service.toggle();
+    service.notifyRematch('request-one');
+    expect(context.createOscillator).not.toHaveBeenCalled();
+    service.notifyRematch('request-two');
+    expect(context.createOscillator).toHaveBeenCalledTimes(3);
+  });
   it('creates no audio context until a pointer or keyboard interaction', () => {
     const { service, factory, context } = audioDevice();
     service.notifyTurn('match:0');

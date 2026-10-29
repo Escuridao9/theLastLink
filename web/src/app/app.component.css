@@ -214,3 +214,14 @@ footer {
   padding: 10px 0;
   color: var(--ll-lilac);
 }
+@media (max-width: 600px) {
+  .site-header nav > a.preview-account-link {
+    max-width: 75px;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.4;
+  }
+}
+@media (max-width: 360px) {
+  .site-header nav > a.preview-account-link { max-width: 62px; font-size: 10px; }
+}

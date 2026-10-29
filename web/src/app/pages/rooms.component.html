@@ -119,6 +119,44 @@
         <a class="ll-back" [routerLink]="links.to('/account')">Saved account results →</a>
       }
     }
+  } @else if (invited()) {
+    <a class="ll-back" [routerLink]="links.to('/play')">← Back to the arenas</a>
+    <header class="ll-page-heading ll-invited-heading">
+      <span class="ll-label">PRIVATE INVITATION / {{ category() === 'football' ? 'FOOTBALL CLUBS' : categories[category()] }}</span>
+      <h1>You’re<br /><em>invited.</em></h1>
+      <p>Your rival has the room ready. Tell them who’s coming.</p>
+    </header>
+    <div class="ll-invited-entry">
+      @if (error() || game.error()) {
+        <div class="ll-note ll-note-error" role="alert">{{ error() || game.error() }}</div>
+      }
+      @if (!config.configured) {
+        <p class="ll-note" role="status">Online rooms aren’t available. Please try again later.</p>
+      } @else if (checkingIdentity() || busy()) {
+        <div class="ll-note" role="status" aria-live="polite">
+          {{ checkingIdentity() ? 'Checking your player identity…' : 'Taking your seat…' }}
+          <div class="ll-loading-bar" aria-hidden="true"></div>
+        </div>
+      } @else if (form.controls.code.valid && form.controls.code.value) {
+        <form class="ll-invited-form" [formGroup]="form" (ngSubmit)="act('join')">
+          <label class="ll-label" for="invite-name">YOUR PLAYER NAME</label>
+          <input id="invite-name" class="ll-input" formControlName="name" autocomplete="nickname"
+            placeholder="Your formidable nickname" maxlength="24" enterkeyhint="go"
+            aria-describedby="invite-name-hint"
+            [attr.aria-invalid]="form.controls.name.touched && form.controls.name.invalid" />
+          <p id="invite-name-hint" class="ll-footnote"
+            [class.ll-field-error]="form.controls.name.touched && form.controls.name.invalid">
+            {{ form.controls.name.touched && form.controls.name.invalid
+              ? 'Use a name with 2–24 characters.' : 'Your host has already chosen the category and starter setting.' }}
+          </p>
+          <button class="ll-action ll-action-coral" type="submit" [disabled]="form.controls.name.invalid">
+            Join room <span aria-hidden="true">↗</span>
+          </button>
+          <p class="ll-footnote">Press Enter to join. The host starts the match from the lobby.</p>
+        </form>
+      }
+      <a class="ll-inline-link" [routerLink]="links.to('/rooms')">Use another room code →</a>
+    </div>
   } @else {
     <a class="ll-back" [routerLink]="links.to('/play')">← Choose another arena</a>
     <header class="ll-page-heading">

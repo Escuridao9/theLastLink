@@ -8,7 +8,7 @@
           <span class="ll-match-connection" role="status">{{ game.connection() }}</span>
         }
         <span class="ll-room-code">{{ match.room.code }}</span>
-        <button class="ll-sound-toggle" type="button" aria-label="Turn sounds"
+        <button class="ll-sound-toggle" type="button" aria-label="Match sounds"
           [attr.aria-pressed]="turnAudio.enabled()" (click)="turnAudio.toggle()">
           <span aria-hidden="true">{{ turnAudio.enabled() ? '♫' : '♪' }}</span>
           Sound {{ turnAudio.enabled() ? 'on' : 'off' }}

@@ -1,6 +1,7 @@
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { signal } from '@angular/core';
 import { createClient } from '@supabase/supabase-js';
 import { firstValueFrom } from 'rxjs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -341,6 +342,7 @@ describe('Authoritative match synchronization', () => {
           provide: BackendService,
           useValue: {
             onIdentityChange: () => () => {},
+            playerId: signal('player-one'),
             command: () => {
               const result = deferred<CommandResponse>();
               pending.push(result);
@@ -388,6 +390,7 @@ describe('Authoritative match synchronization', () => {
           provide: BackendService,
           useValue: {
             onIdentityChange: () => () => {},
+            playerId: signal('player-one'),
             identity: async () => {},
             command,
             client: { channel: openChannel, removeChannel },

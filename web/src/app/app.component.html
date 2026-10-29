@@ -15,21 +15,26 @@
       [routerLinkActiveOptions]="{ exact: true }"
       >Play</a
     ><a [routerLink]="links.to('/catalogue')" routerLinkActive="current">Explore the catalogue</a>
-    @if (resume(); as matchId) {
-      <a [routerLink]="[links.to('/match'), matchId]">Resume</a>
-    }
     <a [routerLink]="links.to('/rooms')" class="nav-cta"
       ><span class="nav-room-long">Have a room code?</span><span class="nav-room-short">Room</span>
       <span aria-hidden="true">↗</span></a
     >
     @if (links.reviewing) {
-      <a class="preview-account-link" [routerLink]="links.to('/account')">Log in</a>
+      <a class="preview-account-link" [routerLink]="links.to('/account')">{{ links.previewAccount() ? 'My Account' : 'Log in / Sign up' }}</a>
     } @else {
       <app-account-link />
     }
   </nav>
 </header>
 <main id="main-content" tabindex="-1">
+  @if (showSessionReturn() && resume.target(); as session) {
+    <aside class="session-return" aria-label="Your current session">
+      <span>{{ session.category }} · {{ session.kind === 'room' ? 'Your lobby is waiting.' : 'Your match is still running.' }}</span>
+      <a [routerLink]="[session.kind === 'room' ? '/rooms' : '/match', session.id]">
+        {{ session.label }} <span aria-hidden="true">↗</span>
+      </a>
+    </aside>
+  }
   @if (config.issue()) {
     <div class="notice error" role="alert">
       <strong>Check your local configuration.</strong>

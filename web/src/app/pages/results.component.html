@@ -44,7 +44,13 @@
         </div>
       </div>
       <div class="ll-result-actions">
-        <div class="ll-rematch-panel" [attr.aria-busy]="rematchBusy()">
+        <div class="ll-rematch-panel" [class.ll-rematch-incoming]="incomingRematch"
+          [attr.aria-busy]="rematchBusy()">
+          <button class="ll-result-sound-toggle" type="button" aria-label="Match sounds"
+            [attr.aria-pressed]="audio.enabled()" (click)="audio.toggle()">
+            <span aria-hidden="true">{{ audio.enabled() ? '♫' : '♪' }}</span>
+            Sound {{ audio.enabled() ? 'on' : 'off' }}
+          </button>
           @if (match.rematch; as rematchState) {
             @if (rematchState.nextMatchId) {
               <p class="ll-rematch-status" role="status">
@@ -65,7 +71,7 @@
                 <span aria-hidden="true">↗</span>
               </a>
             } @else if (canRematch) {
-              <span class="ll-label">SAME RIVAL. FRESH SLATE.</span>
+              <span class="ll-label">{{ incomingRematch ? '↻ REMATCH REQUEST' : 'SAME RIVAL. FRESH SLATE.' }}</span>
               <p class="ll-rematch-status" role="status" aria-live="polite">
                 {{
                   requested
@@ -78,6 +84,7 @@
               <button
                 type="button"
                 class="ll-action ll-action-coral"
+                [class.ll-rematch-accept]="incomingRematch"
                 [disabled]="rematchBusy() || requested"
                 (click)="rematch()"
               >

@@ -239,6 +239,7 @@ export class BackendService implements OnDestroy {
         this.acceptAuthUser(null);
       }
       localStorage.removeItem('last-link-resume:' + expectedId);
+      localStorage.removeItem('last-link-return:' + expectedId);
     }
   }
   async command(

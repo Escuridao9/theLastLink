@@ -12,6 +12,7 @@ import { BackendService } from './core/backend.service';
 import { CatalogueService } from './core/catalogue.service';
 import { ConfigService } from './core/config.service';
 import { MatchService } from './core/match.service';
+import { ResumeService, type SessionReturn } from './core/resume.service';
 import type { CommandResponse, Dataset, Match, Room } from './core/models';
 import { ReviewCatalogueService, ReviewMatchService } from './design-review/review-services';
 import { MatchComponent } from './pages/match.component';
@@ -305,8 +306,12 @@ describe('Routed player journey', () => {
     expect((harness.routeDebugElement!.componentInstance as RoomsComponent).category()).toBe('games');
   });
 
-  it('renders the application shell while navigating into a match and exposes Resume', async () => {
+  it('shows a contextual return only on overview pages and removes the permanent Resume link', async () => {
     fixture();
+    const resume = { target: signal<SessionReturn | null>({
+      kind: 'match', id: 'match-one', label: 'Rejoin match', category: 'Games',
+    }), setVisible: vi.fn() };
+    TestBed.overrideProvider(ResumeService, { useValue: resume });
     const shell = TestBed.createComponent(App);
     shell.detectChanges();
     const router = TestBed.inject(Router);
@@ -319,7 +324,16 @@ describe('Routed player journey', () => {
     await router.navigateByUrl('/match/match-one');
     await shell.whenStable();
     shell.detectChanges();
-    expect(shell.nativeElement.querySelector('a[href="/match/match-one"]')?.textContent).toContain('Resume');
+    expect(shell.nativeElement.querySelector('.site-header a[href="/match/match-one"]')).toBeNull();
+    expect(shell.nativeElement.querySelector('.session-return')).toBeNull();
+    await router.navigateByUrl('/');
+    await shell.whenStable();
+    shell.detectChanges();
+    expect(shell.nativeElement.querySelector('.session-return a')?.textContent).toContain('Rejoin match');
+    expect(resume.setVisible).toHaveBeenLastCalledWith(true);
+    resume.target.set(null);
+    shell.detectChanges();
+    expect(shell.nativeElement.querySelector('.session-return')).toBeNull();
     expect(shell.nativeElement.querySelector('.wordmark-name')?.textContent).toContain('The Last Link');
     shell.checkNoChanges();
   });
