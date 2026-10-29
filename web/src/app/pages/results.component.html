@@ -196,16 +196,22 @@
       {{
         links.reviewing
           ? 'Example result only. Nothing is saved to a multiplayer server.'
-          : 'Result saved on the server. Keep this link and the same browser identity to return.'
+          : 'Unused room details expire after 24 hours. Registered accounts keep a compact result in Account.'
       }}
     </p>
   </section>
 } @else {
   <section class="ll-page ll-state-page" role="status">
     <span class="ll-label">THE CLOCK HAS SPOKEN</span>
-    <h1>Finding the<br /><em>last word…</em></h1>
-    <p>Loading the final match state.</p>
-    <div class="ll-loading-bar" aria-hidden="true"></div>
+    @if (game.connection() === 'Unavailable') {
+      <h1>The room closed.<br /><em>The result stays.</em></h1>
+      <p>Registered players can find their compact results in Account.</p>
+      <a class="ll-inline-link" [routerLink]="links.to('/account')">Open account results ↗</a>
+    } @else {
+      <h1>Finding the<br /><em>last word…</em></h1>
+      <p>Loading the final match state.</p>
+      <div class="ll-loading-bar" aria-hidden="true"></div>
+    }
   </section>
 }
 @if (error() || game.error()) {

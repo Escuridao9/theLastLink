@@ -8,7 +8,10 @@ test('the complete migration chain preserves saved room data and enables indepen
   const db=new PGlite();
   try {
     await db.exec(`create role anon; create role authenticated; create role service_role bypassrls;
-      create schema auth;create table auth.users(id uuid primary key);
+      create schema auth;create table auth.users(id uuid primary key,email text,email_change text default '',
+        is_anonymous boolean default true,email_confirmed_at timestamptz,created_at timestamptz default now(),last_sign_in_at timestamptz default now());
+      create table auth.identities(user_id uuid references auth.users on delete cascade);
+      create table auth.sessions(user_id uuid references auth.users on delete cascade,created_at timestamptz default now());
       create function auth.uid() returns uuid language sql stable as $$
         select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
       grant usage on schema auth to anon,authenticated,service_role;
@@ -25,7 +28,7 @@ test('the complete migration chain preserves saved room data and enables indepen
     await db.exec(readFileSync(new URL('../supabase/migrations/20261027140300_publish_catalogues.sql',import.meta.url),'utf8'));
     assert.equal((await db.query<{count:number}>("select count(*)::int count from public.entries where catalogue_id='movies-tmdb-2017-v1'")).rows[0]!.count,3505);
     assert.equal((await db.query<{count:number}>("select count(*)::int count from public.entry_credits where catalogue_id='movies-tmdb-2017-v1'")).rows[0]!.count,99476);
-    const additions = readdirSync(new URL('../supabase/migrations/', import.meta.url)).filter(n => n.startsWith('20261028')).sort();
+    const additions = readdirSync(new URL('../supabase/migrations/', import.meta.url)).filter(n => n.startsWith('20261028') || n==='20261029120000_account_history_and_retention.sql').sort();
     for (const name of additions) await db.exec(readFileSync(new URL('../supabase/migrations/' + name, import.meta.url), 'utf8'));
     assert.equal((await db.query<{count:number}>("select count(*)::int count from public.entries where catalogue_id='football-clubs-2026-10-28-v1'")).rows[0]!.count,90);
     assert.equal((await db.query<{count:number}>("select count(*)::int count from public.entry_credits where catalogue_id='football-clubs-2026-10-28-v1'")).rows[0]!.count,31286);

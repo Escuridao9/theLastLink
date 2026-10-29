@@ -25,8 +25,11 @@ export const appConfig: ApplicationConfig = {
       const config = inject(ConfigService);
       const injector = inject(Injector);
       return config.load().then(() => {
-        if (config.configured && !isDesignReviewUrl(window.location.href))
-          return injector.get(BackendService).restoreIfPresent();
+        if (config.configured && !isDesignReviewUrl(window.location.href)) {
+          const backend = injector.get(BackendService);
+          backend.enableActivityTracking();
+          return backend.restoreIfPresent();
+        }
         return undefined;
       });
     }),

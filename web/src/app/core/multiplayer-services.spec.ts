@@ -170,6 +170,28 @@ describe('Authenticated match transport', () => {
     await expect(service.command('snapshot', {}, receiptId)).resolves.toEqual(success);
     expect(getSession).toHaveBeenCalledTimes(2);
   });
+
+  it('tracks visible activity without creating identities for cold visits', async () => {
+    vi.useFakeTimers();
+    const { service, getSession, signInAnonymously, rpc } = fixture();
+    service.enableActivityTracking();
+    await vi.advanceTimersByTimeAsync(60000);
+    expect(getSession).not.toHaveBeenCalled();
+    expect(signInAnonymously).not.toHaveBeenCalled();
+    expect(rpc).not.toHaveBeenCalled();
+    await service.initialize();
+    expect(rpc).toHaveBeenCalledWith('account_heartbeat');
+    const hidden = vi.spyOn(document, 'hidden', 'get').mockReturnValue(true);
+    rpc.mockClear();
+    await vi.advanceTimersByTimeAsync(120000);
+    expect(rpc).not.toHaveBeenCalled();
+    hidden.mockReturnValue(false);
+    document.dispatchEvent(new Event('visibilitychange'));
+    expect(rpc).toHaveBeenCalledOnce();
+    service.ngOnDestroy();
+    await vi.advanceTimersByTimeAsync(120000);
+    expect(rpc).toHaveBeenCalledOnce();
+  });
 });
 
 describe('Published catalogue HTTP requests', () => {
@@ -393,6 +415,24 @@ describe('Authoritative match synchronization', () => {
     updated();
     await vi.advanceTimersByTimeAsync(4000);
     expect(command.mock.calls.length).toBeGreaterThanOrEqual(4);
+    const hidden = vi.spyOn(document, 'hidden', 'get').mockReturnValue(true);
+    const callsWhileHidden = command.mock.calls.length;
+    await vi.advanceTimersByTimeAsync(8000);
+    expect(command).toHaveBeenCalledTimes(callsWhileHidden);
+    hidden.mockReturnValue(false);
+    document.dispatchEvent(new Event('visibilitychange'));
+    await Promise.resolve();
+    expect(command).toHaveBeenCalledTimes(callsWhileHidden + 1);
+    command.mockRejectedValueOnce(Error('match_not_found'));
+    localStorage.setItem('last-link-resume', 'match-one');
+    updated();
+    await Promise.resolve();
+    await Promise.resolve();
+    expect(service.connection()).toBe('Unavailable');
+    expect(service.match()).toBeNull();
+    expect(service.room()).toBeNull();
+    expect(service.error()).toMatch(/24 hours/);
+    expect(localStorage.getItem('last-link-resume')).toBeNull();
     const callsBeforeStop = command.mock.calls.length;
     service.stop();
     document.dispatchEvent(new Event('visibilitychange'));

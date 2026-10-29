@@ -2,7 +2,7 @@ import { Injectable, inject, signal, OnDestroy } from '@angular/core';
 import type { SupabaseClient, User, Subscription } from '@supabase/supabase-js';
 import { ConfigService } from './config.service';
 import type { CommandResponse } from './models';
-import { readAuthRedirect } from './auth-navigation';
+import { readAuthRedirect, isDesignReviewUrl } from './auth-navigation';
 
 @Injectable({ providedIn: 'root' })
 export class BackendService implements OnDestroy {
@@ -24,6 +24,11 @@ export class BackendService implements OnDestroy {
   private restoreFailed = false;
   private restoreError?: Error;
   private authRevision = 0;
+  private activityTimer?: ReturnType<typeof setInterval>;
+  private activityEnabled = false;
+  private readonly onActivityVisible = () => {
+    if (!document.hidden) void this.pingActivity();
+  };
   private readonly identityListeners = new Set<() => void>();
   get client(): SupabaseClient {
     if (!this.config.configured)
@@ -144,6 +149,7 @@ export class BackendService implements OnDestroy {
     }
     this.user.set(user);
     this.playerId.set(next ?? '');
+    if (next && previous !== next && this.activityEnabled) void this.pingActivity();
     const name = user?.user_metadata?.['display_name'];
     if (typeof name === 'string' && name.trim().length >= 2 && name.trim().length <= 24)
       localStorage.setItem('last-link-name', name.trim());
@@ -196,8 +202,44 @@ export class BackendService implements OnDestroy {
     }
   }
   ngOnDestroy(): void {
+    if (this.activityTimer) clearInterval(this.activityTimer);
+    document.removeEventListener('visibilitychange', this.onActivityVisible);
     this.authSubscription?.unsubscribe();
     this.identityListeners.clear();
+  }
+  enableActivityTracking(): void {
+    if (this.activityEnabled) return;
+    this.activityEnabled = true;
+    this.activityTimer = setInterval(() => {
+      void this.pingActivity();
+    }, 60000);
+    document.addEventListener('visibilitychange', this.onActivityVisible);
+  }
+  private async pingActivity(): Promise<void> {
+    if (
+      !this.user() ||
+      !this.instance ||
+      document.hidden ||
+      isDesignReviewUrl(window.location.href)
+    )
+      return;
+    try {
+      await this.instance.rpc('account_heartbeat');
+    } catch {
+      /* The next visible heartbeat retries. */
+    }
+  }
+  async clearLocalAccount(expectedId: string): Promise<void> {
+    if (this.user()?.id !== expectedId) throw Error('Your account changed.');
+    try {
+      await this.client.auth.signOut({ scope: 'local' });
+    } finally {
+      if (this.user()?.id === expectedId) {
+        localStorage.removeItem('last-link-auth');
+        this.acceptAuthUser(null);
+      }
+      localStorage.removeItem('last-link-resume:' + expectedId);
+    }
   }
   async command(
     action: string,

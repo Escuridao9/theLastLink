@@ -78,6 +78,18 @@ export class MatchService implements OnDestroy {
         );
       } catch (error) {
         if (generation === this.generation) {
+          if (/room_not_found|match_not_found/.test((error as Error).message)) {
+            this.stop();
+            this.room.set(null);
+            this.match.set(null);
+            this.connection.set('Unavailable');
+            this.error.set(
+              'This room or detailed result is unavailable. Unused room details expire after 24 hours. Registered players can find saved summaries in Account.',
+            );
+            if (localStorage.getItem('last-link-resume') === id)
+              localStorage.removeItem('last-link-resume');
+            return;
+          }
           this.error.set((error as Error).message);
           this.connection.set('Reconnecting');
         }
@@ -106,7 +118,7 @@ export class MatchService implements OnDestroy {
         if (status === 'SUBSCRIBED') void refresh(); // Close the fetch/subscribe race.
       });
     this.poll = setInterval(() => {
-      void refresh();
+      if (!document.hidden) void refresh();
     }, 4000);
     document.addEventListener('visibilitychange', this.onVisible);
     window.addEventListener('online', this.onOnline);

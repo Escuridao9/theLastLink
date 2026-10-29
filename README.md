@@ -11,6 +11,8 @@ The Last Link is a competitive connection game built with Angular, TypeScript an
 - Games, Movies and Football catalogues, with search and credit details.
 - Private rooms, invitations, live lobbies, reconnect/resume, and saved results.
 - Supabase email accounts, email confirmation, and guest registration that preserves the guest identity.
+- Private match summaries and overall/category statistics for registered players; password changes and account deletion verified with the current password.
+- Hourly cleanup after 24 hours of inactivity for unused rooms, detailed results and eligible guest identities. Registered accounts and their compact results are retained.
 - One-versus-one Sudden Death with a **20-second server-authoritative turn**. Invalid answers do not reset the deadline.
 - No repeated entries within a match. Every eligible shared connector is consumed; each has three uses shared by both players. Any exhausted connector rejects the entire move.
 - Deliberate traps are allowed; timeout or concession ends the round.

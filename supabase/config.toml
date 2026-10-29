@@ -443,3 +443,9 @@ entrypoint = "./functions/join-room/index.ts"
 enabled = true
 verify_jwt = false
 entrypoint = "./functions/match-api/index.ts"
+
+[functions.account-api]
+enabled = true
+# The handler validates the caller JWT and current password itself.
+verify_jwt = false
+entrypoint = "./functions/account-api/index.ts"

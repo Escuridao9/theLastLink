@@ -104,13 +104,20 @@
   } @else if (opening()) {
     <div class="ll-state-page" role="status">
       <span class="ll-label">GETTING THE ROOM READY</span>
-      <h1>Saving your seat<span>…</span></h1>
-      <p>Finding the latest room state.</p>
-      <div class="ll-loading-bar" aria-hidden="true"></div>
+      <h1>
+        {{ game.connection() === 'Unavailable' ? 'This room has closed.' : 'Saving your seat…' }}
+      </h1>
+      @if (game.connection() !== 'Unavailable') {
+        <p>Finding the latest room state.</p>
+        <div class="ll-loading-bar" aria-hidden="true"></div>
+      }
     </div>
     @if (error() || game.error()) {
       <p class="ll-note ll-note-error" role="alert">{{ error() || game.error() }}</p>
       <a class="ll-back" [routerLink]="links.to('/rooms')">← Back to rooms</a>
+      @if (game.connection() === 'Unavailable') {
+        <a class="ll-back" [routerLink]="links.to('/account')">Saved account results →</a>
+      }
     }
   } @else {
     <a class="ll-back" [routerLink]="links.to('/play')">← Choose another arena</a>

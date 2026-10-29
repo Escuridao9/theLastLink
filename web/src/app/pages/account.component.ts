@@ -12,6 +12,7 @@ import { AccountService } from '../core/account.service';
 import { ConfigService } from '../core/config.service';
 import { accountReturnPath } from '../core/auth-navigation';
 import { UiLinks } from '../shared/ui-links.service';
+import { AccountDashboardComponent } from './account-dashboard.component';
 
 const passwordRules = [Validators.required, Validators.minLength(8), Validators.maxLength(128)];
 const emailControl = () =>
@@ -25,7 +26,7 @@ const passwordsMatch: ValidatorFn = (form) =>
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, AccountDashboardComponent],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',
 })
@@ -165,6 +166,13 @@ export class AccountComponent implements OnInit, OnDestroy {
       this.clearPasswords();
       this.message.set('You’re logged out.');
     });
+  }
+  settingsComplete(event: { message: string; email: string }): void {
+    this.mode.set('login');
+    this.message.set(event.message);
+    this.error.set('');
+    this.clearPasswords();
+    this.loginForm.controls.email.setValue(event.email);
   }
   async continue(): Promise<void> {
     if (this.destroyed) return;

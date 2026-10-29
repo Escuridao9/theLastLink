@@ -4,6 +4,8 @@ import { MatchService } from '../core/match.service';
 import { ReviewMatchService } from './review-services';
 import { AccountService } from '../core/account.service';
 import { ReviewAccountService } from './review-account.service';
+import { AccountRecordsService } from '../core/account-records.service';
+import { ReviewAccountRecordsService } from './review-account-records.service';
 @Component({
   selector: 'app-design-review',
   standalone: true,
@@ -15,6 +17,14 @@ export class DesignReviewComponent implements OnDestroy {
   readonly preview = inject(MatchService) as unknown as ReviewMatchService;
   readonly router = inject(Router);
   readonly accounts = inject(AccountService) as unknown as ReviewAccountService;
+  private readonly records = inject(
+    AccountRecordsService,
+  ) as unknown as ReviewAccountRecordsService;
+  accountHistory(scenario: ReviewAccountRecordsService['scenario']): void {
+    this.records.scenario = scenario;
+    this.accounts.showAccount();
+    this.records.refreshToken.update((value) => value + 1);
+  }
   get onAccount(): boolean {
     return this.router.url.includes('/account');
   }

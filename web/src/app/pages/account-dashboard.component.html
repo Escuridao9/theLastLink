@@ -1,0 +1,266 @@
+<section class="record-book" aria-labelledby="record-heading">
+  <div class="section-heading">
+    <div>
+      <span class="ll-label">YOUR RECORD</span>
+      <h2 id="record-heading">Every link counts.</h2>
+    </div>
+    <button type="button" class="text-button" (click)="refresh()" [disabled]="loading()">
+      Refresh results ↻
+    </button>
+  </div>
+  <div class="arena-filters" role="group" aria-label="Filter your results">
+    @for (item of categories; track item.label) {
+      <button
+        type="button"
+        [attr.aria-pressed]="category() === item.value"
+        (click)="category.set(item.value)"
+      >
+        {{ item.label }}
+      </button>
+    }
+  </div>
+  @if (overview()) {
+    <dl class="record-strip" aria-label="Your match statistics">
+      <div>
+        <dt>PLAYED</dt>
+        <dd>{{ stats().played }}</dd>
+      </div>
+      <div>
+        <dt>WINS</dt>
+        <dd class="win-value">{{ stats().wins }}</dd>
+      </div>
+      <div>
+        <dt>LOSSES</dt>
+        <dd>{{ stats().losses }}</dd>
+      </div>
+      <div>
+        <dt>WIN RATE</dt>
+        <dd>{{ stats().winRate | number: '1.0-1' }}<small>%</small></dd>
+      </div>
+    </dl>
+  }
+  <div class="history-heading">
+    <h3>Recent matches</h3>
+    <span>Only you can see your record.</span>
+  </div>
+  @if (error()) {
+    <div class="record-error" role="alert">
+      <p>{{ error() }}</p>
+      <button type="button" class="text-button" (click)="load()">Try loading results again</button>
+    </div>
+  }
+  @if (loading() && history().length === 0) {
+    <p class="record-state" role="status">Finding your last links…</p>
+  } @else if (!error() && history().length === 0) {
+    <div class="record-state">
+      <p>Your story starts with the next link.</p>
+      <p>Completed matches appear here after you play.</p>
+      <a [routerLink]="links.to(returnTo)" class="text-button">Find your next opponent ↗</a>
+    </div>
+  }
+  <ul class="match-records">
+    @for (match of history(); track match.id) {
+      <li>
+        <span class="match-outcome" [class.won]="match.outcome === 'win'">{{
+          match.outcome === 'win' ? 'WIN' : 'LOSS'
+        }}</span>
+        <div class="match-description">
+          <strong>vs {{ match.opponent }}</strong
+          ><span
+            >{{ label(match.category) }} · {{ match.finishedAt | date: 'd MMM y, HH:mm' }}</span
+          >
+          <span
+            >{{ match.moves }} moves ·
+            {{ match.endReason === 'timeout' ? 'Time ran out' : 'Conceded' }}</span
+          >
+        </div>
+        @if (match.detailsAvailable) {
+          <a
+            class="result-link"
+            [routerLink]="[links.to('/results'), match.id]"
+            [attr.aria-label]="'Open result against ' + match.opponent"
+            >Result ↗</a
+          >
+        } @else {
+          <span class="saved-summary">Summary saved</span>
+        }
+      </li>
+    }
+  </ul>
+  @if (hasMore()) {
+    <button
+      type="button"
+      class="text-button more-results"
+      (click)="load(true)"
+      [disabled]="loading()"
+    >
+      {{ loading() ? 'Loading…' : 'More matches ↓' }}
+    </button>
+  }
+  <p class="retention-note">
+    Unused room details expire after 24 hours. Your compact results stay with this account.
+  </p>
+</section>
+<section class="account-settings" aria-labelledby="settings-heading">
+  <span class="ll-label">KEEP YOUR CORNER</span>
+  <h2 id="settings-heading">Account settings.</h2>
+  <div class="settings-buttons">
+    <button
+      type="button"
+      class="text-button"
+      (click)="togglePassword()"
+      [disabled]="!!operation() || account.busy()"
+      [attr.aria-expanded]="passwordOpen()"
+      aria-controls="password-settings"
+    >
+      Change password
+    </button>
+    <button
+      type="button"
+      class="text-button delete-link"
+      (click)="toggleDelete()"
+      [disabled]="!!operation() || account.busy()"
+      [attr.aria-expanded]="deleteOpen()"
+      aria-controls="delete-settings"
+    >
+      Delete account
+    </button>
+  </div>
+  @if (settingsError()) {
+    <p class="record-error" role="alert">{{ settingsError() }}</p>
+  }
+  @if (passwordOpen()) {
+    <form
+      id="password-settings"
+      class="settings-form"
+      [formGroup]="passwordForm"
+      (ngSubmit)="changePassword()"
+    >
+      <label for="change-current">CURRENT PASSWORD</label
+      ><input
+        id="change-current"
+        class="ll-input"
+        type="password"
+        autocomplete="current-password"
+        formControlName="current"
+        maxlength="128"
+        [readOnly]="!!operation()"
+        [attr.aria-invalid]="
+          passwordForm.controls.current.touched && passwordForm.controls.current.invalid
+        "
+        aria-describedby="change-errors"
+      />
+      <label for="change-password">NEW PASSWORD</label
+      ><input
+        id="change-password"
+        class="ll-input"
+        type="password"
+        autocomplete="new-password"
+        formControlName="password"
+        minlength="8"
+        maxlength="128"
+        [readOnly]="!!operation()"
+        [attr.aria-invalid]="
+          passwordForm.controls.password.touched && passwordForm.controls.password.invalid
+        "
+        aria-describedby="change-hint change-errors"
+      />
+      <p id="change-hint" class="field-hint">
+        Use 8–128 characters. You will log in again after changing your password.
+      </p>
+      <label for="change-confirm">CONFIRM NEW PASSWORD</label
+      ><input
+        id="change-confirm"
+        class="ll-input"
+        type="password"
+        autocomplete="new-password"
+        formControlName="confirm"
+        maxlength="128"
+        [readOnly]="!!operation()"
+        [attr.aria-invalid]="
+          passwordForm.controls.confirm.touched &&
+          (passwordForm.controls.confirm.invalid || passwordForm.hasError('mismatch'))
+        "
+        aria-describedby="change-errors"
+      />
+      <p id="change-errors" class="field-error" aria-live="polite">
+        @if (passwordForm.controls.confirm.touched && passwordForm.hasError('mismatch')) {
+          The new passwords do not match.
+        } @else if (passwordForm.touched && passwordForm.invalid) {
+          Enter your current password and a valid new password in both fields.
+        }
+      </p>
+      <button
+        class="ll-action ll-action-coral"
+        type="submit"
+        [disabled]="!!operation() || account.busy()"
+      >
+        {{ operation() === 'password' ? 'Changing password…' : 'Save new password' }} ↗
+      </button>
+      <button
+        type="button"
+        class="text-button cancel-setting"
+        (click)="togglePassword()"
+        [disabled]="!!operation()"
+      >
+        Cancel
+      </button>
+    </form>
+  }
+  @if (deleteOpen()) {
+    <form
+      id="delete-settings"
+      class="settings-form delete-settings"
+      [formGroup]="deleteForm"
+      (ngSubmit)="deleteAccount()"
+    >
+      <h3>Leave no loose ends.</h3>
+      <p>
+        This permanently deletes your account, personal history and associated room details. Any
+        match you are playing will be conceded. Opponents keep an anonymised result.
+      </p>
+      <label for="delete-password">CONFIRM WITH YOUR CURRENT PASSWORD</label
+      ><input
+        id="delete-password"
+        class="ll-input"
+        type="password"
+        autocomplete="current-password"
+        formControlName="current"
+        maxlength="128"
+        [readOnly]="!!operation()"
+        [attr.aria-invalid]="
+          deleteForm.controls.current.touched && deleteForm.controls.current.invalid
+        "
+        aria-describedby="delete-errors"
+      />
+      <label class="deletion-check" for="delete-understood"
+        ><input
+          id="delete-understood"
+          type="checkbox"
+          formControlName="understood"
+          [attr.aria-disabled]="!!operation()"
+        />I understand that deleting this account is permanent.</label
+      >
+      <p id="delete-errors" class="field-error" aria-live="polite">
+        @if (deleteForm.touched && deleteForm.invalid) {
+          Enter your current password and confirm that you understand.
+        }
+      </p>
+      <button
+        class="ll-action delete-button"
+        type="submit"
+        [disabled]="!!operation() || account.busy()"
+      >
+        {{ operation() === 'delete' ? 'Deleting account…' : 'Permanently delete my account' }}
+      </button>
+      <button
+        type="button"
+        class="text-button cancel-setting"
+        (click)="toggleDelete()"
+        [disabled]="!!operation()"
+      >
+        Keep my account
+      </button>
+    </form>
+  }
+</section>

@@ -1,0 +1,289 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+.record-book {
+  margin-top: 38px;
+  border-top: 1px solid var(--ll-line);
+  padding-top: 30px;
+}
+.section-heading,
+.history-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.section-heading h2,
+.account-settings h2 {
+  font-size: 32px;
+  letter-spacing: -1.2px;
+  margin: 12px 0 22px;
+}
+.text-button {
+  border: 0;
+  background: none;
+  color: var(--ll-lilac);
+  font: inherit;
+  font-size: 12px;
+  min-height: 44px;
+  padding: 10px 0;
+  text-align: left;
+}
+.text-button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+.arena-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.arena-filters button {
+  min-height: 44px;
+  padding: 9px 12px;
+  border: 1px solid var(--ll-line);
+  background: none;
+  color: var(--ll-quiet);
+  font: inherit;
+  font-size: 12px;
+  border-radius: 5px;
+}
+.arena-filters button[aria-pressed='true'] {
+  border-color: var(--ll-coral);
+  color: var(--ll-cream);
+  background: #3c272d;
+}
+.record-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 30px;
+  padding: 22px 0;
+  border-top: 1px solid var(--ll-line);
+  border-bottom: 1px solid var(--ll-line);
+}
+.record-strip dt {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--ll-quiet);
+}
+.record-strip dd {
+  margin: 5px 0 0;
+  font-size: clamp(27px, 3.5vw, 43px);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.record-strip small {
+  font-size: 17px;
+}
+.win-value {
+  color: var(--ll-coral);
+}
+.history-heading {
+  margin-bottom: 12px;
+}
+.history-heading h3 {
+  font-size: 17px;
+  margin: 0;
+}
+.history-heading > span {
+  font-size: 10px;
+  color: var(--ll-quiet);
+}
+.match-records {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.match-records li {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--ll-line);
+}
+.match-outcome {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--ll-quiet);
+}
+.match-outcome.won {
+  color: var(--ll-coral);
+}
+.match-description strong {
+  display: block;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.match-description span {
+  display: block;
+  font-size: 11px;
+  color: var(--ll-quiet);
+  margin-top: 4px;
+}
+.result-link {
+  color: var(--ll-lilac);
+  font-size: 12px;
+  padding: 12px 0;
+  white-space: nowrap;
+}
+.saved-summary {
+  font-size: 10px;
+  color: var(--ll-quiet);
+  max-width: 64px;
+}
+.retention-note,
+.field-hint {
+  font-size: 11px;
+  color: var(--ll-quiet);
+  line-height: 1.6;
+}
+.retention-note {
+  margin-top: 18px;
+}
+.record-state {
+  padding: 26px 0;
+  color: var(--ll-quiet);
+  font-size: 13px;
+}
+.record-state p {
+  margin: 0 0 8px;
+}
+.record-error {
+  border-left: 3px solid var(--ll-coral);
+  padding: 10px 15px;
+  background: #35252d;
+  font-size: 13px;
+  color: #ffb3a5;
+}
+.record-error p {
+  margin: 0;
+}
+.account-settings {
+  margin-top: 36px;
+  border-top: 1px solid var(--ll-line);
+  padding-top: 28px;
+}
+.settings-buttons {
+  display: flex;
+  gap: 30px;
+}
+.delete-link {
+  color: #ffb3a5;
+}
+.settings-form {
+  margin-top: 22px;
+  max-width: 520px;
+}
+.settings-form label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  margin: 20px 0 8px;
+}
+.settings-form .ll-input {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+.settings-form input[aria-invalid='true'] {
+  border-color: var(--ll-coral);
+}
+.field-error {
+  min-height: 20px;
+  font-size: 12px;
+  color: #ffb3a5;
+  margin: 8px 0 18px;
+}
+.settings-form > .ll-action {
+  width: 100%;
+  min-height: 48px;
+}
+.cancel-setting {
+  display: block;
+  margin: 8px auto;
+}
+.delete-settings {
+  border-top: 2px solid var(--ll-coral);
+  padding-top: 15px;
+}
+.delete-settings h3 {
+  font-size: 23px;
+  margin: 10px 0;
+}
+.delete-settings > p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ll-quiet);
+}
+.settings-form .deletion-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 12px;
+  letter-spacing: 0;
+  font-weight: 400;
+  line-height: 1.6;
+}
+.deletion-check input {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--ll-coral);
+  margin-top: 0;
+}
+.delete-button {
+  background: #ff8b78;
+  color: #271c22;
+  border: 2px solid #ff8b78;
+}
+.more-results {
+  display: block;
+  margin-top: 12px;
+}
+@media (max-width: 600px) {
+  .section-heading {
+    align-items: flex-start;
+  }
+  .section-heading h2,
+  .account-settings h2 {
+    font-size: 28px;
+  }
+  .section-heading > .text-button {
+    max-width: 84px;
+  }
+  .record-strip dd {
+    font-size: 31px;
+  }
+  .record-strip {
+    gap: 8px;
+  }
+  .history-heading {
+    display: block;
+  }
+  .history-heading > span {
+    display: block;
+    margin-top: 5px;
+  }
+  .match-records li {
+    gap: 9px;
+    grid-template-columns: 37px minmax(0, 1fr) 61px;
+  }
+  .saved-summary {
+    font-size: 9px;
+  }
+  .arena-filters {
+    gap: 6px;
+  }
+  .arena-filters button {
+    padding: 9px;
+    font-size: 11px;
+  }
+}

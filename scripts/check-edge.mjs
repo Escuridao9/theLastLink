@@ -17,6 +17,7 @@ const tasks =
           'supabase/functions/join-room/index.ts',
         ],
         ['supabase/functions/match-api/index.ts'],
+        ['supabase/functions/account-api/index.ts'],
       ]
     : [
         [
@@ -26,6 +27,8 @@ const tasks =
           'supabase/functions/join-room/handler.test.ts',
         ],
       ];
+
+if (mode === 'test') tasks.push(['supabase/functions/account-api/handler.test.ts']);
 
 for (const args of tasks) {
   const result = spawnSync(

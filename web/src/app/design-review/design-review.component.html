@@ -16,10 +16,13 @@
       @if (onAccount) {
         <button (click)="accounts.showLogin()">Show logged-out state</button>
         <button (click)="accounts.showGuest()">Show guest upgrade</button>
-        <button (click)="accounts.showAccount()">Show account</button>
+        <button (click)="accountHistory('history')">Show account</button>
+        <button (click)="accountHistory('empty')">Empty history</button>
+        <button (click)="accountHistory('loading')">Loading history</button>
+        <button (click)="accountHistory('error')">History error</button>
         <p>
           Example confirmation code: 123456. No emails are sent. Use error@example.invalid to
-          preview a login error.
+          preview a login error. Settings use the example current password Preview123!.
         </p>
       }
       @if (onLobby) {

@@ -170,6 +170,13 @@
 .account-stop {
   color: var(--ll-coral);
 }
+.account-layout-member {
+  grid-template-columns: minmax(210px, 0.65fr) minmax(0, 1.35fr);
+  gap: 60px;
+}
+.account-layout-member .account-heading h1 {
+  font-size: clamp(58px, 6vw, 78px);
+}
 @media (max-width: 800px) {
   .account-layout {
     gap: 38px;

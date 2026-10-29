@@ -1,6 +1,9 @@
 <section class="ll-page ll-account-page">
   <a class="ll-back" [routerLink]="links.to('/play')">← Back to the arenas</a>
-  <div class="account-layout">
+  <div
+    class="account-layout"
+    [class.account-layout-member]="account.isAccount() && !account.needsPassword()"
+  >
     <header class="account-heading">
       <span class="ll-label">ONE BRAIN. PLENTY OF RIVALS.</span>
       @if (account.needsPassword()) {
@@ -13,7 +16,7 @@
         <h1>A quick<br /><em>inbox check.</em></h1>
         <p>Confirm your email, then get back to making questionable connections.</p>
       } @else if (mode() === 'signup') {
-        <h1>Claim your<br /><em>name.</em></h1>
+        <h1>Make it<br /><em>official.</em></h1>
         <p>Same sharp mind. A player identity you can return to on another device.</p>
       } @else {
         <h1>Back for<br /><em>more?</em></h1>
@@ -27,7 +30,8 @@
       @if (links.reviewing) {
         <p class="account-footnote">
           Interactive example only. Use sample details and confirmation code
-          <strong>123456</strong>. No account or email is created.
+          <strong>123456</strong>. Example current password: <strong>Preview123!</strong>. No
+          account or email is created.
         </p>
       }
       @if (!config.configured) {
@@ -113,7 +117,7 @@
         <span class="account-confirmed">✓ LOGGED IN</span>
         <h2>{{ account.name() }}<span class="account-stop">.</span></h2>
         <p class="account-email">{{ account.user()?.email }}</p>
-        <p class="account-copy">Use this account to return to your own rooms and matches.</p>
+        <p class="account-copy">A few wins. A few lessons. Your next rival is waiting.</p>
         <button type="button" class="ll-action ll-action-coral account-submit" (click)="continue()">
           Back to the competition<span aria-hidden="true">↗</span>
         </button>
@@ -125,6 +129,7 @@
         >
           {{ account.busy() ? 'Logging out…' : 'Log out of this browser' }}
         </button>
+        <app-account-dashboard [returnTo]="returnTo()" (sessionEnded)="settingsComplete($event)" />
       } @else if (account.verification(); as pending) {
         <span class="ll-label">CHECK YOUR EMAIL</span>
         <h2>One last check.</h2>

@@ -229,10 +229,17 @@
 } @else {
   <section class="page-head">
     <span class="eyebrow">Joining the arena</span>
-    <h1>Finding your match…</h1>
+    <h1>
+      {{
+        game.connection() === 'Unavailable' ? 'This match is unavailable.' : 'Finding your match…'
+      }}
+    </h1>
     @if (error() || game.error()) {
       <p class="notice error" role="alert">{{ error() || game.error() }}</p>
       <a [routerLink]="links.to('/rooms')" class="text-link">Back to rooms →</a>
+      @if (game.connection() === 'Unavailable') {
+        <a [routerLink]="links.to('/account')" class="text-link">Saved account results →</a>
+      }
     }
   </section>
 }

@@ -4,6 +4,12 @@ import { Routes } from '@angular/router';
 import { ConfigService } from '../core/config.service';
 import { AccountService } from '../core/account.service';
 import { ReviewAccountService } from './review-account.service';
+import { AccountRecordsService } from '../core/account-records.service';
+import { AccountOperationsService } from '../core/account-operations.service';
+import {
+  ReviewAccountRecordsService,
+  ReviewAccountOperationsService,
+} from './review-account-records.service';
 import { MatchService } from '../core/match.service';
 import { CatalogueService } from '../core/catalogue.service';
 import { ReviewMatchService, ReviewCatalogueService } from './review-services';
@@ -21,6 +27,8 @@ export const REVIEW_ROUTES: Routes = [
       },
       { provide: MatchService, useClass: ReviewMatchService },
       { provide: AccountService, useClass: ReviewAccountService },
+      { provide: AccountRecordsService, useClass: ReviewAccountRecordsService },
+      { provide: AccountOperationsService, useClass: ReviewAccountOperationsService },
       { provide: CatalogueService, useClass: ReviewCatalogueService },
       {
         provide: ConfigService,
