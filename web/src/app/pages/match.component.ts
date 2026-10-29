@@ -10,10 +10,13 @@ import { CATEGORY_LABELS, ROLE_LABELS } from '../core/models';
 import type { Dataset, Game, Turn } from '../core/models';
 import { GameSearchComponent } from '../shared/game-search.component';
 import { TurnClockComponent } from '../shared/turn-clock.component';
+import { MatchExitService } from '../core/match-exit.service';
+import { MatchExitDialogComponent } from '../shared/match-exit-dialog.component';
 @Component({
   selector: 'app-match',
   standalone: true,
-  imports: [RouterLink, GameSearchComponent, TurnClockComponent],
+  imports: [RouterLink, GameSearchComponent, TurnClockComponent, MatchExitDialogComponent],
+  providers: [MatchExitService],
   templateUrl: './match.component.html',
 })
 export class MatchComponent implements OnInit, OnDestroy {
@@ -21,6 +24,7 @@ export class MatchComponent implements OnInit, OnDestroy {
   private readonly requestId = inject(REQUEST_ID);
   readonly game = inject(MatchService);
   readonly turnAudio = inject(TurnAudioService);
+  readonly exit = inject(MatchExitService);
   readonly categories = CATEGORY_LABELS;
   readonly labels = ROLE_LABELS;
   private readonly catalogue = inject(CatalogueService);
@@ -47,6 +51,7 @@ export class MatchComponent implements OnInit, OnDestroy {
     }
     localStorage.setItem('last-link-resume', match.id);
     if (match.status === 'finished') {
+      if (this.exit.busy() || this.exit.navigationApproved()) return;
       void this.router.navigate([this.links.to('/results'), match.id], { replaceUrl: true });
       return;
     }
@@ -67,6 +72,7 @@ export class MatchComponent implements OnInit, OnDestroy {
     const match = this.game.match();
     return match?.status === 'active' && match.activePlayer === this.game.backend.playerId();
   }
+  canLeave(): boolean | Promise<boolean> { return this.exit.confirmNavigation(); }
   get activePlayerName(): string {
     return this.player(this.game.match()?.activePlayer ?? null);
   }

@@ -1,3 +1,5 @@
+<app-match-exit-dialog [open]="exit.open()" [busy]="exit.busy()" [error]="exit.error()"
+  (stay)="exit.stay()" (leave)="exit.forfeit()" />
 @if (game.match(); as match) {
   <section class="ll-match" aria-label="Active match">
     <div class="ll-match-meta">

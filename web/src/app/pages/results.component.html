@@ -20,7 +20,7 @@
           {{
             match.endReason === 'timeout'
               ? 'The clock had the final say.'
-              : 'The other player conceded.'
+              : won ? 'The other player conceded.' : 'You forfeited the match.'
           }}
         </p>
       </div>

@@ -308,14 +308,14 @@ export class ReviewMatchService {
     this.paused.update((v) => !v);
     this.freezeClock();
   }
-  finish(won: boolean): void {
+  finish(won: boolean, reason: Match['endReason'] = 'timeout'): void {
     this.match.update((m) =>
       m
         ? {
             ...m,
             status: 'finished',
             winnerId: won ? 'preview-diogo' : 'preview-alex',
-            endReason: 'timeout',
+            endReason: reason,
             endedAt: new Date().toISOString(),
             room: { ...m.room, status: 'finished' },
             rematch: {
@@ -477,6 +477,11 @@ export class ReviewMatchService {
         this.match.set(updated);
       }
       return { ...response, match: updated };
+    } else if (action === 'concede') {
+      const current = this.match();
+      if (!current || current.id !== payload['matchId']) throw Error('match_not_found');
+      if (current.status === 'active') this.finish(false, 'conceded');
+      return { ...response, match: this.match()! };
     } else if (action === 'expire') {
       if (!this.paused()) this.finish(this.match()?.activePlayer !== this.backend.playerId());
     } else if (action === 'submit') {

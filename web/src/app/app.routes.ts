@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { Router, Routes } from '@angular/router';
 import { readCategory } from './core/models';
+import { confirmMatchExit } from './core/match-exit.guard';
 
 export const routes: Routes = [
   {
@@ -44,6 +45,7 @@ export const routes: Routes = [
   {
     path: 'match/:id',
     title: 'Sudden Death — The Last Link',
+    canDeactivate: [confirmMatchExit],
     loadComponent: () => import('./pages/match.component').then((m) => m.MatchComponent),
   },
   {

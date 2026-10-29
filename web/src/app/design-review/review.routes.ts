@@ -14,6 +14,7 @@ import { MatchService } from '../core/match.service';
 import { CatalogueService } from '../core/catalogue.service';
 import { ReviewMatchService, ReviewCatalogueService } from './review-services';
 import { PREVIEW_CONFIGURATION } from '../../../../src/configuration';
+import { confirmMatchExit } from '../core/match-exit.guard';
 export const REVIEW_ROUTES: Routes = [
   {
     path: '',
@@ -62,6 +63,7 @@ export const REVIEW_ROUTES: Routes = [
       },
       {
         path: 'match/:id',
+        canDeactivate: [confirmMatchExit],
         loadComponent: () => import('../pages/match.component').then((m) => m.MatchComponent),
       },
       {

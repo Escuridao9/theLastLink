@@ -13,6 +13,7 @@ import { CatalogueService } from './core/catalogue.service';
 import { ConfigService } from './core/config.service';
 import { MatchService } from './core/match.service';
 import { ResumeService, type SessionReturn } from './core/resume.service';
+import { MatchExitService } from './core/match-exit.service';
 import type { CommandResponse, Dataset, Match, Room } from './core/models';
 import { ReviewCatalogueService, ReviewMatchService } from './design-review/review-services';
 import { MatchComponent } from './pages/match.component';
@@ -71,6 +72,7 @@ function classFixture(initial: Match | null = match()) {
   const state = game(initial);
   const router = { url: '/match/match-one', navigate: vi.fn(async () => true) };
   TestBed.configureTestingModule({ providers: [
+    MatchExitService,
     { provide: Router, useValue: router },
     { provide: ActivatedRoute, useValue: { snapshot: { paramMap: new Map([['id', 'match-one']]), queryParamMap: new Map() } } },
     { provide: ConfigService, useValue: config },
@@ -319,11 +321,6 @@ describe('Routed player journey', () => {
     await shell.whenStable();
     const setupElement = shell.nativeElement.querySelector('app-rooms');
     expect(setupElement).not.toBeNull();
-    const state = TestBed.inject(MatchService);
-    await state.send('start', { roomId: 'room-one' });
-    await router.navigateByUrl('/match/match-one');
-    await shell.whenStable();
-    shell.detectChanges();
     expect(shell.nativeElement.querySelector('.site-header a[href="/match/match-one"]')).toBeNull();
     expect(shell.nativeElement.querySelector('.session-return')).toBeNull();
     await router.navigateByUrl('/');

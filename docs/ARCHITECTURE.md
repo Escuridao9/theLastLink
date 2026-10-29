@@ -36,6 +36,8 @@ Invite links retain the room code and category in the hash URL. They open a dedi
 
 The clock displays the server deadline with a clock offset. Each accepted answer starts an exact 20-second turn for the other player. `pg_cron` independently expires due matches, including when both browsers are closed. RLS restricts private reads; browser roles cannot write gameplay tables directly.
 
+Active match routes use a `CanDeactivate` guard and a native modal dialog with **Stay in match** as the initial action. Confirming **Leave and forfeit** sends the existing authorized `concede` command with a stable receipt; navigation waits for a finished server snapshot. Failed or lost responses leave a retry available. The timer, Realtime updates and Cron continue during confirmation. Natural results dismiss an unanswered warning and follow the usual result route. A match-scoped `beforeunload` listener also requests the browser's generic close/refresh/external-navigation warning, without sending a concession during unload. Browsers control that warning and may omit it, especially on mobile; returning with the same identity can recover a still-active match under its original deadline. Neither mechanism prevents research on another device or in another tab. Preview routes use the same guard with a local concession fixture.
+
 ## Categories, accounts and rematches
 
 Games connect recorded eligible developers, composers, voice actors and recurring characters in matching roles. Movies connect actors, directors, writers, composers and cinematographers, allowing the same canonical person across roles. Football connects historical senior players and head managers across roles; national, youth and reserve teams are excluded. Names never substitute for canonical identities.
