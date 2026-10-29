@@ -102,22 +102,34 @@ describe('Account page forms and routing', () => {
     f.harness.detectChanges();
     expect(f.harness.routeNativeElement?.textContent).toContain('One last check');
   });
-  it('does not collect a password until a guest email has been confirmed', async () => {
+  it('requires both passwords before a guest registration and opens the account directly after verification', async () => {
     const f = await fixture('/account?mode=signup');
     f.account.showGuest();
     TestBed.tick();
     f.harness.detectChanges();
-    expect(f.harness.routeNativeElement?.querySelector('#signup-password')).toBeNull();
+    expect(f.harness.routeNativeElement?.querySelector('#signup-password')).not.toBeNull();
+    expect(f.harness.routeNativeElement?.querySelector('#signup-confirm')).not.toBeNull();
     f.component.signupForm.patchValue({ name: 'Diogo', email: 'diogo@example.invalid' });
     await f.component.register();
-    expect(f.register).toHaveBeenCalledWith('Diogo', 'diogo@example.invalid', undefined);
+    expect(f.register).not.toHaveBeenCalled();
+    f.component.signupForm.patchValue({
+      password: 'A test password',
+      confirm: 'Different password',
+    });
+    await f.component.register();
+    expect(f.register).not.toHaveBeenCalled();
+    f.component.signupForm.controls.confirm.setValue('A test password');
+    await f.component.register();
+    expect(f.register).toHaveBeenCalledWith('Diogo', 'diogo@example.invalid', 'A test password');
+    expect(f.component.signupForm.controls.password.value).toBe('');
+    expect(f.component.signupForm.controls.confirm.value).toBe('');
     f.component.codeForm.controls.code.setValue('123456');
     await f.component.verify();
     f.harness.detectChanges();
-    expect(f.harness.routeNativeElement?.querySelector('#finish-password')).not.toBeNull();
-    f.component.finishForm.setValue({ password: 'A test password', confirm: 'A test password' });
-    await f.component.finishPassword();
-    expect(f.account.needsPassword()).toBe(false);
+    expect(f.harness.routeNativeElement?.querySelector('#finish-password')).toBeNull();
+    expect(f.account.isAccount()).toBe(true);
+    expect(f.harness.routeNativeElement?.textContent).toContain('LOGGED IN');
+    expect(f.account.user()?.id).toBe('design-review-account');
   });
   it('blocks duplicate submissions while a request is running', async () => {
     const f = await fixture();

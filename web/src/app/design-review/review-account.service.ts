@@ -12,7 +12,6 @@ export class ReviewAccountService {
   readonly isGuest = computed(() => !!this.user()?.is_anonymous);
   readonly isAccount = computed(() => !!this.user()?.email && !this.isGuest());
   readonly name = computed(() => this.user()?.user_metadata?.['display_name'] ?? 'Diogo');
-  readonly needsPassword = signal(false);
   private pendingName = 'Diogo';
   initialize(): Promise<void> {
     return Promise.resolve();
@@ -34,7 +33,7 @@ export class ReviewAccountService {
     this.user.set(this.example(email, 'Diogo'));
     this.clearVerification();
   }
-  async register(name: string, email: string, _password?: string): Promise<void> {
+  async register(name: string, email: string, _password: string): Promise<void> {
     this.pendingName = name;
     this.verification.set({
       email,
@@ -47,15 +46,14 @@ export class ReviewAccountService {
       throw Error('That confirmation has expired or was already used. Request a new email.');
     const pending = this.verification();
     if (!pending) throw Error('Request a confirmation email first.');
-    this.needsPassword.set(pending.type === 'email_change');
-    this.user.set(this.example(pending.email));
+    this.user.set({
+      ...this.example(pending.email),
+      id: pending.userId ?? 'design-review-account',
+    });
     this.clearVerification();
   }
   async resend(): Promise<void> {
     /* The example does not send an email. */
-  }
-  async finishPassword(_password: string): Promise<void> {
-    this.needsPassword.set(false);
   }
   async logout(): Promise<void> {
     this.showLogin();
@@ -74,7 +72,6 @@ export class ReviewAccountService {
   }
   showLogin(): void {
     this.user.set(null);
-    this.needsPassword.set(false);
     this.clearVerification();
   }
   showAccount(): void {

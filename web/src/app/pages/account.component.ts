@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject, signal, effect } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -60,8 +60,8 @@ export class AccountComponent implements OnInit, OnDestroy {
         ],
       }),
       email: emailControl(),
-      password: new FormControl('', { nonNullable: true }),
-      confirm: new FormControl('', { nonNullable: true }),
+      password: new FormControl('', { nonNullable: true, validators: passwordRules }),
+      confirm: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     },
     { validators: passwordsMatch },
   );
@@ -71,24 +71,8 @@ export class AccountComponent implements OnInit, OnDestroy {
       validators: [Validators.required, Validators.pattern(/^\d{6}$/)],
     }),
   });
-  readonly finishForm = new FormGroup(
-    {
-      password: new FormControl('', { nonNullable: true, validators: passwordRules }),
-      confirm: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    },
-    { validators: passwordsMatch },
-  );
   private querySubscription?: Subscription;
   private destroyed = false;
-  constructor() {
-    effect(() => {
-      const guest = this.account.isGuest();
-      this.signupForm.controls.password.setValidators(guest ? [] : passwordRules);
-      this.signupForm.controls.confirm.setValidators(guest ? [] : [Validators.required]);
-      this.signupForm.controls.password.updateValueAndValidity({ emitEvent: false });
-      this.signupForm.controls.confirm.updateValueAndValidity({ emitEvent: false });
-    });
-  }
   ngOnInit(): void {
     this.signupForm.controls.name.setValue(localStorage.getItem('last-link-name') ?? '');
     this.querySubscription = this.route.queryParamMap.subscribe((params) => {
@@ -112,7 +96,7 @@ export class AccountComponent implements OnInit, OnDestroy {
       const value = this.loginForm.getRawValue();
       await this.account.login(value.email, value.password);
       this.clearPasswords();
-      if (!this.destroyed && !this.account.needsPassword()) await this.continue();
+      if (!this.destroyed) await this.continue();
     });
   }
   async register(): Promise<void> {
@@ -121,11 +105,7 @@ export class AccountComponent implements OnInit, OnDestroy {
     sessionStorage.setItem('last-link-account-return', this.returnTo());
     await this.perform(async () => {
       const value = this.signupForm.getRawValue();
-      await this.account.register(
-        value.name,
-        value.email,
-        this.account.isGuest() ? undefined : value.password,
-      );
+      await this.account.register(value.name, value.email, value.password);
       this.clearPasswords();
     });
   }
@@ -135,11 +115,7 @@ export class AccountComponent implements OnInit, OnDestroy {
     await this.perform(async () => {
       await this.account.verifyEmail(this.codeForm.controls.code.value);
       this.codeForm.reset();
-      this.message.set(
-        this.account.needsPassword()
-          ? 'Email confirmed. Choose a password to finish.'
-          : 'Email confirmed. You’re in.',
-      );
+      this.message.set('Email confirmed. You’re in.');
     });
   }
   async resend(): Promise<void> {
@@ -147,15 +123,6 @@ export class AccountComponent implements OnInit, OnDestroy {
     await this.perform(async () => {
       await this.account.resend();
       this.message.set('Confirmation requested. Check your inbox and spam folder.');
-    });
-  }
-  async finishPassword(): Promise<void> {
-    this.finishForm.markAllAsTouched();
-    if (this.finishForm.invalid || this.account.busy()) return;
-    await this.perform(async () => {
-      await this.account.finishPassword(this.finishForm.controls.password.value);
-      this.clearPasswords();
-      this.message.set('Account complete. Your player identity stays with you.');
     });
   }
   async logout(): Promise<void> {
@@ -200,7 +167,6 @@ export class AccountComponent implements OnInit, OnDestroy {
     this.loginForm.controls.password.reset();
     this.signupForm.controls.password.reset();
     this.signupForm.controls.confirm.reset();
-    this.finishForm.reset();
   }
   ngOnDestroy(): void {
     this.destroyed = true;

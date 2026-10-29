@@ -102,7 +102,7 @@ export class BackendService implements OnDestroy {
               this.authIssue.set(
                 'This confirmation link could not restore your session. Open it in the browser that requested it, or try logging in.',
               );
-            else this.authNotice.set('Email confirmed. Your account is ready for the next step.');
+            else this.authNotice.set('Email confirmed. Your account is ready.');
           }
         }
         const auth = this.client.auth;

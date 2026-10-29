@@ -1,15 +1,9 @@
 <section class="ll-page ll-account-page">
   <a class="ll-back" [routerLink]="links.to('/play')">← Back to the arenas</a>
-  <div
-    class="account-layout"
-    [class.account-layout-member]="account.isAccount() && !account.needsPassword()"
-  >
+  <div class="account-layout" [class.account-layout-member]="account.isAccount()">
     <header class="account-heading">
       <span class="ll-label">ONE BRAIN. PLENTY OF RIVALS.</span>
-      @if (account.needsPassword()) {
-        <h1>Make it<br /><em>official.</em></h1>
-        <p>Your email is confirmed. One password, and this player identity is yours to keep.</p>
-      } @else if (account.isAccount()) {
+      @if (account.isAccount()) {
         <h1>Your name.<br /><em>Your game.</em></h1>
         <p>Welcome back, {{ account.name() }}. There’s always another worthy opponent.</p>
       } @else if (account.verification()) {
@@ -49,70 +43,6 @@
       }
       @if (!account.ready()) {
         <p role="status">Restoring your session…</p>
-      } @else if (account.needsPassword()) {
-        <span class="ll-label">FINAL STEP / CHOOSE A PASSWORD</span>
-        <h2>Keep your seat.</h2>
-        <p class="account-copy">
-          Choose a password for {{ account.user()?.email }}. Your existing matches keep the same
-          player identity.
-        </p>
-        <form [formGroup]="finishForm" (ngSubmit)="finishPassword()">
-          <label for="finish-password">PASSWORD</label>
-          <input
-            id="finish-password"
-            class="ll-input"
-            type="password"
-            formControlName="password"
-            autocomplete="new-password"
-            minlength="8"
-            maxlength="128"
-            [readOnly]="account.busy()"
-            aria-describedby="finish-password-hint"
-            [attr.aria-invalid]="
-              finishForm.controls.password.touched && finishForm.controls.password.invalid
-            "
-          />
-          <p
-            id="finish-password-hint"
-            class="account-hint"
-            [class.account-field-error]="
-              finishForm.controls.password.touched && finishForm.controls.password.invalid
-            "
-          >
-            At least 8 characters.
-          </p>
-          <label for="finish-confirm">CONFIRM PASSWORD</label>
-          <input
-            id="finish-confirm"
-            class="ll-input"
-            type="password"
-            formControlName="confirm"
-            autocomplete="new-password"
-            maxlength="128"
-            [readOnly]="account.busy()"
-            aria-describedby="finish-confirm-error"
-            [attr.aria-invalid]="
-              finishForm.controls.confirm.touched &&
-              (finishForm.controls.confirm.invalid || finishForm.hasError('passwordsMatch'))
-            "
-          />
-          <p id="finish-confirm-error" class="account-field-error">
-            {{
-              finishForm.controls.confirm.touched &&
-              (finishForm.controls.confirm.invalid || finishForm.hasError('passwordsMatch'))
-                ? 'The passwords must match.'
-                : ''
-            }}
-          </p>
-          <button
-            class="ll-action ll-action-coral account-submit"
-            type="submit"
-            [disabled]="account.busy() || !config.configured"
-          >
-            {{ account.busy() ? 'Saving…' : 'Finish creating account'
-            }}<span aria-hidden="true">↗</span>
-          </button>
-        </form>
       } @else if (account.isAccount()) {
         <span class="account-confirmed">✓ LOGGED IN</span>
         <h2>{{ account.name() }}<span class="account-stop">.</span></h2>
@@ -278,7 +208,7 @@
           <h2>Your next chapter.</h2>
           @if (account.isGuest()) {
             <p class="account-copy">
-              Keep your guest identity: confirm your email first, then choose a password.
+              Keep your guest identity. Choose your password now, then confirm your email.
             </p>
           }
           <form [formGroup]="signupForm" (ngSubmit)="register()">
@@ -324,73 +254,65 @@
                   : ''
               }}
             </p>
-            @if (!account.isGuest()) {
-              <label for="signup-password">PASSWORD</label>
-              <input
-                id="signup-password"
-                class="ll-input"
-                type="password"
-                formControlName="password"
-                autocomplete="new-password"
-                minlength="8"
-                maxlength="128"
-                [readOnly]="account.busy()"
-                aria-describedby="signup-password-hint"
-                [attr.aria-invalid]="
-                  signupForm.controls.password.touched && signupForm.controls.password.invalid
-                "
-              />
-              <p
-                id="signup-password-hint"
-                class="account-hint"
-                [class.account-field-error]="
-                  signupForm.controls.password.touched && signupForm.controls.password.invalid
-                "
-              >
-                At least 8 characters.
-              </p>
-              <label for="signup-confirm">CONFIRM PASSWORD</label>
-              <input
-                id="signup-confirm"
-                class="ll-input"
-                type="password"
-                formControlName="confirm"
-                autocomplete="new-password"
-                maxlength="128"
-                [readOnly]="account.busy()"
-                aria-describedby="signup-confirm-error"
-                [attr.aria-invalid]="
-                  signupForm.controls.confirm.touched &&
-                  (signupForm.controls.confirm.invalid || signupForm.hasError('passwordsMatch'))
-                "
-              />
-              <p id="signup-confirm-error" class="account-field-error">
-                {{
-                  signupForm.controls.confirm.touched &&
-                  (signupForm.controls.confirm.invalid || signupForm.hasError('passwordsMatch'))
-                    ? 'The passwords must match.'
-                    : ''
-                }}
-              </p>
-            }
+            <label for="signup-password">PASSWORD</label>
+            <input
+              id="signup-password"
+              class="ll-input"
+              type="password"
+              formControlName="password"
+              autocomplete="new-password"
+              minlength="8"
+              maxlength="128"
+              [readOnly]="account.busy()"
+              aria-describedby="signup-password-hint"
+              [attr.aria-invalid]="
+                signupForm.controls.password.touched && signupForm.controls.password.invalid
+              "
+            />
+            <p
+              id="signup-password-hint"
+              class="account-hint"
+              [class.account-field-error]="
+                signupForm.controls.password.touched && signupForm.controls.password.invalid
+              "
+            >
+              At least 8 characters.
+            </p>
+            <label for="signup-confirm">CONFIRM PASSWORD</label>
+            <input
+              id="signup-confirm"
+              class="ll-input"
+              type="password"
+              formControlName="confirm"
+              autocomplete="new-password"
+              maxlength="128"
+              [readOnly]="account.busy()"
+              aria-describedby="signup-confirm-error"
+              [attr.aria-invalid]="
+                signupForm.controls.confirm.touched &&
+                (signupForm.controls.confirm.invalid || signupForm.hasError('passwordsMatch'))
+              "
+            />
+            <p id="signup-confirm-error" class="account-field-error">
+              {{
+                signupForm.controls.confirm.touched &&
+                (signupForm.controls.confirm.invalid || signupForm.hasError('passwordsMatch'))
+                  ? 'The passwords must match.'
+                  : ''
+              }}
+            </p>
             <button
               class="ll-action ll-action-coral account-submit"
               type="submit"
               [disabled]="account.busy() || !config.configured"
             >
-              {{
-                account.busy()
-                  ? 'Working…'
-                  : account.isGuest()
-                    ? 'Send confirmation email'
-                    : 'Create account'
-              }}<span aria-hidden="true">↗</span>
+              {{ account.busy() ? 'Working…' : 'Create account' }}<span aria-hidden="true">↗</span>
             </button>
           </form>
           <p class="account-footnote">
             {{
               account.isGuest()
-                ? 'Your player ID stays the same when you finish registration.'
+                ? 'Confirm your email to activate your account. Your player identity stays the same.'
                 : 'We’ll ask you to confirm your email before your first login.'
             }}
           </p>

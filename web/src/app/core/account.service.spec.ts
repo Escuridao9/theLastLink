@@ -74,7 +74,12 @@ function fixture(initial: User | null = null) {
     })),
     updateUser: vi.fn(
       async (
-        attributes: { email?: string; password?: string; data?: Record<string, unknown> },
+        attributes: {
+          email?: string;
+          password?: string;
+          current_password?: string;
+          data?: Record<string, unknown>;
+        },
         _options?: unknown,
       ) => {
         const user = { ...current!, user_metadata: attributes.data ?? current!.user_metadata };
@@ -228,34 +233,38 @@ describe('Real account service with an isolated Auth transport', () => {
     expect(f.account.isAccount()).toBe(true);
     expect(f.account.verification()).toBeNull();
   });
-  it('upgrades a guest in place and adds a password only after the email is verified', async () => {
+  it('sets the guest email and password together, preserves its UUID and finishes on email verification', async () => {
     const f = fixture(person('guest-one', true));
     await f.account.initialize();
     localStorage.setItem('last-link-resume', 'existing-match');
     const changed = vi.fn();
     f.backend.onIdentityChange(changed);
-    await f.account.register('Diogo', 'diogo@example.invalid');
+    await f.account.register('Diogo', 'diogo@example.invalid', password);
     expect(f.auth.signUp).not.toHaveBeenCalled();
     expect(f.auth.updateUser).toHaveBeenCalledWith(
-      { email: 'diogo@example.invalid', data: { display_name: 'Diogo' } },
+      {
+        email: 'diogo@example.invalid',
+        password,
+        current_password: password,
+        data: { display_name: 'Diogo' },
+      },
       expect.objectContaining({ emailRedirectTo: expect.any(String) }),
     );
     expect(f.account.verification()?.type).toBe('email_change');
-    await expect(f.account.finishPassword(password)).rejects.toThrow('Confirm your email');
+    expect(f.account.isGuest()).toBe(true);
     expect(f.auth.updateUser).toHaveBeenCalledTimes(1);
     await f.account.verifyEmail('123456');
-    expect(f.account.needsPassword()).toBe(true);
-    await f.account.finishPassword(password);
-    expect(f.auth.updateUser).toHaveBeenLastCalledWith({ password });
+    expect(f.account.isAccount()).toBe(true);
+    expect(f.auth.updateUser).toHaveBeenCalledTimes(1);
     expect(f.backend.playerId()).toBe('guest-one');
-    expect(f.account.needsPassword()).toBe(false);
     expect(changed).not.toHaveBeenCalled();
     expect(localStorage.getItem('last-link-resume')).toBe('existing-match');
     expect(JSON.stringify({ ...localStorage, ...sessionStorage })).not.toContain(password);
+    expect(localStorage.getItem('last-link-account-password-user')).toBeNull();
   });
   it('clears pending guest verification when a different identity signs in', async () => {
     const f = fixture(person('guest-one', true));
-    await f.account.register('Diogo', 'diogo@example.invalid');
+    await f.account.register('Diogo', 'diogo@example.invalid', password);
     f.emit(person('another-account'));
     expect(f.account.verification()).toBeNull();
     expect(sessionStorage.getItem('last-link-account-verification')).toBeNull();
@@ -263,6 +272,72 @@ describe('Real account service with an isolated Auth transport', () => {
       'Request a confirmation email first',
     );
     expect(f.auth.verifyOtp).not.toHaveBeenCalled();
+  });
+  it('validates a guest password before requesting any email or Auth mutation', async () => {
+    const f = fixture(person('guest-one', true));
+    for (const value of ['', 'short', 'x'.repeat(129)]) {
+      await expect(f.account.register('Diogo', 'diogo@example.invalid', value)).rejects.toThrow(
+        '8–128',
+      );
+    }
+    expect(f.auth.updateUser).not.toHaveBeenCalled();
+    expect(f.auth.signUp).not.toHaveBeenCalled();
+    expect(f.account.verification()).toBeNull();
+    expect(f.account.busy()).toBe(false);
+  });
+  it('resumes an already-committed guest signup after Auth verifies the same password', async () => {
+    const f = fixture(person('guest-one', true));
+    f.auth.updateUser.mockResolvedValueOnce({
+      data: { user: person('guest-one', true) },
+      error: { code: 'same_password' },
+    });
+    await f.account.register('Diogo', 'diogo@example.invalid', password);
+    expect(f.auth.getUser).toHaveBeenCalledOnce();
+    expect(f.auth.updateUser).toHaveBeenCalledTimes(2);
+    expect(f.auth.updateUser).toHaveBeenLastCalledWith(
+      { email: 'diogo@example.invalid', data: { display_name: 'Diogo' } },
+      expect.objectContaining({ emailRedirectTo: expect.any(String) }),
+    );
+    expect(f.account.verification()?.userId).toBe('guest-one');
+    expect(JSON.stringify({ ...localStorage, ...sessionStorage })).not.toContain(password);
+  });
+  it('never drops a rejected password and retries with an email-only mutation', async () => {
+    const f = fixture(person('guest-one', true));
+    f.auth.updateUser.mockResolvedValueOnce({
+      data: { user: person('guest-one', true) },
+      error: { code: 'current_password_mismatch' },
+    });
+    await expect(f.account.register('Diogo', 'diogo@example.invalid', password)).rejects.toThrow(
+      'registration is already in progress',
+    );
+    expect(f.auth.updateUser).toHaveBeenCalledOnce();
+    expect(f.auth.getUser).not.toHaveBeenCalled();
+    expect(f.account.verification()).toBeNull();
+  });
+  it('does not retry guest signup after the server reports that it is already a registered account', async () => {
+    const f = fixture(person('guest-one', true));
+    f.auth.updateUser.mockResolvedValueOnce({
+      data: { user: person('guest-one', true) },
+      error: { code: 'same_password' },
+    });
+    f.auth.getUser.mockResolvedValueOnce({ data: { user: person('guest-one') }, error: null });
+    await expect(f.account.register('Diogo', 'diogo@example.invalid', password)).rejects.toThrow(
+      'account changed',
+    );
+    expect(f.auth.updateUser).toHaveBeenCalledOnce();
+  });
+  it('restores guest verification after a reload without saving a password or requiring another password step', async () => {
+    const f = fixture(person('guest-one', true));
+    await f.account.register('Diogo', 'diogo@example.invalid', password);
+    const pending = sessionStorage.getItem('last-link-account-verification');
+    TestBed.resetTestingModule();
+    const restored = fixture(person('guest-one', true));
+    expect(sessionStorage.getItem('last-link-account-verification')).toBe(pending);
+    await restored.account.verifyEmail('123456');
+    expect(restored.account.isAccount()).toBe(true);
+    expect(restored.backend.playerId()).toBe('guest-one');
+    expect(restored.auth.updateUser).not.toHaveBeenCalled();
+    expect(JSON.stringify({ ...localStorage, ...sessionStorage })).not.toContain(password);
   });
   it('locks account operations while an already-started guest sign-in finishes', async () => {
     const f = fixture();
@@ -301,10 +376,12 @@ describe('Real account service with an isolated Auth transport', () => {
     expect(f.backend.playerId()).toBe('account-one');
     expect(f.account.busy()).toBe(false);
   });
-  it('does not change another account password if identity changes during server verification', async () => {
+  it('never retries an email update for another identity after a same-password response', async () => {
     const f = fixture(person('guest-one', true));
-    await f.account.register('Diogo', 'diogo@example.invalid');
-    await f.account.verifyEmail('123456');
+    f.auth.updateUser.mockResolvedValueOnce({
+      data: { user: person('guest-one', true) },
+      error: { code: 'same_password' },
+    });
     let finishVerification!: (value: Awaited<ReturnType<typeof f.auth.getUser>>) => void;
     f.auth.getUser.mockImplementation(
       () =>
@@ -312,13 +389,13 @@ describe('Real account service with an isolated Auth transport', () => {
           finishVerification = resolve;
         }),
     );
-    const finishing = f.account.finishPassword(password);
+    const finishing = f.account.register('Diogo', 'diogo@example.invalid', password);
     const rejected = expect(finishing).rejects.toThrow('Your account changed');
     await vi.waitFor(() => expect(f.auth.getUser).toHaveBeenCalledTimes(1));
     f.emit(person('another-account'));
     finishVerification({ data: { user: person('guest-one') }, error: null });
     await rejected;
-    expect(f.auth.updateUser).not.toHaveBeenCalledWith({ password });
+    expect(f.auth.updateUser).toHaveBeenCalledTimes(1);
     expect(f.backend.playerId()).toBe('another-account');
     expect(f.account.busy()).toBe(false);
   });
@@ -359,7 +436,7 @@ describe('Real account service with an isolated Auth transport', () => {
       expect.objectContaining({ type: 'signup', email: 'diogo@example.invalid' }),
     );
     f.emit(person('guest-one', true));
-    await f.account.register('Diogo', 'guest@example.invalid');
+    await f.account.register('Diogo', 'guest@example.invalid', password);
     await f.account.resend();
     expect(f.auth.updateUser).toHaveBeenLastCalledWith(
       { email: 'guest@example.invalid' },

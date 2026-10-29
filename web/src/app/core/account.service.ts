@@ -9,7 +9,6 @@ export interface AccountVerification {
   userId: string | null;
 }
 const verificationKey = 'last-link-account-verification';
-const passwordKey = 'last-link-account-password-user';
 
 export function accountError(error: unknown): string {
   const code = error && typeof error === 'object' && 'code' in error ? String(error.code) : '';
@@ -28,6 +27,12 @@ export function accountError(error: unknown): string {
   if (code === 'email_exists' || code === 'user_already_exists')
     return 'This email could not be linked. Try logging in with it instead.';
   if (code === 'weak_password') return 'Choose a stronger password with at least 8 characters.';
+  if (
+    ['current_password_required', 'current_password_invalid', 'current_password_mismatch'].includes(
+      code,
+    )
+  )
+    return 'A registration is already in progress. Use the password you chose when requesting its confirmation email.';
   if (code === 'anonymous_provider_disabled' || code === 'manual_linking_disabled')
     return 'Guest account registration is unavailable. Please contact the site owner.';
   if (
@@ -53,20 +58,11 @@ export class AccountService implements OnDestroy {
     return typeof name === 'string' && name.trim() ? name.trim() : 'Player';
   });
   readonly verification = signal<AccountVerification | null>(this.readVerification());
-  private readonly passwordUser = signal(localStorage.getItem(passwordKey));
-  readonly needsPassword = computed(() => {
-    const user = this.user();
-    return !!user && this.passwordUser() === user.id && !!user.email_confirmed_at;
-  });
-  private readonly onStorage = (event: StorageEvent) => {
-    if (event.key === passwordKey || event.key === null)
-      this.passwordUser.set(localStorage.getItem(passwordKey));
-  };
   private readonly unsubscribeIdentity = this.backend.onIdentityChange(() =>
     this.clearVerification(),
   );
   constructor() {
-    window.addEventListener('storage', this.onStorage);
+    localStorage.removeItem('last-link-account-password-user');
   }
   initialize(): Promise<void> {
     return this.backend.initialize();
@@ -85,37 +81,55 @@ export class AccountService implements OnDestroy {
     });
   }
 
-  async register(name: string, email: string, password?: string): Promise<void> {
+  async register(name: string, email: string, password: string): Promise<void> {
     await this.backend.withAuth(async () => {
       const displayName = name.trim();
       if (displayName.length < 2 || displayName.length > 24)
         throw Error('Use a name with 2–24 characters.');
       const address = email.trim();
+      this.validatePassword(password);
       const user = this.user();
       const redirect = authRedirectUrl(document.baseURI);
       if (user?.is_anonymous) {
-        // Supabase requires email verification before adding a guest password.
+        // Set the first password and request email verification in one Auth call.
+        // The UUID stays the same; Auth keeps the email unverified until confirmation.
         const { data, error } = await this.backend.client.auth.updateUser(
           {
             email: address,
+            password,
+            current_password: password,
             data: { display_name: displayName },
           },
           { emailRedirectTo: redirect },
         );
-        if (error) throw Error(accountError(error));
-        if (!data.user || data.user.id !== user.id)
+        let updated = data.user;
+        if (error?.code === 'same_password') {
+          // A lost response can leave the first request committed. Auth's
+          // same-password response verifies the supplied password; never replace it.
+          const current = await this.backend.client.auth.getUser();
+          if (current.error) throw Error(accountError(current.error));
+          this.requireIdentity(user.id);
+          if (current.data.user?.id !== user.id || !current.data.user.is_anonymous)
+            throw Error('Your account changed. Check the signed-in account before trying again.');
+          const retry = await this.backend.client.auth.updateUser(
+            { email: address, data: { display_name: displayName } },
+            { emailRedirectTo: redirect },
+          );
+          if (retry.error) throw Error(accountError(retry.error));
+          updated = retry.data.user;
+        } else if (error) throw Error(accountError(error));
+        if (!updated || updated.id !== user.id)
           throw Error('Your guest identity could not be preserved.');
-        this.setPasswordUser(user.id);
         this.requireIdentity(user.id);
-        if (!data.user.email_confirmed_at)
+        if (!updated.email_confirmed_at)
           this.setVerification({ email: address, type: 'email_change', userId: user.id });
+        else this.clearVerification();
         return;
       }
       if (user?.email) throw Error('You are already signed in.');
-      this.validatePassword(password ?? '');
       const { data, error } = await this.backend.client.auth.signUp({
         email: address,
-        password: password!,
+        password,
         options: { data: { display_name: displayName }, emailRedirectTo: redirect },
       });
       if (error) throw Error(accountError(error));
@@ -173,27 +187,6 @@ export class AccountService implements OnDestroy {
     });
   }
 
-  async finishPassword(password: string): Promise<void> {
-    this.validatePassword(password);
-    await this.backend.withAuth(async () => {
-      const id = this.user()?.id;
-      if (!id || this.passwordUser() !== id)
-        throw Error('Start account registration from your guest session.');
-      // Verify the email with Auth; client metadata never authorizes this operation.
-      const current = await this.backend.client.auth.getUser();
-      if (current.error) throw Error(accountError(current.error));
-      if (current.data.user?.id !== id || !current.data.user.email_confirmed_at)
-        throw Error('Confirm your email before choosing a password.');
-      this.requireIdentity(id);
-      const { data, error } = await this.backend.client.auth.updateUser({ password });
-      if (error) throw Error(accountError(error));
-      if (!data.user || data.user.id !== id) throw Error('Your account could not be completed.');
-      this.requireIdentity(id);
-      this.setPasswordUser(null);
-      this.clearVerification();
-    });
-  }
-
   async logout(): Promise<void> {
     await this.backend.withAuth(async () => {
       if (!this.isAccount())
@@ -233,11 +226,6 @@ export class AccountService implements OnDestroy {
       return null;
     }
   }
-  private setPasswordUser(id: string | null): void {
-    this.passwordUser.set(id);
-    if (id) localStorage.setItem(passwordKey, id);
-    else localStorage.removeItem(passwordKey);
-  }
   private validatePassword(password: string): void {
     if (password.length < 8 || password.length > 128)
       throw Error('Use a password with 8–128 characters.');
@@ -249,7 +237,6 @@ export class AccountService implements OnDestroy {
       );
   }
   ngOnDestroy(): void {
-    window.removeEventListener('storage', this.onStorage);
     this.unsubscribeIdentity();
   }
 }
