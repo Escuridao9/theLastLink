@@ -1,12 +1,13 @@
 import { REQUEST_ID } from '../shared/request-id';
 import { UiLinks } from '../shared/ui-links.service';
-import { Component, OnInit, OnDestroy, inject, signal, effect } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal, effect, untracked } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatchService } from '../core/match.service';
 import { CatalogueService } from '../core/catalogue.service';
+import { TurnAudioService } from '../core/turn-audio.service';
 import { CATEGORY_LABELS, ROLE_LABELS } from '../core/models';
-import type { Dataset, Game, SharedConnector } from '../core/models';
+import type { Dataset, Game, Turn } from '../core/models';
 import { GameSearchComponent } from '../shared/game-search.component';
 import { TurnClockComponent } from '../shared/turn-clock.component';
 @Component({
@@ -19,6 +20,7 @@ export class MatchComponent implements OnInit, OnDestroy {
   readonly links = inject(UiLinks);
   private readonly requestId = inject(REQUEST_ID);
   readonly game = inject(MatchService);
+  readonly turnAudio = inject(TurnAudioService);
   readonly categories = CATEGORY_LABELS;
   readonly labels = ROLE_LABELS;
   private readonly catalogue = inject(CatalogueService);
@@ -29,7 +31,6 @@ export class MatchComponent implements OnInit, OnDestroy {
   readonly busy = signal(false);
   readonly feedback = signal('');
   readonly error = signal('');
-  readonly responseConnectors = signal<SharedConnector[]>([]);
   private subscription?: Subscription;
   private catalogueId = '';
   private selectionTurn = '';
@@ -41,11 +42,16 @@ export class MatchComponent implements OnInit, OnDestroy {
     if (turn !== this.selectionTurn) {
       this.selectionTurn = turn;
       this.selected.set(null);
+      this.error.set('');
+      this.feedback.set('');
     }
     localStorage.setItem('last-link-resume', match.id);
     if (match.status === 'finished') {
       void this.router.navigate([this.links.to('/results'), match.id], { replaceUrl: true });
       return;
+    }
+    if (match.activePlayer === this.game.backend.playerId()) {
+      untracked(() => this.turnAudio.notifyTurn(turn));
     }
     if (this.catalogueId !== match.catalogueId) {
       this.catalogueId = match.catalogueId;
@@ -58,7 +64,16 @@ export class MatchComponent implements OnInit, OnDestroy {
     }
   });
   get myTurn(): boolean {
-    return this.game.match()?.activePlayer === this.game.backend.playerId();
+    const match = this.game.match();
+    return match?.status === 'active' && match.activePlayer === this.game.backend.playerId();
+  }
+  get activePlayerName(): string {
+    return this.player(this.game.match()?.activePlayer ?? null);
+  }
+  /** Accepted turns come from the shared server snapshot, including after reconnecting. */
+  get lastConnection(): Turn | undefined {
+    const match = this.game.match();
+    return match?.turns.find((turn) => turn.index > 0 && turn.index === match.state.version);
   }
   get current(): Game | undefined {
     return this.dataset()?.games.find((g) => g.id === this.game.match()?.state.currentGameId);
@@ -83,7 +98,6 @@ export class MatchComponent implements OnInit, OnDestroy {
   connector(id: string): string {
     return (
       this.dataset()?.entities[id]?.name ??
-      this.responseConnectors().find((c) => c.entityId === id)?.name ??
       this.game
         .match()
         ?.turns.flatMap((t) => t.connectors)
@@ -117,14 +131,12 @@ export class MatchComponent implements OnInit, OnDestroy {
     this.busy.set(true);
     this.error.set('');
     this.feedback.set('');
-    this.responseConnectors.set([]);
     try {
       const response = await this.game.send('submit', payload, this.pending.id);
       sessionStorage.removeItem(key);
       this.pending = undefined;
       if (response.ok) {
         this.selected.set(null);
-        this.responseConnectors.set(response.connectors ?? []);
         this.feedback.set('Connection accepted. The pressure is on your opponent.');
       } else {
         const messages: Record<string, string> = {
@@ -139,7 +151,6 @@ export class MatchComponent implements OnInit, OnDestroy {
           match_finished: 'The match has ended.',
         };
         this.error.set(messages[response.reason ?? ''] ?? 'The answer was rejected.');
-        this.responseConnectors.set(response.connectors ?? []);
       }
     } catch (e) {
       this.error.set(`${(e as Error).message} Retry the same answer to safely check its outcome.`);

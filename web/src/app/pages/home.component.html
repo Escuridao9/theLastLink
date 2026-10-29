@@ -3,7 +3,8 @@
     <p class="ll-kicker"><span></span> A FRIENDLY GAME. UNTIL IT ISN’T.</p>
     <h1 id="home-title">Your brain.<br />Their <em>problem.</em></h1>
     <p class="ll-intro">
-      Connect the titles. Pass the pressure.<br />Twenty seconds to keep your one life.
+      Take turns linking movies, games or football clubs through shared connections.
+      You have <strong>20 seconds</strong> to answer. Make your opponent run out of time to win.
     </p>
     <a [routerLink]="links.to('/play')" class="ll-play-button"
       >Let’s play <span aria-hidden="true">↗</span></a
@@ -74,9 +75,9 @@
     >
     <a class="ll-category ll-football" [routerLink]="links.to('/rooms')" [queryParams]="{ category: 'football' }">
       <div class="ll-category-top"><span class="ll-category-icon" aria-hidden="true">⚽</span><small>READY WHEN YOU ARE</small></div>
-      <h3>Football <span aria-hidden="true">↗</span></h3>
+      <h3>Football Clubs <span aria-hidden="true">↗</span></h3>
       <p>Your transfer knowledge finally has a purpose.</p>
-      <span class="ll-category-foot">Senior players · Head managers · Worldwide clubs</span>
+      <span class="ll-category-foot">Senior players · Head managers</span>
     </a>
     <div class="ll-category ll-music" aria-label="Music, coming soon">
       <div class="ll-category-top">
@@ -95,31 +96,33 @@
       Easy to learn.<br />
       Hard to get out of.
     </h2>
-    <p>One life. Make it count.</p>
+    <p>Two players. One chain. Run out of time and you lose.</p>
   </div>
   <ol>
     <li>
       <span>01</span>
       <div>
-        <h3>Find the connection.</h3>
-        <p>Name a new title that shares an eligible credit with the current one.</p>
+        <h3>Pick an arena. Invite a friend.</h3>
+        <p>Choose Movies, Games or Football Clubs, then share your private room code. The server picks the opening entry.</p>
       </div>
     </li>
     <li>
       <span>02</span>
       <div>
-        <h3>Watch the shared limits.</h3>
+        <h3>Make a link in 20 seconds.</h3>
         <p>
-          Every shared connector counts. Three uses each, across both players. An exhausted one
-          blocks the move.
+          Answer with an unplayed entry in the same category. Movies share cast or eligible crew;
+          games share developers, composers, voice actors or characters; clubs share players or managers.
+          A valid answer starts your opponent’s 20 seconds. Invalid? Keep trying on the same clock.
         </p>
       </div>
     </li>
     <li>
       <span>03</span>
       <div>
-        <h3>Leave them thinking.</h3>
-        <p>A valid answer passes the 20-second clock. Invalid? Retry. No repeats. Traps welcome.</p>
+        <h3>Use your links. Outlast your opponent.</h3>
+        <p>Every shared connector counts, with three uses each across both players. Any exhausted connector blocks the move.
+          No repeats. Traps welcome. Whoever runs out of time loses.</p>
       </div>
     </li>
   </ol>

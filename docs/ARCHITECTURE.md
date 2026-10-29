@@ -28,6 +28,8 @@ PostgreSQL enforces room membership, host permissions, two players, immutable ca
 
 `MatchService` watches the relevant `game_rooms` or `matches` row. Realtime notifications trigger authorized snapshot reads. Polling, reconnect/visibility events and subscription readiness also refresh snapshots. Revisions reject stale state. Stopping a watch releases channels, timers and listeners and invalidates in-flight responses.
 
+The match view derives the last accepted connection and usage from that shared snapshot, so both players see it after a move or reconnect. Rejected submissions show separate local feedback without replacing accepted connections. Only the active player sees answer controls. `TurnAudioService` optionally synthesizes one cue per own turn after browser interaction; its mute preference is local, repeated snapshots do not replay a cue, and audio never affects gameplay commands or deadlines.
+
 The clock displays the server deadline with a clock offset. Each accepted answer starts an exact 20-second turn for the other player. `pg_cron` independently expires due matches, including when both browsers are closed. RLS restricts private reads; browser roles cannot write gameplay tables directly.
 
 ## Categories, accounts and rematches

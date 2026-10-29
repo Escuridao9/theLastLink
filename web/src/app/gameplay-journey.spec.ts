@@ -275,7 +275,7 @@ describe('Routed player journey', () => {
   it('navigates Home to Category, Room, Lobby, Match, and Result with normal routes', async () => {
     const { state, finish } = fixture();
     const harness = await RouterTestingHarness.create('/');
-    expect(harness.routeNativeElement?.textContent).toContain('Make it count');
+    expect(harness.routeNativeElement?.querySelector('#home-title')?.textContent).toContain('Your brain');
     await harness.navigateByUrl('/play');
     expect(harness.routeNativeElement?.querySelector<HTMLButtonElement>('.ll-choice-music button')?.disabled).toBe(true);
     const setup = await harness.navigateByUrl('/rooms?category=games', RoomsComponent);

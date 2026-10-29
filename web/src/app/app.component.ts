@@ -3,6 +3,7 @@ import { Component, afterEveryRender, inject, signal } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { ConfigService } from './core/config.service';
 import { AccountLinkComponent } from './shared/account-link.component';
+import { TurnAudioService } from './core/turn-audio.service';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -16,6 +17,8 @@ export class App {
   readonly links = inject(UiLinks);
   readonly config = inject(ConfigService);
   readonly resume = signal(this.readResume());
+  // Listen for a user gesture before the first match needs to play a turn cue.
+  private readonly turnAudio = inject(TurnAudioService);
   constructor() {
     // Routed match views update storage; refresh navigation after rendering.
     afterEveryRender(() => this.resume.set(this.readResume()));

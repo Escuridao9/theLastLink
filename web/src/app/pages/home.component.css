@@ -59,6 +59,10 @@ app-home .ll-intro {
   line-height: 1.55;
   color: #beb5bc;
   margin-bottom: 28px;
+  max-width: 480px;
+}
+app-home .ll-intro strong {
+  color: var(--ll-cream);
 }
 app-home .ll-play-button {
   display: inline-flex;
@@ -370,6 +374,8 @@ app-home .ll-rules-heading h2 {
 app-home .ll-rules-heading > p:last-child {
   font-size: 12px;
   color: var(--ll-coral);
+  line-height: 1.6;
+  max-width: 250px;
 }
 app-home .ll-quick-rules ol {
   padding: 0;

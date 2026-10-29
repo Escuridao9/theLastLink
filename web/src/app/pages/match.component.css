@@ -27,20 +27,45 @@ app-match .ll-match-meta b {
   color: #746575;
   margin: 0 10px;
 }
-app-match .ll-match-connection {
-  font-size: 10px;
+app-match .ll-match-tools {
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
 }
-app-match .ll-match-connection > i {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #b6c8a5;
+app-match .ll-match-connection {
+  font-size: 11px;
+  color: #edcf97;
 }
 app-match .ll-room-code {
-  color: #8e7e8d;
+  color: #b9acba;
+  font-size: 10px;
+}
+app-match .ll-sound-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 8px 11px;
+  border: 1px solid #77677b;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ll-cream);
+  font: inherit;
+  font-size: 11px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+app-match .ll-sound-toggle:hover {
+  background: #3a2c40;
+}
+app-match .ll-sound-toggle:focus-visible {
+  outline: 3px solid var(--ll-lilac);
+  outline-offset: 3px;
+}
+app-match .ll-sound-toggle[aria-pressed='true'] > span {
+  color: var(--ll-lilac);
 }
 app-match .ll-duel-score {
   display: grid;
@@ -57,6 +82,8 @@ app-match .ll-duelist {
   align-items: center;
   gap: 13px;
   min-width: 0;
+  padding: 8px;
+  border-bottom: 3px solid transparent;
 }
 app-match .ll-player-avatar {
   display: grid;
@@ -95,22 +122,29 @@ app-match .ll-duelist > div > span {
 app-match .ll-on-clock .ll-player-avatar {
   background: var(--ll-coral);
   color: #241721;
+  outline: 2px solid var(--ll-coral);
+  outline-offset: 3px;
+}
+app-match .ll-on-clock {
+  border-bottom-color: var(--ll-coral);
 }
 app-match .ll-on-clock > div > span {
   color: var(--ll-coral);
-}
-app-match .ll-player-life {
-  color: var(--ll-coral);
-  font-size: 17px;
-  margin-left: 12px;
+  font-weight: 800;
+  font-size: 10px;
 }
 app-match .ll-rival {
   flex-direction: row-reverse;
   text-align: right;
 }
-app-match .ll-rival .ll-player-life {
-  margin-right: 12px;
-  margin-left: 0;
+app-match .ll-rival.ll-on-clock {
+  border-bottom-color: var(--ll-lilac);
+}
+app-match .ll-rival.ll-on-clock .ll-player-avatar {
+  background: var(--ll-lilac);
+  outline-color: var(--ll-lilac);
+}
+app-match .ll-rival.ll-on-clock > div > span {
   color: var(--ll-lilac);
 }
 app-match .ll-score-middle {
@@ -156,12 +190,15 @@ app-match .ll-field-top {
   gap: 15px;
 }
 app-match .ll-turn-label {
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: 1px;
   display: flex;
   align-items: center;
   gap: 7px;
+  text-transform: uppercase;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 app-match .ll-turn-label i {
   height: 6px;
@@ -173,6 +210,7 @@ app-match .ll-format {
   font-size: 9px;
   letter-spacing: 1px;
   color: #867a7c;
+  flex-shrink: 0;
 }
 app-match .ll-current-title {
   display: flex;
@@ -224,6 +262,32 @@ app-match .ll-answer-form {
   align-items: flex-start;
   gap: 12px;
   margin-top: 24px;
+}
+app-match .ll-waiting-turn {
+  display: flex;
+  gap: 13px;
+  align-items: center;
+  min-height: 78px;
+  margin-top: 18px;
+  padding: 16px;
+  border-left: 3px solid var(--ll-lilac);
+  border-radius: 6px;
+  background: #332638;
+}
+app-match .ll-waiting-turn > span {
+  color: var(--ll-lilac);
+  font-size: 28px;
+}
+app-match .ll-waiting-turn strong {
+  color: var(--ll-cream);
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+app-match .ll-waiting-turn p {
+  margin: 5px 0 0;
+  color: #c1b3c4;
+  font-size: 12px;
+  line-height: 1.5;
 }
 app-match .ll-answer-form > app-game-search {
   flex: 1;
@@ -288,6 +352,61 @@ app-match .ll-response-connectors {
   gap: 7px;
   flex-wrap: wrap;
   margin-top: 10px;
+  max-height: 176px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  align-items: flex-start;
+  align-content: flex-start;
+  padding-right: 4px;
+}
+app-match .ll-response-connectors:focus-visible {
+  outline: 2px solid var(--ll-lilac);
+  outline-offset: 4px;
+}
+app-match .ll-last-connection {
+  margin-top: 18px;
+  padding: 14px 0;
+  border-top: 1px solid #59465e;
+  border-bottom: 1px solid #59465e;
+}
+app-match .ll-last-connection-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+app-match .ll-last-connection-heading h2 {
+  margin: 0;
+  color: var(--ll-lilac);
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+app-match .ll-last-connection-heading h2 small {
+  font-size: inherit;
+  color: #c1b3c4;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+app-match .ll-last-connection-heading > span {
+  color: #c1b3c4;
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+app-match .ll-link-path {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 8px;
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+app-match .ll-link-path > span {
+  color: #c1b3c4;
+}
+app-match .ll-link-path strong {
+  color: var(--ll-cream);
 }
 app-match .ll-response-connectors > span {
   padding: 6px 9px;
@@ -295,6 +414,8 @@ app-match .ll-response-connectors > span {
   border-radius: 4px;
   font-size: 10px;
   line-height: 1.4;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 app-match .ll-response-connectors b {
   margin-left: 5px;
@@ -575,9 +696,16 @@ app-match .ll-history-entry .ll-opening-label {
     padding: 12px 0 10px;
     font-size: 11px;
     gap: 12px;
+    align-items: center;
   }
   app-match .ll-match-connection {
-    font-size: 8px;
+    font-size: 10px;
+  }
+  app-match .ll-match-tools {
+    gap: 6px;
+  }
+  app-match .ll-sound-toggle {
+    padding: 7px 9px;
   }
   app-match .ll-room-code {
     display: none;
@@ -595,6 +723,7 @@ app-match .ll-history-entry .ll-opening-label {
   }
   app-match .ll-duelist {
     gap: 7px;
+    padding: 6px 3px;
   }
   app-match .ll-duelist strong {
     font-size: 13px;
@@ -607,8 +736,8 @@ app-match .ll-history-entry .ll-opening-label {
     letter-spacing: 0.2px;
     margin-top: 3px;
   }
-  app-match .ll-player-life {
-    display: none;
+  app-match .ll-on-clock > div > span {
+    font-size: 8px;
   }
   app-match .ll-score-middle strong {
     font-size: 22px;
@@ -629,7 +758,7 @@ app-match .ll-history-entry .ll-opening-label {
     border-top-width: 4px;
   }
   app-match .ll-turn-label {
-    font-size: 8px;
+    font-size: 12px;
     letter-spacing: 0.8px;
   }
   app-match .ll-format {
@@ -695,6 +824,22 @@ app-match .ll-history-entry .ll-opening-label {
   }
   app-match .ll-response-connectors {
     margin-top: 10px;
+    max-height: 128px;
+  }
+  app-match .ll-last-connection {
+    margin-top: 12px;
+    padding: 12px 0;
+  }
+  app-match .ll-waiting-turn {
+    margin-top: 12px;
+    min-height: 72px;
+    padding: 12px;
+  }
+  app-match .ll-waiting-turn strong {
+    font-size: 14px;
+  }
+  app-match .ll-waiting-turn p {
+    font-size: 11px;
   }
   app-match .ll-credit-rail {
     grid-column: 1;

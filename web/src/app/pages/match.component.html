@@ -2,10 +2,18 @@
   <section class="ll-match" aria-label="Active match">
     <div class="ll-match-meta">
       <span>{{ categories[match.category] }} <b>/</b> Sudden Death</span
-      ><span class="ll-match-connection"
-        ><i></i>{{ game.connection()
-        }}<span class="ll-room-code"> · {{ match.room.code }}</span></span
       >
+      <div class="ll-match-tools">
+        @if (game.connection() !== 'Live' && game.connection() !== 'Local example') {
+          <span class="ll-match-connection" role="status">{{ game.connection() }}</span>
+        }
+        <span class="ll-room-code">{{ match.room.code }}</span>
+        <button class="ll-sound-toggle" type="button" aria-label="Turn sounds"
+          [attr.aria-pressed]="turnAudio.enabled()" (click)="turnAudio.toggle()">
+          <span aria-hidden="true">{{ turnAudio.enabled() ? '♫' : '♪' }}</span>
+          Sound {{ turnAudio.enabled() ? 'on' : 'off' }}
+        </button>
+      </div>
     </div>
     <div class="ll-duel-score">
       @for (player of match.room.players; track player.id; let i = $index) {
@@ -26,10 +34,11 @@
               >{{ player.name }}
               <small>{{ player.id === game.backend.playerId() ? '(you)' : '' }}</small></strong
             ><span>{{
-              player.id === match.activePlayer ? 'ON THE CLOCK' : 'WAITING IN THE WINGS'
+              player.id === match.activePlayer
+                ? player.id === game.backend.playerId() ? 'YOUR TURN' : 'PLAYING NOW'
+                : 'UP NEXT'
             }}</span>
           </div>
-          <span class="ll-player-life" aria-label="One life">♥</span>
         </div>
       }
     </div>
@@ -37,7 +46,9 @@
       <section class="ll-play-zone">
         <div class="ll-play-field" [class.ll-opponent-turn]="!myTurn">
           <div class="ll-field-top">
-            <span class="ll-turn-label"><i></i>{{ myTurn ? 'YOUR TURN' : 'OPPONENT’S TURN' }}</span
+            <span class="ll-turn-label" role="status" aria-atomic="true"><i aria-hidden="true"></i>{{
+              myTurn ? 'YOUR TURN' : activePlayerName + '’S TURN'
+            }}</span
             ><span class="ll-format"
               >{{ match.category === 'movies' ? 'MOVIE' : match.category === 'football' ? 'CLUB' : 'GAME' }}
               {{ match.state.history.length.toString().padStart(2, '0') }}</span
@@ -45,7 +56,7 @@
           </div>
           <div class="ll-current-title">
             <div>
-              <p>Find a connection to</p>
+              <p>{{ myTurn ? 'Find your next connection to' : activePlayerName + ' is finding a connection to' }}</p>
               <h1>{{ current?.title || 'Loading title…' }}</h1>
               <span class="ll-entry-year">{{ current?.releaseYear }}</span>
             </div>
@@ -62,6 +73,32 @@
             ><span>One life. Make it count.</span>
           </div>
         </div>
+        @if (lastConnection; as turn) {
+          <section class="ll-last-connection" aria-labelledby="last-connection-title">
+            <div class="ll-last-connection-heading">
+              <h2 id="last-connection-title">Last accepted link <small>· {{ turn.connectors.length }} shared</small></h2>
+              <span>{{ player(turn.playerId) }}</span>
+            </div>
+            <p class="ll-link-path">
+              <span>{{ title(match.state.history[turn.index - 1]) }}</span>
+              <span aria-hidden="true">→</span>
+              <strong>{{ title(turn.entryId) }}</strong>
+            </p>
+            <div class="ll-response-connectors" role="region" tabindex="0"
+              aria-label="Connectors used in the last accepted answer">
+              @for (c of turn.connectors; track c.entityId) {
+                <span [class.ll-credit-out]="(match.state.usage[c.entityId] || 0) >= 3"
+                  >{{ connector(c.entityId) }} <b>{{ match.state.usage[c.entityId] || 0 }}/3</b>
+                  <small>{{ roleText(c.fromTypes ?? c.types) }}
+                    @if (c.toTypes && roleText(c.toTypes) !== roleText(c.fromTypes ?? c.types)) {
+                      → {{ roleText(c.toTypes) }}
+                    }
+                  </small>
+                </span>
+              }
+            </div>
+          </section>
+        }
         @if (game.error()) {
           <p class="ll-answer-notice ll-rejected" role="alert">
             {{ game.error() }}. Reconnecting automatically; the server timer continues.
@@ -75,47 +112,39 @@
             <b>GOOD LINK.</b> {{ feedback() }}
           </p>
         }
-        @if (responseConnectors().length) {
-          <div class="ll-response-connectors">
-            @for (c of responseConnectors(); track c.entityId) {
-              <span [class.ll-credit-out]="(match.state.usage[c.entityId] || 0) >= 3"
-                >{{ connector(c.entityId) }} <b>{{ match.state.usage[c.entityId] || 0 }}/3</b
-                ><small
-                  >{{ roleText(c.fromTypes ?? c.types) }}
-                  @if (c.toTypes && roleText(c.toTypes) !== roleText(c.fromTypes ?? c.types)) {
-                    → {{ roleText(c.toTypes) }}
-                  }
-                </small></span
-              >
+        @if (myTurn) {
+          @if (dataset(); as data) {
+            @for (version of [match.state.version]; track version) {
+              <form class="ll-answer-form" (submit)="$event.preventDefault(); submit()">
+                <app-game-search
+                  [category]="match.category"
+                  [games]="data.games"
+                  [played]="match.state.history"
+                  [disabled]="!myTurn || busy()"
+                  (selected)="selected.set($event)"
+                /><button
+                  class="ll-lock-answer"
+                  type="submit"
+                  [disabled]="!myTurn || !selected() || busy()"
+                >
+                  {{ busy() ? 'Checking…' : 'Lock it in' }} <span aria-hidden="true">↗</span>
+                </button>
+              </form>
             }
+          } @else {
+            <p class="ll-answer-hint" role="status">Loading the answer catalogue…</p>
+          }
+        } @else {
+          <div class="ll-waiting-turn">
+            <span aria-hidden="true">↳</span>
+            <div><strong>{{ activePlayerName }} is thinking…</strong>
+              <p>You’re up next. Your 20 seconds start after their accepted answer.</p>
+            </div>
           </div>
         }
-        @if (dataset(); as data) {
-          @for (version of [match.state.version]; track version) {
-            <form class="ll-answer-form" (submit)="$event.preventDefault(); submit()">
-              <app-game-search
-                [category]="match.category"
-                [games]="data.games"
-                [played]="match.state.history"
-                [disabled]="!myTurn || busy()"
-                (selected)="selected.set($event)"
-              /><button
-                class="ll-lock-answer"
-                type="submit"
-                [disabled]="!myTurn || !selected() || busy()"
-              >
-                {{ busy() ? 'Checking…' : 'Lock it in' }} <span aria-hidden="true">↗</span>
-              </button>
-            </form>
-          }
+        @if (myTurn) {
+          <p class="ll-answer-hint">Invalid answer? Keep going. The clock doesn’t reset.</p>
         }
-        <p class="ll-answer-hint">
-          {{
-            myTurn
-              ? 'Invalid answer? Keep going. The clock doesn’t reset.'
-              : 'Stay sharp. You’re up next.'
-          }}
-        </p>
       </section>
       <aside class="ll-credit-rail" aria-labelledby="credits-title">
         <div class="ll-rail-heading">
