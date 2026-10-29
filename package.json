@@ -7,17 +7,26 @@
     "node": ">=24.0.0"
   },
   "scripts": {
+    "setup": "npm ci && npm --prefix web ci && npm run catalogue:build",
+    "dev": "npm --prefix web start --",
+    "build": "npm --prefix web run build --",
     "test": "node --test test/*.test.ts",
+    "pretest": "npm run catalogue:build",
     "typecheck": "tsc --noEmit",
     "typecheck:edge": "node scripts/check-edge.mjs",
-    "verify": "npm run typecheck && npm run typecheck:edge && npm test",
-    "catalogue:build": "node scripts/build-playable.ts && node scripts/build-football.ts && node scripts/build-rematch-preview.ts",
+    "verify:core": "npm run typecheck && npm run typecheck:edge && npm run test:edge && npm test",
+    "verify:web": "npm --prefix web run typecheck && npm --prefix web test -- --watch=false && npm run build -- --base-href=/theLastLink/",
+    "verify": "npm run verify:core && npm run verify:web",
+    "catalogue:build": "node scripts/build-web-assets.ts",
+    "games:prepare": "node scripts/build-playable.ts",
     "football:collect": "node scripts/football/collect-wikidata.mjs",
     "football:prepare": "node scripts/football/prepare-catalogue.ts",
-    "pretest": "npm run catalogue:build"
+    "football:publication": "node scripts/build-football.ts",
+    "test:edge": "node scripts/check-edge.mjs test"
   },
   "devDependencies": {
     "@electric-sql/pglite": "0.5.10",
+    "@supabase/server": "1.9.2",
     "@supabase/supabase-js": "2.118.0",
     "@types/node": "25.9.5",
     "typescript": "5.9.3"

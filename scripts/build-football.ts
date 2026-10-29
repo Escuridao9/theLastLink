@@ -3,13 +3,9 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 
 import { createHash } from 'node:crypto';
 import { FootballConnectionEngine } from '../src/football/engine.ts';
 import { MovieConnectionEngine } from '../src/movies/engine.ts';
-import type {
-  FootballDataset,
-  FootballClub,
-  FootballRole,
-  CareerEvidence,
-} from '../src/football/types.ts';
+import type { FootballDataset } from '../src/football/types.ts';
 import type { MovieDataset } from '../src/movies/types.ts';
+import { footballPresentation } from './catalogue-views.ts';
 const root = new URL('../', import.meta.url),
   id = 'football-clubs-2026-10-28-v1';
 const source = new URL(`data/football/published/${id}/catalogue.json`, root);
@@ -27,61 +23,7 @@ if (data.datasetId !== id || sha(raw) !== manifest.sha256)
 const engine = new FootballConnectionEngine(data),
   component = new Set(engine.connectedComponents()[0]);
 const roles = ['player', 'manager'] as const;
-const uiEvidence = (e: CareerEvidence, role: FootballRole, person: string) => ({
-  property: e.property,
-  statementId: e.statementId,
-  sourceUrl: data.entities[person]!.sourceUrl,
-  job: `${role === 'player' ? 'Senior player' : 'Head manager'} · ${e.start?.slice(0, 4) ?? '?'}–${e.end?.slice(0, 4) ?? '?'}`,
-});
-const view = (c: FootballClub, index: number) => ({
-  id: c.id,
-  category: 'football' as const,
-  title: c.title,
-  aliases: c.aliases,
-  countries: [c.country],
-  region: c.region,
-  ...(c.foundedYear ? { foundedYear: c.foundedYear } : {}),
-  externalIds: c.externalIds,
-  detailShard: index,
-  credits: { player: [], manager: [] },
-});
-const games = data.clubs.map(view);
-const snapshot = {
-  datasetId: id,
-  category: 'football',
-  sourceDate: data.sourceDate,
-  games,
-  entities: {},
-};
-function write(path: string, value: unknown) {
-  const url = new URL(path, root);
-  mkdirSync(new URL('.', url), { recursive: true });
-  writeFileSync(url, JSON.stringify(value) + '\n');
-}
-write('web/public/football-index-v1.json', snapshot);
-for (const [index, club] of data.clubs.entries()) {
-  const people = Object.fromEntries(
-    roles.flatMap((role) => club.credits[role].map((c) => [c.entityId, data.entities[c.entityId]])),
-  );
-  const credits = Object.fromEntries(
-    roles.map((role) => [
-      role,
-      club.credits[role].map((c) => ({
-        entityId: c.entityId,
-        sourceCredits: c.sourceCredits.map((e) => uiEvidence(e, role, c.entityId)),
-      })),
-    ]),
-  );
-  write(`web/public/football/${id}/credits-${index}.json`, {
-    [club.id]: {
-      ...games[index],
-      credits,
-      people,
-      coverage: club.coverage,
-      provenance: club.provenance,
-    },
-  });
-}
+const { snapshot, uiEvidence } = footballPresentation(data);
 interface Pool {
   poolId: string;
   catalogueId: string;
@@ -109,58 +51,6 @@ for (const pool of pools) {
   )
     throw Error('Opening pool contains an unknown, duplicate or unplayable entry.');
 }
-write(
-  'web/public/opening-pools-v1.json',
-  Object.fromEntries(
-    pools.map((p) => [
-      p.catalogueId,
-      [{ mode: p.mode, label: p.label, pool_id: p.poolId, entries: p.entries.length }],
-    ]),
-  ),
-);
-
-// The preview is populated with actual legal source-backed moves, while player state stays mocked.
-const history = ['Q18656', 'Q8682', 'Q483020', 'Q7156', 'Q1543', 'Q9616', 'Q1130849', 'Q9617'].map(
-  (q) => 'wikidata:club:' + q,
-);
-let state = engine.createMatch(history[0]!);
-const named = (connectors: ReturnType<typeof engine.sharedConnectors>) =>
-  connectors.map((c) => ({ ...c, name: data.entities[c.entityId]!.name }));
-const turns = [
-  {
-    index: 0,
-    playerId: null as string | null,
-    entryId: history[0]!,
-    connectors: [] as ReturnType<typeof named>,
-    acceptedAt: '2026-10-28T10:00:00.000Z',
-  },
-];
-for (const [offset, entryId] of history.slice(1).entries()) {
-  const result = engine.applyMove(state, entryId);
-  if (!result.ok) throw Error('Invalid Football preview history: ' + result.reason);
-  state = result.state;
-  turns.push({
-    index: state.version,
-    playerId: state.version % 2 ? 'preview-alex' : 'preview-diogo',
-    entryId,
-    connectors: named(result.connectors),
-    acceptedAt: new Date(Date.parse('2026-10-28T10:00:00Z') + (offset + 1) * 7000).toISOString(),
-  });
-}
-write('web/public/design-review/football-fixture.json', { state, turns });
-const receiptsPath = new URL('web/public/design-review/move-receipts.json', root);
-const receipts = JSON.parse(readFileSync(receiptsPath, 'utf8'));
-receipts.football = {
-  version: state.version,
-  moves: Object.fromEntries(
-    data.clubs.map((c) => {
-      const result = engine.applyMove(state, c.id);
-      return [c.id, { ...result, connectors: named(result.connectors) }];
-    }),
-  ),
-};
-writeFileSync(receiptsPath, JSON.stringify(receipts) + '\n');
-
 const literal = (value: string) => "'" + value.replaceAll("'", "''") + "'";
 function migration(name: string, sql: string) {
   const path = new URL('supabase/migrations/' + name, root);
@@ -283,10 +173,6 @@ console.log(
       dataChunks: chunkIndex,
       maxMigrationBytes: maxMigration,
       relationSignature,
-      previewHistory: history.length,
-      previewExhausted: Object.entries(state.usage)
-        .filter(([, n]) => n === 3)
-        .map(([id]) => data.entities[id]!.name),
     },
     null,
     2,

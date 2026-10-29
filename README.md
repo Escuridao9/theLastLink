@@ -2,157 +2,67 @@
 
 **One life. Make it count.**
 
-A competitive connection game built with Angular, TypeScript and Supabase. Challenge a friend in a private one-versus-one room, connect the current entry to another, and keep the chain alive before the clock runs out.
-
 [Play The Last Link](https://escuridao9.github.io/theLastLink/)
 
-## Rules
+The Last Link is a competitive connection game built with Angular, TypeScript and Supabase. Two players share a private room and take turns connecting games, movies or football clubs through their eligible credits or people.
 
-- One round of Sudden Death, with a server-authoritative **20-second turn**.
-- Every accepted answer passes the turn to the other player.
-- Invalid answers can be retried while time remains; they do not reset the deadline.
-- Entries cannot repeat, including the opening entry.
-- Each connector has **three uses total across both players**.
-- Every eligible shared connector is consumed on an accepted answer. If **any** shared connector is already exhausted, the entire answer is rejected without changing state.
-- Deliberate traps are allowed. Running out of legal answers does not itself end the match; the deadline or a concession does.
-- The server chooses the first player and opening entry. Each match uses one immutable catalogue version.
+## Features and rules
 
-## Categories and starting options
+- Games, Movies and Football catalogues, with search and credit details.
+- Private rooms, invitations, live lobbies, reconnect/resume, and saved results.
+- Supabase email accounts, email confirmation, and guest registration that preserves the guest identity.
+- One-versus-one Sudden Death with a **20-second server-authoritative turn**. Invalid answers do not reset the deadline.
+- No repeated entries within a match. Every eligible shared connector is consumed; each has three uses shared by both players. Any exhausted connector rejects the entire move.
+- Deliberate traps are allowed; timeout or concession ends the round.
+- Optional Familiar favourites openings for Movies and Football, and mutual rematches in the same room.
 
-| Category | Playable entries | Eligible connections |
-| --- | ---: | --- |
-| Games | 35 | Developers, composers, voice actors and recurring characters; matching eligible roles |
-| Movies | 3,505 | Actors, directors, writers, original score composers and cinematographers; the same person may connect different roles |
-| Football | 90 clubs | Historical senior players and head managers; a player at one club can connect to a manager at another |
-| Music | Coming soon | Unavailable for room creation |
+## Run locally
 
-Football includes curated major senior men's clubs worldwide, with no national, youth or reserve teams. Movie and Football identities are canonical people, with one allowance per person across eligible roles. Names alone never create a connection.
-
-Movies and Football offer **Standard** or **Familiar favourites** during room creation. Standard selects any eligible starter. Familiar favourites selects the first entry randomly from a curated pool: 55 movies or 27 clubs. The full category catalogue remains available for every later answer. These pools are editorial selections, not current popularity rankings or a guarantee of difficulty. Both players see the saved setting in the lobby.
-
-## Rematches
-
-Both players can play again from the results screen without creating another room. Click **Rematch** to request a new round; the other player sees **Accept rematch**. The server starts only after both agree. A pending request can be cancelled and expires after two minutes.
-
-Rematches retain the room code, players, category, published catalogue version and starting option. Each creates a new match ID, zero connector usage, a one-entry history, a randomly chosen first player and a fresh 20-second deadline. The opening differs from the preceding opening whenever another eligible starter exists. Finished results remain saved. All connection rules apply independently to each round.
-
-Setup requires the rematch migration and an updated `match-api` deployment. See [Rematches](docs/REMATCHES.md) for deployment and live verification. The visual review toolbar can simulate an opponent requesting or accepting a rematch.
-
-## Architecture
-
-The Angular application uses standalone components, lazy routes, typed models, Reactive Forms and reusable search, clock and entry components. `CatalogueService` uses typed Angular `HttpClient` observables for published catalogue indexes and credit details. Components subscribe with explicit loading, error and cleanup handling.
-
-Supabase Authentication provides persistent email accounts and anonymous guest identities. Guests can register their current identity, preserving their room membership. Email confirmation, recovery links and production redirect settings are described in [Accounts](docs/ACCOUNTS.md).
-
-Normal multiplayer commands go through `BackendService` to the **`match-api` Edge Function**. It verifies Supabase Auth and forwards the user's token to PostgreSQL's `public.game_command`. PostgreSQL enforces membership, host permissions, the two-player limit, pinned catalogues, turn order, all connection rules, idempotency and deadlines. Browser code never decides whether a move is valid. Database locks serialize competing submissions; the server samples time after acquiring the match lock.
-
-Supabase Realtime delivers room and match changes. The UI restores snapshots after reconnecting. `pg_cron` independently calls `expire_due_matches()` so a timeout can finish a match even when neither player is connected. RLS protects private room and match reads, and browser roles have no direct write privileges on gameplay tables.
-
-Rematch consent is held in a private database table. The public command RPC dispatches rematch requests separately and delegates existing actions to the unchanged private core command. A finished match's synchronization revision signals consent changes to its existing subscribers; its outcome, deadline, history and usage remain intact.
-
-## Structure
-
-| Path | Purpose |
-| --- | --- |
-| `web/` | Angular frontend, local fonts/assets and component/service tests; its own npm package |
-| `web/src/app/core/` | Configuration, accounts, catalogue HTTP and multiplayer synchronization |
-| `web/src/app/pages/` | Home, category selection, catalogues, rooms/lobby, match, results and accounts |
-| `web/src/app/shared/` | Search, turn clock, entry cards and shared UI helpers |
-| `web/src/app/design-review/` | Route-scoped, clearly labelled visual preview fixtures |
-| `src/` | Shared TypeScript rules, search and catalogue tools |
-| `src/movies/`, `src/football/` | Category normalization and person-based connection engines |
-| `data/` | Frozen catalogues, starter-pool manifests, provenance and research audits |
-| `supabase/migrations/` | Ordered schema, authorization and frozen publication migrations |
-| `supabase/functions/` | Authenticated Edge Functions and handler tests |
-| `scripts/` | Configuration, catalogue generation, source collection and live smoke checks |
-| `test/` | Rules, normalization, migration, RLS and configuration tests |
-| `docs/` | Backend setup, integration and feature documentation |
-| `.github/workflows/deploy.yml` | Verification and GitHub Pages deployment |
-
-The root package and `web/package.json` are separate. Install and verify both from the repository root.
-
-## Local development
-
-Requirements: Node.js 24.x, npm and Git. Supabase CLI and Deno are invoked at the pinned versions used by the project scripts.
+Install Node.js 24.x, npm and Git. Run from the repository root:
 
 ```bash
-npm ci
-npm --prefix web ci
+npm run setup
 cp web/.env.example web/.env
 ```
 
-Fill in `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` in `web/.env`. Use your project's public URL and publishable key. Do not commit this file. Enable anonymous sign-ins in Supabase Auth if guest play is required. Configure email and redirects using [ACCOUNTS.md](docs/ACCOUNTS.md).
+Fill in `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` in `web/.env`, then:
 
 ```bash
-npm run catalogue:build
-npm --prefix web start
+npm run dev
 ```
 
-Open the local address printed by Angular. Local development does not deploy anything. Configuration scripts generate ignored frontend configuration files from the environment before Angular starts, tests or builds.
+Open the address Angular prints. A configured Supabase project is required for online play. Without configuration, catalogue browsing and the labelled visual preview remain available. The publishable key is public by design; Auth, database permissions and RLS protect access. Never put private credentials in frontend configuration.
 
-## Backend setup
+See [Setup](docs/SETUP.md) for database, Authentication, email and deployment instructions. The root and `web/` packages have separate lockfiles; `setup` installs both. It also generates browser catalogue assets entirely from the committed local datasets, without contacting data providers or publishing to Supabase.
 
-An existing linked Supabase project can apply pending migrations with:
-
-```bash
-npx --yes supabase@2.121.0 db push --dry-run
-npx --yes supabase@2.121.0 db push
-npx --yes supabase@2.121.0 migration list
-```
-
-Review the dry run before applying it. Do not reset the remote database or rerun recorded migrations. [Football and familiar starter setup](docs/FOOTBALL_SETUP.md) explains the bounded new import and verification queries. Existing Games and Movies publications retain their identities and hashes.
-
-Deploy the authoritative match API separately when it has changed:
-
-```bash
-npx --yes supabase@2.121.0 functions deploy match-api --use-api
-```
-
-The additional `create-room` and `join-room` functions have dedicated handler tests. The current multiplayer interface sends its commands through `match-api`.
-
-## Verification
-
-Run these from the repository root:
+## Verify and build
 
 ```bash
 npm run verify
-npm --prefix web run typecheck
-npm --prefix web test -- --watch=false
-npm --prefix web run build -- --base-href=/theLastLink/
+npm run build -- --base-href=/theLastLink/
 ```
 
-Root verification checks shared TypeScript, the match API and automated Node/PostgreSQL tests. The Angular commands check its TypeScript, component/service/navigation tests and production build. Catalogue builds use frozen local files and do not query third-party data sources.
+`verify` runs shared TypeScript, Edge checks and handler tests, Node/PostgreSQL tests, Angular typechecking and tests, and the production build. `verify:core` and `verify:web` run those groups separately. Builds produce `web/dist/the-last-link/browser/`.
 
-Embedded PostgreSQL tests run the real migrations, RLS policies and game functions, including the complete publication chain. They cannot establish hosted Realtime delivery, separate-connection locking, email delivery or actual Cron scheduling. Run those checks against the owner's configured Supabase project:
+GitHub Actions verifies changes and deploys successful `main` builds to GitHub Pages. Hash routing supports direct links and refreshes under `/theLastLink/`. Backend migrations, Edge Functions and hosted Auth settings are managed separately.
 
-```bash
-node --env-file=web/.env scripts/live-smoke.mjs
-node --env-file=web/.env scripts/live-smoke.mjs --category=movies --opening=familiar
-node --env-file=web/.env scripts/live-smoke.mjs --category=football --opening=familiar
-```
+## Angular assignment coverage
 
-Each live smoke test creates two real guest identities and a test room. It verifies accepted/rejected answers, idempotency, two-client Realtime delivery, session restoration and independent server expiry. See [Client integration](docs/CLIENT_INTEGRATION.md) for manual two-browser checks. Simulations and automated checks do not predict human performance under the timer.
+| Area                       | Example in the application                                                                                                                  |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Components and templates   | Separate routed pages; reusable entry cards, search and turn clock                                                                          |
+| Binding and rendering      | Interpolation, property/event binding, catalogue `[(ngModel)]`, `@if`, `@for`, room-state `@switch`, date/number pipes                      |
+| Parent-child communication | Entry cards, search and clock use `@Input`, `@Output` and `EventEmitter`                                                                    |
+| Services and typed models  | Injectable catalogue/account/backend/match services, interfaces and dependency injection                                                    |
+| HTTP                       | `CatalogueService` uses typed `HttpClient` requests and `Observable`; catalogue components call `subscribe()` and show loading/error states |
+| Router                     | `router-outlet`, `RouterLink`, home, category, catalogue, room, match, result and account views                                             |
+| Reactive Forms             | Room and account `FormGroup`/`FormControl`, validation, field errors and invalid-submission guards                                          |
+| Lifecycle and organisation | `OnInit`, `OnDestroy`, subscription/timer cleanup and separated data/presentation responsibilities                                          |
 
-## Visual preview and real multiplayer
+## Structure, data and preview
 
-`/#/design-review` is an explicitly labelled, local-fixture journey through the actual Angular pages. Its route-scoped services mock players, room commands, match state, timers and account flows. Match histories and answer receipts are checked against the category engines and published data. No preview account or result is sent to Supabase.
+`web/` contains Angular, local fonts and UI tests; `src/` contains the shared rules and typed catalogue tools; `data/` holds frozen datasets and provenance. `supabase/` contains backend migrations/functions, `scripts/` contains build and maintenance tools, and `test/` contains shared/database tests. See [Architecture](docs/ARCHITECTURE.md).
 
-Try `/#/design-review/rooms?category=football` to review room options and `/#/design-review/match/design-review-football-match` for a populated match. The review toolbar can pause the clock and show waiting, error and result states.
+The catalogues contain **35 Games, 3,505 Movies and 90 major senior men's Football clubs**. Games use reviewed Wikidata/Wikipedia assertions; Movies use the TMDB 5000 archive; Football uses Wikidata. Missing credits remain a limitation. Normal play reads published Supabase data; source updates are deliberate maintenance. Read [data terms](DATA_LICENSE.md), [third-party notices](THIRD_PARTY_NOTICES.md) and the [Football audit](docs/FOOTBALL_DATA_REPORT.md). Application source uses the [MIT licence](LICENSE).
 
-Normal `/rooms`, `/match/:id`, `/results/:id` and `/account` routes use the real Supabase services. Mock providers do not replace production providers. Source-backed catalogue browsing has local static assets when multiplayer is unconfigured; that does not create a playable online match.
-
-## Deployment and public configuration
-
-GitHub Pages hosts the Angular frontend. Hash routing supports direct links and refreshes without a custom web server. Asset URLs are relative, and the workflow obtains the production base path from GitHub Pages. For manual builds under this repository path, use `/theLastLink/` with the trailing slash.
-
-Select **GitHub Actions** under repository Settings → Pages. Set `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` under Settings → Secrets and variables → Actions → Variables. The workflow verifies shared code, Edge handlers and Angular, then deploys successful `main` builds. Pull requests verify without deploying. SQL migrations, Edge deployments and Auth dashboard settings are managed separately.
-
-The publishable key is intentionally public. Environment variables configure the frontend; they do not conceal its values. Authentication, RLS and server authorization enforce access. Database passwords, Supabase secret/service-role keys and private mail credentials must never enter frontend configuration, assets or Git history.
-
-## Data and licences
-
-Movies use TMDB data through the 2017 TMDB 5000 archive, with attribution and validation documented in `MOVIES_DATA_REPORT.md`. This is not an exhaustive or current movie database. TMDB's use conditions still apply.
-
-Football uses Wikidata structured data under CC0, collected on 28 October 2026 through the public QLever Wikidata endpoint. The source-backed catalogue retains statement IDs, available career dates and reference hashes. Positive recorded appearances are required for players; ambiguous roles, future appointments and unconfirmed identities are quarantined. Coverage is incomplete, especially for managers. Missing credits can affect both accepted and rejected answers; see [Football data audit](docs/FOOTBALL_DATA_REPORT.md).
-
-Games retain their reviewed credits and provenance. Research datasets remain separate from the playable publication. Local Bricolage Grotesque and Anton font files include their SIL Open Font License files. Data attribution is also visible at `/#/credits`.
+`/#/design-review` renders the real Angular screens with clearly labelled mock players, accounts and match state. These providers are route-scoped. Normal account, room, match and result routes use real Supabase functionality. Automated checks and previews do not predict human performance under the timer.

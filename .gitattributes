@@ -2,3 +2,7 @@
 *.zip binary
 *.ttf binary
 *.ico binary
+# Frozen data publication payloads are generated, not handwritten game logic.
+supabase/migrations/20261027140300_publish_catalogues.sql linguist-generated=true
+supabase/migrations/20261028100100_football_catalogue_metadata.sql linguist-generated=true
+supabase/migrations/202610281002*.sql linguist-generated=true

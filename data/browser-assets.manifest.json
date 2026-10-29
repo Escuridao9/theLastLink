@@ -1,0 +1,659 @@
+{
+  "description": "Expected browser assets derived offline from the frozen published catalogues. Hashes retain the approved catalogue and preview representation.",
+  "sources": {
+    "data/playable/catalogue-v1.json": "ceca471f4d9f6295047a7f6307f83aff3379a86632367d552659316ee855fe5e",
+    "data/movies/published/movies-tmdb-2017-v1/catalogue.json": "2f1f0d402c33d2111641d90a78a99ca4c9f2cac8951c34acaf5fc1ce787624f2",
+    "data/movies/published/movies-tmdb-2017-v1/search-index.json": "0705c1190cd75e0789d63cf593c3f34a5766f9ecd722c61648d3e99a4117a242",
+    "data/football/published/football-clubs-2026-10-28-v1/catalogue.json": "f003dc98c8b4986eb36940fe9c38900d18cac4ac544e35faae275ff24ca3606d",
+    "data/openers/movies-familiar-v1.json": "97b61b8dbbd64ccecd99b0e49b20a6dd33924d619f2a8d873fd33f37bdc35e45",
+    "data/openers/football-familiar-v1.json": "91a2f6bc036486da4a0836fa9aaa58350be0af731c42c31f7ef0ab3bb4f7448b",
+    "web/src/app/design-review/fixture.ts": "338a190a2e3dcf3e3cbf55f4b4d7f1eb6dce6e1fad8963f94fd9ff83cd094ec7",
+    "web/src/app/design-review/games-fixture.ts": "901bbfae4f6a90027ef63cee5bb7f524836dde77361bef72796adcd47127e613"
+  },
+  "files": {
+    "catalogue-v1.json": {
+      "sha256": "ceca471f4d9f6295047a7f6307f83aff3379a86632367d552659316ee855fe5e",
+      "bytes": 349964
+    },
+    "design-review/football-fixture.json": {
+      "sha256": "8f4be8879f687da4b3f1b0fba83b1b97311e3c6996398b872323d27fec44335c",
+      "bytes": 19067
+    },
+    "design-review/move-receipts.json": {
+      "sha256": "a144fbe0e3ce553e52164620f3dcb0dd1a7d3f65b6a86997d89d1f7f3d7432d7",
+      "bytes": 721949
+    },
+    "design-review/rematch-fixtures.json": {
+      "sha256": "a01b7c80823d10a625c4e9599489b62ee660854854b08f86defbc19367199eac",
+      "bytes": 1968194
+    },
+    "football/football-clubs-2026-10-28-v1/credits-0.json": {
+      "sha256": "1f8d01d76454d6fd10fe07b8d20302c95e4861f89dab69b8160cc7558f96c552",
+      "bytes": 252102
+    },
+    "football/football-clubs-2026-10-28-v1/credits-1.json": {
+      "sha256": "1a21fd21d30992ed6f9cb837d05be11bf3a0c78b5dfda5e6aaddce60537226de",
+      "bytes": 224393
+    },
+    "football/football-clubs-2026-10-28-v1/credits-10.json": {
+      "sha256": "398ae83698be56188bf413fc8b292d382c11a5237a27b082f0067a948fafcc5e",
+      "bytes": 177228
+    },
+    "football/football-clubs-2026-10-28-v1/credits-11.json": {
+      "sha256": "2eb9c1ed9ced759c22a81feec407a44a7af93704e0757e085ab2eedbe450ae63",
+      "bytes": 152875
+    },
+    "football/football-clubs-2026-10-28-v1/credits-12.json": {
+      "sha256": "ff807c3d9f2bfb70de3b30906d686e25f53514e4972586ff9a3bdb08397473fb",
+      "bytes": 153298
+    },
+    "football/football-clubs-2026-10-28-v1/credits-13.json": {
+      "sha256": "54ef9c3a8a2abff94dc350121f62a852fd45d0906e69888e93de1274997feda4",
+      "bytes": 168857
+    },
+    "football/football-clubs-2026-10-28-v1/credits-14.json": {
+      "sha256": "767d563eff4276157ec44f57442b1f76e60c863ada710eafc3f938038c658621",
+      "bytes": 133908
+    },
+    "football/football-clubs-2026-10-28-v1/credits-15.json": {
+      "sha256": "2bf31c6b3b910657ee1244eea56223ccba546286efdc60d31220827575518ca3",
+      "bytes": 301178
+    },
+    "football/football-clubs-2026-10-28-v1/credits-16.json": {
+      "sha256": "fc0cb9638f156552396d1be22af7e6de6c188f8bbc7e080a69fe643114343bb5",
+      "bytes": 350587
+    },
+    "football/football-clubs-2026-10-28-v1/credits-17.json": {
+      "sha256": "ccaa1f94944a1cbdb4b3c4286039a461182097b67b7a9484e8aeaed9059c80c9",
+      "bytes": 354290
+    },
+    "football/football-clubs-2026-10-28-v1/credits-18.json": {
+      "sha256": "602ebd52d0f3764d2be43f884dde406c02bf678e9f2bae66690db41ccc477a49",
+      "bytes": 290002
+    },
+    "football/football-clubs-2026-10-28-v1/credits-19.json": {
+      "sha256": "648845ab52d5b143cc1565809df34c817dc8eb2cd158fcbaecc54e4a1ba41d33",
+      "bytes": 304137
+    },
+    "football/football-clubs-2026-10-28-v1/credits-2.json": {
+      "sha256": "513706df72e647f7ef287da55f8dfaa43b1b6bde74f1c5b366867b8293af0099",
+      "bytes": 252433
+    },
+    "football/football-clubs-2026-10-28-v1/credits-20.json": {
+      "sha256": "8a72f33a7cb3d48641b3621611f378da7c52c600c794b2fc6385b2d396cfdb87",
+      "bytes": 285281
+    },
+    "football/football-clubs-2026-10-28-v1/credits-21.json": {
+      "sha256": "73d33f420dc4496a980cd3559b48eb2a330bc6b8d4bcdabcd7eb6b6277f011d0",
+      "bytes": 195454
+    },
+    "football/football-clubs-2026-10-28-v1/credits-22.json": {
+      "sha256": "c6420432f99c5544da9e00e07a8c1816e0f0ec5f882011994c73ab51f4f5e206",
+      "bytes": 156380
+    },
+    "football/football-clubs-2026-10-28-v1/credits-23.json": {
+      "sha256": "1b48be94c7c45fe878920f1f3cc232fc2673a9e4e26e9d648ddffcf0e371bd28",
+      "bytes": 132808
+    },
+    "football/football-clubs-2026-10-28-v1/credits-24.json": {
+      "sha256": "71c66ded7bc6923a4028f0e7c7725d46fe0f5f91cecc3bf63085ddb372f924cf",
+      "bytes": 48289
+    },
+    "football/football-clubs-2026-10-28-v1/credits-25.json": {
+      "sha256": "800ace0e92e87f08d2ba0be25fce54733a3e6da440164bdfc8322b1ec835e199",
+      "bytes": 190385
+    },
+    "football/football-clubs-2026-10-28-v1/credits-26.json": {
+      "sha256": "4fb107aa7952980a8b15440ad4c8621a2f4feea45f65b0b573b6448ead3725b2",
+      "bytes": 165223
+    },
+    "football/football-clubs-2026-10-28-v1/credits-27.json": {
+      "sha256": "53754032beec9a4430695cf8d739ca88d0261ddcff0ff1fd8e15e34ba567b84d",
+      "bytes": 206893
+    },
+    "football/football-clubs-2026-10-28-v1/credits-28.json": {
+      "sha256": "f55a82c614a1033cd0fc46c748dc77c3ffc0f8d28811f6d4b57d24c17aaa5c2d",
+      "bytes": 116771
+    },
+    "football/football-clubs-2026-10-28-v1/credits-29.json": {
+      "sha256": "3318b1bf3298e3335e4af5ea71deb42d2b77b4cf4d97bd7aef5d6ec0a37d2a1f",
+      "bytes": 170085
+    },
+    "football/football-clubs-2026-10-28-v1/credits-3.json": {
+      "sha256": "a6f62133bd170a8963e665bac95865dd86310d8f726217f40cd14c61b5af81e5",
+      "bytes": 241491
+    },
+    "football/football-clubs-2026-10-28-v1/credits-30.json": {
+      "sha256": "b470a8dfc09a62c2cabde5ae52c4ee477a83cabf1193bbd67c83cae02e3e897a",
+      "bytes": 164104
+    },
+    "football/football-clubs-2026-10-28-v1/credits-31.json": {
+      "sha256": "e181d35520f284ebc111a4094c8956215c9f223419f1e2099d82405f12efe556",
+      "bytes": 128986
+    },
+    "football/football-clubs-2026-10-28-v1/credits-32.json": {
+      "sha256": "153d3b2bdda18937ea1b44fe4566c3d50e2aac1d8c31537f29bac70f38a431a2",
+      "bytes": 143689
+    },
+    "football/football-clubs-2026-10-28-v1/credits-33.json": {
+      "sha256": "284ca15a3d1e1c7d6b458ff7f50b5ea4dd374967267754965acd4b81083067d9",
+      "bytes": 200069
+    },
+    "football/football-clubs-2026-10-28-v1/credits-34.json": {
+      "sha256": "c9b53b4fe9f91a23a7de214372564fd04db47e96b1f34d24aeb9d87a35518468",
+      "bytes": 220687
+    },
+    "football/football-clubs-2026-10-28-v1/credits-35.json": {
+      "sha256": "3d9af2fcbc96e654aa5aa465a02f7957a132227d9e617471be0265368b023a44",
+      "bytes": 159093
+    },
+    "football/football-clubs-2026-10-28-v1/credits-36.json": {
+      "sha256": "ffa9ec9ef74239c70afe582404c5d5af661217964824da00381057978c98ff85",
+      "bytes": 145635
+    },
+    "football/football-clubs-2026-10-28-v1/credits-37.json": {
+      "sha256": "895a0a1f8b0e13b2a22b45d6cb151886b6fcf855eaefad514b31c06ac4d41833",
+      "bytes": 131134
+    },
+    "football/football-clubs-2026-10-28-v1/credits-38.json": {
+      "sha256": "6609a04055bdc20aa957e1218d8acfb4c6abf08b53f1ebfe9c2140b376bc119d",
+      "bytes": 120357
+    },
+    "football/football-clubs-2026-10-28-v1/credits-39.json": {
+      "sha256": "d879139367268f143e0c4bc17a773a92499e8273f970bc92f97d66c06ffefdb4",
+      "bytes": 101786
+    },
+    "football/football-clubs-2026-10-28-v1/credits-4.json": {
+      "sha256": "d31efcdb474652bf78869796b33be2353cad7d8e4eb394d20f5688102891182c",
+      "bytes": 298932
+    },
+    "football/football-clubs-2026-10-28-v1/credits-40.json": {
+      "sha256": "43bffe949aec5ad5b343d1bfc439d595cc1931e702e3f90783ae9796c2cee61f",
+      "bytes": 199104
+    },
+    "football/football-clubs-2026-10-28-v1/credits-41.json": {
+      "sha256": "34bb88e5f1618cfbffdcc79e8cba0f17d2545ebba364b7a5f1a839b21e73a6e9",
+      "bytes": 153255
+    },
+    "football/football-clubs-2026-10-28-v1/credits-42.json": {
+      "sha256": "5d5f5fd271c96675acfd8bfbe1f23fc9db1b2ce10b762185dd577e2626853f60",
+      "bytes": 161290
+    },
+    "football/football-clubs-2026-10-28-v1/credits-43.json": {
+      "sha256": "ceb2abe9c2d3a6850e125643fb999ef235c10fc6a297e68005d38f083cf8be62",
+      "bytes": 128517
+    },
+    "football/football-clubs-2026-10-28-v1/credits-44.json": {
+      "sha256": "608eaef3d0d41ae0d70e77ed87159508f7bbbe9804756f92df0ef887ddba9ae0",
+      "bytes": 209757
+    },
+    "football/football-clubs-2026-10-28-v1/credits-45.json": {
+      "sha256": "1748bbf7c1ed1db701267cb4ab97c81ceb91864c26b0d49188672427c0e18dd2",
+      "bytes": 214365
+    },
+    "football/football-clubs-2026-10-28-v1/credits-46.json": {
+      "sha256": "57e6eb3749ea398accbd91c848aa6536a2e2630cc615f9ae4a40e2388aa18635",
+      "bytes": 196936
+    },
+    "football/football-clubs-2026-10-28-v1/credits-47.json": {
+      "sha256": "71cd4c1734a4ae6f10520f88f3d4727a1f22cfbaaa249b97eb7dedf9262f0142",
+      "bytes": 173481
+    },
+    "football/football-clubs-2026-10-28-v1/credits-48.json": {
+      "sha256": "fdbf81b9c26d9ec4d77192088c72d5e834f06a66e48ebea56f83771d0124b40b",
+      "bytes": 158897
+    },
+    "football/football-clubs-2026-10-28-v1/credits-49.json": {
+      "sha256": "e0e92d63a6d9869c503f36c23acbe697630ed5bfc722a4b0d789b378cfb668c9",
+      "bytes": 150567
+    },
+    "football/football-clubs-2026-10-28-v1/credits-5.json": {
+      "sha256": "0b97a894694ec4b2ac929d1b7cb2df2396c6f2583a964320069cd777cbdbbfad",
+      "bytes": 272205
+    },
+    "football/football-clubs-2026-10-28-v1/credits-50.json": {
+      "sha256": "e9a2ff11e3be60dcc371bf070d2d77c0f45105a4d3125ac57a064daa832bb3ce",
+      "bytes": 167096
+    },
+    "football/football-clubs-2026-10-28-v1/credits-51.json": {
+      "sha256": "afb6f2727b0b46eca4a91c34c0c0b4f9dac1840322f689e805d7fa37fc2cc20a",
+      "bytes": 154019
+    },
+    "football/football-clubs-2026-10-28-v1/credits-52.json": {
+      "sha256": "0a2468c0973aeee2ee04b2342c7e361590d90010d96cb2b5b080a07d3554752c",
+      "bytes": 149290
+    },
+    "football/football-clubs-2026-10-28-v1/credits-53.json": {
+      "sha256": "6c070c02c52f8ead305a9959c97f8da0a08e5ed3341dc929b8606b5459a1c2e9",
+      "bytes": 111317
+    },
+    "football/football-clubs-2026-10-28-v1/credits-54.json": {
+      "sha256": "9cd9f973490830e4f41779acce760ee874eacffc9f29210f5578aa2991b3071a",
+      "bytes": 119610
+    },
+    "football/football-clubs-2026-10-28-v1/credits-55.json": {
+      "sha256": "51cd7f4c74a61c60a4a5569172d6bc7545395ba50ceb7908ce3db627a9ea6f3e",
+      "bytes": 108984
+    },
+    "football/football-clubs-2026-10-28-v1/credits-56.json": {
+      "sha256": "07476f34a5fb30f12a7603e56cc7a73d6c3dc72318906c94501fa8f9ab1fc812",
+      "bytes": 71828
+    },
+    "football/football-clubs-2026-10-28-v1/credits-57.json": {
+      "sha256": "21b03d066ae1c8ebc0f296b74ad5409fd0508081361350e8bc365502acaf7e6e",
+      "bytes": 83196
+    },
+    "football/football-clubs-2026-10-28-v1/credits-58.json": {
+      "sha256": "0caeb742ead547ecb253b52954a3d196623be0d83b927441c7e1892baf085f10",
+      "bytes": 62743
+    },
+    "football/football-clubs-2026-10-28-v1/credits-59.json": {
+      "sha256": "ed18900bcd3936f7c876751067dce98d491596090d5781d26f0950757a900788",
+      "bytes": 101786
+    },
+    "football/football-clubs-2026-10-28-v1/credits-6.json": {
+      "sha256": "120c92d39917165cca7ecb44dc857dd334217140872e8c4bf6a65d88d88e9675",
+      "bytes": 265851
+    },
+    "football/football-clubs-2026-10-28-v1/credits-60.json": {
+      "sha256": "f85faa8e837964a49900f46baec4a96a3804c2fa0359fcc662636adadacdd99f",
+      "bytes": 71286
+    },
+    "football/football-clubs-2026-10-28-v1/credits-61.json": {
+      "sha256": "b36dd57f0b7b35348f1104d369ca02771aac90bb8fbd9154a06797266ac1d1da",
+      "bytes": 91272
+    },
+    "football/football-clubs-2026-10-28-v1/credits-62.json": {
+      "sha256": "7153a360fa1d2b3a2c9eaf774252b01cc35a59ddf2e37d74a8a1bc354a646d48",
+      "bytes": 78315
+    },
+    "football/football-clubs-2026-10-28-v1/credits-63.json": {
+      "sha256": "ed4c8e42dd464f7e27ac17375569eddb17d16130132d61935267457eb04c49cb",
+      "bytes": 12746
+    },
+    "football/football-clubs-2026-10-28-v1/credits-64.json": {
+      "sha256": "67ccfac40ec335b32c4290632d05c2b69bb3fab1f209daf400bcad78189235b1",
+      "bytes": 96810
+    },
+    "football/football-clubs-2026-10-28-v1/credits-65.json": {
+      "sha256": "2238ee1079dd4bbffeef92b81d4411a712da92e110d13b433c6c0919ed3a3c27",
+      "bytes": 36848
+    },
+    "football/football-clubs-2026-10-28-v1/credits-66.json": {
+      "sha256": "e245accf57e0fa3f852982fbd71498913960874c1bf84b8bfd9e19265ae254c9",
+      "bytes": 39774
+    },
+    "football/football-clubs-2026-10-28-v1/credits-67.json": {
+      "sha256": "39690022024de7dc87e0063d4a9def9861a33f61ef2084881dad0c552e3ca8ed",
+      "bytes": 49642
+    },
+    "football/football-clubs-2026-10-28-v1/credits-68.json": {
+      "sha256": "4dac5d6ecef8445ebbfd5a97f9b4d505db694b3386967b22b271fb304848038f",
+      "bytes": 40809
+    },
+    "football/football-clubs-2026-10-28-v1/credits-69.json": {
+      "sha256": "aff798b604ea5c813b301b19ade6d7b8da1d4b50b111cd3c0b76000b20dddd04",
+      "bytes": 28662
+    },
+    "football/football-clubs-2026-10-28-v1/credits-7.json": {
+      "sha256": "b46ee04e6817c2fd5ac152f9f41ce546ca7ccdb9ad473dc223873fca9ed74ea0",
+      "bytes": 254712
+    },
+    "football/football-clubs-2026-10-28-v1/credits-70.json": {
+      "sha256": "8b3e26c10eff645d431727a633c153611cba71617cc8ff39d954df24a9b1c597",
+      "bytes": 31306
+    },
+    "football/football-clubs-2026-10-28-v1/credits-71.json": {
+      "sha256": "eb008ace555ea93a20a561c8255fc6846122ba4d19dabbee3853ef84dea06d7a",
+      "bytes": 43322
+    },
+    "football/football-clubs-2026-10-28-v1/credits-72.json": {
+      "sha256": "c4c41ec687aeb4ff5cc439a27a4a75599c299a5aac4e412492d85b0792dd2769",
+      "bytes": 43162
+    },
+    "football/football-clubs-2026-10-28-v1/credits-73.json": {
+      "sha256": "250cd6b633402509948e209cce23e883639e42ca3aed3ab7ed87cb10bd1b0256",
+      "bytes": 44974
+    },
+    "football/football-clubs-2026-10-28-v1/credits-74.json": {
+      "sha256": "50d47c586bd781101e45cb0a9b5844c62afe88fd47dca3f2a09895493997496f",
+      "bytes": 6550
+    },
+    "football/football-clubs-2026-10-28-v1/credits-75.json": {
+      "sha256": "c8f44268573a54e213bbb969814ca038a4c27d3c91accdf1142b6059bbfd43bf",
+      "bytes": 45121
+    },
+    "football/football-clubs-2026-10-28-v1/credits-76.json": {
+      "sha256": "27fd3d6f40a0e69c59e2373b5398a9c6fdf523db07be49e4cd844fedbb49dd5a",
+      "bytes": 57237
+    },
+    "football/football-clubs-2026-10-28-v1/credits-77.json": {
+      "sha256": "dff23c18c6464d97a4024c5c19c3bc0583f7ca900ec1d3e686f25a93bbf9b158",
+      "bytes": 53607
+    },
+    "football/football-clubs-2026-10-28-v1/credits-78.json": {
+      "sha256": "bcfda258cde719f63396ad53e60661b6ecfcb81563440e6f8d8d042cdc4b158e",
+      "bytes": 30715
+    },
+    "football/football-clubs-2026-10-28-v1/credits-79.json": {
+      "sha256": "c2a17d463971eb5e6b030f257c83bedf3ddf13d20ee7b5be207464d71eadebe4",
+      "bytes": 31689
+    },
+    "football/football-clubs-2026-10-28-v1/credits-8.json": {
+      "sha256": "d3ae60e0af27cd04921a3d37d9acca176c6c428ee3e7a1d7b4ac19938e1ee265",
+      "bytes": 179927
+    },
+    "football/football-clubs-2026-10-28-v1/credits-80.json": {
+      "sha256": "a08bc7140858d2733d8c5da3fc6c8ad7d4dab47cfa4d7edb6f18c743e4b56307",
+      "bytes": 66990
+    },
+    "football/football-clubs-2026-10-28-v1/credits-81.json": {
+      "sha256": "4f5ee1f77504a997647db1dd7f2f566b679592bfef215f7ba330428c3ee1776a",
+      "bytes": 46872
+    },
+    "football/football-clubs-2026-10-28-v1/credits-82.json": {
+      "sha256": "cb00b325bccbbba0dde5786d7ec60c3fcd0377f65687888af29c081a3ee20f4d",
+      "bytes": 68331
+    },
+    "football/football-clubs-2026-10-28-v1/credits-83.json": {
+      "sha256": "2fc73bdc56a1a843cca020d61173f1a9315d065d7b63bb614f61f28299f98511",
+      "bytes": 65822
+    },
+    "football/football-clubs-2026-10-28-v1/credits-84.json": {
+      "sha256": "dc8859cf6a568ec158d3f2971efd2c3f03be9657f8ea094f4f83a7c58ea58725",
+      "bytes": 95374
+    },
+    "football/football-clubs-2026-10-28-v1/credits-85.json": {
+      "sha256": "adfa2975bac606b5ae06a01d50cdc2aba6fa5beadd7e28dee7e073fbb42d3a70",
+      "bytes": 76982
+    },
+    "football/football-clubs-2026-10-28-v1/credits-86.json": {
+      "sha256": "366bcb5247c858f0b7c677fff47c44bc89923a3fa822e72d37dba3967a7cc9f8",
+      "bytes": 61610
+    },
+    "football/football-clubs-2026-10-28-v1/credits-87.json": {
+      "sha256": "462c6766e6ad91af17d462c8b7bdb3252f5583e1ba939951520229496e9d3d7d",
+      "bytes": 48232
+    },
+    "football/football-clubs-2026-10-28-v1/credits-88.json": {
+      "sha256": "89a5abc493bc7cf2ceda0bfce44c32f02b8a5c5847af143687f881c6040e73e5",
+      "bytes": 41760
+    },
+    "football/football-clubs-2026-10-28-v1/credits-89.json": {
+      "sha256": "225c07168711aac93aee28385d679639820a382fa17aed5d7d9f415988bcdf22",
+      "bytes": 35636
+    },
+    "football/football-clubs-2026-10-28-v1/credits-9.json": {
+      "sha256": "5657dbb0ee55a0cdbfb6cde6367c6c8bdceb8505a0bcd8f74c4888af9e9198b0",
+      "bytes": 222917
+    },
+    "football-index-v1.json": {
+      "sha256": "9e2df24f9e75a6043c3030c9198ae7ac52a55d79658ffed6cc33305a20c43b6e",
+      "bytes": 33734
+    },
+    "movies/movies-tmdb-2017-v1/credits-0.json": {
+      "sha256": "5a4a6f790175230b8a21d7f1599a93a1aacd6321a2862585e9a7ce85e8b9382f",
+      "bytes": 421071
+    },
+    "movies/movies-tmdb-2017-v1/credits-1.json": {
+      "sha256": "c5f7abba9ead0cf82601acc48c3705b6ef5d4d3201cbb033a520b6198733a782",
+      "bytes": 390410
+    },
+    "movies/movies-tmdb-2017-v1/credits-10.json": {
+      "sha256": "c3f93d8b83c973067920a5366861329859b2fc01d83e2cfffa9abe2d4abc8e66",
+      "bytes": 391177
+    },
+    "movies/movies-tmdb-2017-v1/credits-11.json": {
+      "sha256": "60d1c07316445023e2dd82c6822a6ccefc4e26458d0651b140339f8c8a63342f",
+      "bytes": 402316
+    },
+    "movies/movies-tmdb-2017-v1/credits-12.json": {
+      "sha256": "38bdb4467716bf49763af1c92b8af10326274eb46eb5181047aff2a5c659b0ef",
+      "bytes": 432309
+    },
+    "movies/movies-tmdb-2017-v1/credits-13.json": {
+      "sha256": "8329d974876704ecd8e5afaab4de1f05dde074e76f145a8366708749fdcf5810",
+      "bytes": 441947
+    },
+    "movies/movies-tmdb-2017-v1/credits-14.json": {
+      "sha256": "069c3423e2de2b927272ec50f5e02a76e8a7ddb31ad2929f011eeac5d1a285ce",
+      "bytes": 378429
+    },
+    "movies/movies-tmdb-2017-v1/credits-15.json": {
+      "sha256": "2bb0229f5cf8266723ceb8ca68797728b3ed36e02de9c20488120da1157e4846",
+      "bytes": 423479
+    },
+    "movies/movies-tmdb-2017-v1/credits-16.json": {
+      "sha256": "9eaa2c7443666ca3c491ff3b1ce9a133036e4c8fdd73bd05cf7265823db91fa5",
+      "bytes": 451536
+    },
+    "movies/movies-tmdb-2017-v1/credits-17.json": {
+      "sha256": "366fa0ce3a265854c755a488bfc9a557bae257dbd2eb4dde1e527ef6445ae2d6",
+      "bytes": 402991
+    },
+    "movies/movies-tmdb-2017-v1/credits-18.json": {
+      "sha256": "f0d3aeb9a5e47ae43fd626080b270b3cbfdabaabd5a29b6050c887b4cc053dc6",
+      "bytes": 444779
+    },
+    "movies/movies-tmdb-2017-v1/credits-19.json": {
+      "sha256": "45e9a31b763d0d7a1e12c4362610eff8322b93e2c83b2e6877a50e8a548298b7",
+      "bytes": 367345
+    },
+    "movies/movies-tmdb-2017-v1/credits-2.json": {
+      "sha256": "49739cb5f8aaef8e04b69995652b79fbd8ec7a3bbda576d21101d3eb5514962f",
+      "bytes": 377353
+    },
+    "movies/movies-tmdb-2017-v1/credits-20.json": {
+      "sha256": "ebad3fca0ad5c73a701b5ab90c492ae2945d1436406d2d5ccc0d5db5226c7a4c",
+      "bytes": 358063
+    },
+    "movies/movies-tmdb-2017-v1/credits-21.json": {
+      "sha256": "8c27e043ccd039c6eb4173078bd1cb19df9fd2ca351b45f352f3dd59601578ee",
+      "bytes": 448305
+    },
+    "movies/movies-tmdb-2017-v1/credits-22.json": {
+      "sha256": "1b0ff57be9105bd9adbf171eaab585e7dc5ef9741b2f7da6bd42cbfa2173d503",
+      "bytes": 414817
+    },
+    "movies/movies-tmdb-2017-v1/credits-23.json": {
+      "sha256": "c2318e9ba5170fdd1c22db7297d053a32cdd91cfaf7e8e39d56c74bd42be2065",
+      "bytes": 427142
+    },
+    "movies/movies-tmdb-2017-v1/credits-24.json": {
+      "sha256": "b616263d951ed34a2e6075f80768f54156cf57a4dccbfd830c3fbcf42aec7a36",
+      "bytes": 428603
+    },
+    "movies/movies-tmdb-2017-v1/credits-25.json": {
+      "sha256": "7590b6d7d82d8d7ac1f938b9b36899a0f2a12225dc24dbb92bd010fbd4ccd730",
+      "bytes": 398182
+    },
+    "movies/movies-tmdb-2017-v1/credits-26.json": {
+      "sha256": "561b344237e173e051661ac75ddc5e239b43eb4af27bb786ba31bd82945255b6",
+      "bytes": 510719
+    },
+    "movies/movies-tmdb-2017-v1/credits-27.json": {
+      "sha256": "928a8029fc55462a8154f7555885a25ae10f8019c28c47fd5f46e9202dece144",
+      "bytes": 469582
+    },
+    "movies/movies-tmdb-2017-v1/credits-28.json": {
+      "sha256": "7267475363ca226807061c398381a194b009bf23d2a302f3c26f05ddb9339a10",
+      "bytes": 423571
+    },
+    "movies/movies-tmdb-2017-v1/credits-29.json": {
+      "sha256": "3b5fd1cc07a723239aa67217893ea512876cb272fcc66e9bfce378e84819c157",
+      "bytes": 406939
+    },
+    "movies/movies-tmdb-2017-v1/credits-3.json": {
+      "sha256": "f4eddd98dce765b9c1970d257977cf9b9d02c584a20e33b02fbd6bae034bb185",
+      "bytes": 473674
+    },
+    "movies/movies-tmdb-2017-v1/credits-30.json": {
+      "sha256": "50b90560f6f6780b3a49d515441f2e1f83299ae5ac72a2a476c54a25da50d09d",
+      "bytes": 362755
+    },
+    "movies/movies-tmdb-2017-v1/credits-31.json": {
+      "sha256": "08b3021653aa8bed168617d008443af8c9630c9b737ef6d9ab68b8eade686d17",
+      "bytes": 453534
+    },
+    "movies/movies-tmdb-2017-v1/credits-32.json": {
+      "sha256": "73ba42be66a81f95dc11d7c3cb61178fc908257a040a0cc38eeae0f1c09a4fc8",
+      "bytes": 478973
+    },
+    "movies/movies-tmdb-2017-v1/credits-33.json": {
+      "sha256": "84de7f4ee0732c9d94170690a06ee667e61a11f226b0243432eb1aa03283a5e2",
+      "bytes": 378390
+    },
+    "movies/movies-tmdb-2017-v1/credits-34.json": {
+      "sha256": "f2692e4c8d318867dc96a559d95b30e7d6bbfbcbb674f95a688bcc04cd46cdef",
+      "bytes": 421451
+    },
+    "movies/movies-tmdb-2017-v1/credits-35.json": {
+      "sha256": "5af5ad3d4e488d2e9240a62133beceda1edc9766fedea07d507f9c25bc0c48c2",
+      "bytes": 503095
+    },
+    "movies/movies-tmdb-2017-v1/credits-36.json": {
+      "sha256": "779df89bcdb280faff5c443449f19ca1682133d0607c29b77b1adbfb3c2b69cb",
+      "bytes": 463401
+    },
+    "movies/movies-tmdb-2017-v1/credits-37.json": {
+      "sha256": "052c72ce7257bb504f20d5f4527c03fc2430ef233815953666ba76950d035b8e",
+      "bytes": 579904
+    },
+    "movies/movies-tmdb-2017-v1/credits-38.json": {
+      "sha256": "9f0acef5e9cd597b2a5e5402ddc678d6ffa6fe2eb123fc80f8173184b28c885c",
+      "bytes": 422972
+    },
+    "movies/movies-tmdb-2017-v1/credits-39.json": {
+      "sha256": "a504d164df2ec6e9aeb6d749365e045363272860e640f66bdaebbc57260661c2",
+      "bytes": 457200
+    },
+    "movies/movies-tmdb-2017-v1/credits-4.json": {
+      "sha256": "fa0ecb11844afe79ef769cb1300f2a3cb5fcebcd7a391e39659ee856cb33fd7a",
+      "bytes": 417983
+    },
+    "movies/movies-tmdb-2017-v1/credits-40.json": {
+      "sha256": "71f1f49c7dba090cd5f0a0a673fd16770803144f82092d7fe28bd47bb752f319",
+      "bytes": 390333
+    },
+    "movies/movies-tmdb-2017-v1/credits-41.json": {
+      "sha256": "2040dfa9ecf3153cee2cdda2daa40afdcbc6c2c0de3296d2507932098858a553",
+      "bytes": 423283
+    },
+    "movies/movies-tmdb-2017-v1/credits-42.json": {
+      "sha256": "03ae2fe2e3e87d0e3db17f978841668812d43bb59a9ca3b275a316dcdde2d419",
+      "bytes": 435001
+    },
+    "movies/movies-tmdb-2017-v1/credits-43.json": {
+      "sha256": "21048a8b4e88b09a655565e6616eae49e8555e7b0f13f94608b127bd6dc9c62d",
+      "bytes": 471165
+    },
+    "movies/movies-tmdb-2017-v1/credits-44.json": {
+      "sha256": "34e5552e64a3716abaabed1d951c2825c14e9748cd85dc6d1bc55aab3fc5ac44",
+      "bytes": 388736
+    },
+    "movies/movies-tmdb-2017-v1/credits-45.json": {
+      "sha256": "7b7b22e3ddbb5b7c14d2519e943509770a4344d66c1565de47be484bcaee91bf",
+      "bytes": 309852
+    },
+    "movies/movies-tmdb-2017-v1/credits-46.json": {
+      "sha256": "d586508cac6f95bdb03bed9082c5aa7defaa2e0d3503c726ac569a0625c34c24",
+      "bytes": 396026
+    },
+    "movies/movies-tmdb-2017-v1/credits-47.json": {
+      "sha256": "90ff267b7e023d9a53656146542a59ebc8821f9a935f6cbe8cfb5a481a31ad84",
+      "bytes": 424319
+    },
+    "movies/movies-tmdb-2017-v1/credits-48.json": {
+      "sha256": "47d1f5c95e3ef111d0c95a42e386c828015b07ba97c37f9d84eb5c1f4c0f4dc2",
+      "bytes": 350160
+    },
+    "movies/movies-tmdb-2017-v1/credits-49.json": {
+      "sha256": "15358a4c3a6d77fa6c591f5d0739cd264dc68c4cc522beaa64ef758463e0bb7d",
+      "bytes": 374169
+    },
+    "movies/movies-tmdb-2017-v1/credits-5.json": {
+      "sha256": "00abd8baa79ac7a397acebc9ed855647f8378f7a241df639340642be96ebf818",
+      "bytes": 516161
+    },
+    "movies/movies-tmdb-2017-v1/credits-50.json": {
+      "sha256": "8fc4546321a0b2d1c6dbc9b7c72cfe1380a95335bcc968af8bfd95db83400d93",
+      "bytes": 445596
+    },
+    "movies/movies-tmdb-2017-v1/credits-51.json": {
+      "sha256": "f6cc2b8e6adca5216b7a5f12de91e0a24605818c50b1af8b5981a20fd6baa9bd",
+      "bytes": 524506
+    },
+    "movies/movies-tmdb-2017-v1/credits-52.json": {
+      "sha256": "3d268e261464e4ea043e0a2348b8d7800306dc72b82eeafc49a0d46125cb36be",
+      "bytes": 352472
+    },
+    "movies/movies-tmdb-2017-v1/credits-53.json": {
+      "sha256": "c9a98c9864c7e756e9ce7915948f08acd53d502fe481352b3e8614bd1f8e2265",
+      "bytes": 399233
+    },
+    "movies/movies-tmdb-2017-v1/credits-54.json": {
+      "sha256": "36fd310d30dc1f5ec21d10df8e4e8f9ddf741bc30aaeee72ca90d24dc878a519",
+      "bytes": 422069
+    },
+    "movies/movies-tmdb-2017-v1/credits-55.json": {
+      "sha256": "9e71676b93ba3947016f30d22226f021f231d294b89a79f04636fa045fb98abe",
+      "bytes": 455897
+    },
+    "movies/movies-tmdb-2017-v1/credits-56.json": {
+      "sha256": "621efdcefff11c062e77a030553eb1ba1cb8ca88a37d4a9b6fde5d8244df0e77",
+      "bytes": 415770
+    },
+    "movies/movies-tmdb-2017-v1/credits-57.json": {
+      "sha256": "2177f2ce477fe567098c06d5e30827ae0a30705c017902e6df29cbd0b75c64e3",
+      "bytes": 338166
+    },
+    "movies/movies-tmdb-2017-v1/credits-58.json": {
+      "sha256": "82ab8de027f1922060eb98dd7c7767b263c571ad30b0c0514b371f6c970c900c",
+      "bytes": 447436
+    },
+    "movies/movies-tmdb-2017-v1/credits-59.json": {
+      "sha256": "fb495c4be87f64031ad6901a55a23abf57beaca25fc754c419785a08d9e83aee",
+      "bytes": 323905
+    },
+    "movies/movies-tmdb-2017-v1/credits-6.json": {
+      "sha256": "7128ac4e788747fd7d562f3cde56f6e325dca572fd99cc5f6075635cd14734a5",
+      "bytes": 481255
+    },
+    "movies/movies-tmdb-2017-v1/credits-60.json": {
+      "sha256": "2aac1b9f636f3c887d70aae3a7f25cbaace5b289dfd7d51a02e48c5b9e3fb88a",
+      "bytes": 532010
+    },
+    "movies/movies-tmdb-2017-v1/credits-61.json": {
+      "sha256": "b588717469949a76c50c6072de70ef39ca6561ae961c90e83c0ad05a0f6a46e9",
+      "bytes": 447154
+    },
+    "movies/movies-tmdb-2017-v1/credits-62.json": {
+      "sha256": "9f9f742abea12ca0dd6a1b8cae0168eee199961fd6ab6c8062c9520cb6fba9e5",
+      "bytes": 308565
+    },
+    "movies/movies-tmdb-2017-v1/credits-63.json": {
+      "sha256": "80c7b42e0d423a0d63a43906105b38a17f7dede7eeeb6453e3a35a9ec09e1665",
+      "bytes": 376771
+    },
+    "movies/movies-tmdb-2017-v1/credits-7.json": {
+      "sha256": "cb437f9b0efeccf6c0ae38bfaddd72c757ab53973fb00b7a69fe3a601ea64c13",
+      "bytes": 344609
+    },
+    "movies/movies-tmdb-2017-v1/credits-8.json": {
+      "sha256": "3d994a216c71c783584389c7a522a8c34a599c24ab59f7a3fb6cc902b955e156",
+      "bytes": 440091
+    },
+    "movies/movies-tmdb-2017-v1/credits-9.json": {
+      "sha256": "d31cac474d8232d3532aebab37c220c7d3575c7bab8878d817dc5d5aeb894ce2",
+      "bytes": 522762
+    },
+    "movies-index-v1.json": {
+      "sha256": "0705c1190cd75e0789d63cf593c3f34a5766f9ecd722c61648d3e99a4117a242",
+      "bytes": 950806
+    },
+    "opening-pools-v1.json": {
+      "sha256": "fc1f81f8147ec864a99ac6085fe541c73d551904757bec2ccd0c11c315263918",
+      "bytes": 271
+    }
+  }
+}

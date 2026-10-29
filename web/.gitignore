@@ -47,6 +47,3 @@ Thumbs.db
 /.env
 /.env.*
 !/.env.example
-
-# Generated public Supabase configuration
-/src/environments/supabase.config.ts

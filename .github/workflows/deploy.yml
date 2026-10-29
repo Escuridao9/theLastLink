@@ -48,13 +48,9 @@ jobs:
         working-directory: .
         run: npm run typecheck
 
-      - name: Check match API TypeScript
+      - name: Check Edge Function TypeScript
         working-directory: .
         run: npm run typecheck:edge
-
-      - name: Build Games catalogue
-        working-directory: .
-        run: node scripts/build-playable.ts
 
       - name: Run shared and database tests
         working-directory: .
@@ -75,21 +71,9 @@ jobs:
       - name: Run automated tests
         run: npm test -- --watch=false
 
-      - name: Check Edge Function TypeScript
+      - name: Test Edge Function handlers
         working-directory: .
-        run: npx --yes deno@2.9.6 check --config supabase/functions/create-room/deno.json supabase/functions/create-room/index.ts
-
-      - name: Test room creation handler
-        working-directory: .
-        run: npx --yes deno@2.9.6 test --config supabase/functions/create-room/deno.json supabase/functions/create-room/handler.test.ts
-
-      - name: Check room joining TypeScript
-        working-directory: .
-        run: npx --yes deno@2.9.6 check --config supabase/functions/join-room/deno.json supabase/functions/join-room/index.ts
-
-      - name: Test room joining handler
-        working-directory: .
-        run: npx --yes deno@2.9.6 test --config supabase/functions/join-room/deno.json supabase/functions/join-room/handler.test.ts
+        run: npm run test:edge
 
       - name: Read GitHub Pages configuration
         if: github.ref == 'refs/heads/main'
