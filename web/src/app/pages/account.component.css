@@ -132,14 +132,6 @@
   color: var(--ll-quiet);
   margin: 18px 0 0;
 }
-.account-guest-link {
-  display: inline-block;
-  font-size: 12px;
-  color: var(--ll-lilac);
-  margin-top: 24px;
-  padding: 11px 0;
-  min-height: 44px;
-}
 .account-message {
   padding: 14px 16px;
   border-left: 3px solid var(--ll-lilac);
