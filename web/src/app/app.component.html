@@ -8,7 +8,9 @@
   >
   <nav aria-label="Main navigation">
     <a
-      [routerLink]="links.to('/play')"
+      [routerLink]="links.to('/')"
+      fragment="arenas"
+      class="nav-play"
       routerLinkActive="current"
       [routerLinkActiveOptions]="{ exact: true }"
       >Play</a

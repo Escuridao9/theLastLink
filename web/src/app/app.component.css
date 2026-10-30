@@ -125,9 +125,9 @@ footer {
   .site-header {
     padding: 19px 20px;
     min-height: 80px;
-    gap: 15px;
-    flex-direction: row;
-    align-items: center;
+    gap: 10px;
+    flex-direction: column;
+    align-items: stretch;
   }
   .wordmark {
     font-size: 27px;
@@ -142,11 +142,23 @@ footer {
     letter-spacing: 0.8px;
     margin-top: 7px;
   }
+  .site-header > .wordmark {
+    align-self: flex-start;
+  }
   .site-header nav {
+    width: 100%;
+    justify-content: space-between;
     gap: 12px;
   }
-  .site-header nav > a:not(.nav-cta) {
+  .site-header nav > a:not(.nav-cta):not(.nav-play):not(.preview-account-link) {
     display: none;
+  }
+  .nav-play {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
   }
   .nav-cta {
     font-size: 10px;

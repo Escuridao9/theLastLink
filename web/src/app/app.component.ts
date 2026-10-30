@@ -39,7 +39,7 @@ export class App implements OnDestroy {
   }
   private updateSessionReturn(url: string): void {
     const path = url.split(/[?#]/)[0];
-    this.showSessionReturn.set(path === '/' || path === '/play');
+    this.showSessionReturn.set(path === '/');
     this.resume.setVisible(this.showSessionReturn());
   }
   ngOnDestroy(): void {

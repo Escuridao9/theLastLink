@@ -222,13 +222,14 @@ describe('Football room settings and navigation', () => {
     };
   }
 
-  it('keeps the full Home → Category → Room → Lobby → Match → Result journey on Football', async () => {
+  it('keeps the Home category → Room → Lobby → Match → Result journey on Football', async () => {
     const { state, finish } = fixture();
     const harness = await RouterTestingHarness.create('/');
     expect(harness.routeNativeElement?.textContent).toContain('Football');
-    await harness.navigateByUrl('/play');
-    expect(harness.routeNativeElement?.textContent).toContain('Football');
-    const setup = await harness.navigateByUrl('/rooms?category=football', RoomsComponent);
+    harness.routeNativeElement!.querySelector<HTMLAnchorElement>('.ll-football')!.click();
+    await harness.fixture.whenStable();
+    expect(TestBed.inject(Router).url).toBe('/rooms?category=football');
+    const setup = harness.routeDebugElement!.componentInstance as RoomsComponent;
     setup.form.controls.name.setValue('Diogo');
     setup.form.controls.openingMode.setValue('familiar');
     harness.detectChanges();

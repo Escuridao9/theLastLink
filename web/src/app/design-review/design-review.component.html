@@ -99,19 +99,17 @@
     [routerLinkActiveOptions]="{ exact: true }"
     ><small>01</small> Home</a
   ><span>→</span
-  ><a routerLink="/design-review/play" routerLinkActive="active"><small>02</small> Category</a
-  ><span>→</span
   ><a
     routerLink="/design-review/rooms"
     [queryParams]="{ category: category }"
     routerLinkActive="active"
     [routerLinkActiveOptions]="{ exact: true }"
-    ><small>03</small> Room</a
+    ><small>02</small> Room</a
   ><span>→</span
   ><a [routerLink]="['/design-review/rooms', 'design-review-' + category + '-room']"
-    ><small>04</small> Lobby</a
-  ><span>→</span><a [routerLink]="['/design-review/match', matchId]"><small>05</small> Match</a
-  ><span>→</span><a [routerLink]="['/design-review/results', matchId]"><small>06</small> Result</a>
+    ><small>03</small> Lobby</a
+  ><span>→</span><a [routerLink]="['/design-review/match', matchId]"><small>04</small> Match</a
+  ><span>→</span><a [routerLink]="['/design-review/results', matchId]"><small>05</small> Result</a>
 </nav>
 @if (onLobby && preview.room()?.status === 'waiting') {
   <div class="review-waiting">

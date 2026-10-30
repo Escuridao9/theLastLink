@@ -310,13 +310,15 @@ describe('Routed player journey', () => {
     };
   }
 
-  it('navigates Home to Category, Room, Lobby, Match, and Result with normal routes', async () => {
+  it('navigates from a homepage category directly to Room, Lobby, Match, and Result', async () => {
     const { state, finish } = fixture();
     const harness = await RouterTestingHarness.create('/');
     expect(harness.routeNativeElement?.querySelector('#home-title')?.textContent).toContain('Your brain');
-    await harness.navigateByUrl('/play');
-    expect(harness.routeNativeElement?.querySelector<HTMLButtonElement>('.ll-choice-music button')?.disabled).toBe(true);
-    const setup = await harness.navigateByUrl('/rooms?category=games', RoomsComponent);
+    expect(harness.routeNativeElement?.querySelector('.ll-music a')).toBeNull();
+    harness.routeNativeElement!.querySelector<HTMLAnchorElement>('.ll-games')!.click();
+    await harness.fixture.whenStable();
+    expect(TestBed.inject(Router).url).toBe('/rooms?category=games');
+    const setup = harness.routeDebugElement!.componentInstance as RoomsComponent;
     expect(setup.category()).toBe('games');
     setup.form.controls.name.setValue('Diogo');
     await setup.act('create');
@@ -334,6 +336,13 @@ describe('Routed player journey', () => {
     expect(TestBed.inject(Router).url).toBe('/results/match-one');
     expect(harness.routeDebugElement!.componentInstance).toBeInstanceOf(ResultsComponent);
     expect((harness.routeDebugElement!.componentInstance as ResultsComponent).winner).toBe('Diogo');
+  });
+
+  it('redirects saved Play links to the homepage arenas', async () => {
+    fixture();
+    const harness = await RouterTestingHarness.create('/play');
+    expect(TestBed.inject(Router).url).toBe('/#arenas');
+    expect(harness.routeNativeElement?.querySelector('#arenas .ll-games')).not.toBeNull();
   });
 
   it('retains Games category links from the existing URL format', async () => {

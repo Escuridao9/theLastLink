@@ -18,8 +18,8 @@ export const routes: Routes = [
   },
   {
     path: 'play',
-    title: 'Choose your arena — The Last Link',
-    loadComponent: () => import('./pages/categories.component').then((m) => m.CategoriesComponent),
+    pathMatch: 'full',
+    redirectTo: () => inject(Router).createUrlTree(['/'], { fragment: 'arenas' }),
   },
   {
     path: 'play/:categoryId',

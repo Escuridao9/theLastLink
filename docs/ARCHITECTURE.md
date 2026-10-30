@@ -70,7 +70,7 @@ Recorded SQL migrations remain intact so a fresh database and an existing linked
 
 ## Routes and preview boundary
 
-Hash routing supports GitHub Pages base paths without server rewrites. Main routes include `/`, `/play`, `/catalogue`, `/rooms`, `/rooms/:id`, `/match/:id`, `/results/:id`, `/account` and `/credits`. `RouterLink` navigation stays within the SPA.
+Hash routing supports GitHub Pages base paths without server rewrites. Main routes include `/`, `/catalogue`, `/rooms`, `/rooms/:id`, `/match/:id`, `/results/:id`, `/account` and `/credits`. Category selection is on the homepage; Play links scroll to its arenas section. Existing `/play` URLs redirect there, and `/play/:categoryId` still opens room setup for that category. `RouterLink` navigation stays within the SPA.
 
 `/design-review` provides the same pages with local mock accounts, players, rooms, results and timers. Its example histories and answer receipts replay through the actual category engines. Providers are scoped to this route, preserve the real resume ID and never sign in or call Supabase. A paused timer is visibly labelled. Production routes use real services.
 

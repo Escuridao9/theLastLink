@@ -125,7 +125,6 @@
       }
     }
   } @else if (invited()) {
-    <a class="ll-back" [routerLink]="links.to('/play')">← Back to the arenas</a>
     <header class="ll-page-heading ll-invited-heading">
       <span class="ll-label">PRIVATE INVITATION / {{ category() === 'football' ? 'FOOTBALL CLUBS' : categories[category()] }}</span>
       <h1>You’re<br /><em>invited.</em></h1>
@@ -163,7 +162,6 @@
       <a class="ll-inline-link" [routerLink]="links.to('/rooms')">Use another room code →</a>
     </div>
   } @else {
-    <a class="ll-back" [routerLink]="links.to('/play')">← Choose another arena</a>
     <header class="ll-page-heading">
       <span class="ll-label">02 / BRING THE COMPETITION</span>
       <h1>A worthy<br /><em>opponent awaits.</em></h1>

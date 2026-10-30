@@ -1,6 +1,7 @@
 import { REQUEST_ID } from '../shared/request-id';
 import { signal } from '@angular/core';
-import { Routes } from '@angular/router';
+import { Routes, Router } from '@angular/router';
+import { inject } from '@angular/core';
 import { ConfigService } from '../core/config.service';
 import { AccountService } from '../core/account.service';
 import { ReviewAccountService } from './review-account.service';
@@ -46,8 +47,8 @@ export const REVIEW_ROUTES: Routes = [
       },
       {
         path: 'play',
-        loadComponent: () =>
-          import('../pages/categories.component').then((m) => m.CategoriesComponent),
+        pathMatch: 'full',
+        redirectTo: () => inject(Router).createUrlTree(['/design-review'], { fragment: 'arenas' }),
       },
       {
         path: 'catalogue',

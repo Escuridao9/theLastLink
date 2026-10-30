@@ -57,7 +57,7 @@ GitHub Actions verifies changes and deploys successful `main` builds to GitHub P
 | Parent-child communication | Entry cards, search and clock use `@Input`, `@Output` and `EventEmitter`                                                                    |
 | Services and typed models  | Injectable catalogue/account/backend/match services, interfaces and dependency injection                                                    |
 | HTTP                       | `CatalogueService` uses typed `HttpClient` requests and `Observable`; catalogue components call `subscribe()` and show loading/error states |
-| Router                     | `router-outlet`, `RouterLink`, home, category, catalogue, room, match, result and account views                                             |
+| Router                     | `router-outlet`, `RouterLink`, home with category selection, catalogue, room, match, result and account views                                             |
 | Reactive Forms             | Room and account `FormGroup`/`FormControl`, validation, field errors and invalid-submission guards                                          |
 | Lifecycle and organisation | `OnInit`, `OnDestroy`, subscription/timer cleanup and separated data/presentation responsibilities                                          |
 
