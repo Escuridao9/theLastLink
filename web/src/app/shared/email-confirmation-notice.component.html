@@ -1,0 +1,38 @@
+@if (account.verification(); as pending) {
+  @if (!account.isAccount()) {
+    <section
+      class="confirmation-notice"
+      aria-labelledby="confirmation-heading"
+      [attr.aria-busy]="sending() || account.busy()"
+    >
+      <div class="confirmation-copy">
+        <span class="confirmation-kicker">ONE LAST LINK</span>
+        <h2 id="confirmation-heading">Check your inbox<span>.</span></h2>
+        <p role="status">
+          A confirmation link has been requested for <strong>{{ pending.email }}</strong
+          >. Open it to activate your account. You can leave this page.
+        </p>
+        <p class="confirmation-hint">Already confirmed? Log in with the password you chose.</p>
+        @if (message()) {
+          <p class="confirmation-feedback" role="status">{{ message() }}</p>
+        }
+        @if (error()) {
+          <p class="confirmation-error" role="alert">{{ error() }}</p>
+        }
+      </div>
+      <div class="confirmation-actions">
+        <a [routerLink]="links.to('/account')" [queryParams]="{ mode: 'login' }">Log in ↗</a>
+        <button
+          type="button"
+          (click)="resend()"
+          [disabled]="sending() || account.busy() || !config.configured"
+        >
+          {{ sending() ? 'Sending…' : 'Resend email' }}
+        </button>
+        <button type="button" (click)="dismiss()" [disabled]="sending() || account.busy()">
+          Dismiss
+        </button>
+      </div>
+    </section>
+  }
+}

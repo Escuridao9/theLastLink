@@ -9,6 +9,10 @@ import {
   inject,
   signal,
   untracked,
+  ElementRef,
+  ViewChild,
+  Injector,
+  afterNextRender,
 } from '@angular/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { Router, RouterLink, type UrlTree } from '@angular/router';
@@ -39,6 +43,11 @@ export class AccountDashboardComponent implements OnDestroy {
   private readonly router = inject(Router);
   private readonly records = inject(AccountRecordsService);
   private readonly operations = inject(AccountOperationsService);
+  private readonly injector = inject(Injector);
+  @ViewChild('nameInput') set nameInput(field: ElementRef<HTMLInputElement> | undefined) {
+    field?.nativeElement.focus();
+  }
+  @ViewChild('nameButton') private nameButton?: ElementRef<HTMLButtonElement>;
   get returnUrl(): UrlTree {
     return this.router.parseUrl(this.links.to(this.returnTo));
   }
@@ -56,7 +65,21 @@ export class AccountDashboardComponent implements OnDestroy {
   readonly hasMore = signal(false);
   readonly passwordOpen = signal(false);
   readonly deleteOpen = signal(false);
-  readonly operation = signal<'password' | 'delete' | null>(null);
+  readonly nameOpen = signal(false);
+  readonly nameError = signal('');
+  readonly nameMessage = signal('');
+  readonly nameForm = new FormGroup({
+    name: new FormControl('', {
+      nonNullable: true,
+      validators: [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(24),
+        Validators.pattern(/\S.*\S/),
+      ],
+    }),
+  });
+  readonly operation = signal<'name' | 'password' | 'delete' | null>(null);
   readonly settingsError = signal('');
   readonly stats = computed(() => {
     const data = this.overview();
@@ -96,6 +119,7 @@ export class AccountDashboardComponent implements OnDestroy {
   private subscription?: Subscription;
   private userId = '';
   private generation = 0;
+  private destroyed = false;
   private readonly reaction = effect(() => {
     const user = this.account.user();
     this.category();
@@ -142,7 +166,60 @@ export class AccountDashboardComponent implements OnDestroy {
   label(category: Category): string {
     return this.categories.find((row) => row.value === category)?.label ?? category;
   }
+  get nameUnchanged(): boolean {
+    return this.nameForm.controls.name.value.trim() === this.account.name();
+  }
+  toggleName(): void {
+    if (this.operation() || this.account.busy()) return;
+    this.nameOpen.update((value) => !value);
+    this.nameForm.reset({ name: this.nameOpen() ? this.account.name() : '' });
+    this.nameError.set('');
+    this.nameMessage.set('');
+    this.passwordOpen.set(false);
+    this.deleteOpen.set(false);
+    this.settingsError.set('');
+    this.passwordForm.reset();
+    this.deleteForm.reset();
+    if (!this.nameOpen()) this.focusNameButton();
+  }
+  async saveName(): Promise<void> {
+    this.nameForm.markAllAsTouched();
+    if (this.nameForm.invalid || this.nameUnchanged || this.operation() || this.account.busy())
+      return;
+    const id = this.userId;
+    const name = this.nameForm.controls.name.value;
+    this.operation.set('name');
+    this.nameError.set('');
+    this.nameMessage.set('');
+    try {
+      await this.account.updateName(name);
+      if (this.destroyed || this.userId !== id) return;
+      this.nameOpen.set(false);
+      this.nameForm.reset();
+      this.nameMessage.set('Your display name has been updated.');
+      this.focusNameButton();
+    } catch (error) {
+      if (!this.destroyed && this.userId === id)
+        this.nameError.set(
+          error instanceof Error ? error.message : 'Your name could not be saved. Try again.',
+        );
+    } finally {
+      if (!this.destroyed && this.userId === id) this.operation.set(null);
+    }
+  }
+  private focusNameButton(): void {
+    afterNextRender(
+      () => {
+        if (!this.destroyed) this.nameButton?.nativeElement.focus();
+      },
+      { injector: this.injector },
+    );
+  }
   togglePassword(): void {
+    this.nameOpen.set(false);
+    this.nameForm.reset();
+    this.nameError.set('');
+    this.nameMessage.set('');
     this.passwordOpen.update((value) => !value);
     this.deleteOpen.set(false);
     this.settingsError.set('');
@@ -150,6 +227,10 @@ export class AccountDashboardComponent implements OnDestroy {
     this.deleteForm.reset();
   }
   toggleDelete(): void {
+    this.nameOpen.set(false);
+    this.nameForm.reset();
+    this.nameError.set('');
+    this.nameMessage.set('');
     this.deleteOpen.update((value) => !value);
     this.passwordOpen.set(false);
     this.settingsError.set('');
@@ -201,6 +282,10 @@ export class AccountDashboardComponent implements OnDestroy {
     }
   }
   private resetSettings(): void {
+    this.nameForm.reset();
+    this.nameOpen.set(false);
+    this.nameError.set('');
+    this.nameMessage.set('');
     this.passwordForm.reset();
     this.deleteForm.reset();
     this.operation.set(null);
@@ -209,6 +294,7 @@ export class AccountDashboardComponent implements OnDestroy {
     this.settingsError.set('');
   }
   ngOnDestroy(): void {
+    this.destroyed = true;
     this.generation++;
     this.reaction.destroy();
     this.subscription?.unsubscribe();

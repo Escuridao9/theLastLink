@@ -12,20 +12,35 @@
     <summary>Review controls</summary>
     <div class="review-tools">
       <a routerLink="/design-review/account">Log in / Sign up</a>
-      <a routerLink="/design-review/rooms" [queryParams]="{ code: 'LASTLINK2026', category: category }">Example invite</a>
+      <a
+        routerLink="/design-review/rooms"
+        [queryParams]="{ code: 'LASTLINK2026', category: category }"
+        >Example invite</a
+      >
       <a routerLink="/design-review/account" [queryParams]="{ mode: 'signup' }">Create account</a>
       @if (onAccount) {
         <button (click)="accounts.showLogin()">Show logged-out state</button>
         <button (click)="accounts.showGuest()">Show guest upgrade</button>
+        <button (click)="accounts.showPendingConfirmation()" routerLink="/design-review">
+          Preview confirmation notice
+        </button>
         <button (click)="accountHistory('history')">Show account</button>
         <button (click)="accountHistory('empty')">Empty history</button>
         <button (click)="accountHistory('loading')">Loading history</button>
         <button (click)="accountHistory('error')">History error</button>
         <p>
-          Example confirmation code: 123456. No emails are sent. Use error@example.invalid to
-          preview a login error. Settings use the example current password Preview123!.
+          No emails are sent. Use error@example.invalid to preview a login error. Settings use the
+          example current password Preview123!.
         </p>
       }
+      @if (accounts.verification()) {
+        <button (click)="accounts.confirmEmail()" routerLink="/design-review/account">
+          Simulate email confirmation
+        </button>
+      }
+      <button (click)="accounts.showBrowserFallback()" [routerLink]="'/design-review/account'">
+        Other-browser login fallback
+      </button>
       @if (onLobby) {
         <button (click)="preview.addRival()">Add example rival</button
         ><button (click)="preview.waitForRival()">Waiting lobby</button>

@@ -152,11 +152,6 @@
 .account-panel .ll-note {
   margin: 0 0 24px;
 }
-.account-code {
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 8px;
-  font-size: 24px;
-}
 .account-confirmed {
   font-size: 11px;
   letter-spacing: 1px;

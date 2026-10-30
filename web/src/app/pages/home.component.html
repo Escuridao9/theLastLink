@@ -1,10 +1,11 @@
+<app-email-confirmation-notice />
 <section class="ll-home-hero" aria-labelledby="home-title">
   <div class="ll-hero-copy">
     <p class="ll-kicker"><span></span> A FRIENDLY GAME. UNTIL IT ISN’T.</p>
     <h1 id="home-title">Your brain.<br />Their <em>problem.</em></h1>
     <p class="ll-intro">
-      Take turns linking movies, games or football clubs through shared connections.
-      You have <strong>20 seconds</strong> to answer. Make your opponent run out of time to win.
+      Take turns linking movies, games or football clubs through shared connections. You have
+      <strong>20 seconds</strong> to answer. Make your opponent run out of time to win.
     </p>
     <a [routerLink]="links.to('/play')" class="ll-play-button"
       >Let’s play <span aria-hidden="true">↗</span></a
@@ -73,8 +74,14 @@
       <p>Put those very specific obsessions to use.</p>
       <span class="ll-category-foot">Developers · Composers · Voices · Characters</span></a
     >
-    <a class="ll-category ll-football" [routerLink]="links.to('/rooms')" [queryParams]="{ category: 'football' }">
-      <div class="ll-category-top"><span class="ll-category-icon" aria-hidden="true">⚽</span><small>READY WHEN YOU ARE</small></div>
+    <a
+      class="ll-category ll-football"
+      [routerLink]="links.to('/rooms')"
+      [queryParams]="{ category: 'football' }"
+    >
+      <div class="ll-category-top">
+        <span class="ll-category-icon" aria-hidden="true">⚽</span><small>READY WHEN YOU ARE</small>
+      </div>
       <h3>Football Clubs <span aria-hidden="true">↗</span></h3>
       <p>Your transfer knowledge finally has a purpose.</p>
       <span class="ll-category-foot">Senior players · Head managers</span>
@@ -103,7 +110,10 @@
       <span>01</span>
       <div>
         <h3>Pick an arena. Invite a friend.</h3>
-        <p>Choose Movies, Games or Football Clubs, then share your private room code. The server picks the opening entry.</p>
+        <p>
+          Choose Movies, Games or Football Clubs, then share your private room code. The server
+          picks the opening entry.
+        </p>
       </div>
     </li>
     <li>
@@ -112,8 +122,9 @@
         <h3>Make a link in 20 seconds.</h3>
         <p>
           Answer with an unplayed entry in the same category. Movies share cast or eligible crew;
-          games share developers, composers, voice actors or characters; clubs share players or managers.
-          A valid answer starts your opponent’s 20 seconds. Invalid? Keep trying on the same clock.
+          games share developers, composers, voice actors or characters; clubs share players or
+          managers. A valid answer starts your opponent’s 20 seconds. Invalid? Keep trying on the
+          same clock.
         </p>
       </div>
     </li>
@@ -121,8 +132,10 @@
       <span>03</span>
       <div>
         <h3>Use your links. Outlast your opponent.</h3>
-        <p>Every shared connector counts, with three uses each across both players. Any exhausted connector blocks the move.
-          No repeats. Traps welcome. Whoever runs out of time loses.</p>
+        <p>
+          Every shared connector counts, with three uses each across both players. Any exhausted
+          connector blocks the move. No repeats. Traps welcome. Whoever runs out of time loses.
+        </p>
       </div>
     </li>
   </ol>

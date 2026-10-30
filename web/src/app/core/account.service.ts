@@ -200,6 +200,24 @@ export class AccountService implements OnDestroy {
       this.clearVerification();
     });
   }
+  async updateName(name: string): Promise<void> {
+    await this.backend.withAuth(async () => {
+      const user = this.user();
+      if (!user || !this.isAccount() || !user.email_confirmed_at)
+        throw Error('Log in to a confirmed account before changing your name.');
+      const displayName = name.trim();
+      if (displayName.length < 2 || displayName.length > 24)
+        throw Error('Use a name with 2–24 characters.');
+      const id = user.id;
+      const { data, error } = await this.backend.client.auth.updateUser({
+        data: { display_name: displayName },
+      });
+      if (error) throw Error(accountError(error));
+      this.requireIdentity(id);
+      if (data.user?.id !== id)
+        throw Error('Your account changed. Check the signed-in account before trying again.');
+    });
+  }
   clearVerification(): void {
     this.verification.set(null);
     sessionStorage.removeItem(verificationKey);

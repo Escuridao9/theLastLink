@@ -43,7 +43,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
   }
   readonly form = new FormGroup({
     openingMode: new FormControl<OpeningMode>('standard', { nonNullable: true }),
-    name: new FormControl(localStorage.getItem('last-link-name') ?? '', {
+    name: new FormControl(this.account.isAccount() ? this.account.name() : localStorage.getItem('last-link-name') ?? '', {
       nonNullable: true,
       validators: [
         Validators.required,

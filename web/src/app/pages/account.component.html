@@ -1,4 +1,5 @@
 <section class="ll-page ll-account-page">
+  <app-email-confirmation-notice />
   <a class="ll-back" [routerLink]="links.to('/play')">← Back to the arenas</a>
   <div class="account-layout" [class.account-layout-member]="account.isAccount()">
     <header class="account-heading">
@@ -6,9 +7,6 @@
       @if (account.isAccount()) {
         <h1>Your name.<br /><em>Your game.</em></h1>
         <p>Welcome back, {{ account.name() }}. There’s always another worthy opponent.</p>
-      } @else if (account.verification()) {
-        <h1>A quick<br /><em>inbox check.</em></h1>
-        <p>Confirm your email, then get back to making questionable connections.</p>
       } @else if (mode() === 'signup') {
         <h1>Make it<br /><em>official.</em></h1>
         <p>Same sharp mind. A player identity you can return to on another device.</p>
@@ -23,8 +21,7 @@
     <div class="account-panel" [attr.aria-busy]="account.busy() || !account.ready()">
       @if (links.reviewing) {
         <p class="account-footnote">
-          Interactive example only. Use sample details and confirmation code
-          <strong>123456</strong>. Example current password: <strong>Preview123!</strong>. No
+          Interactive example only. Example current password: <strong>Preview123!</strong>. No
           account or email is created.
         </p>
       }
@@ -60,64 +57,6 @@
           {{ account.busy() ? 'Logging out…' : 'Log out of this browser' }}
         </button>
         <app-account-dashboard [returnTo]="returnTo()" (sessionEnded)="settingsComplete($event)" />
-      } @else if (account.verification(); as pending) {
-        <span class="ll-label">CHECK YOUR EMAIL</span>
-        <h2>One last check.</h2>
-        <p class="account-copy">
-          If this address can be registered, a confirmation will arrive at
-          <strong>{{ pending.email }}</strong
-          >.
-        </p>
-        <p class="account-copy">
-          Open the link in this browser, or enter the six-digit code from the email.
-        </p>
-        <form [formGroup]="codeForm" (ngSubmit)="verify()">
-          <label for="email-code">CONFIRMATION CODE</label>
-          <input
-            id="email-code"
-            class="ll-input account-code"
-            type="text"
-            formControlName="code"
-            inputmode="numeric"
-            autocomplete="one-time-code"
-            maxlength="6"
-            pattern="[0-9]{6}"
-            [readOnly]="account.busy()"
-            aria-describedby="code-error"
-            [attr.aria-invalid]="codeForm.controls.code.touched && codeForm.controls.code.invalid"
-          />
-          <p id="code-error" class="account-field-error">
-            {{
-              codeForm.controls.code.touched && codeForm.controls.code.invalid
-                ? 'Enter the six digits from your email.'
-                : ''
-            }}
-          </p>
-          <button
-            class="ll-action ll-action-coral account-submit"
-            type="submit"
-            [disabled]="account.busy() || !config.configured"
-          >
-            {{ account.busy() ? 'Confirming…' : 'Confirm email' }}<span aria-hidden="true">↗</span>
-          </button>
-        </form>
-        <div class="account-secondary">
-          <button
-            type="button"
-            class="account-text-button"
-            (click)="resend()"
-            [disabled]="account.busy()"
-          >
-            Resend email</button
-          ><button
-            type="button"
-            class="account-text-button"
-            (click)="differentEmail()"
-            [disabled]="account.busy()"
-          >
-            Use another email
-          </button>
-        </div>
       } @else {
         <nav class="account-modes" aria-label="Account access">
           <a

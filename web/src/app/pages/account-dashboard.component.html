@@ -104,6 +104,77 @@
 <section class="account-settings" aria-labelledby="settings-heading">
   <span class="ll-label">KEEP YOUR CORNER</span>
   <h2 id="settings-heading">Account settings.</h2>
+  <div class="profile-name">
+    <div>
+      <span class="ll-label">DISPLAY NAME</span>
+      <strong>{{ account.name() }}</strong>
+      <p class="field-hint">
+        Used on your profile and in new rooms. Existing match names stay the same.
+      </p>
+    </div>
+    @if (!nameOpen()) {
+      <button
+        #nameButton
+        type="button"
+        class="text-button"
+        (click)="toggleName()"
+        [disabled]="!!operation() || account.busy()"
+      >
+        Edit name
+      </button>
+    }
+  </div>
+  @if (nameMessage()) {
+    <p class="settings-notice" role="status">{{ nameMessage() }}</p>
+  }
+  @if (nameOpen()) {
+    <form
+      id="name-settings"
+      class="settings-form name-settings"
+      [formGroup]="nameForm"
+      (ngSubmit)="saveName()"
+    >
+      <label for="profile-name">YOUR DISPLAY NAME</label>
+      <input
+        #nameInput
+        id="profile-name"
+        class="ll-input"
+        type="text"
+        formControlName="name"
+        autocomplete="nickname"
+        maxlength="24"
+        [readOnly]="!!operation() || account.busy()"
+        [attr.aria-invalid]="nameForm.controls.name.touched && nameForm.controls.name.invalid"
+        aria-describedby="name-hint name-error"
+      />
+      <p id="name-hint" class="field-hint">
+        Use 2–24 characters. Other players can use the same name.
+      </p>
+      <p id="name-error" class="field-error" aria-live="polite">
+        @if (nameForm.controls.name.touched && nameForm.controls.name.invalid) {
+          Use a name with 2–24 characters.
+        }
+      </p>
+      @if (nameError()) {
+        <p class="record-error" role="alert">{{ nameError() }}</p>
+      }
+      <button
+        type="submit"
+        class="ll-action ll-action-coral"
+        [disabled]="nameForm.invalid || nameUnchanged || !!operation() || account.busy()"
+      >
+        {{ operation() === 'name' ? 'Saving name…' : 'Save changes' }} ↗
+      </button>
+      <button
+        type="button"
+        class="text-button cancel-setting"
+        (click)="toggleName()"
+        [disabled]="!!operation() || account.busy()"
+      >
+        Cancel
+      </button>
+    </form>
+  }
   <div class="settings-buttons">
     <button
       type="button"

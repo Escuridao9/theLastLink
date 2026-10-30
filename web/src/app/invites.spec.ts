@@ -51,6 +51,17 @@ beforeEach(() => { localStorage.clear(); sessionStorage.clear(); });
 afterEach(() => { TestBed.resetTestingModule(); vi.restoreAllMocks(); });
 
 describe('Private invite entry', () => {
+  it('uses the updated account name for a new room even when the cached room name is older', async () => {
+    const f = setup();
+    f.account.showAccount();
+    await f.account.updateName('Link Captain');
+    localStorage.setItem('last-link-name', 'Older room name');
+    const h = await RouterTestingHarness.create('/rooms?category=games');
+    await h.fixture.whenStable();
+    const component = h.routeDebugElement!.componentInstance as RoomsComponent;
+    expect(component.form.controls.name.value).toBe('Link Captain');
+    expect(f.game.send).not.toHaveBeenCalled();
+  });
   it('joins the entered room when Enter is pressed in the manual room-code field', async () => {
     const f = setup();
     const h = await RouterTestingHarness.create('/rooms?category=movies');

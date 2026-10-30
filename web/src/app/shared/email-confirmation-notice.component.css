@@ -1,0 +1,109 @@
+:host {
+  display: block;
+}
+.confirmation-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  margin: 28px 0 12px;
+  padding: 23px 26px;
+  border: 1px solid var(--ll-line);
+  border-left: 4px solid var(--ll-lilac);
+  border-radius: 8px;
+  background: #2c2331;
+  color: var(--ll-cream);
+}
+.confirmation-copy {
+  min-width: 0;
+}
+.confirmation-kicker {
+  font-size: 9px;
+  letter-spacing: 1.4px;
+  color: var(--ll-lilac);
+  font-weight: 700;
+}
+.confirmation-notice h2 {
+  font-size: 27px;
+  line-height: 1.1;
+  letter-spacing: -0.8px;
+  margin: 7px 0 10px;
+}
+.confirmation-notice h2 span {
+  color: var(--ll-coral);
+}
+.confirmation-notice p {
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.confirmation-notice strong {
+  font-weight: 700;
+}
+.confirmation-notice .confirmation-hint {
+  color: var(--ll-quiet);
+  margin-top: 6px;
+  font-size: 12px;
+}
+.confirmation-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-shrink: 0;
+}
+.confirmation-actions a,
+.confirmation-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 9px 0;
+  border: 0;
+  background: none;
+  color: var(--ll-lilac);
+  font: inherit;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.confirmation-actions a {
+  color: var(--ll-cream);
+  font-weight: 700;
+}
+.confirmation-actions button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+.confirmation-notice .confirmation-feedback {
+  margin-top: 10px;
+  color: var(--ll-lilac);
+}
+.confirmation-notice .confirmation-error {
+  margin-top: 10px;
+  color: #ffb3a5;
+}
+@media (max-width: 800px) {
+  .confirmation-notice {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .confirmation-actions {
+    flex-wrap: wrap;
+    gap: 12px 22px;
+  }
+}
+@media (max-width: 600px) {
+  .confirmation-notice {
+    padding: 18px 16px;
+    margin-top: 18px;
+  }
+  .confirmation-notice h2 {
+    font-size: 25px;
+  }
+  .confirmation-actions {
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+  }
+}

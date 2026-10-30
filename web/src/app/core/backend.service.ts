@@ -98,11 +98,26 @@ export class BackendService implements OnDestroy {
             );
           } else {
             const { error } = await this.client.auth.exchangeCodeForSession(redirect.code);
-            if (error)
-              this.authIssue.set(
-                'This confirmation link could not restore your session. Open it in the browser that requested it, or try logging in.',
-              );
-            else this.authNotice.set('Email confirmed. Your account is ready.');
+            if (error) {
+              // Email verification can succeed before a different browser fails
+              // the PKCE exchange. Missing browser state is a login fallback,
+              // not evidence that the email was rejected or confirmed.
+              if (
+                error.name === 'AuthPKCECodeVerifierMissingError' ||
+                error.code === 'bad_code_verifier'
+              )
+                this.authNotice.set(
+                  'Automatic sign-in could not finish in this browser. Log in with your email and password to continue.',
+                );
+              else
+                this.authIssue.set(
+                  ['otp_expired', 'flow_state_expired', 'flow_state_not_found'].includes(
+                    error.code ?? '',
+                  )
+                    ? 'This confirmation link has expired or was already used. Try logging in, or request a new email if confirmation is still needed.'
+                    : 'This confirmation link could not be completed. Try logging in or request a new email.',
+                );
+            } else this.authNotice.set('Email confirmed. Your account is ready.');
           }
         }
         const auth = this.client.auth;

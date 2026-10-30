@@ -7,6 +7,7 @@ import { AccountComponent } from './account.component';
 import { AccountService } from '../core/account.service';
 import { ConfigService } from '../core/config.service';
 import { ReviewAccountService } from '../design-review/review-account.service';
+import { HomeComponent } from './home.component';
 
 @Component({ template: '<p>Next screen</p>' })
 class DestinationComponent {}
@@ -18,6 +19,7 @@ async function fixture(url = '/account', configured = true) {
   TestBed.configureTestingModule({
     providers: [
       provideRouter([
+        { path: '', pathMatch: 'full', component: HomeComponent },
         { path: 'account', component: AccountComponent },
         { path: 'play', component: DestinationComponent },
         { path: 'rooms', component: DestinationComponent },
@@ -100,7 +102,10 @@ describe('Account page forms and routing', () => {
     await f.component.register();
     expect(f.register).toHaveBeenCalledWith('Diogo', 'diogo@example.invalid', 'long password');
     f.harness.detectChanges();
-    expect(f.harness.routeNativeElement?.textContent).toContain('One last check');
+    expect(f.router.url).toBe('/');
+    expect(f.harness.routeNativeElement?.textContent).toContain('Check your inbox');
+    expect(f.harness.routeNativeElement?.textContent).toContain('diogo@example.invalid');
+    expect(f.harness.routeNativeElement?.querySelector('#email-code')).toBeNull();
   });
   it('requires both passwords before a guest registration and opens the account directly after verification', async () => {
     const f = await fixture('/account?mode=signup');
@@ -123,8 +128,9 @@ describe('Account page forms and routing', () => {
     expect(f.register).toHaveBeenCalledWith('Diogo', 'diogo@example.invalid', 'A test password');
     expect(f.component.signupForm.controls.password.value).toBe('');
     expect(f.component.signupForm.controls.confirm.value).toBe('');
-    f.component.codeForm.controls.code.setValue('123456');
-    await f.component.verify();
+    expect(f.router.url).toBe('/');
+    f.account.confirmEmail();
+    await f.harness.navigateByUrl('/account');
     f.harness.detectChanges();
     expect(f.harness.routeNativeElement?.querySelector('#finish-password')).toBeNull();
     expect(f.account.isAccount()).toBe(true);
@@ -143,6 +149,47 @@ describe('Account page forms and routing', () => {
         ?.querySelector('button[type="submit"]')
         ?.hasAttribute('disabled'),
     ).toBe(true);
+  });
+  it('keeps login available while an email is pending and removes the manual code form', async () => {
+    const f = await fixture();
+    await f.account.register('Diogo', 'pending@example.invalid', 'A test password');
+    f.harness.detectChanges();
+    expect(f.harness.routeNativeElement?.querySelector('#login-email')).not.toBeNull();
+    expect(f.harness.routeNativeElement?.querySelector('#email-code')).toBeNull();
+    expect(f.harness.routeNativeElement?.textContent).not.toContain('six-digit');
+  });
+  it('does not redirect a visitor who leaves while the signup request is pending', async () => {
+    const f = await fixture('/account?mode=signup');
+    let complete!: () => void;
+    f.register.mockImplementationOnce(
+      () =>
+        new Promise<void>((resolve) => {
+          complete = resolve;
+        }),
+    );
+    f.component.signupForm.setValue({
+      name: 'Diogo',
+      email: 'diogo@example.invalid',
+      password: 'long password',
+      confirm: 'long password',
+    });
+    const pending = f.component.register();
+    await f.router.navigateByUrl('/play');
+    complete();
+    await pending;
+    expect(f.router.url).toBe('/play');
+    expect(f.component.signupForm.controls.password.value).toBe('');
+  });
+  it('shows the other-browser fallback as a notice with a usable login form', async () => {
+    const f = await fixture();
+    f.account.showBrowserFallback();
+    f.harness.detectChanges();
+    expect(f.harness.routeNativeElement?.querySelector('[role="alert"]')).toBeNull();
+    expect(f.harness.routeNativeElement?.querySelector('.account-message')?.textContent).toContain(
+      'Automatic sign-in',
+    );
+    expect(f.harness.routeNativeElement?.querySelector('#login-email')).not.toBeNull();
+    expect(f.harness.routeNativeElement?.querySelector('#email-code')).toBeNull();
   });
   it('keeps signup and login disabled when Supabase is not configured', async () => {
     const f = await fixture('/account', false);

@@ -62,15 +62,18 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-it.each([false, true])('preserves invitation and category query parameters in the empty-history return link (preview=%s)', (preview) => {
-  const f = setup(of({ ...data, history: [] }));
-  vi.spyOn(TestBed.inject(UiLinks), 'reviewing', 'get').mockReturnValue(preview);
-  f.fixture.componentRef.setInput('returnTo', '/rooms?code=ABCDEF123456&category=football');
-  f.fixture.detectChanges();
-  expect(f.page.querySelector('a.text-button')?.getAttribute('href')).toBe(
-    `${preview ? '/design-review' : ''}/rooms?code=ABCDEF123456&category=football`,
-  );
-});
+it.each([false, true])(
+  'preserves invitation and category query parameters in the empty-history return link (preview=%s)',
+  (preview) => {
+    const f = setup(of({ ...data, history: [] }));
+    vi.spyOn(TestBed.inject(UiLinks), 'reviewing', 'get').mockReturnValue(preview);
+    f.fixture.componentRef.setInput('returnTo', '/rooms?code=ABCDEF123456&category=football');
+    f.fixture.detectChanges();
+    expect(f.page.querySelector('a.text-button')?.getAttribute('href')).toBe(
+      `${preview ? '/design-review' : ''}/rooms?code=ABCDEF123456&category=football`,
+    );
+  },
+);
 
 it('shows personal statistics and saved summaries without broken links to expired details', () => {
   const f = setup();
@@ -150,4 +153,75 @@ it('changing identity clears private history before the next request completes',
   f.fixture.detectChanges();
   expect(f.component.history()).toEqual([]);
   expect(f.component.overview()).toBeNull();
+});
+
+it('edits and saves the display name without changing saved history or statistics', async () => {
+  const f = setup();
+  const update = vi.spyOn(f.account, 'updateName');
+  f.component.toggleName();
+  f.fixture.detectChanges();
+  expect(f.component.nameForm.controls.name.value).toBe('Diogo');
+  expect(
+    f.page.querySelector<HTMLButtonElement>('#name-settings button[type="submit"]')?.disabled,
+  ).toBe(true);
+  expect(f.page.querySelector('#profile-name')?.getAttribute('autocomplete')).toBe('nickname');
+  f.component.nameForm.controls.name.setValue('Alex');
+  await f.component.saveName();
+  f.fixture.detectChanges();
+  expect(update).toHaveBeenCalledExactlyOnceWith('Alex');
+  expect(f.account.name()).toBe('Alex');
+  expect(f.component.nameOpen()).toBe(false);
+  expect(f.page.querySelector('.settings-notice')?.textContent).toContain('updated');
+  expect(f.component.history()).toEqual(data.history);
+  expect(f.component.stats()).toEqual(data.statistics);
+});
+it('validates changed names and lets the player cancel without saving', async () => {
+  const f = setup();
+  const update = vi.spyOn(f.account, 'updateName');
+  f.component.toggleName();
+  for (const name of [' ', 'x', 'x'.repeat(25)]) {
+    f.component.nameForm.controls.name.setValue(name);
+    await f.component.saveName();
+  }
+  expect(update).not.toHaveBeenCalled();
+  f.component.nameForm.controls.name.setValue('Unsaved name');
+  f.component.toggleName();
+  expect(f.account.name()).toBe('Diogo');
+  expect(f.component.nameForm.controls.name.value).toBe('');
+  expect(f.component.nameOpen()).toBe(false);
+});
+it('keeps a failed name edit available for retry and prevents duplicate saves', async () => {
+  const f = setup();
+  let complete!: () => void;
+  const update = vi.spyOn(f.account, 'updateName').mockImplementationOnce(
+    () =>
+      new Promise<void>((resolve) => {
+        complete = resolve;
+      }),
+  );
+  f.component.toggleName();
+  f.component.nameForm.controls.name.setValue('Alex');
+  const saving = f.component.saveName();
+  await f.component.saveName();
+  expect(update).toHaveBeenCalledTimes(1);
+  complete();
+  await saving;
+  f.component.toggleName();
+  f.component.nameForm.controls.name.setValue('Another name');
+  update.mockRejectedValueOnce(Error('Connection unavailable. Try again.'));
+  await f.component.saveName();
+  f.fixture.detectChanges();
+  expect(f.component.nameOpen()).toBe(true);
+  expect(f.component.operation()).toBeNull();
+  expect(f.page.querySelector('[role="alert"]')?.textContent).toContain('Connection unavailable');
+  expect(f.component.nameForm.controls.name.value).toBe('Another name');
+});
+it('clears an unfinished name edit when the identity changes', () => {
+  const f = setup();
+  f.component.toggleName();
+  f.component.nameForm.controls.name.setValue('Unsaved name');
+  f.account.showLogin();
+  f.fixture.detectChanges();
+  expect(f.component.nameForm.controls.name.value).toBe('');
+  expect(f.component.nameOpen()).toBe(false);
 });

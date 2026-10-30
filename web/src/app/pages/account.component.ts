@@ -13,6 +13,7 @@ import { ConfigService } from '../core/config.service';
 import { accountReturnPath } from '../core/auth-navigation';
 import { UiLinks } from '../shared/ui-links.service';
 import { AccountDashboardComponent } from './account-dashboard.component';
+import { EmailConfirmationNoticeComponent } from '../shared/email-confirmation-notice.component';
 
 const passwordRules = [Validators.required, Validators.minLength(8), Validators.maxLength(128)];
 const emailControl = () =>
@@ -26,7 +27,12 @@ const passwordsMatch: ValidatorFn = (form) =>
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, AccountDashboardComponent],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    AccountDashboardComponent,
+    EmailConfirmationNoticeComponent,
+  ],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',
 })
@@ -65,12 +71,6 @@ export class AccountComponent implements OnInit, OnDestroy {
     },
     { validators: passwordsMatch },
   );
-  readonly codeForm = new FormGroup({
-    code: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required, Validators.pattern(/^\d{6}$/)],
-    }),
-  });
   private querySubscription?: Subscription;
   private destroyed = false;
   ngOnInit(): void {
@@ -107,22 +107,9 @@ export class AccountComponent implements OnInit, OnDestroy {
       const value = this.signupForm.getRawValue();
       await this.account.register(value.name, value.email, value.password);
       this.clearPasswords();
-    });
-  }
-  async verify(): Promise<void> {
-    this.codeForm.markAllAsTouched();
-    if (this.codeForm.invalid || this.account.busy()) return;
-    await this.perform(async () => {
-      await this.account.verifyEmail(this.codeForm.controls.code.value);
-      this.codeForm.reset();
-      this.message.set('Email confirmed. You’re in.');
-    });
-  }
-  async resend(): Promise<void> {
-    if (this.account.busy()) return;
-    await this.perform(async () => {
-      await this.account.resend();
-      this.message.set('Confirmation requested. Check your inbox and spam folder.');
+      if (this.destroyed) return;
+      if (this.account.verification()) await this.router.navigateByUrl(this.links.to('/'));
+      else await this.continue();
     });
   }
   async logout(): Promise<void> {
@@ -146,13 +133,6 @@ export class AccountComponent implements OnInit, OnDestroy {
     sessionStorage.removeItem('last-link-account-return');
     await this.router.navigateByUrl(this.links.to(this.returnTo()));
   }
-  differentEmail(): void {
-    if (this.account.busy()) return;
-    this.account.clearVerification();
-    this.message.set('');
-    this.error.set('');
-    this.mode.set('signup');
-  }
   private async perform(action: () => Promise<void>): Promise<void> {
     this.error.set('');
     this.message.set('');
@@ -172,6 +152,5 @@ export class AccountComponent implements OnInit, OnDestroy {
     this.destroyed = true;
     this.querySubscription?.unsubscribe();
     this.clearPasswords();
-    this.codeForm.reset();
   }
 }

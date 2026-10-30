@@ -41,9 +41,7 @@ export class ReviewAccountService {
       userId: this.user()?.id ?? null,
     });
   }
-  async verifyEmail(code: string): Promise<void> {
-    if (code !== '123456')
-      throw Error('That confirmation has expired or was already used. Request a new email.');
+  confirmEmail(): void {
     const pending = this.verification();
     if (!pending) throw Error('Request a confirmation email first.');
     this.user.set({
@@ -51,6 +49,26 @@ export class ReviewAccountService {
       id: pending.userId ?? 'design-review-account',
     });
     this.clearVerification();
+  }
+  showPendingConfirmation(): void {
+    this.showLogin();
+    this.verification.set({ email: 'diogo@example.invalid', type: 'signup', userId: null });
+  }
+  showBrowserFallback(): void {
+    this.showLogin();
+    this.redirectIssue.set('');
+    this.redirectNotice.set(
+      'Automatic sign-in could not finish in this browser. Log in with your email and password to continue.',
+    );
+  }
+  async updateName(name: string): Promise<void> {
+    const user = this.user();
+    if (!user || !this.isAccount())
+      throw Error('Log in to a confirmed account before changing your name.');
+    const displayName = name.trim();
+    if (displayName.length < 2 || displayName.length > 24)
+      throw Error('Use a name with 2–24 characters.');
+    this.user.set({ ...user, user_metadata: { ...user.user_metadata, display_name: displayName } });
   }
   async resend(): Promise<void> {
     /* The example does not send an email. */
@@ -73,6 +91,8 @@ export class ReviewAccountService {
   showLogin(): void {
     this.user.set(null);
     this.clearVerification();
+    this.redirectIssue.set('');
+    this.redirectNotice.set('');
   }
   showAccount(): void {
     this.showLogin();

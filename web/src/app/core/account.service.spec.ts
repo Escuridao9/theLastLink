@@ -101,7 +101,10 @@ function fixture(initial: User | null = null) {
     exchangeCodeForSession: vi.fn(async (_code: string) => {
       const user = person();
       emit(user);
-      return { data: { user, session: session(user) }, error: null as null | { code: string } };
+      return {
+        data: { user, session: session(user) },
+        error: null as null | { code?: string; name?: string },
+      };
     }),
   };
   const client = {
@@ -134,6 +137,91 @@ afterEach(() => {
 });
 
 describe('Real account service with an isolated Auth transport', () => {
+  it('updates only the confirmed account display name, preserving its identity and match resume', async () => {
+    const f = fixture(person());
+    await f.account.initialize();
+    localStorage.setItem('last-link-resume', 'existing-match');
+    const changed = vi.fn();
+    f.backend.onIdentityChange(changed);
+    await f.account.updateName(' Alex ');
+    expect(f.auth.updateUser).toHaveBeenCalledExactlyOnceWith({ data: { display_name: 'Alex' } });
+    expect(f.account.name()).toBe('Alex');
+    expect(f.backend.playerId()).toBe('account-one');
+    expect(f.account.user()?.email).toBe('diogo@example.invalid');
+    expect(localStorage.getItem('last-link-name')).toBe('Alex');
+    expect(localStorage.getItem('last-link-resume')).toBe('existing-match');
+    expect(changed).not.toHaveBeenCalled();
+    expect(f.auth.signUp).not.toHaveBeenCalled();
+  });
+  it('rejects invalid display names before changing Auth metadata', async () => {
+    const f = fixture(person());
+    for (const name of ['', '   ', 'x', 'x'.repeat(25)])
+      await expect(f.account.updateName(name)).rejects.toThrow('2–24');
+    expect(f.auth.updateUser).not.toHaveBeenCalled();
+    expect(f.account.name()).toBe('Diogo');
+  });
+  it.each([null, person('guest-one', true), { ...person(), email_confirmed_at: undefined }])(
+    'requires a signed-in confirmed account for name edits (%j)',
+    async (user) => {
+      const f = fixture(user);
+      await expect(f.account.updateName('Alex')).rejects.toThrow('confirmed account');
+      expect(f.auth.updateUser).not.toHaveBeenCalled();
+    },
+  );
+  it('preserves the previous name and unlocks the form after a failed metadata update', async () => {
+    const f = fixture(person());
+    f.auth.updateUser.mockResolvedValueOnce({
+      data: { user: person() },
+      error: { code: 'over_request_rate_limit' },
+    });
+    await expect(f.account.updateName('Alex')).rejects.toThrow('Too many attempts');
+    expect(f.account.name()).toBe('Diogo');
+    expect(f.account.busy()).toBe(false);
+  });
+  it('rejects a late profile response after another account signs in', async () => {
+    const f = fixture(person());
+    let complete!: (value: Awaited<ReturnType<typeof f.auth.updateUser>>) => void;
+    f.auth.updateUser.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          complete = resolve;
+        }),
+    );
+    const saving = f.account.updateName('Alex');
+    const rejected = expect(saving).rejects.toThrow('account changed');
+    await vi.waitFor(() => expect(f.auth.updateUser).toHaveBeenCalledOnce());
+    f.emit(person('another-account'));
+    complete({
+      data: { user: { ...person(), user_metadata: { display_name: 'Alex' } } },
+      error: null,
+    });
+    await rejected;
+    expect(f.backend.playerId()).toBe('another-account');
+    expect(f.account.name()).toBe('Diogo');
+  });
+  it.each([{ name: 'AuthPKCECodeVerifierMissingError' }, { code: 'bad_code_verifier' }])(
+    'offers login without claiming confirmation when the browser verifier is unavailable (%j)',
+    async (error) => {
+      history.replaceState(null, '', '/theLastLink/?code=one-time-code');
+      const f = fixture();
+      f.auth.exchangeCodeForSession.mockResolvedValueOnce({
+        data: { user: person(), session: null },
+        error,
+      });
+      await f.account.initialize();
+      expect(f.account.redirectIssue()).toBe('');
+      expect(f.account.redirectNotice()).toContain('Automatic sign-in could not finish');
+      expect(f.account.redirectNotice()).not.toContain('Email confirmed');
+      expect(f.account.isAccount()).toBe(false);
+      expect(f.account.ready()).toBe(true);
+      expect(f.auth.signInAnonymously).not.toHaveBeenCalled();
+      expect(location.search).toBe('');
+      expect(location.hash).toBe('#/account');
+      await f.account.login('diogo@example.invalid', password);
+      expect(f.account.isAccount()).toBe(true);
+      expect(f.account.redirectNotice()).toBe('');
+    },
+  );
   it('restores an account without creating a guest and keeps the existing SDK storage key', async () => {
     const f = fixture(person());
     await f.account.initialize();
@@ -490,7 +578,8 @@ describe('Real account service with an isolated Auth transport', () => {
     });
     await f.account.initialize();
     expect(f.account.ready()).toBe(true);
-    expect(f.account.redirectIssue()).toContain('could not restore');
+    expect(f.account.redirectIssue()).toContain('expired or was already used');
+    expect(f.account.redirectNotice()).toBe('');
     expect(location.search).toBe('');
   });
   it('does not let an old session restoration overwrite a newer Auth event', async () => {
