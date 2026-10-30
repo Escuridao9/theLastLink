@@ -298,7 +298,7 @@ footer {
   font-family: var(--display);
   font-size: 25px;
 }
-.footer-logo span {
+.footer-logo small {
   display: block;
   font: 9px Arial;
   font-weight: 800;
@@ -2194,7 +2194,7 @@ a.arena-choice:hover {
   .footer-logo {
     font-size: 22px;
   }
-  .footer-logo span {
+  .footer-logo small {
     font-size: 7px;
   }
   .footer-meta {

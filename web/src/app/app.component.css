@@ -34,11 +34,9 @@
 .brand-mark {
   width: 36px;
   height: 36px;
-  stroke: var(--ll-coral);
-  stroke-width: 3;
-  fill: none;
+  flex-shrink: 0;
+  object-fit: contain;
   margin-right: 12px;
-  overflow: visible;
 }
 .site-header nav {
   font-size: 12px;
@@ -86,7 +84,12 @@ footer {
   font-size: 25px;
   letter-spacing: -1px;
 }
-.footer-logo span {
+.footer-logo .brand-mark {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+.footer-logo small {
   font-family: Arial, sans-serif;
   font-size: 7px;
   letter-spacing: 1px;
@@ -172,7 +175,12 @@ footer {
   .footer-meta {
     font-size: 10px;
   }
-  .footer-logo span {
+  .footer-logo .brand-mark {
+    width: 26px;
+    height: 26px;
+    margin-right: 8px;
+  }
+  .footer-logo small {
     font-size: 6px;
   }
 }
