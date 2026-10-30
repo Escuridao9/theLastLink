@@ -288,6 +288,9 @@ app-home .ll-category-row {
   gap: 16px;
 }
 app-home .ll-category {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid transparent;
   border-radius: 12px;
   padding: 23px 24px 20px;
   color: #281d27;
@@ -346,6 +349,9 @@ app-home .ll-category p {
 }
 app-home .ll-category-foot {
   display: block;
+  margin-top: auto;
+  /* Reserve two lines so dividers align even when a connector list wraps. */
+  min-block-size: calc(3.2em + 14px);
   padding-top: 13px;
   border-top: 1px solid #281d2735;
   font-size: 9px;
