@@ -15,9 +15,9 @@
   border-radius: 7px;
   min-height: 54px;
 }
-.answer-search-wrap:focus-within {
-  border-color: var(--ll-coral);
-  box-shadow: 0 0 0 1px var(--ll-coral);
+:host-context([data-focus-mode='keyboard']) .answer-search-wrap:focus-within {
+  outline: 3px solid var(--ll-lilac);
+  outline-offset: 4px;
 }
 .answer-search-wrap > span {
   color: #b9a3ba;
@@ -39,6 +39,9 @@
 .answer-search-wrap input:focus-visible {
   outline: none;
   box-shadow: none;
+}
+:host-context([data-focus-mode='keyboard']) .answer-search-wrap input:focus {
+  outline: none;
 }
 .answer-search-wrap input:read-only {
   opacity: 0.6;

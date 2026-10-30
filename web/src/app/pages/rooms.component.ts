@@ -37,6 +37,18 @@ export class RoomsComponent implements OnInit, OnDestroy {
   private inviteVersion = 0;
   private operation = 0;
   private destroyed = false;
+  private leaving?: Promise<boolean>;
+  private left = false;
+  private departure?: { roomId: string; id: string };
+  get bothConnected(): boolean {
+    const room = this.game.room();
+    return !!room?.guestId && (!room.lobbyPresence ||
+      (room.lobbyPresence[room.hostId]?.connected === true && room.lobbyPresence[room.guestId]?.connected === true));
+  }
+  connected(id: string): boolean {
+    const room = this.game.room();
+    return !room?.lobbyPresence || room.lobbyPresence[id]?.connected === true;
+  }
   chooseCategory(category: Category): void {
     this.category.set(category);
     if (category === 'games') this.form.controls.openingMode.setValue('standard');
@@ -162,11 +174,14 @@ export class RoomsComponent implements OnInit, OnDestroy {
     } catch (e) {
       if (this.destroyed || operation !== this.operation) return;
       const reason = (e as Error).message;
+      if (reason === 'lobby_seat_expired' || reason === 'room_closed') this.pending = undefined;
       const messages: Record<string, string> = {
         room_not_found: 'This invitation is invalid or has expired. Ask your friend for a new link.',
         room_full: 'Both seats are taken. Ask your friend to invite you to another room.',
         room_not_joinable: 'This room is no longer accepting players. Ask your friend for a new invitation.',
         room_not_waiting: 'This room has already started. Ask your friend for a new invitation.',
+        room_closed: 'The host left, so this waiting room has closed. Ask your friend for a new invitation.',
+        lobby_seat_expired: 'Your disconnected seat expired. Join again if a seat is available.',
       };
       this.error.set(messages[reason] ?? reason);
     } finally {
@@ -180,6 +195,9 @@ export class RoomsComponent implements OnInit, OnDestroy {
     this.error.set('');
     try {
       const response = await this.game.send('start', { roomId: room.id });
+      if (!response.ok) throw Error(response.reason === 'players_reconnecting'
+        ? 'Both players need to be connected before the match can start.'
+        : response.reason === 'room_closed' ? 'The waiting room has closed.' : 'The match could not start. Wait for your rival and try again.');
       if (response.match) await this.router.navigate([this.links.to('/match'), response.match.id]);
     } catch (e) {
       this.error.set((e as Error).message);
@@ -194,6 +212,35 @@ export class RoomsComponent implements OnInit, OnDestroy {
     } catch {
       this.error.set('Copy the invite link shown below.');
     }
+  }
+  async leave(): Promise<void> {
+    if (await this.canLeave()) await this.router.navigateByUrl(this.links.to('/rooms'));
+  }
+  canLeave(): Promise<boolean> {
+    const room = this.game.room();
+    if (this.left || !this.route.snapshot.paramMap.get('id') || !room || room.matchId || !['waiting','ready'].includes(room.status))
+      return Promise.resolve(true);
+    if (this.leaving) return this.leaving;
+    this.leaving = (async () => {
+      this.busy.set(true);
+      this.error.set('');
+      try {
+        if (this.departure?.roomId !== room.id) this.departure = { roomId: room.id, id: this.requestId() };
+        const response = await this.game.send('leave', { roomId: room.id }, this.departure.id);
+        if (!response.ok && response.reason !== 'room_closed' && response.reason !== 'lobby_seat_expired')
+          throw Error(response.reason === 'room_started' ? 'The match has started. Opening your match…' : 'Could not leave the lobby. Try again.');
+        this.left = true;
+        if (localStorage.getItem('last-link-resume') === room.id) localStorage.removeItem('last-link-resume');
+        return true;
+      } catch (error) {
+        this.error.set((error as Error).message);
+        return false;
+      } finally {
+        this.busy.set(false);
+        this.leaving = undefined;
+      }
+    })();
+    return this.leaving;
   }
   ngOnDestroy(): void {
     this.destroyed = true;

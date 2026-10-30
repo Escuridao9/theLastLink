@@ -196,16 +196,6 @@
         }
       </aside>
     </div>
-    <p class="ll-footnote">
-      Finished {{ match.endedAt | date: 'medium' }} · Single round · No extra lives.
-    </p>
-    <p class="ll-footnote">
-      {{
-        links.reviewing
-          ? 'Example result only. Nothing is saved to a multiplayer server.'
-          : 'Unused room details expire after 24 hours. Registered accounts keep a compact result in Account.'
-      }}
-    </p>
   </section>
 } @else {
   <section class="ll-page ll-state-page" role="status">

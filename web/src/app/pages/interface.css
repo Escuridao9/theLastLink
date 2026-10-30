@@ -20,13 +20,15 @@ select:focus-visible,
   outline: 3px solid var(--ll-lilac);
   outline-offset: 4px;
 }
-/* Text fields also match :focus-visible after pointer clicks. Their own border
-   supplies focus feedback without a second, detached outline. */
+/* Mouse/touch keeps the normal input border; Tab gets a visible focus ring. */
 input:focus,
 input:focus-visible {
   outline: none;
-  border-color: var(--ll-coral);
-  box-shadow: inset 0 0 0 1px var(--ll-coral);
+  box-shadow: none;
+}
+:root[data-focus-mode='keyboard'] input:focus {
+  outline: 3px solid var(--ll-lilac);
+  outline-offset: 4px;
 }
 @media (forced-colors: active) {
   input:focus-visible,
@@ -1782,4 +1784,11 @@ a.ll-arena-choice:hover {
   .ll-opening-summary {
     font-size: 11px;
   }
+}
+.ll-seat .ll-seat-ready.ll-seat-reconnecting {
+  color: var(--ll-coral);
+}
+.ll-leave-lobby {
+  margin-top: 12px;
+  min-height: 44px;
 }

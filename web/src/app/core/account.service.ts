@@ -51,6 +51,7 @@ export class AccountService implements OnDestroy {
   readonly ready = this.backend.authReady;
   readonly redirectIssue = this.backend.authIssue;
   readonly redirectNotice = this.backend.authNotice;
+  readonly recovering = computed(() => !!this.backend.recoveryUserId() && this.backend.recoveryUserId() === this.user()?.id);
   readonly isGuest = computed(() => !!this.user()?.is_anonymous);
   readonly isAccount = computed(() => !!this.user()?.email && !this.isGuest());
   readonly name = computed(() => {
@@ -78,6 +79,35 @@ export class AccountService implements OnDestroy {
       if (!data.user || !data.session) throw Error('A signed-in session could not be established.');
       this.requireIdentity(data.user.id);
       this.clearVerification();
+    });
+  }
+
+  async requestPasswordReset(email: string): Promise<void> {
+    await this.backend.withAuth(async () => {
+      const address = email.trim();
+      if (address.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(address))
+        throw Error('Enter a valid email address.');
+      const { error } = await this.backend.client.auth.resetPasswordForEmail(address, {
+        redirectTo: authRedirectUrl(document.baseURI, true),
+      });
+      if (error) throw Error(accountError(error));
+    });
+  }
+
+  async resetPassword(password: string): Promise<void> {
+    await this.backend.withAuth(async () => {
+      const id = this.backend.recoveryUserId();
+      if (!id || id !== this.user()?.id || !this.user()?.email_confirmed_at || this.isGuest())
+        throw Error('Open a valid password recovery link before choosing a new password.');
+      this.validatePassword(password);
+      const { data, error } = await this.backend.client.auth.updateUser({ password });
+      if (error) throw Error(error.code === 'same_password'
+        ? 'Choose a different password from the one you used before.'
+        : error.code === 'current_password_required' || error.code === 'reauthentication_needed'
+          ? 'This recovery session has expired. Request a new password recovery email.' : accountError(error));
+      this.requireIdentity(id);
+      if (data.user?.id !== id) throw Error('Your account changed. Request a new recovery email.');
+      this.backend.recoveryUserId.set('');
     });
   }
 

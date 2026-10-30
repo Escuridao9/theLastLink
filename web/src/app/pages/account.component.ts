@@ -42,7 +42,8 @@ export class AccountComponent implements OnInit, OnDestroy {
   readonly links = inject(UiLinks);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  readonly mode = signal<'login' | 'signup'>('login');
+  readonly mode = signal<'login' | 'signup' | 'forgot' | 'reset'>('login');
+  readonly recoveryBusy = signal(false);
   readonly returnTo = signal('/play');
   readonly error = signal('');
   readonly message = signal('');
@@ -54,6 +55,11 @@ export class AccountComponent implements OnInit, OnDestroy {
       validators: [Validators.required, Validators.maxLength(128)],
     }),
   });
+  readonly recoveryForm = new FormGroup({ email: emailControl() });
+  readonly resetForm = new FormGroup({
+    password: new FormControl('', { nonNullable: true, validators: passwordRules }),
+    confirm: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+  }, { validators: passwordsMatch });
   readonly signupForm = new FormGroup(
     {
       name: new FormControl('', {
@@ -76,7 +82,8 @@ export class AccountComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.signupForm.controls.name.setValue(localStorage.getItem('last-link-name') ?? '');
     this.querySubscription = this.route.queryParamMap.subscribe((params) => {
-      this.mode.set(params.get('mode') === 'signup' ? 'signup' : 'login');
+      const mode = params.get('mode');
+      this.mode.set(mode === 'signup' || mode === 'forgot' || mode === 'reset' ? mode : 'login');
       this.returnTo.set(
         accountReturnPath(
           params.get('returnTo') ?? sessionStorage.getItem('last-link-account-return'),
@@ -98,6 +105,30 @@ export class AccountComponent implements OnInit, OnDestroy {
       this.clearPasswords();
       if (!this.destroyed) await this.continue();
     });
+  }
+  async requestReset(): Promise<void> {
+    this.recoveryForm.markAllAsTouched();
+    if (this.recoveryForm.invalid || this.account.busy() || this.recoveryBusy() || !this.config.configured) return;
+    this.recoveryBusy.set(true);
+    await this.perform(async () => {
+      await this.account.requestPasswordReset(this.recoveryForm.controls.email.value);
+      if (!this.destroyed) this.message.set('If an account exists for this email, you’ll receive a password recovery link. Open the new link in this browser.');
+    });
+    this.recoveryBusy.set(false);
+  }
+  async resetPassword(): Promise<void> {
+    this.resetForm.markAllAsTouched();
+    if (this.resetForm.invalid || !this.account.recovering() || this.account.busy() || this.recoveryBusy() || !this.config.configured) return;
+    this.recoveryBusy.set(true);
+    await this.perform(async () => {
+      await this.account.resetPassword(this.resetForm.controls.password.value);
+      this.clearPasswords();
+      if (!this.destroyed) {
+        await this.router.navigateByUrl(this.links.to('/account'));
+        this.message.set('Your password has been updated. You’re signed in and ready to play.');
+      }
+    });
+    this.recoveryBusy.set(false);
   }
   async register(): Promise<void> {
     this.signupForm.markAllAsTouched();
@@ -147,6 +178,7 @@ export class AccountComponent implements OnInit, OnDestroy {
     this.loginForm.controls.password.reset();
     this.signupForm.controls.password.reset();
     this.signupForm.controls.confirm.reset();
+    this.resetForm.reset();
   }
   ngOnDestroy(): void {
     this.destroyed = true;

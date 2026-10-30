@@ -9,6 +9,19 @@ export class ReviewAccountService {
   readonly redirectIssue = signal('');
   readonly redirectNotice = signal('');
   readonly verification = signal<AccountVerification | null>(null);
+  readonly recovering = signal(false);
+  async requestPasswordReset(email: string): Promise<void> {
+    if (email === 'error@example.invalid') throw Error('Could not reach the sign-in service. Check your connection and try again.');
+  }
+  showRecovery(): void {
+    this.showAccount();
+    this.recovering.set(true);
+  }
+  async resetPassword(password: string): Promise<void> {
+    if (!this.recovering()) throw Error('Open a valid password recovery link first.');
+    if (password.length < 8 || password.length > 128) throw Error('Use a password with 8–128 characters.');
+    this.recovering.set(false);
+  }
   readonly isGuest = computed(() => !!this.user()?.is_anonymous);
   readonly isAccount = computed(() => !!this.user()?.email && !this.isGuest());
   readonly name = computed(() => this.user()?.user_metadata?.['display_name'] ?? 'Diogo');
@@ -89,6 +102,7 @@ export class ReviewAccountService {
     });
   }
   showLogin(): void {
+    this.recovering.set(false);
     this.user.set(null);
     this.clearVerification();
     this.redirectIssue.set('');

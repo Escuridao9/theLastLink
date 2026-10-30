@@ -164,6 +164,10 @@ export class ReviewMatchService {
         { id: 'preview-diogo', name: 'Diogo' },
         ...(ready ? [{ id: 'preview-alex', name: 'Alex' }] : []),
       ],
+      lobbyPresence: {
+        'preview-diogo': { connected: true, expiresAt: null },
+        ...(ready ? { 'preview-alex': { connected: true, expiresAt: null } } : {}),
+      },
     };
   }
   async watch(kind: 'room' | 'match', id: string): Promise<void> {
@@ -284,9 +288,16 @@ export class ReviewMatchService {
             guestId: 'preview-alex',
             status: 'ready',
             players: [room.players[0]!, { id: 'preview-alex', name: 'Alex' }],
+            lobbyPresence: { 'preview-diogo': { connected: true, expiresAt: null }, 'preview-alex': { connected: true, expiresAt: null } },
           }
         : room,
     );
+  }
+  disconnectRival(): void {
+    this.room.update(room => room ? { ...room, lobbyPresence: {
+      'preview-diogo': { connected: true, expiresAt: null },
+      'preview-alex': { connected: false, expiresAt: new Date(Date.now()+30000).toISOString() },
+    } } : room);
   }
   changeTurn(): void {
     this.match.update((m) =>
@@ -425,7 +436,10 @@ export class ReviewMatchService {
       duplicate: false,
       serverTime: new Date().toISOString(),
     };
-    if (action === 'create' || action === 'join') {
+    if (action === 'leave') {
+      this.room.set(null);
+      return response;
+    } else if (action === 'create' || action === 'join') {
       if (action === 'join' && String(payload['code']) !== 'LASTLINK2026')
         throw Error('Example room not found. In this preview, use LASTLINK2026.');
       const room = this.makeRoom(

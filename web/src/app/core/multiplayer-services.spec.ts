@@ -298,6 +298,28 @@ describe('Published catalogue HTTP requests', () => {
 });
 
 describe('Authoritative match synchronization', () => {
+  it('heartbeats a lobby per tab, survives backgrounding, and treats page close as a best-effort disconnect', async () => {
+    vi.useFakeTimers();
+    const channel={on:vi.fn(()=>channel),subscribe:vi.fn(()=>channel)};
+    const room={id:'room-one',hostId:'player-one',status:'waiting',revision:1,players:[{id:'player-one',name:'Diogo'}]};
+    const command=vi.fn().mockResolvedValue({...success,room});
+    TestBed.configureTestingModule({providers:[{provide:BackendService,useValue:{
+      onIdentityChange:()=>()=>{},playerId:signal('player-one'),identity:async()=>{},command,
+      client:{channel:()=>channel,removeChannel:vi.fn().mockResolvedValue('ok')},
+    }}]});
+    const service=TestBed.inject(MatchService); await service.watch('room','room-one');
+    const key=command.mock.calls[0][1].clientId; expect(key).toMatch(/^[a-f0-9-]{36}$/);
+    vi.spyOn(document,'hidden','get').mockReturnValue(true); await vi.advanceTimersByTimeAsync(4000);
+    expect(command).toHaveBeenLastCalledWith('room',{roomId:'room-one',clientId:key},expect.any(String));
+    window.dispatchEvent(new Event('pagehide')); expect(command).toHaveBeenLastCalledWith('lobby_disconnect',{roomId:'room-one',clientId:key});
+    await Promise.resolve();
+    command.mockResolvedValueOnce({...success,ok:false,reason:'lobby_seat_expired'});
+    window.dispatchEvent(new Event('pageshow')); await vi.advanceTimersByTimeAsync(0);
+    expect(service.connection()).toBe('Unavailable'); expect(service.room()).toBeNull();
+    expect(service.error()).toContain('seat expired');
+    const count=command.mock.calls.length; window.dispatchEvent(new Event('pagehide')); await vi.advanceTimersByTimeAsync(8000);
+    expect(command).toHaveBeenCalledTimes(count);
+  });
   function snapshot(revision: number): Match {
     return {
       id: 'match-one',

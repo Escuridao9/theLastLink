@@ -74,7 +74,8 @@ export interface Room {
   hostId: string;
   guestId: string | null;
   category: Category;
-  status: 'waiting' | 'ready' | 'playing' | 'finished';
+  status: 'waiting' | 'ready' | 'playing' | 'finished' | 'closed';
+  lobbyPresence?: Record<string, { connected: boolean; expiresAt: string | null }>;
   /** Optional while clients roll forward from the schema without opening pools. */
   openingMode?: OpeningMode;
   openingPoolId?: string | null;

@@ -1,7 +1,6 @@
 import { UiLinks } from '../shared/ui-links.service';
 import { REQUEST_ID } from '../shared/request-id';
 import { Component, OnInit, OnDestroy, inject, effect, signal } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatchService } from '../core/match.service';
@@ -12,7 +11,7 @@ import type { Dataset, ConnectorType } from '../core/models';
 @Component({
   selector: 'app-results',
   standalone: true,
-  imports: [DatePipe, RouterLink],
+  imports: [RouterLink],
   templateUrl: './results.component.html',
 })
 export class ResultsComponent implements OnInit, OnDestroy {

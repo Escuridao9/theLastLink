@@ -6,6 +6,13 @@ import {
   readAuthRedirect,
 } from './auth-navigation';
 describe('Account routing on GitHub Pages', () => {
+  it('identifies recovery callbacks without accepting a URL as authentication', () => {
+    expect(authRedirectUrl('https://example.github.io/theLastLink/#/account',true)).toBe('https://example.github.io/theLastLink/?auth=recovery');
+    expect(readAuthRedirect('https://example.github.io/theLastLink/?auth=recovery&code=once')).toEqual({
+      code:'once',failed:false,recovery:true,cleanUrl:'/theLastLink/#/account?mode=reset',
+    });
+    expect(readAuthRedirect('https://example.github.io/theLastLink/?auth=recovery')).toBeNull();
+  });
   it('keeps the production base directory and removes router fragments from email redirects', () => {
     expect(authRedirectUrl('https://example.github.io/theLastLink/?campaign=one#/account')).toBe(
       'https://example.github.io/theLastLink/',

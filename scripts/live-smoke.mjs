@@ -178,6 +178,7 @@ export async function runLiveSmoke() {
     auth: { persistSession: false, autoRefreshToken: true, detectSessionInUrl: false },
   });
   const clients = [makeClient(), makeClient()];
+  const lobbyClients = clients.map(() => crypto.randomUUID());
   const streams = [];
   const verified = [];
   const skipped = [];
@@ -185,6 +186,7 @@ export async function runLiveSmoke() {
   let rematchObservation;
   let phase = 'authentication';
   const command = async (index, action, payload, requestId = crypto.randomUUID()) => {
+    if (['create','join','room','start'].includes(action)) payload = { ...payload, clientId: lobbyClients[index] };
     const { data, error } = await clients[index].functions.invoke('match-api', { body: { action, payload, requestId } });
     if (error) {
       let message = error.message;
@@ -239,6 +241,7 @@ export async function runLiveSmoke() {
     await Promise.all(streams.map(stream => stream.ready));
     verified.push('both Postgres Changes subscriptions confirmed ready before match start');
     phase = 'start and RLS reads';
+    await Promise.all(clients.map((_client,index) => command(index,'room',{roomId:room.id})));
     let match = (await command(0, 'start', { roomId: room.id })).match;
     assert.equal(match.category, category);
     assert.equal(match.catalogueId, publication.id);

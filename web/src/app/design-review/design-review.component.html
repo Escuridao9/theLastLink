@@ -19,6 +19,8 @@
       >
       <a routerLink="/design-review/account" [queryParams]="{ mode: 'signup' }">Create account</a>
       @if (onAccount) {
+        <a routerLink="/design-review/account" [queryParams]="{ mode: 'forgot' }" (click)="accounts.showLogin()">Forgot password</a>
+        <button (click)="accounts.showRecovery()" routerLink="/design-review/account" [queryParams]="{ mode: 'reset' }">Verified recovery example</button>
         <button (click)="accounts.showLogin()">Show logged-out state</button>
         <button (click)="accounts.showGuest()">Show guest upgrade</button>
         <button (click)="accounts.showPendingConfirmation()" routerLink="/design-review">
@@ -42,6 +44,8 @@
         Other-browser login fallback
       </button>
       @if (onLobby) {
+        <button (click)="preview.disconnectRival()">Rival reconnecting</button>
+        <button (click)="preview.waitForRival()">Expire rival’s seat</button>
         <button (click)="preview.addRival()">Add example rival</button
         ><button (click)="preview.waitForRival()">Waiting lobby</button>
       }

@@ -15,6 +15,7 @@ import { CatalogueService } from '../core/catalogue.service';
 import { ReviewMatchService, ReviewCatalogueService } from './review-services';
 import { PREVIEW_CONFIGURATION } from '../../../../src/configuration';
 import { confirmMatchExit } from '../core/match-exit.guard';
+import { leaveWaitingLobby } from '../core/lobby-exit.guard';
 export const REVIEW_ROUTES: Routes = [
   {
     path: '',
@@ -59,6 +60,7 @@ export const REVIEW_ROUTES: Routes = [
       },
       {
         path: 'rooms/:id',
+        canDeactivate: [leaveWaitingLobby],
         loadComponent: () => import('../pages/rooms.component').then((m) => m.RoomsComponent),
       },
       {

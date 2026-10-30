@@ -123,6 +123,7 @@
                   [games]="data.games"
                   [played]="match.state.history"
                   [disabled]="!myTurn || busy()"
+                  [autoFocus]="true"
                   (selected)="selected.set($event)"
                 /><button
                   class="ll-lock-answer"
@@ -181,13 +182,6 @@
           } @empty {
             <p class="ll-no-counters">A clean slate. No credits used yet.</p>
           }
-        </div>
-        <div class="ll-trap-tip">
-          <span aria-hidden="true">↳</span>
-          <p>
-            <strong>Yes, you can leave a trap.</strong><br />No legal reply? The clock keeps
-            running.
-          </p>
         </div>
       </aside>
       <section class="ll-match-history" aria-labelledby="chain-title">

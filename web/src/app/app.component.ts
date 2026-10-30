@@ -6,6 +6,7 @@ import { ConfigService } from './core/config.service';
 import { AccountLinkComponent } from './shared/account-link.component';
 import { TurnAudioService } from './core/turn-audio.service';
 import { ResumeService } from './core/resume.service';
+import { FocusModeService } from './core/focus-mode.service';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -24,6 +25,7 @@ export class App implements OnDestroy {
   readonly showSessionReturn = signal(false);
   // Listen for a user gesture before the first match needs to play a turn cue.
   private readonly turnAudio = inject(TurnAudioService);
+  private readonly focusMode = inject(FocusModeService);
   constructor() {
     this.updateSessionReturn(this.router.url);
     this.navigation = this.router.events.subscribe((event) => {

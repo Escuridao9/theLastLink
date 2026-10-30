@@ -215,3 +215,9 @@
     font-size: 14px;
   }
 }
+.account-recovery-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 10px;
+}

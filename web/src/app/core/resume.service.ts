@@ -107,7 +107,7 @@ export class ResumeService implements OnDestroy {
       const nextId = match.rematch.nextMatchId;
       this.save(id, { kind: 'match', id: nextId });
       if (this.target()?.id !== nextId) this.target.set(null);
-    } else if (match?.status === 'finished' || room.status === 'finished') {
+    } else if (match?.status === 'finished' || room.status === 'finished' || room.status === 'closed') {
       const saved = this.read(id);
       if (saved?.id === match?.id || saved?.id === room.id || saved?.id === room.matchId)
         this.clear(id);
@@ -120,6 +120,10 @@ export class ResumeService implements OnDestroy {
       this.target.set({ ...candidate, label: 'Return to lobby', category: this.category(room.category) });
     }
   }
+  forgetRoom(roomId: string): void {
+    const id = this.backend.playerId();
+    if (id && this.read(id)?.id === roomId) this.clear(id);
+  }
 
   async refresh(): Promise<void> {
     const id = this.backend.playerId();
@@ -130,9 +134,13 @@ export class ResumeService implements OnDestroy {
     const serial = this.serial, started = Date.now();
     this.refreshing = true;
     try {
-      const response = await this.backend.command(saved.kind === 'room' ? 'room' : 'snapshot',
+      const response = await this.backend.command(saved.kind === 'room' ? 'room_status' : 'snapshot',
         saved.kind === 'room' ? { roomId: saved.id } : { matchId: saved.id });
       if (this.destroyed || serial !== this.serial || id !== this.backend.playerId()) return;
+      if (response.reason === 'room_closed' || response.reason === 'lobby_seat_expired') {
+        this.clear(id);
+        return;
+      }
       this.remember(response, Date.parse(response.serverTime) - (started + Date.now()) / 2);
     } catch (error) {
       if (!this.destroyed && serial === this.serial && id === this.backend.playerId()) {

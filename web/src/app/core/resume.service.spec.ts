@@ -37,6 +37,21 @@ beforeEach(() => {
 afterEach(() => { TestBed.resetTestingModule(); vi.useRealTimers(); vi.restoreAllMocks(); });
 
 describe('Contextual session return', () => {
+  it('uses a read-only room check and clears a closed lobby shortcut', async () => {
+    const {service,backend}=setup();
+    service.remember(reply({room:room()}));
+    backend.command.mockResolvedValue(reply({ok:false,reason:'room_closed'}));
+    service.setVisible(true); await Promise.resolve();
+    expect(backend.command).toHaveBeenCalledWith('room_status',{roomId:'room-one'});
+    expect(service.target()).toBeNull();
+    expect(localStorage.getItem('last-link-return:host')).toBeNull();
+  });
+  it('forgets an explicitly departed room without removing a different active match', () => {
+    const {service}=setup(); service.remember(reply({room:room()}));
+    service.forgetRoom('room-one'); expect(service.target()).toBeNull();
+    service.remember(reply({match:match()})); service.forgetRoom('room-one');
+    expect(service.target()?.id).toBe('match-one');
+  });
   it('saves an authorized lobby and uses a lobby-specific label', () => {
     const { service } = setup();
     service.remember(reply({ room: room() }));

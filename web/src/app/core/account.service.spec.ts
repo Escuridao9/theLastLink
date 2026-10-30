@@ -94,6 +94,7 @@ function fixture(initial: User | null = null) {
       return { data: { user, session: session(user) }, error: null as null | { code: string } };
     }),
     resend: vi.fn(async (_request: unknown) => ({ data: {}, error: null })),
+    resetPasswordForEmail: vi.fn(async (_email: string, _options: unknown) => ({ data: {}, error: null as null | { code: string } })),
     signOut: vi.fn(async (_options: unknown) => {
       emit(null);
       return { error: null };
@@ -137,6 +138,77 @@ afterEach(() => {
 });
 
 describe('Real account service with an isolated Auth transport', () => {
+  it('requests password recovery with a GitHub Pages safe callback and never creates a guest', async () => {
+    const f = fixture();
+    await f.account.requestPasswordReset('  diogo@example.invalid  ');
+    expect(f.auth.resetPasswordForEmail).toHaveBeenCalledWith('diogo@example.invalid', {
+      redirectTo: new URL('?auth=recovery', document.baseURI).href,
+    });
+    expect(f.auth.signInAnonymously).not.toHaveBeenCalled();
+    expect(f.backend.recoveryUserId()).toBe('');
+  });
+  it('updates a password only after a real recovery Auth event, preserving the identity', async () => {
+    const f = fixture(person());
+    await f.account.initialize();
+    await expect(f.account.resetPassword(password)).rejects.toThrow('valid password recovery link');
+    expect(f.auth.updateUser).not.toHaveBeenCalled();
+    f.emit(person(), 'PASSWORD_RECOVERY');
+    expect(f.account.recovering()).toBe(true);
+    await f.account.resetPassword(password);
+    expect(f.auth.updateUser).toHaveBeenCalledExactlyOnceWith({ password });
+    expect(f.backend.playerId()).toBe('account-one');
+    expect(f.account.recovering()).toBe(false);
+  });
+  it('rejects weak passwords, keeps a recoverable error, and blocks late updates after identity changes', async () => {
+    const f = fixture(person()); await f.account.initialize(); f.emit(person(),'PASSWORD_RECOVERY');
+    await expect(f.account.resetPassword('short')).rejects.toThrow('8–128');
+    f.auth.updateUser.mockResolvedValueOnce({ data:{user:person()},error:{code:'same_password'} });
+    await expect(f.account.resetPassword(password)).rejects.toThrow('different password');
+    expect(f.account.recovering()).toBe(true);
+    f.emit(person('other-account'));
+    expect(f.account.recovering()).toBe(false);
+    await expect(f.account.resetPassword(password)).rejects.toThrow('valid password recovery link');
+    expect(f.auth.updateUser).toHaveBeenCalledTimes(1);
+  });
+  it('does not treat a recovery URL or ordinary login as permission to reset a password', async () => {
+    history.replaceState(null,'','/?auth=recovery&code=ordinary-login-code');
+    const f = fixture(); await f.account.initialize();
+    expect(f.account.recovering()).toBe(false);
+    expect(f.account.redirectIssue()).toContain('did not establish a password recovery session');
+    await expect(f.account.resetPassword(password)).rejects.toThrow('valid password recovery link');
+    expect(location.search).toBe('');
+    expect(location.hash).toBe('#/account?mode=reset');
+  });
+  it('opens the reset form for a verified recovery callback and scrubs its one-time code', async () => {
+    history.replaceState(null,'','/?auth=recovery&code=recovery-code');
+    const f = fixture();
+    f.auth.exchangeCodeForSession.mockImplementation(async () => {
+      const user = person(); f.emit(user,'PASSWORD_RECOVERY');
+      return {data:{user,session:{user,access_token:'test-access-token',refresh_token:'test-refresh-token'}},error:null};
+    });
+    await f.account.initialize();
+    expect(f.account.recovering()).toBe(true);
+    expect(f.account.redirectNotice()).toContain('new password');
+    expect(f.account.redirectNotice()).not.toContain('Email confirmed');
+    expect(location.search).toBe(''); expect(location.hash).toBe('#/account?mode=reset');
+  });
+  it('provides recovery-specific guidance in a different browser instead of requiring a forgotten password', async () => {
+    history.replaceState(null,'','/?auth=recovery&code=recovery-code');
+    const f = fixture();
+    f.auth.exchangeCodeForSession.mockResolvedValueOnce({data:{user:person(),session:null as never},error:{name:'AuthPKCECodeVerifierMissingError'}});
+    await f.account.initialize();
+    expect(f.account.redirectNotice()).toContain('Request a new recovery email here');
+    expect(f.account.redirectNotice()).not.toContain('Log in with your email and password');
+    expect(f.account.recovering()).toBe(false);
+    expect(f.account.redirectIssue()).toBe('');
+  });
+  it('reports invalid recovery links separately and does not restore recovery privileges after a normal login', async () => {
+    history.replaceState(null,'','/?auth=recovery&error=access_denied');
+    const f = fixture(); await f.account.initialize();
+    expect(f.account.redirectIssue()).toContain('password recovery link is invalid or expired');
+    f.emit(person(),'PASSWORD_RECOVERY'); expect(f.account.recovering()).toBe(true);
+    f.emit(person(),'SIGNED_IN'); expect(f.account.recovering()).toBe(false);
+  });
   it('updates only the confirmed account display name, preserving its identity and match resume', async () => {
     const f = fixture(person());
     await f.account.initialize();

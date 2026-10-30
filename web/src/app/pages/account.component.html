@@ -1,10 +1,13 @@
 <section class="ll-page ll-account-page">
   <app-email-confirmation-notice />
   <a class="ll-back" [routerLink]="links.to('/play')">← Back to the arenas</a>
-  <div class="account-layout" [class.account-layout-member]="account.isAccount()">
+  <div class="account-layout" [class.account-layout-member]="account.isAccount() && !account.recovering() && mode() !== 'forgot' && mode() !== 'reset'">
     <header class="account-heading">
       <span class="ll-label">ONE BRAIN. PLENTY OF RIVALS.</span>
-      @if (account.isAccount()) {
+      @if (account.recovering() || mode() === 'forgot' || mode() === 'reset') {
+        <h1>Back in<br /><em>the game.</em></h1>
+        <p>A forgotten password shouldn’t be your last link.</p>
+      } @else if (account.isAccount()) {
         <h1>Your name.<br /><em>Your game.</em></h1>
         <p>Welcome back, {{ account.name() }}. There’s always another worthy opponent.</p>
       } @else if (mode() === 'signup') {
@@ -40,6 +43,44 @@
       }
       @if (!account.ready()) {
         <p role="status">Restoring your session…</p>
+      } @else if (account.recovering()) {
+        <span class="account-confirmed">✓ RECOVERY LINK VERIFIED</span>
+        <h2>A fresh start.</h2>
+        <p class="account-copy">Choose a new password for {{ account.user()?.email }}.</p>
+        <form [formGroup]="resetForm" (ngSubmit)="resetPassword()">
+          <label for="reset-password">NEW PASSWORD</label>
+          <input id="reset-password" class="ll-input" type="password" formControlName="password"
+            autocomplete="new-password" minlength="8" maxlength="128"
+            [readOnly]="account.busy() || recoveryBusy()" aria-describedby="reset-password-hint"
+            [attr.aria-invalid]="resetForm.controls.password.touched && resetForm.controls.password.invalid" />
+          <p id="reset-password-hint" class="account-hint">Use 8–128 characters.</p>
+          <label for="reset-confirm">CONFIRM NEW PASSWORD</label>
+          <input id="reset-confirm" class="ll-input" type="password" formControlName="confirm"
+            autocomplete="new-password" maxlength="128" [readOnly]="account.busy() || recoveryBusy()"
+            aria-describedby="reset-confirm-error"
+            [attr.aria-invalid]="resetForm.controls.confirm.touched && (resetForm.controls.confirm.invalid || resetForm.hasError('passwordsMatch'))" />
+          <p id="reset-confirm-error" class="account-field-error">{{ resetForm.controls.confirm.touched && (resetForm.controls.confirm.invalid || resetForm.hasError('passwordsMatch')) ? 'The passwords must match.' : '' }}</p>
+          <button class="ll-action ll-action-coral account-submit" type="submit" [disabled]="resetForm.invalid || account.busy() || recoveryBusy() || !config.configured">
+            {{ recoveryBusy() ? 'Saving…' : 'Save new password' }}<span aria-hidden="true">↗</span>
+          </button>
+        </form>
+      } @else if (mode() === 'forgot' || mode() === 'reset') {
+        <h2>Forgot your password?</h2>
+        <p class="account-copy">We’ll email a link so you can choose a new one.</p>
+        @if (mode() === 'reset' && !account.redirectIssue() && !account.redirectNotice()) {
+          <p class="ll-note" role="status">Open a fresh recovery link to reset your password. If you refreshed this page, request another email below.</p>
+        }
+        <form [formGroup]="recoveryForm" (ngSubmit)="requestReset()">
+          <label for="recovery-email">EMAIL ADDRESS</label>
+          <input id="recovery-email" class="ll-input" type="email" formControlName="email" autocomplete="email" maxlength="254"
+            [readOnly]="account.busy() || recoveryBusy()" aria-describedby="recovery-email-error"
+            [attr.aria-invalid]="recoveryForm.controls.email.touched && recoveryForm.controls.email.invalid" />
+          <p id="recovery-email-error" class="account-field-error">{{ recoveryForm.controls.email.touched && recoveryForm.controls.email.invalid ? 'Enter a valid email address.' : '' }}</p>
+          <button class="ll-action ll-action-coral account-submit" type="submit" [disabled]="account.busy() || recoveryBusy() || !config.configured">
+            {{ recoveryBusy() ? 'Sending…' : 'Send recovery link' }}<span aria-hidden="true">↗</span>
+          </button>
+        </form>
+        <a class="account-text-button account-recovery-link" [routerLink]="links.to('/account')" [queryParams]="{ mode: 'login', returnTo: returnTo() }">← Back to log in</a>
       } @else if (account.isAccount()) {
         <span class="account-confirmed">✓ LOGGED IN</span>
         <h2>{{ account.name() }}<span class="account-stop">.</span></h2>
@@ -137,6 +178,7 @@
               {{ account.busy() ? 'Logging in…' : 'Log in' }}<span aria-hidden="true">↗</span>
             </button>
           </form>
+          <a class="account-text-button account-recovery-link" [routerLink]="links.to('/account')" [queryParams]="{ mode: 'forgot', returnTo: returnTo() }">Forgot password?</a>
           @if (account.isGuest()) {
             <p class="account-footnote">
               Logging in uses that account’s player identity. To keep this guest identity, choose

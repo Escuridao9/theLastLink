@@ -13,6 +13,8 @@ export class BackendService implements OnDestroy {
   readonly authReady = signal(false);
   readonly authIssue = signal('');
   readonly authNotice = signal('');
+  // Set only by a recovery Auth event, never by a query parameter or saved marker.
+  readonly recoveryUserId = signal('');
   private instance?: SupabaseClient;
   private factory?: typeof import('@supabase/supabase-js').createClient;
   private clientLoading?: Promise<void>;
@@ -50,9 +52,12 @@ export class BackendService implements OnDestroy {
         },
       },
     );
-    const { data } = this.instance.auth.onAuthStateChange((_event, session) => {
+    const { data } = this.instance.auth.onAuthStateChange((event, session) => {
       // Keep this callback synchronous: calling Auth methods here can deadlock.
       this.acceptAuthUser(session?.user ?? null);
+      if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') this.recoveryUserId.set('');
+      if (event === 'PASSWORD_RECOVERY' && session?.user.email_confirmed_at && !session.user.is_anonymous)
+        this.recoveryUserId.set(session.user.id);
     });
     this.authSubscription = data.subscription;
     return this.instance;
@@ -94,7 +99,9 @@ export class BackendService implements OnDestroy {
           // Remove the one-time code before the router or any view can expose it.
           if (redirect.failed || !redirect.code) {
             this.authIssue.set(
-              'This confirmation link could not be completed. Try logging in or request a new email.',
+              redirect.recovery
+                ? 'This password recovery link is invalid or expired. Request a new recovery email.'
+                : 'This confirmation link could not be completed. Try logging in or request a new email.',
             );
           } else {
             const { error } = await this.client.auth.exchangeCodeForSession(redirect.code);
@@ -107,16 +114,25 @@ export class BackendService implements OnDestroy {
                 error.code === 'bad_code_verifier'
               )
                 this.authNotice.set(
-                  'Automatic sign-in could not finish in this browser. Log in with your email and password to continue.',
+                  redirect.recovery
+                    ? 'This recovery link needs the browser where you requested it. Request a new recovery email here, then open that new link in this browser.'
+                    : 'Automatic sign-in could not finish in this browser. Log in with your email and password to continue.',
                 );
               else
                 this.authIssue.set(
-                  ['otp_expired', 'flow_state_expired', 'flow_state_not_found'].includes(
+                  redirect.recovery
+                    ? 'This password recovery link could not be completed or has expired. Request a new recovery email.'
+                    : ['otp_expired', 'flow_state_expired', 'flow_state_not_found'].includes(
                     error.code ?? '',
                   )
                     ? 'This confirmation link has expired or was already used. Try logging in, or request a new email if confirmation is still needed.'
                     : 'This confirmation link could not be completed. Try logging in or request a new email.',
                 );
+            } else if (this.recoveryUserId()) {
+              this.authNotice.set('Choose and confirm your new password below.');
+              history.replaceState(history.state, '', location.pathname + location.search + '#/account?mode=reset');
+            } else if (redirect.recovery) {
+              this.authIssue.set('This link did not establish a password recovery session. Request a new recovery email.');
             } else this.authNotice.set('Email confirmed. Your account is ready.');
           }
         }
@@ -148,6 +164,7 @@ export class BackendService implements OnDestroy {
     const next = user?.id ?? null;
     this.knownIdentity = next;
     if (previous !== undefined && previous !== next) {
+      this.recoveryUserId.set('');
       const resume = localStorage.getItem('last-link-resume');
       if (previous && resume) localStorage.setItem('last-link-resume:' + previous, resume);
       if (previous) {

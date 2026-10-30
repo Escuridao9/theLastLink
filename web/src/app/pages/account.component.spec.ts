@@ -42,6 +42,42 @@ afterEach(() => {
 });
 
 describe('Account page forms and routing', () => {
+  it('offers password recovery from login, validates email and shows neutral confirmation', async () => {
+    const f = await fixture();
+    const link = f.harness.routeNativeElement!.querySelector('.account-recovery-link') as HTMLAnchorElement;
+    expect(link.textContent).toContain('Forgot password?'); link.click(); await f.harness.fixture.whenStable();
+    const page = f.harness.routeDebugElement!.componentInstance as AccountComponent;
+    const reset = vi.spyOn(f.account,'requestPasswordReset');
+    await page.requestReset(); expect(reset).not.toHaveBeenCalled();
+    page.recoveryForm.controls.email.setValue('diogo@example.invalid'); await page.requestReset(); f.harness.detectChanges();
+    expect(reset).toHaveBeenCalledWith('diogo@example.invalid');
+    expect(f.harness.routeNativeElement!.textContent).toContain('If an account exists');
+    expect(f.harness.routeNativeElement!.querySelector('input[type="password"]')).toBeNull();
+  });
+  it('requires a verified recovery state and matching new passwords without asking for the old one', async () => {
+    const f = await fixture('/account?mode=reset');
+    expect(f.harness.routeNativeElement!.querySelector('#reset-password')).toBeNull();
+    f.account.showRecovery(); f.harness.detectChanges();
+    const reset = vi.spyOn(f.account,'resetPassword');
+    expect(f.harness.routeNativeElement!.querySelector('input[autocomplete="current-password"]')).toBeNull();
+    f.component.resetForm.setValue({password:'A new password 123!',confirm:'different'});
+    await f.component.resetPassword(); expect(reset).not.toHaveBeenCalled();
+    f.component.resetForm.controls.confirm.setValue('A new password 123!'); await f.component.resetPassword();
+    f.harness.detectChanges(); expect(reset).toHaveBeenCalledExactlyOnceWith('A new password 123!');
+    expect(f.component.resetForm.controls.password.value).toBe('');
+    expect(f.harness.routeNativeElement!.textContent).toContain('Your password has been updated');
+    expect(f.router.url).toBe('/account');
+  });
+  it('prevents duplicate recovery requests and shows a retryable email error', async () => {
+    const f = await fixture('/account?mode=forgot');
+    f.component.recoveryForm.controls.email.setValue('diogo@example.invalid');
+    let fail!:(error:Error)=>void;
+    const reset=vi.spyOn(f.account,'requestPasswordReset').mockImplementationOnce(()=>new Promise((_done,reject)=>{fail=reject;}));
+    const first=f.component.requestReset(); await f.component.requestReset(); expect(reset).toHaveBeenCalledOnce();
+    fail(Error('Try again later.')); await first; f.harness.detectChanges();
+    expect(f.component.recoveryBusy()).toBe(false);
+    expect(f.harness.routeNativeElement!.querySelector('[role="alert"]')?.textContent).toContain('Try again later');
+  });
   it('shows associated input labels and browser password-manager autocomplete attributes', async () => {
     const f = await fixture();
     const page = f.harness.routeNativeElement!;

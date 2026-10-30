@@ -2,7 +2,10 @@
   @if (game.room(); as room) {
     <div class="ll-room-meta">
       <span class="ll-label">{{ room.category }} / PRIVATE ROOM</span
-      ><span class="ll-live-status"><i aria-hidden="true"></i>{{ game.connection() }}</span>
+      >
+      @if (game.connection() !== 'Live' && game.connection() !== 'Local example') {
+        <span class="ll-live-status" role="status">{{ game.connection() }}</span>
+      }
     </div>
     <header class="ll-page-heading ll-lobby-heading">
       <span class="ll-label">02 / THE CALM BEFORE THE CLOCK</span>
@@ -43,7 +46,7 @@
               >
               <h2>{{ player.name }}</h2>
             </div>
-            <span class="ll-seat-ready">✓ In the room</span>
+            <span class="ll-seat-ready" [class.ll-seat-reconnecting]="!connected(player.id)" role="status">{{ connected(player.id) ? '✓ In the room' : 'Reconnecting…' }}</span>
           </div>
         }
         @if (!room.guestId) {
@@ -66,14 +69,15 @@
             @if (room.hostId === game.backend.playerId()) {
               <button
                 class="ll-action ll-action-coral ll-start"
-                [disabled]="busy()"
+                [disabled]="busy() || !bothConnected"
                 (click)="start()"
               >
                 {{ busy() ? 'Starting…' : 'Start Sudden Death' }}<span aria-hidden="true">↗</span>
               </button>
             } @else {
-              <p class="ll-note" role="status">You’re both in. The host starts the match.</p>
+              <p class="ll-note" role="status">{{ bothConnected ? 'You’re both in. The host starts the match.' : 'Waiting for both players to reconnect.' }}</p>
             }
+            @if (!bothConnected) { <p class="ll-footnote" role="status">A disconnected seat is held for up to 30 seconds. The match starts when both players are connected.</p> }
           }
           @default {
             <p class="ll-note" role="status">Opening your match…</p>
@@ -83,6 +87,7 @@
           The starting {{ room.category === 'football' ? 'club' : 'title' }} and first player are selected by the server. The 20-second clock starts
           immediately.
         </p>
+        <button type="button" class="ll-back ll-leave-lobby" (click)="leave()" [disabled]="busy()">← Leave room</button>
       </section>
       <aside class="ll-invite-panel">
         <span class="ll-label">THE INVITE. NOT A SECRET HANDSHAKE.</span>

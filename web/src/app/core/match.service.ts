@@ -19,6 +19,14 @@ export class MatchService implements OnDestroy {
   private sequence = 0;
   private clockSequence = 0;
   private refresh?: () => Promise<void>;
+  private lobbyId?: string;
+  private readonly clientId = crypto.randomUUID();
+  private readonly onPageHide = () => {
+    if (this.lobbyId) void this.backend.command('lobby_disconnect', {
+      roomId: this.lobbyId, clientId: this.clientId,
+    }).catch(() => { /* The server lease expires if the browser cannot send this. */ });
+  };
+  private readonly onPageShow = () => { void this.refresh?.(); };
   private readonly unsubscribeIdentity = this.backend.onIdentityChange(() => {
     this.stop();
     this.room.set(null);
@@ -41,7 +49,9 @@ export class MatchService implements OnDestroy {
     const started = Date.now(),
       sequence = ++this.sequence,
       generation = this.generation;
-    const response = await this.backend.command(action, payload, requestId);
+    const response = await this.backend.command(action,
+      ['create','join','room','start','leave'].includes(action) ? { ...payload, clientId: this.clientId } : payload,
+      requestId);
     if (generation !== this.generation) return response;
     if (sequence >= this.clockSequence) {
       this.clockOffset.set(Date.parse(response.serverTime) - (started + Date.now()) / 2);
@@ -61,6 +71,7 @@ export class MatchService implements OnDestroy {
       this.match.set(match);
     this.error.set('');
     this.resume.remember(response, this.clockOffset());
+    if (action === 'leave' && response.ok) this.resume.forgetRoom(String(payload['roomId']));
     return response;
   }
   async watch(kind: 'room' | 'match', id: string): Promise<void> {
@@ -75,20 +86,17 @@ export class MatchService implements OnDestroy {
     const refresh = async () => {
       if (generation !== this.generation) return;
       try {
-        await this.send(
+        const response = await this.send(
           kind === 'room' ? 'room' : 'snapshot',
           kind === 'room' ? { roomId: id } : { matchId: id },
         );
+        if (generation === this.generation && (response.reason === 'room_closed' || response.reason === 'lobby_seat_expired')) {
+          this.unavailable(response.reason);
+        }
       } catch (error) {
         if (generation === this.generation) {
           if (/room_not_found|match_not_found/.test((error as Error).message)) {
-            this.stop();
-            this.room.set(null);
-            this.match.set(null);
-            this.connection.set('Unavailable');
-            this.error.set(
-              'This room or detailed result is unavailable. Unused room details expire after 24 hours. Registered players can find saved summaries in Account.',
-            );
+            this.unavailable('not_found');
             if (localStorage.getItem('last-link-resume') === id)
               localStorage.removeItem('last-link-resume');
             return;
@@ -99,6 +107,11 @@ export class MatchService implements OnDestroy {
       }
     };
     this.refresh = refresh;
+    if (kind === 'room') {
+      this.lobbyId = id;
+      window.addEventListener('pagehide', this.onPageHide);
+      window.addEventListener('pageshow', this.onPageShow);
+    }
     this.channel = this.backend.client
       .channel(`last-link:${kind}:${id}`, {
         config: { postgres_changes_options: { wait: true, timeout: 10000 } },
@@ -121,7 +134,7 @@ export class MatchService implements OnDestroy {
         if (status === 'SUBSCRIBED') void refresh(); // Close the fetch/subscribe race.
       });
     this.poll = setInterval(() => {
-      if (!document.hidden) void refresh();
+      if (kind === 'room' || !document.hidden) void refresh();
     }, 4000);
     document.addEventListener('visibilitychange', this.onVisible);
     window.addEventListener('online', this.onOnline);
@@ -134,8 +147,25 @@ export class MatchService implements OnDestroy {
     this.poll = undefined;
     this.channel = undefined;
     this.refresh = undefined;
+    this.lobbyId = undefined;
+    window.removeEventListener('pagehide', this.onPageHide);
+    window.removeEventListener('pageshow', this.onPageShow);
     document.removeEventListener('visibilitychange', this.onVisible);
     window.removeEventListener('online', this.onOnline);
+  }
+  private unavailable(reason: string): void {
+    const id = this.lobbyId;
+    if (id) this.resume.forgetRoom(id);
+    this.stop();
+    this.room.set(null);
+    this.match.set(null);
+    this.connection.set('Unavailable');
+    this.error.set(reason === 'room_closed'
+      ? 'The host left the lobby, so this waiting room has closed. Create or join another room.'
+      : reason === 'lobby_seat_expired'
+        ? 'Your lobby seat expired while you were disconnected. Use the invitation to join again if a seat is available.'
+        : 'This room or detailed result is unavailable. Unused room details expire after 24 hours. Registered players can find saved summaries in Account.');
+    if (id && localStorage.getItem('last-link-resume') === id) localStorage.removeItem('last-link-resume');
   }
   ngOnDestroy(): void {
     this.stop();

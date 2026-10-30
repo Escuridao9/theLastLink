@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import { Router, Routes } from '@angular/router';
 import { readCategory } from './core/models';
 import { confirmMatchExit } from './core/match-exit.guard';
+import { leaveWaitingLobby } from './core/lobby-exit.guard';
 
 export const routes: Routes = [
   {
@@ -39,6 +40,7 @@ export const routes: Routes = [
   },
   {
     path: 'rooms/:id',
+    canDeactivate: [leaveWaitingLobby],
     title: 'Your room — The Last Link',
     loadComponent: () => import('./pages/rooms.component').then((m) => m.RoomsComponent),
   },

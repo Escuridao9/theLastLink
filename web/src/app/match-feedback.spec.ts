@@ -74,6 +74,19 @@ beforeEach(() => { localStorage.clear(); sessionStorage.clear(); });
 afterEach(() => { TestBed.resetTestingModule(); vi.restoreAllMocks(); });
 
 describe('Shared match feedback', () => {
+  it('focuses the answer when the active player changes and keeps rejected answers editable', async () => {
+    const f=await render('movies','host','guest');
+    expect(f.element.querySelector('#answer-search')).toBeNull();
+    f.state.match.set({...f.match,activePlayer:'host',state:{...f.match.state,version:3}});
+    f.fixture.detectChanges(); await f.fixture.whenStable();
+    const input=f.element.querySelector('#answer-search') as HTMLInputElement;
+    expect(document.activeElement).toBe(input);
+    f.fixture.componentInstance.selected.set(f.dataset.games[3]!);
+    await f.fixture.componentInstance.submit(); f.fixture.detectChanges(); await f.fixture.whenStable();
+    expect(document.activeElement).toBe(input); expect(input.readOnly).toBe(false);
+    expect(f.element.textContent).toContain('TRY AGAIN');
+    expect(f.element.querySelector('.ll-trap-tip')).toBeNull();
+  });
   for (const category of ['games', 'movies', 'football'] as const) {
     for (const viewer of ['host', 'guest']) {
       it(`shows the server's last accepted connection to ${viewer} in ${category} without a local submission`, async () => {

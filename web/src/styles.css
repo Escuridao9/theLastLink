@@ -81,9 +81,6 @@ select {
   width: 100%;
   min-width: 0;
 }
-input:focus {
-  border-color: var(--acid);
-}
 input::placeholder {
   color: #929789;
 }

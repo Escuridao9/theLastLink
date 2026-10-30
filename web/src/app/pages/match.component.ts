@@ -1,6 +1,6 @@
 import { REQUEST_ID } from '../shared/request-id';
 import { UiLinks } from '../shared/ui-links.service';
-import { Component, OnInit, OnDestroy, inject, signal, effect, untracked } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal, effect, untracked, ViewChild, afterNextRender, Injector } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatchService } from '../core/match.service';
@@ -35,6 +35,8 @@ export class MatchComponent implements OnInit, OnDestroy {
   readonly busy = signal(false);
   readonly feedback = signal('');
   readonly error = signal('');
+  @ViewChild(GameSearchComponent) private answerSearch?: GameSearchComponent;
+  private readonly injector = inject(Injector);
   private subscription?: Subscription;
   private catalogueId = '';
   private selectionTurn = '';
@@ -162,6 +164,7 @@ export class MatchComponent implements OnInit, OnDestroy {
       this.error.set(`${(e as Error).message} Retry the same answer to safely check its outcome.`);
     } finally {
       this.busy.set(false);
+      if (this.myTurn) afterNextRender(() => this.answerSearch?.focusAnswer(), { injector: this.injector });
     }
   }
   async elapsed(): Promise<void> {
