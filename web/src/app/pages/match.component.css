@@ -209,7 +209,7 @@ app-match .ll-turn-label i {
 app-match .ll-format {
   font-size: 9px;
   letter-spacing: 1px;
-  color: #867a7c;
+  color: #66565f;
   flex-shrink: 0;
 }
 app-match .ll-current-title {
@@ -224,7 +224,7 @@ app-match .ll-current-title > div {
 }
 app-match .ll-current-title p {
   font-size: 11px;
-  color: #7b6c75;
+  color: #66565f;
   margin: 0 0 8px;
   line-height: 1.4;
 }
@@ -236,7 +236,7 @@ app-match .ll-current-title h1 {
   margin: 0 0 9px;
 }
 app-match .ll-entry-year {
-  color: #86717c;
+  color: #66565f;
   font-size: 16px;
 }
 app-match .ll-field-foot {

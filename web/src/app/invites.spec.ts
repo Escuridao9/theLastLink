@@ -51,6 +51,36 @@ beforeEach(() => { localStorage.clear(); sessionStorage.clear(); });
 afterEach(() => { TestBed.resetTestingModule(); vi.restoreAllMocks(); });
 
 describe('Private invite entry', () => {
+  it('joins the entered room when Enter is pressed in the manual room-code field', async () => {
+    const f = setup();
+    const h = await RouterTestingHarness.create('/rooms?category=movies');
+    await h.fixture.whenStable();
+    const component = h.routeDebugElement!.componentInstance as RoomsComponent;
+    component.form.controls.name.setValue('Diogo');
+    component.form.controls.code.setValue('ABCDEF123456');
+    const enter = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
+    h.routeNativeElement!.querySelector('#room-code')!.dispatchEvent(enter);
+    await h.fixture.whenStable();
+    expect(enter.defaultPrevented).toBe(true);
+    expect(f.game.send).toHaveBeenCalledExactlyOnceWith(
+      'join', { name: 'Diogo', code: 'ABCDEF123456' }, expect.any(String),
+    );
+    expect(TestBed.inject(Router).url).toBe('/rooms/invited-room');
+  });
+  it('does not fall through to room creation when Enter is pressed on an invalid room code', async () => {
+    const f = setup();
+    const h = await RouterTestingHarness.create('/rooms?category=movies');
+    await h.fixture.whenStable();
+    const component = h.routeDebugElement!.componentInstance as RoomsComponent;
+    component.form.controls.name.setValue('Diogo');
+    component.form.controls.code.setValue('SHORT');
+    const enter = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
+    h.routeNativeElement!.querySelector('#room-code')!.dispatchEvent(enter);
+    await h.fixture.whenStable();
+    expect(enter.defaultPrevented).toBe(true);
+    expect(f.game.send).not.toHaveBeenCalled();
+    expect(TestBed.inject(Router).url).toBe('/rooms?category=movies');
+  });
   it('shows one name field and submits the invited room instead of creating another', async () => {
     const f = setup();
     const h = await RouterTestingHarness.create('/rooms?code=abcdef123456&category=movies');

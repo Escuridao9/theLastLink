@@ -59,7 +59,11 @@ export class GameSearchComponent implements OnInit, OnDestroy {
       event.preventDefault();
       this.choose(options[this.active]);
     }
-    if (event.key === 'Escape') this.open.set(false);
+    if (event.key === 'Escape') {
+      event.preventDefault(); // A native search input would otherwise clear the typed answer.
+      this.open.set(false);
+    }
+    if (event.key === 'Tab') this.open.set(false);
   }
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();

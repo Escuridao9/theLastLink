@@ -11,7 +11,7 @@ import {
   untracked,
 } from '@angular/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink, type UrlTree } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AccountService } from '../core/account.service';
@@ -36,8 +36,12 @@ export class AccountDashboardComponent implements OnDestroy {
   @Output() sessionEnded = new EventEmitter<{ message: string; email: string }>();
   readonly account = inject(AccountService);
   readonly links = inject(UiLinks);
+  private readonly router = inject(Router);
   private readonly records = inject(AccountRecordsService);
   private readonly operations = inject(AccountOperationsService);
+  get returnUrl(): UrlTree {
+    return this.router.parseUrl(this.links.to(this.returnTo));
+  }
   readonly categories: { value: Category | null; label: string }[] = [
     { value: null, label: 'All arenas' },
     { value: 'movies', label: 'Movies' },

@@ -261,6 +261,7 @@
           <label class="ll-label" for="room-code">12-CHARACTER ROOM CODE</label
           ><input
             id="room-code"
+            (keydown.enter)="$event.preventDefault(); act('join')"
             class="ll-input"
             formControlName="code"
             placeholder="Enter your room code"

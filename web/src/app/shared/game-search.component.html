@@ -14,7 +14,7 @@
       [placeholder]="category === 'movies' ? 'Movie title or release year…' : category === 'football' ? 'Club name…' : 'Game title…'"
       role="combobox"
       aria-autocomplete="list"
-      aria-controls="game-options"
+      [attr.aria-controls]="open() && text().trim().length >= 2 && !disabled ? 'game-options' : null"
       [attr.aria-expanded]="!disabled && open() && suggestions.length > 0"
       [attr.aria-activedescendant]="
         !disabled && open() && suggestions.length ? 'game-option-' + active : null
@@ -29,6 +29,7 @@
         <button
           type="button"
           role="option"
+          tabindex="-1"
           [id]="'game-option-' + i"
           [attr.aria-selected]="i === active"
           [class.highlight]="i === active"

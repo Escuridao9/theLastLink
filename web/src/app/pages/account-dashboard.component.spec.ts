@@ -8,6 +8,7 @@ import { AccountRecordsService, type AccountOverview } from '../core/account-rec
 import { AccountOperationsService } from '../core/account-operations.service';
 import { AccountService } from '../core/account.service';
 import { ReviewAccountService } from '../design-review/review-account.service';
+import { UiLinks } from '../shared/ui-links.service';
 const data: AccountOverview = {
   statistics: { played: 1, wins: 1, losses: 0, winRate: 100 },
   categories: [{ category: 'movies', played: 1, wins: 1, losses: 0, winRate: 100 }],
@@ -58,6 +59,17 @@ function setup(stream = of(data)) {
 }
 afterEach(() => {
   TestBed.resetTestingModule();
+  vi.restoreAllMocks();
+});
+
+it.each([false, true])('preserves invitation and category query parameters in the empty-history return link (preview=%s)', (preview) => {
+  const f = setup(of({ ...data, history: [] }));
+  vi.spyOn(TestBed.inject(UiLinks), 'reviewing', 'get').mockReturnValue(preview);
+  f.fixture.componentRef.setInput('returnTo', '/rooms?code=ABCDEF123456&category=football');
+  f.fixture.detectChanges();
+  expect(f.page.querySelector('a.text-button')?.getAttribute('href')).toBe(
+    `${preview ? '/design-review' : ''}/rooms?code=ABCDEF123456&category=football`,
+  );
 });
 
 it('shows personal statistics and saved summaries without broken links to expired details', () => {

@@ -86,6 +86,41 @@ beforeEach(() => { localStorage.clear(); sessionStorage.clear(); });
 afterEach(() => { TestBed.resetTestingModule(); vi.useRealTimers(); vi.restoreAllMocks(); });
 
 describe('Answer selection and retries', () => {
+  it('keeps suggestions out of the tab order and closes them without selecting a hidden answer', () => {
+    const fixture = TestBed.createComponent(GameSearchComponent);
+    const search = fixture.componentInstance;
+    search.games = dataset.games;
+    fixture.detectChanges();
+    search.query.setValue('Test');
+    fixture.detectChanges();
+    const page = fixture.nativeElement as HTMLElement;
+    expect(page.querySelector('[role="option"]')?.getAttribute('tabindex')).toBe('-1');
+    const selected = vi.fn();
+    search.selected.subscribe(selected);
+    const tab = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
+    page.querySelector('input')!.dispatchEvent(tab);
+    fixture.detectChanges();
+    expect(tab.defaultPrevented).toBe(false);
+    expect(search.open()).toBe(false);
+    expect(search.query.value).toBe('Test');
+    expect(page.querySelector('[role="listbox"]')).toBeNull();
+    expect(page.querySelector('input')?.hasAttribute('aria-controls')).toBe(false);
+    search.key(new KeyboardEvent('keydown', { key: 'Enter', cancelable: true }));
+    expect(selected).not.toHaveBeenCalled();
+  });
+
+  it('prevents native search clearing on Escape while dismissing suggestions and preserving the query', () => {
+    const search = new GameSearchComponent();
+    search.games = dataset.games;
+    search.ngOnInit();
+    search.query.setValue('Test');
+    const escape = new KeyboardEvent('keydown', { key: 'Escape', cancelable: true });
+    search.key(escape);
+    expect(escape.defaultPrevented).toBe(true);
+    expect(search.open()).toBe(false);
+    expect(search.query.value).toBe('Test');
+    search.ngOnDestroy();
+  });
   it('clears a selected answer when the authoritative turn changes', () => {
     const { state } = classFixture();
     const component = TestBed.runInInjectionContext(() => new MatchComponent());
