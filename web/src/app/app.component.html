@@ -14,7 +14,10 @@
       routerLinkActive="current"
       [routerLinkActiveOptions]="{ exact: true }"
       >Play</a
-    ><a [routerLink]="links.to('/catalogue')" routerLinkActive="current">Explore the catalogue</a>
+    ><a [routerLink]="links.to('/catalogue')" routerLinkActive="current" class="nav-catalogue"
+      ><span class="nav-catalogue-long">Explore the catalogue</span
+      ><span class="nav-catalogue-short">Catalogue</span></a
+    >
     <a [routerLink]="links.to('/rooms')" class="nav-cta"
       ><span class="nav-room-long">Have a room code?</span><span class="nav-room-short">Room</span>
       <span aria-hidden="true">↗</span></a

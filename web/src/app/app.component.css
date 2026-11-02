@@ -51,6 +51,9 @@
 .site-header nav .current {
   color: var(--ll-coral);
 }
+.nav-catalogue-short {
+  display: none;
+}
 .nav-cta {
   display: inline-flex;
   align-items: center;
@@ -155,15 +158,25 @@ footer {
     justify-content: space-between;
     gap: 12px;
   }
-  .site-header nav > a:not(.nav-cta):not(.nav-play):not(.preview-account-link) {
+  .site-header nav > a:not(.nav-cta):not(.nav-play):not(.nav-catalogue):not(.preview-account-link) {
     display: none;
   }
-  .nav-play {
+  .nav-play,
+  .nav-catalogue {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     min-width: 44px;
     min-height: 44px;
+  }
+  .nav-catalogue {
+    white-space: nowrap;
+  }
+  .nav-catalogue-long {
+    display: none;
+  }
+  .nav-catalogue-short {
+    display: inline;
   }
   .nav-cta {
     font-size: 10px;
