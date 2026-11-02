@@ -1,5 +1,6 @@
 import { UiLinks } from './shared/ui-links.service';
-import { Component, OnDestroy, inject, signal } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild, inject, signal } from '@angular/core';
+import { ViewportScroller } from '@angular/common';
 import { Router, NavigationEnd, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ConfigService } from './core/config.service';
@@ -21,12 +22,35 @@ export class App implements OnDestroy {
   readonly config = inject(ConfigService);
   readonly resume = inject(ResumeService);
   private readonly router = inject(Router);
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly viewportScroller = inject(ViewportScroller);
+  private header?: HTMLElement;
+  private headerObserver?: ResizeObserver;
+  @ViewChild('siteHeader') set siteHeader(element: ElementRef<HTMLElement> | undefined) {
+    this.headerObserver?.disconnect();
+    this.header = element?.nativeElement;
+    if (!this.header) return;
+    // Keep section links and sticky credit details clear of the responsive header.
+    const updateHeight = () => {
+      const height = this.header?.getBoundingClientRect().height ?? 0;
+      this.host.nativeElement.style.setProperty('--ll-header-height', `${Math.ceil(height)}px`);
+    };
+    updateHeight();
+    if (typeof ResizeObserver !== 'undefined') {
+      this.headerObserver = new ResizeObserver(updateHeight);
+      this.headerObserver.observe(this.header);
+    }
+  }
   private readonly navigation: Subscription;
   readonly showSessionReturn = signal(false);
   // Listen for a user gesture before the first match needs to play a turn cue.
   private readonly turnAudio = inject(TurnAudioService);
   private readonly focusMode = inject(FocusModeService);
   constructor() {
+    this.viewportScroller.setOffset(() => [
+      0,
+      (this.header?.getBoundingClientRect().height ?? 0) + 20,
+    ]);
     this.updateSessionReturn(this.router.url);
     this.navigation = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) this.updateSessionReturn(event.urlAfterRedirects);
@@ -43,6 +67,8 @@ export class App implements OnDestroy {
     this.resume.setVisible(this.showSessionReturn());
   }
   ngOnDestroy(): void {
+    this.headerObserver?.disconnect();
+    this.viewportScroller.setOffset([0, 0]);
     this.navigation.unsubscribe();
     this.resume.setVisible(false);
   }

@@ -1,5 +1,5 @@
 <a class="skip-link" href="#main-content" (click)="skipToContent($event)">Skip to content</a>
-<header class="site-header">
+<header #siteHeader class="site-header">
   <a [routerLink]="links.to('/')" class="wordmark" aria-label="The Last Link home"
     ><img class="brand-mark" src="favicon.svg" width="36" height="36" alt="" />
     <span class="wordmark-name"

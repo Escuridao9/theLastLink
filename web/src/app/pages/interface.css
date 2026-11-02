@@ -745,8 +745,8 @@ a.ll-arena-choice:hover {
   border-radius: 9px;
   padding: 26px;
   position: sticky;
-  top: 20px;
-  max-height: calc(100vh - 40px);
+  top: calc(var(--ll-header-height, 100px) + 20px);
+  max-height: calc(100vh - var(--ll-header-height, 100px) - 40px);
   overflow: auto;
   scrollbar-color: #755982 #2d2334;
 }

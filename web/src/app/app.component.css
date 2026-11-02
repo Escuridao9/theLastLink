@@ -5,6 +5,10 @@
   color: var(--ll-cream);
 }
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--ll-dark);
   font-family: 'Bricolage Grotesque', Arial, sans-serif;
   max-width: 1264px;
   padding: 24px 40px;
@@ -70,6 +74,7 @@
 main {
   max-width: 1264px;
   padding: 0 40px;
+  scroll-margin-top: calc(var(--ll-header-height, 100px) + 20px);
 }
 footer {
   max-width: 1264px;
